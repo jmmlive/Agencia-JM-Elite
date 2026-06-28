@@ -29,46 +29,86 @@ body{
 }
 
 .topbar{
-  height:70px;
-  display:flex;
+  height:54px;
+  display:grid;
+  grid-template-columns:42px 1fr 42px;
   align-items:center;
-  justify-content:space-between;
-  padding:0 14px;
+  gap:8px;
+  padding:0 10px;
   border-bottom:1px solid rgba(0,140,255,.35);
-  background:rgba(0,0,0,.55);
+  background:rgba(0,0,0,.78);
   position:sticky;
   top:0;
   z-index:10;
 }
 
 .menu-btn,.bell{
-  width:42px;
-  height:42px;
-  border:1px solid rgba(90,170,255,.45);
-  border-radius:12px;
+  width:36px;
+  height:36px;
+  border:1px solid rgba(90,170,255,.55);
+  border-radius:10px;
   display:flex;
   align-items:center;
   justify-content:center;
   background:#071426;
   color:white;
-  font-size:22px;
+  font-size:20px;
+  box-shadow:0 0 12px rgba(0,120,255,.28);
+}
+
+.bell{
+  position:relative;
+  font-size:18px;
+}
+
+.bell small{
+  position:absolute;
+  top:-7px;
+  right:-7px;
+  width:17px;
+  height:17px;
+  border-radius:50%;
+  background:#075cff;
+  color:white;
+  font-size:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #71b7ff;
 }
 
 .title{
   text-align:center;
+  min-width:0;
+}
+
+.line-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+}
+
+.line-title span{
+  width:26px;
+  height:1px;
+  background:#168cff;
+  box-shadow:0 0 8px #168cff;
 }
 
 .title h1{
   font-family:Georgia, serif;
-  font-size:20px;
-  letter-spacing:1px;
+  font-size:15px;
+  letter-spacing:.8px;
+  white-space:nowrap;
 }
 
 .title p{
   color:#00a8ff;
-  font-size:11px;
-  letter-spacing:2px;
-  margin-top:3px;
+  font-size:9px;
+  letter-spacing:1.6px;
+  margin-top:2px;
+  white-space:nowrap;
 }
 
 .hero{
