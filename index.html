@@ -4,445 +4,295 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agencia JM Elite</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  min-height:100vh;
+  font-family:Arial,sans-serif;
   background:#020713;
   color:white;
-  font-family:Arial, sans-serif;
 }
-
 .app{
-  width:100%;
   min-height:100vh;
-  background:
-    radial-gradient(circle at top center, rgba(0,115,255,.35), transparent 35%),
-    linear-gradient(180deg,#020713,#061326);
-  padding-bottom:80px;
+  background:radial-gradient(circle at top,#0b4da8 0,#020713 38%,#01040b 100%);
+  padding-bottom:72px;
 }
-
 .topbar{
-  height:54px;
-  display:grid;
-  grid-template-columns:42px 1fr 42px;
-  align-items:center;
-  gap:8px;
-  padding:0 10px;
-  border-bottom:1px solid rgba(0,140,255,.35);
-  background:rgba(0,0,0,.78);
-  position:sticky;
-  top:0;
-  z-index:10;
-}
-
-.menu-btn,.bell{
-  width:36px;
-  height:36px;
-  border:1px solid rgba(90,170,255,.55);
-  border-radius:10px;
+  height:58px;
   display:flex;
   align-items:center;
-  justify-content:center;
-  background:#071426;
-  color:white;
-  font-size:20px;
-  box-shadow:0 0 12px rgba(0,120,255,.28);
-}
-
-.bell{
-  position:relative;
-  font-size:18px;
-}
-
-.bell small{
-  position:absolute;
-  top:-7px;
-  right:-7px;
-  width:17px;
-  height:17px;
-  border-radius:50%;
-  background:#075cff;
-  color:white;
-  font-size:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid #71b7ff;
-}
-
-.title{
-  text-align:center;
-  min-width:0;
-}
-
-.line-title{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-}
-
-.line-title span{
-  width:26px;
-  height:1px;
-  background:#168cff;
-  box-shadow:0 0 8px #168cff;
-}
-
-.title h1{
-  font-family:Georgia, serif;
-  font-size:15px;
-  letter-spacing:.8px;
-  white-space:nowrap;
-}
-
-.title p{
-  color:#00a8ff;
-  font-size:9px;
-  letter-spacing:1.6px;
-  margin-top:2px;
-  white-space:nowrap;
-}
-
-.hero{
-  padding:22px 14px 12px;
-  text-align:center;
-}
-
-.logo-circle{
-  width:88px;
-  height:88px;
-  margin:0 auto 6px;
-  border-radius:50%;
-  border:2px solid #0b7dff;
-  background:
-    radial-gradient(circle, #113b70, #020713 65%);
-  box-shadow:0 0 25px #006fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:Georgia, serif;
-  font-size:42px;
-  font-weight:bold;
-  color:#d9ecff;
-}
-  .sidebar{
-  display:none;
-  margin:10px 14px;
-  padding:12px;
-  border:1px solid rgba(0,130,255,.45);
-  border-radius:14px;
-  background:linear-gradient(180deg,#03101f,#010712);
-  box-shadow:0 0 22px rgba(0,100,255,.25);
-}
-
-.side-logo{
-  text-align:center;
-  padding:10px 6px 14px;
-  border-bottom:1px solid rgba(0,130,255,.35);
-}
-
-.side-eagle{
-  font-size:46px;
-  margin-bottom:4px;
-}
-
-.side-logo h2{
-  font-family:Georgia,serif;
-  font-size:22px;
-  letter-spacing:2px;
-}
-
-.side-logo p{
-  color:#18aaff;
-  letter-spacing:4px;
-  font-size:12px;
-  margin-top:4px;
-}
-
-.side-logo small{
-  color:#4bb8ff;
-  font-size:9px;
-  letter-spacing:1.5px;
-}
-
-.side-menu{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  margin-top:12px;
-}
-
-.side-menu button{
-  height:42px;
-  border:1px solid rgba(0,120,255,.35);
-  border-radius:10px;
-  background:linear-gradient(90deg,#071426,#020914);
-  color:white;
-  text-align:left;
+  justify-content:space-between;
   padding:0 12px;
-  font-weight:bold;
+  background:rgba(0,0,0,.75);
+  border-bottom:1px solid #0b6cff;
 }
-
-.side-menu button.active{
-  background:linear-gradient(90deg,#006dff,#00306b);
-  box-shadow:0 0 15px rgba(0,115,255,.55);
+.icon-btn{
+  width:38px;height:38px;border-radius:12px;
+  border:1px solid #147dff;
+  background:#06162c;color:white;font-size:20px;
+  box-shadow:0 0 12px #004cff;
 }
+.brand-title{text-align:center}
+.brand-title h1{font-family:Georgia,serif;font-size:15px;letter-spacing:1px}
+.brand-title p{font-size:9px;color:#23a8ff;letter-spacing:1.5px;margin-top:3px}
 
-.side-footer{
-  text-align:center;
-  padding-top:14px;
-  color:#2fa8ff;
-}
-
-.side-footer p{
-  font-family:cursive;
-  font-size:22px;
-}
-
-.side-footer small{
-  display:block;
-  margin:8px 0;
-  font-size:11px;
-  }
-
-.hero h2{
-  font-family:Georgia, serif;
-  font-size:32px;
-  letter-spacing:7px;
-}
-
-.hero p{
-  color:#18aaff;
-  font-size:12px;
-  letter-spacing:2px;
-  margin-top:6px;
-}
-
-.people{
-  display:flex;
-  justify-content:space-around;
-  margin-top:18px;
-}
-
-.person{
-  width:31%;
-  font-size:12px;
-}
-
-.person strong{
-  display:block;
-  font-family:Georgia, serif;
-  font-size:16px;
-}
-
-.person span{
-  color:#0099ff;
-  font-style:italic;
-}
-
-.notice{
-  margin:10px 14px;
+.layout{display:flex}
+.sidebar{
+  width:255px;
+  min-height:calc(100vh - 58px);
+  background:linear-gradient(180deg,#03142a,#010611);
+  border-right:1px solid #0b6cff;
   padding:12px;
-  border:1px solid rgba(0,130,255,.45);
-  border-radius:12px;
+  display:none;
+}
+.sidebar.open{display:block;position:fixed;top:58px;left:0;z-index:50}
+.side-logo{text-align:center;border-bottom:1px solid #0b6cff;padding-bottom:12px}
+.eagle{font-size:48px}
+.side-logo h2{font-family:Georgia,serif;font-size:23px}
+.side-logo p{color:#18aaff;font-size:11px;letter-spacing:3px}
+.side-menu{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.side-menu button,.card{
+  cursor:pointer;
+}
+.side-menu button{
+  height:40px;border-radius:10px;border:1px solid #0b6cff;
+  background:linear-gradient(90deg,#082145,#020914);
+  color:white;text-align:left;padding:0 12px;font-weight:bold;
+}
+.side-menu button.active{
+  background:linear-gradient(90deg,#0072ff,#003675);
+  box-shadow:0 0 16px #006dff;
+}
+.content{width:100%;padding:14px}
+.hero{
+  border:1px solid rgba(28,132,255,.55);
+  border-radius:18px;
+  background:linear-gradient(135deg,rgba(0,78,170,.38),rgba(0,0,0,.72));
+  box-shadow:0 0 28px rgba(0,102,255,.35);
+  padding:16px 10px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero:before{
+  content:"";
+  position:absolute;inset:-80px;
+  background:radial-gradient(circle,rgba(0,156,255,.25),transparent 45%);
+  pointer-events:none;
+}
+.team{position:relative;display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:8px;align-items:center}
+.member,.main-logo{
+  background:rgba(0,10,28,.65);
+  border:1px solid rgba(26,139,255,.45);
+  border-radius:16px;
+  padding:10px 6px;
+}
+.avatar{
+  width:66px;height:66px;border-radius:50%;margin:0 auto 8px;
+  border:2px solid #168cff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;font-weight:bold;
+  background:linear-gradient(180deg,#07366c,#020814);
+  box-shadow:0 0 18px #006dff;
+}
+.member strong{display:block;font-family:Georgia,serif;font-size:14px}
+.member span{color:#32adff;font-style:italic;font-size:12px}
+.member p{font-size:10px;color:#d7eaff;margin-top:3px}
+.main-logo .eagle-big{font-size:46px}
+.main-logo .jm{
+  font-family:Georgia,serif;
+  font-size:38px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+.main-logo h2{font-size:18px;font-family:Georgia,serif;margin-top:2px}
+.main-logo p{font-size:9px;color:#22aaff;letter-spacing:1px;margin-top:4px}
+.notice{
+  margin:12px 0;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,193,7,.55);
+  background:linear-gradient(90deg,#1c1200,#06172c);
   display:flex;
+  gap:10px;
   align-items:center;
-  gap:12px;
-  background:linear-gradient(90deg,#071426,#09264c);
 }
-
-.notice .icon{
-  font-size:34px;
-}
-
-.notice h3{
-  color:#12a8ff;
-  font-size:16px;
-}
-
-.notice p{
-  font-size:12px;
-  opacity:.85;
-}
-
+.notice .nicon{font-size:30px}
+.notice h3{color:#ffc94a;font-size:15px}
+.notice p{font-size:12px;color:#eaf4ff}
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:10px;
-  padding:10px 14px;
 }
-
 .card{
-  min-height:125px;
-  border:1px solid rgba(0,130,255,.35);
-  border-radius:12px;
-  background:linear-gradient(180deg,#07172b,#020a16);
+  min-height:108px;
+  border-radius:15px;
+  border:1px solid rgba(255,198,65,.45);
+  background:linear-gradient(180deg,#102644,#030813);
+  box-shadow:inset 0 0 18px rgba(0,111,255,.25),0 0 12px rgba(0,80,255,.18);
   display:flex;
   flex-direction:column;
+  align-items:center;
   justify-content:center;
-  align-items:center;
   text-align:center;
-  box-shadow:inset 0 0 20px rgba(0,80,160,.18);
+  padding:10px;
 }
-
-.card .emoji{
-  font-size:34px;
-  margin-bottom:8px;
-}
-
-.card h3{
-  font-size:15px;
-}
-
-.card p{
-  font-size:12px;
-  opacity:.85;
-  margin-top:6px;
-  line-height:1.35;
-}
-
+.card .emoji{font-size:30px;margin-bottom:7px}
+.card h3{font-size:13px;color:#ffd56b}
+.card p{font-size:11px;color:#dbeeff;margin-top:5px}
 .bottom{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:64px;
-  background:rgba(0,5,15,.95);
-  border-top:1px solid rgba(0,130,255,.35);
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:20;
+  position:fixed;left:0;right:0;bottom:0;
+  height:62px;background:rgba(0,5,15,.96);
+  border-top:1px solid #0b6cff;
+  display:flex;justify-content:space-around;align-items:center;
+  z-index:60;
 }
-
-.bottom div{
-  color:#aeb7c4;
-  font-size:12px;
-  text-align:center;
+.bottom button{
+  background:none;border:0;color:#a8b4c5;font-size:11px;
 }
-
-.bottom .active{
-  color:#168cff;
+.bottom button span{display:block;font-size:21px;margin-bottom:3px}
+.bottom button.active{color:#168cff}
+.panel{
+  display:none;
+  margin-top:12px;
+  border:1px solid #0b6cff;
+  border-radius:15px;
+  padding:15px;
+  background:rgba(0,10,28,.75);
 }
-
-.bottom span{
-  display:block;
-  font-size:22px;
-  margin-bottom:3px;
+.panel.active{display:block}
+.panel h2{color:#ffd56b;margin-bottom:8px}
+.panel p{font-size:13px;line-height:1.5;color:#e6f2ff}
+@media(min-width:900px){
+  .sidebar{display:block;position:static}
+  .content{padding:18px;max-width:1000px}
+  .bottom{display:none}
+  .grid{grid-template-columns:repeat(4,1fr)}
+  .team{max-width:760px;margin:auto}
 }
 </style>
 </head>
-
 <body>
 <div class="app">
 
-  <header class="topbar">
-  <div class="menu-btn">☰</div>
-
-  <div class="title">
-    <div class="line-title">
-      <span></span>
-      <h1>AGENCIA TENERIFE JMM</h1>
-      <span></span>
-    </div>
+<header class="topbar">
+  <button class="icon-btn" onclick="toggleMenu()">☰</button>
+  <div class="brand-title">
+    <h1>AGENCIA TENERIFE JMM</h1>
     <p>DISCIPLINA · ENFOQUE · RESULTADOS</p>
   </div>
+  <button class="icon-btn" onclick="showPanel('avisos')">🔔</button>
+</header>
 
-  <div class="bell">🔔<small>3</small></div>
-  </header>
+<div class="layout">
 
-  <section class="hero">
-  <div class="logo-circle">JM</div>
-  <h2>AGENCIA JM</h2>
-  <p>CONEXIONES QUE TRASCIENDEN</p>
+<aside class="sidebar" id="sidebar">
+  <div class="side-logo">
+    <div class="eagle">🦅</div>
+    <h2>AGENCIA JM</h2>
+    <p>TENERIFE</p>
+  </div>
+  <div class="side-menu">
+    <button class="active" onclick="showPanel('inicio')">🏠 INICIO</button>
+    <button onclick="showPanel('panel')">▦ PANEL PRINCIPAL</button>
+    <button onclick="showPanel('perfil')">👤 MI PERFIL</button>
+    <button onclick="showPanel('emisoras')">📡 MIS EMISORAS</button>
+    <button onclick="showPanel('academia')">🎓 ACADEMIA JMM</button>
+    <button onclick="showPanel('pagos')">💰 PAGOS Y BONOS</button>
+    <button onclick="showPanel('ranking')">🏆 RANKING TOP</button>
+    <button onclick="showPanel('avisos')">🔔 AVISOS</button>
+    <button onclick="showPanel('normas')">📜 REGLAS Y NORMAS</button>
+    <button onclick="showPanel('soporte')">🎧 SOPORTE</button>
+    <button onclick="showPanel('salir')">🚪 CERRAR SESIÓN</button>
+  </div>
+</aside>
 
-  <div class="people">
-    <div class="person">
+<main class="content">
+
+<section class="hero">
+  <div class="team">
+    <div class="member">
+      <div class="avatar">R</div>
       <strong>RUTH</strong>
       <span>María</span>
       <p>Administradora</p>
     </div>
 
-    <div class="person">
+    <div class="main-logo">
+      <div class="eagle-big">🦅</div>
+      <div class="jm">JM</div>
+      <h2>AGENCIA JM</h2>
+      <p>CONEXIONES QUE TRASCIENDEN</p>
+      <div class="avatar" style="margin-top:10px;">J</div>
       <strong>JESÚS</strong>
       <span>Melián</span>
       <p>Agente Oficial</p>
     </div>
 
-    <div class="person">
+    <div class="member">
+      <div class="avatar">Y</div>
       <strong>YANDIRA</strong>
       <span>Vives</span>
       <p>Administradora</p>
     </div>
   </div>
-  </section>
-<aside class="sidebar">
-  <div class="side-logo">
-    <div class="side-eagle">🦅</div>
-    <h2>AGENCIA JM</h2>
-    <p>TENERIFE</p>
-    <small>CONEXIONES QUE TRASCIENDEN</small>
+</section>
+
+<section class="notice">
+  <div class="nicon">📢</div>
+  <div>
+    <h3>AVISO IMPORTANTE</h3>
+    <p>Revisa las nuevas normas, objetivos y comunicados de esta semana.</p>
   </div>
+</section>
 
-  <div class="side-menu">
-    <button class="active">🏠 INICIO</button>
-    <button>▦ PANEL PRINCIPAL</button>
-    <button>👤 MI PERFIL</button>
-    <button>📡 MIS EMISORAS</button>
-    <button>🎓 ACADEMIA JMM</button>
-    <button>💰 PAGOS Y BONOS</button>
-    <button>🏆 RANKING TOP</button>
-    <button>🔔 AVISOS</button>
-    <button>📜 REGLAS Y NORMAS</button>
-    <button>🎧 SOPORTE</button>
-    <button>🚪 CERRAR SESIÓN</button>
-  </div>
+<section class="grid">
+  <div class="card" onclick="showPanel('perfil')"><div class="emoji">👤</div><h3>MI PERFIL</h3><p>Información personal</p></div>
+  <div class="card" onclick="showPanel('emisoras')"><div class="emoji">📡</div><h3>MIS EMISORAS</h3><p>Gestión del equipo</p></div>
+  <div class="card" onclick="showPanel('academia')"><div class="emoji">🎓</div><h3>ACADEMIA JMM</h3><p>Cursos y tareas</p></div>
+  <div class="card" onclick="showPanel('pagos')"><div class="emoji">💰</div><h3>PAGOS Y BONOS</h3><p>Comisiones y metas</p></div>
+  <div class="card" onclick="showPanel('ranking')"><div class="emoji">🏆</div><h3>RANKING TOP</h3><p>Top emisoras</p></div>
+  <div class="card" onclick="showPanel('avisos')"><div class="emoji">🔔</div><h3>AVISOS</h3><p>Noticias internas</p></div>
+  <div class="card" onclick="showPanel('normas')"><div class="emoji">📜</div><h3>REGLAS Y NORMAS</h3><p>Guía oficial</p></div>
+  <div class="card" onclick="showPanel('soporte')"><div class="emoji">🎧</div><h3>SOPORTE</h3><p>Ayuda técnica</p></div>
+</section>
 
-  <div class="side-footer">
-    <p>Juntos Somos Más</p>
-    <small>AGENCIA TENERIFE JMM</small>
-    <div>🔵 🟢 ▶️ 🎵</div>
-  </div>
-  </aside>
-  <section class="notice">
-    <div class="icon">📢</div>
-    <div>
-      <h3>AVISO IMPORTANTE</h3>
-      <p>Revisa las nuevas normas y objetivos de esta semana.</p>
-    </div>
-  </section>
+<section id="inicio" class="panel active"><h2>Inicio</h2><p>Bienvenido a Agencia JM Elite. Esta es la pantalla principal de control.</p></section>
+<section id="panel" class="panel"><h2>Panel Principal</h2><p>Resumen general de actividad, avisos y herramientas de administración.</p></section>
+<section id="perfil" class="panel"><h2>Mi Perfil</h2><p>Aquí irá la información del usuario, foto, ID, país, nivel y datos editables.</p></section>
+<section id="emisoras" class="panel"><h2>Mis Emisoras</h2><p>Listado y control de emisoras de la agencia.</p></section>
+<section id="academia" class="panel"><h2>Academia JMM</h2><p>Cursos, tareas, formación, normas y entrenamiento para nuevas emisoras.</p></section>
+<section id="pagos" class="panel"><h2>Pagos y Bonos</h2><p>Zona de pagos, bonos, comisiones, metas y registros.</p></section>
+<section id="ranking" class="panel"><h2>Ranking Top</h2><p>Clasificación de emisoras y resultados destacados.</p></section>
+<section id="avisos" class="panel"><h2>Avisos</h2><p>Comunicados importantes de la agencia.</p></section>
+<section id="normas" class="panel"><h2>Reglas y Normas</h2><p>Normas oficiales de Agencia Tenerife JMM.</p></section>
+<section id="soporte" class="panel"><h2>Soporte</h2><p>Área de ayuda para resolver dudas y problemas técnicos.</p></section>
+<section id="salir" class="panel"><h2>Cerrar sesión</h2><p>Más adelante activaremos el sistema real de acceso y cierre de sesión.</p></section>
 
-  <main class="grid">
-    <div class="card"><div class="emoji">👤</div><h3>MI PERFIL</h3><p>Ver y editar mi información</p></div>
-    <div class="card"><div class="emoji">📡</div><h3>MIS EMISORAS</h3><p>Gestiona tus emisoras</p></div>
-    <div class="card"><div class="emoji">🎓</div><h3>ACADEMIA JMM</h3><p>Cursos, tareas y entrenamientos</p></div>
-    <div class="card"><div class="emoji">💰</div><h3>PAGOS Y BONOS</h3><p>Pagos, bonos y comisiones</p></div>
-    <div class="card"><div class="emoji">🏆</div><h3>RANKING TOP</h3><p>Top emisoras y conductores</p></div>
-    <div class="card"><div class="emoji">🔔</div><h3>AVISOS</h3><p>Noticias y avisos importantes</p></div>
-    <div class="card"><div class="emoji">📜</div><h3>REGLAS Y NORMAS</h3><p>Normas de la agencia</p></div>
-    <div class="card"><div class="emoji">🎧</div><h3>SOPORTE</h3><p>Soporte y ayuda técnica</p></div>
-    <div class="card"><div class="emoji">👥</div><h3>QUIÉNES SOMOS</h3><p>Conoce nuestro equipo</p></div>
-    <div class="card"><div class="emoji">⭐</div><h3>NUESTROS VALORES</h3><p>Disciplina, enfoque y resultados</p></div>
-    <div class="card"><div class="emoji">🛡️</div><h3>SEGURIDAD</h3><p>Protegemos nuestra comunidad</p></div>
-    <div class="card"><div class="emoji">📊</div><h3>ESTADÍSTICAS</h3><p>Métricas y rendimiento</p></div>
-  </main>
+</main>
+</div>
 
-  <nav class="bottom">
-    <div class="active"><span>🏠</span>Inicio</div>
-    <div><span>▦</span>Panel</div>
-    <div><span>📡</span>Emisoras</div>
-    <div><span>🎓</span>Academia</div>
-    <div><span>👤</span>Perfil</div>
-  </nav>
+<nav class="bottom">
+  <button class="active" onclick="showPanel('inicio')"><span>🏠</span>Inicio</button>
+  <button onclick="showPanel('panel')"><span>▦</span>Panel</button>
+  <button onclick="showPanel('emisoras')"><span>📡</span>Emisoras</button>
+  <button onclick="showPanel('academia')"><span>🎓</span>Academia</button>
+  <button onclick="showPanel('perfil')"><span>👤</span>Perfil</button>
+</nav>
 
 </div>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("open");
+}
+function showPanel(id){
+  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  const panel=document.getElementById(id);
+  if(panel){panel.classList.add("active");}
+  document.getElementById("sidebar").classList.remove("open");
+}
+</script>
+
 </body>
-      </html>
+        </html>
