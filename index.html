@@ -133,6 +133,85 @@ body{
   font-weight:bold;
   color:#d9ecff;
 }
+  .sidebar{
+  display:none;
+  margin:10px 14px;
+  padding:12px;
+  border:1px solid rgba(0,130,255,.45);
+  border-radius:14px;
+  background:linear-gradient(180deg,#03101f,#010712);
+  box-shadow:0 0 22px rgba(0,100,255,.25);
+}
+
+.side-logo{
+  text-align:center;
+  padding:10px 6px 14px;
+  border-bottom:1px solid rgba(0,130,255,.35);
+}
+
+.side-eagle{
+  font-size:46px;
+  margin-bottom:4px;
+}
+
+.side-logo h2{
+  font-family:Georgia,serif;
+  font-size:22px;
+  letter-spacing:2px;
+}
+
+.side-logo p{
+  color:#18aaff;
+  letter-spacing:4px;
+  font-size:12px;
+  margin-top:4px;
+}
+
+.side-logo small{
+  color:#4bb8ff;
+  font-size:9px;
+  letter-spacing:1.5px;
+}
+
+.side-menu{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:12px;
+}
+
+.side-menu button{
+  height:42px;
+  border:1px solid rgba(0,120,255,.35);
+  border-radius:10px;
+  background:linear-gradient(90deg,#071426,#020914);
+  color:white;
+  text-align:left;
+  padding:0 12px;
+  font-weight:bold;
+}
+
+.side-menu button.active{
+  background:linear-gradient(90deg,#006dff,#00306b);
+  box-shadow:0 0 15px rgba(0,115,255,.55);
+}
+
+.side-footer{
+  text-align:center;
+  padding-top:14px;
+  color:#2fa8ff;
+}
+
+.side-footer p{
+  font-family:cursive;
+  font-size:22px;
+}
+
+.side-footer small{
+  display:block;
+  margin:8px 0;
+  font-size:11px;
+  }
 
 .hero h2{
   font-family:Georgia, serif;
@@ -305,7 +384,34 @@ body{
     </div>
   </div>
   </section>
+<aside class="sidebar">
+  <div class="side-logo">
+    <div class="side-eagle">🦅</div>
+    <h2>AGENCIA JM</h2>
+    <p>TENERIFE</p>
+    <small>CONEXIONES QUE TRASCIENDEN</small>
+  </div>
 
+  <div class="side-menu">
+    <button class="active">🏠 INICIO</button>
+    <button>▦ PANEL PRINCIPAL</button>
+    <button>👤 MI PERFIL</button>
+    <button>📡 MIS EMISORAS</button>
+    <button>🎓 ACADEMIA JMM</button>
+    <button>💰 PAGOS Y BONOS</button>
+    <button>🏆 RANKING TOP</button>
+    <button>🔔 AVISOS</button>
+    <button>📜 REGLAS Y NORMAS</button>
+    <button>🎧 SOPORTE</button>
+    <button>🚪 CERRAR SESIÓN</button>
+  </div>
+
+  <div class="side-footer">
+    <p>Juntos Somos Más</p>
+    <small>AGENCIA TENERIFE JMM</small>
+    <div>🔵 🟢 ▶️ 🎵</div>
+  </div>
+  </aside>
   <section class="notice">
     <div class="icon">📢</div>
     <div>
