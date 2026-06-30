@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Sala JM Elite</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+body{
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  background:#020713;
+  color:white;
+}
+
+.sala-app{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top,#0d58bd 0%,#061326 40%,#020713 100%);
+  display:flex;
+  flex-direction:column;
+  padding-bottom:72px;
+}
+
+/* CABECERA */
+.sala-topbar{
+  height:58px;
+  padding:0 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(0,0,0,.86);
+  border-bottom:1px solid rgba(0,130,255,.75);
+  box-shadow:0 0 18px rgba(0,110,255,.35);
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+
+.icon-btn{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  border:1px solid #168cff;
+  background:#06162c;
+  color:white;
+  font-size:18px;
+  box-shadow:0 0 12px rgba(0,110,255,.55);
+}
+
+.sala-title{
+  text-align:center;
+}
+
+.sala-title h1{
+  font-family:Georgia,serif;
+  font-size:15px;
+  color:#ffd56b;
+  letter-spacing:.8px;
+}
+
+.sala-title p{
+  font-size:9px;
+  color:#27aaff;
+  margin-top:3px;
+}
+
+.live-pill{
+  padding:6px 8px;
+  border-radius:999px;
+  background:rgba(0,255,120,.14);
+  border:1px solid rgba(0,255,120,.45);
+  color:#3cff96;
+  font-size:10px;
+  font-weight:bold;
+}
+
+/* CONTENIDO */
+.sala-content{
+  width:100%;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* ZONA VIDEO */
+.stage{
+  min-height:36vh;
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid rgba(255,198,65,.45);
+  background:
+    linear-gradient(rgba(0,0,0,.08),rgba(0,0,0,.72)),
+    radial-gradient(circle at center,#155cc0 0%,#061326 52%,#020713 100%);
+  box-shadow:
+    inset 0 0 55px rgba(0,111,255,.35),
+    0 0 24px rgba(0,102,255,.28);
+  position:relative;
+  display:flex;
+  align-items:flex-end;
+}
+
+.stage-info{
+  width:100%;
+  padding:16px;
+}
+
+.stage-info .badge{
+  display:inline-block;
+  padding:6px 11px;
+  border-radius:999px;
+  background:#e83252;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.stage-info h2{
+  font-size:22px;
+  color:white;
+  margin-bottom:5px;
+}
+
+.stage-info p{
+  font-size:12px;
+  color:#dbeeff;
+  line-height:1.4;
+}
+
+/* DATOS RÁPIDOS */
+.room-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.stat{
+  min-height:58px;
+  border-radius:14px;
+  border:1px solid rgba(0,130,255,.45);
+  background:rgba(0,10,28,.72);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.stat strong{
+  color:#ffd56b;
+  font-size:15px;
+}
+
+.stat span{
+  font-size:10px;
+  color:#dbeeff;
+  margin-top:3px;
+}
+
+/* MICRÓFONOS */
+.mics-box{
+  border-radius:18px;
+  border:1px solid rgba(0,130,255,.5);
+  background:rgba(0,10,28,.76);
+  padding:10px;
+}
+
+.section-title{
+  color:#ffd56b;
+  font-size:14px;
+  margin-bottom:9px;
+}
+
+.mics-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.mic{
+  min-height:68px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#102644,#030813);
+  border:1px solid rgba(255,198,65,.35);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:6px 4px;
+}
+
+.mic .avatar{
+  font-size:22px;
+  margin-bottom:4px;
+}
+
+.mic strong{
+  font-size:10px;
+  color:#ffd56b;
+}
+
+.mic span{
+  font-size:9px;
+  color:#cfe6ff;
+  margin-top:2px;
+}
+
+.mic.speaking{
+  box-shadow:0 0 18px rgba(0,255,150,.45);
+  border-color:#3cff96;
+}
+
+/* CHAT */
+.chat-box{
+  border-radius:18px;
+  border:1px solid rgba(0,130,255,.5);
+  background:rgba(0,10,28,.82);
+  padding:10px;
+}
+
+.messages{
+  max-height:135px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.msg{
+  padding:8px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.07);
+  font-size:12px;
+  color:#e6f2ff;
+}
+
+.msg strong{
+  color:#ffd56b;
+}
+
+.chat-input{
+  margin-top:9px;
+  display:flex;
+  gap:8px;
+}
+
+.chat-input input{
+  flex:1;
+  min-width:0;
+  border:1px solid rgba(0,130,255,.45);
+  border-radius:13px;
+  background:#06162c;
+  color:white;
+  padding:11px;
+  outline:none;
+}
+
+.chat-input button{
+  width:48px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(135deg,#ffd56b,#b98725);
+  color:#061326;
+  font-size:18px;
+  font-weight:bold;
+}
+
+/* BARRA INFERIOR */
+.sala-bottom{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:62px;
+  background:rgba(0,5,15,.97);
+  border-top:1px solid rgba(0,130,255,.75);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:80;
+}
+
+.sala-bottom button{
+  background:none;
+  border:0;
+  color:#a8b4c5;
+  font-size:10px;
+}
+
+.sala-bottom button span{
+  display:block;
+  font-size:21px;
+  margin-bottom:3px;
+}
+
+.sala-bottom button.active{
+  color:#168cff;
+}
+
+@media(max-width:380px){
+  .mics-grid{
+    gap:6px;
+  }
+
+  .mic{
+    min-height:62px;
+  }
+
+  .stage-info h2{
+    font-size:20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="sala-app">
+
+<header class="sala-topbar">
+  <button class="icon-btn" onclick="goHome()">←</button>
+
+  <div class="sala-title">
+    <h1>SALA JM ELITE</h1>
+    <p>DIRECTO · EQUIPO · COMUNIDAD</p>
+  </div>
+
+  <div class="live-pill">● LIVE</div>
+</header>
+
+<main class="sala-content">
+
+<section class="stage">
+  <div class="stage-info">
+    <div class="badge">● EN VIVO</div>
+    <h2>Sala oficial de la agencia</h2>
+    <p>Espacio principal para reuniones, formación, apoyo entre emisoras y comunicación directa con la agencia.</p>
+  </div>
+</section>
+<!-- ESTADÍSTICAS -->
+<section class="room-stats">
+
+<div class="stat">
+<strong>328</strong>
+<span>Conectados</span>
+</div>
+
+<div class="stat">
+<strong>12</strong>
+<span>Micrófonos</span>
+</div>
+
+<div class="stat">
+<strong>Nivel 37</strong>
+<span>Sala Oficial</span>
+</div>
+
+</section>
+
+<!-- MICRÓFONOS -->
+<section class="mics-box">
+
+<h3 class="section-title">🎙️ Micrófonos de la Sala</h3>
+
+<div class="mics-grid">
+
+<div class="mic speaking">
+<div class="avatar">👑</div>
+<strong>Host</strong>
+<span>Jesús</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🛡️</div>
+<strong>Admin</strong>
+<span>Ruth</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🛡️</div>
+<strong>Admin</strong>
+<span>Yandira</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 4</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 5</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 6</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 7</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 8</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 9</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 10</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 11</span>
+</div>
+
+<div class="mic">
+<div class="avatar">🎤</div>
+<strong>Libre</strong>
+<span>Plaza 12</span>
+</div>
+
+</div>
+
+</section>
+
+<!-- CHAT -->
+
+<section class="chat-box">
+
+<h3 class="section-title">💬 Chat de la Sala</h3>
+
+<div class="messages" id="messages">
+
+<div class="msg">
+<strong>Agencia:</strong>
+Bienvenidos a la Sala Oficial JM Elite.
+</div>
+
+<div class="msg">
+<strong>Sistema:</strong>
+Respeta las normas de convivencia.
+</div>
+
+</div>
+
+<div class="chat-input">
+
+<input
+id="chatText"
+type="text"
+placeholder="Escribe un mensaje...">
+
+<button onclick="sendMessage()">
+➤
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+<nav class="sala-bottom">
+
+<button class="active" onclick="goHome()">
+<span>🏠</span>
+Inicio
+</button>
+
+<button>
+<span>🎁</span>
+Regalos
+</button>
+
+<button>
+<span>❤️</span>
+Reacciones
+</button>
+
+<button>
+<span>👥</span>
+Usuarios
+</button>
+
+<button>
+<span>⚙️</span>
+Más
+</button>
+
+  </nav>
+  <script>
+function goHome(){
+  window.location.href = "index.html";
+}
+
+function sendMessage(){
+  const input = document.getElementById("chatText");
+  const messages = document.getElementById("messages");
+
+  const text = input.value.trim();
+
+  if(text === ""){
+    return;
+  }
+
+  const newMsg = document.createElement("div");
+  newMsg.className = "msg";
+  newMsg.innerHTML = "<strong>Tú:</strong> " + text;
+
+  messages.appendChild(newMsg);
+  messages.scrollTop = messages.scrollHeight;
+
+  input.value = "";
+}
+
+document.getElementById("chatText").addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    sendMessage();
+  }
+});
+</script>
+
+</div>
+
+</body>
+</html>
