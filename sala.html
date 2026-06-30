@@ -329,20 +329,34 @@ function escapeText(text){
   return text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
-async function sendMessage(){
+async async function sendMessage(){
   const input = document.getElementById("chatText");
+  const messages = document.getElementById("messages");
   const text = input.value.trim();
+
   if(text === "") return;
 
-  await addDoc(collection(db,"salaJMEliteChat"),{
-    user:"Tú",
-    text:text,
-    type:"user",
-    createdAt:serverTimestamp()
-  });
+  const safeText = escapeText(text);
+
+  const newMsg = document.createElement("div");
+  newMsg.className = "msg";
+  newMsg.innerHTML = "<strong>Tú:</strong> " + safeText + "<small>" + getHour() + "</small>";
+  messages.appendChild(newMsg);
+  messages.scrollTop = messages.scrollHeight;
 
   input.value = "";
-}
+
+  try{
+    await addDoc(collection(db,"salaJMEliteChat"),{
+      user:"Tú",
+      text:text,
+      type:"user",
+      createdAt:serverTimestamp()
+    });
+  }catch(error){
+    console.log(error);
+  }
+  }
 
 async function addSystemMsg(text){
   await addDoc(collection(db,"salaJMEliteChat"),{
