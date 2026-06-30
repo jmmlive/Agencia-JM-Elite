@@ -544,11 +544,11 @@ function sendMessage(){
   });
 
   const newMsg = document.createElement("div");
-  newMsg.className = "msg";
-  newMsg.innerHTML = `
-    <strong>Tú:</strong> ${safeText}
-    <small style="display:block;color:#8fb7e8;margin-top:4px;font-size:10px;">${hour}</small>
-  `;
+newMsg.className = "msg";
+newMsg.innerHTML = `
+<strong>Tú:</strong> ${safeText}
+<small style="display:block;color:#888">${hour}</small>
+`;
 
   messages.appendChild(newMsg);
   messages.scrollTop = messages.scrollHeight;
