@@ -129,23 +129,38 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:#020713;color:whit
   <div class="stat"><strong>Nivel 37</strong><span>Sala Oficial</span></div>
 </section>
 
-<section class="box">
-  <h3 class="section-title">🎙️ Micrófonos de la Sala</h3>
-  <div class="mics-grid">
-    <div class="mic speaking"><div class="avatar">👑</div><strong>Host</strong><span>Jesús</span></div>
-    <div class="mic"><div class="avatar">🛡️</div><strong>Admin</strong><span>Ruth</span></div>
-    <div class="mic"><div class="avatar">🛡️</div><strong>Admin</strong><span>Yandira</span></div>
-    <div class="mic" id="mic4" onclick="joinMic(4)"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 4</span></div>
-    <div class="mic" id="mic5" onclick="joinMic(5)"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 5</span></div>
-    <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 6</span></div>
-    <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 7</span></div>
-    <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 8</span></div>
-    <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 9</span></div>
-    <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 10</span></div>
-    <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 11</span></div>
-    <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 12</span></div>
-  </div>
-</section>
+let currentMic = null;
+
+function joinMic(number){
+  const mic = document.getElementById("mic" + number);
+
+  if(!mic){
+    return;
+  }
+
+  if(currentMic === number){
+    mic.classList.remove("speaking");
+    mic.innerHTML = '<div class="avatar">🎤</div><strong>Libre</strong><span>Plaza ' + number + '</span>';
+    addSystemMsg("⬇️ Jesús ha bajado de la Plaza " + number + ".");
+    currentMic = null;
+    return;
+  }
+
+  if(currentMic !== null){
+    const oldMic = document.getElementById("mic" + currentMic);
+
+    if(oldMic){
+      oldMic.classList.remove("speaking");
+      oldMic.innerHTML = '<div class="avatar">🎤</div><strong>Libre</strong><span>Plaza ' + currentMic + '</span>';
+    }
+  }
+
+  mic.classList.add("speaking");
+  mic.innerHTML = '<div class="avatar">👤</div><strong>Jesús</strong><span>En micrófono</span>';
+
+  addSystemMsg("🎙️ Jesús ha subido a la Plaza " + number + ".");
+  currentMic = number;
+}
 
 <section class="box">
   <h3 class="section-title">💬 Chat de la Sala</h3>
