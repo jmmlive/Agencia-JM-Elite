@@ -288,7 +288,32 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:#020713;color:whit
 </nav>
 
 </div>
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  query,
+  orderBy,
+  limit,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLjbeblx9a5cMb-iSEq4NfQu-5Sqtv63w",
+  authDomain: "agencia-jm-8076e.firebaseapp.com",
+  projectId: "agencia-jm-8076e",
+  storageBucket: "agencia-jm-8076e.firebasestorage.app",
+  messagingSenderId: "925714422714",
+  appId: "1:925714422714:web:e209adb0f0bf3ee5cf9b83",
+  measurementId: "G-CPBWZ2VSG0"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 let currentMic = null;
 let isMuted = false;
 
@@ -297,56 +322,73 @@ function goHome(){
 }
 
 function getHour(){
-  return new Date().toLocaleTimeString("es-ES", {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  return new Date().toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"});
 }
 
-function addSystemMsg(text){
-  const messages = document.getElementById("messages");
-  const newMsg = document.createElement("div");
-
-  newMsg.className = "msg";
-  newMsg.innerHTML = "<strong>Sistema:</strong> " + text + "<small>" + getHour() + "</small>";
-
-  messages.appendChild(newMsg);
-  messages.scrollTop = messages.scrollHeight;
+function escapeText(text){
+  return text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
-function sendMessage(){
+async function sendMessage(){
   const input = document.getElementById("chatText");
-  const messages = document.getElementById("messages");
   const text = input.value.trim();
+  if(text === "") return;
 
-  if(text === ""){
-    return;
-  }
+  await addDoc(collection(db,"salaJMEliteChat"),{
+    user:"Tú",
+    text:text,
+    type:"user",
+    createdAt:serverTimestamp()
+  });
 
-  const safeText = text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-
-  const newMsg = document.createElement("div");
-  newMsg.className = "msg";
-  newMsg.innerHTML = "<strong>Tú:</strong> " + safeText + "<small>" + getHour() + "</small>";
-
-  messages.appendChild(newMsg);
-  messages.scrollTop = messages.scrollHeight;
   input.value = "";
 }
 
-function joinMic(number){
-  const mic = document.getElementById("mic" + number);
+async function addSystemMsg(text){
+  await addDoc(collection(db,"salaJMEliteChat"),{
+    user:"Sistema",
+    text:text,
+    type:"system",
+    createdAt:serverTimestamp()
+  });
+}
 
-  if(!mic){
+const q = query(collection(db,"salaJMEliteChat"), orderBy("createdAt","asc"), limit(50));
+
+onSnapshot(q,function(snapshot){
+  const messages = document.getElementById("messages");
+  messages.innerHTML = "";
+
+  if(snapshot.empty){
+    messages.innerHTML = `
+      <div class="msg"><strong>Agencia:</strong> Bienvenidos a la Sala Oficial JM Elite.</div>
+      <div class="msg"><strong>Sistema:</strong> Chat conectado a Firebase.</div>
+    `;
     return;
   }
 
+  snapshot.forEach(function(doc){
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.className = "msg";
+
+    const hora = data.createdAt && data.createdAt.toDate
+      ? data.createdAt.toDate().toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})
+      : getHour();
+
+    div.innerHTML = "<strong>" + escapeText(data.user || "Usuario") + ":</strong> " + escapeText(data.text || "") + "<small>" + hora + "</small>";
+    messages.appendChild(div);
+  });
+
+  messages.scrollTop = messages.scrollHeight;
+});
+
+function joinMic(number){
+  const mic = document.getElementById("mic" + number);
+  if(!mic) return;
+
   if(currentMic === number){
-    mic.classList.remove("speaking");
-    mic.classList.remove("muted");
+    mic.classList.remove("speaking","muted");
     mic.innerHTML = '<div class="avatar">🎤</div><strong>Libre</strong><span>Plaza ' + number + '</span>';
     addSystemMsg("⬇️ Jesús ha bajado de la Plaza " + number + ".");
     currentMic = null;
@@ -357,10 +399,8 @@ function joinMic(number){
 
   if(currentMic !== null){
     const oldMic = document.getElementById("mic" + currentMic);
-
     if(oldMic){
-      oldMic.classList.remove("speaking");
-      oldMic.classList.remove("muted");
+      oldMic.classList.remove("speaking","muted");
       oldMic.innerHTML = '<div class="avatar">🎤</div><strong>Libre</strong><span>Plaza ' + currentMic + '</span>';
     }
   }
@@ -383,7 +423,6 @@ function toggleMute(){
   }
 
   const mic = document.getElementById("mic" + currentMic);
-
   isMuted = !isMuted;
 
   if(isMuted){
@@ -411,34 +450,25 @@ function updateMuteButton(){
     return;
   }
 
-  if(isMuted){
-    icon.textContent = "🔇";
-    text.textContent = "Silencio";
-  }else{
-    icon.textContent = "🎙️";
-    text.textContent = "Micro";
-  }
+  icon.textContent = isMuted ? "🔇" : "🎙️";
+  text.textContent = isMuted ? "Silencio" : "Micro";
 }
 
-function giftAction(){
-  addSystemMsg("🎁 Has enviado un regalo a la sala.");
-}
+function giftAction(){ addSystemMsg("🎁 Has enviado un regalo a la sala."); }
+function reactAction(){ addSystemMsg("❤️ Reacción enviada."); }
+function usersAction(){ addSystemMsg("👥 Usuarios conectados: Jesús, Ruth, Yandira y emisoras invitadas."); }
 
-function reactAction(){
-  const reactions = ["❤️", "👏", "🔥", "😂", "🌟"];
-  const reaction = reactions[Math.floor(Math.random() * reactions.length)];
-  addSystemMsg(reaction + " Reacción enviada.");
-}
-
-function usersAction(){
-  addSystemMsg("👥 Usuarios conectados: Jesús, Ruth, Yandira y emisoras invitadas.");
-}
-
-document.getElementById("chatText").addEventListener("keydown", function(e){
-  if(e.key === "Enter"){
-    sendMessage();
-  }
+document.getElementById("chatText").addEventListener("keydown",function(e){
+  if(e.key === "Enter") sendMessage();
 });
+
+window.goHome = goHome;
+window.sendMessage = sendMessage;
+window.joinMic = joinMic;
+window.toggleMute = toggleMute;
+window.giftAction = giftAction;
+window.reactAction = reactAction;
+window.usersAction = usersAction;
 </script>
 
 </body>
