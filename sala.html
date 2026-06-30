@@ -316,26 +316,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const myUser = "Jesús";
-
-async function userOnline(){
-  await setDoc(doc(db,"usuariosOnline",myUser),{
-    nombre: myUser,
-    conectado: true,
-    hora: serverTimestamp()
-  });
-}
-
-async function userOffline(){
-  await deleteDoc(doc(db,"usuariosOnline",myUser));
-}
-
-window.addEventListener("load", userOnline);
-window.addEventListener("beforeunload", userOffline);
-
-onSnapshot(collection(db,"usuariosOnline"), (snapshot)=>{
-  document.querySelector(".stat strong").textContent = snapshot.size;
-});
+const 
 let currentMic = null;
 let isMuted = false;
 
@@ -351,7 +332,7 @@ function escapeText(text){
   return text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 }
 
-async async function sendMessage(){
+async function sendMessage(){
   const input = document.getElementById("chatText");
   const messages = document.getElementById("messages");
   const text = input.value.trim();
@@ -378,7 +359,7 @@ async async function sendMessage(){
   }catch(error){
     console.log(error);
   }
-  }
+      }
 
 async function addSystemMsg(text){
   await addDoc(collection(db,"salaJMEliteChat"),{
