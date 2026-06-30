@@ -210,26 +210,30 @@ document.getElementById("chatText").addEventListener("keydown", function(e){
     sendMessage();
   }
 });
-let mic4Busy = false;
+let currentMic = null;
 
 function joinMic(number){
-  if(number !== 4){
+  if(currentMic === number){
+    const mic = document.getElementById("mic" + number);
+    mic.classList.remove("speaking");
+    mic.innerHTML = '<div class="avatar">🎤</div><strong>Libre</strong><span>Plaza ' + number + '</span>';
+    addSystemMsg("⬇️ Jesús ha bajado de la Plaza " + number + ".");
+    currentMic = null;
     return;
   }
 
-  const mic = document.getElementById("mic4");
-
-  if(!mic4Busy){
-    mic4Busy = true;
-    mic.classList.add("speaking");
-    mic.innerHTML = '<div class="avatar">👤</div><strong>Jesús</strong><span>En micrófono</span>';
-    addSystemMsg("🎙️ Jesús ha subido a la Plaza 4.");
-  }else{
-    mic4Busy = false;
-    mic.classList.remove("speaking");
-    mic.innerHTML = '<div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 4</span>';
-    addSystemMsg("⬇️ Jesús ha bajado de la Plaza 4.");
+  if(currentMic !== null){
+    const oldMic = document.getElementById("mic" + currentMic);
+    oldMic.classList.remove("speaking");
+    oldMic.innerHTML = '<div class="avatar">🎤</div><strong>Libre</strong><span>Plaza ' + currentMic + '</span>';
   }
+
+  const newMic = document.getElementById("mic" + number);
+  newMic.classList.add("speaking");
+  newMic.innerHTML = '<div class="avatar">👤</div><strong>Jesús</strong><span>En micrófono</span>';
+
+  addSystemMsg("🎙️ Jesús ha subido a la Plaza " + number + ".");
+  currentMic = number;
 }
 function giftAction(){
   addSystemMsg("🎁 Regalos: función preparada para conectar más adelante.");
