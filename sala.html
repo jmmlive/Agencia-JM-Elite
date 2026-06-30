@@ -135,7 +135,7 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:#020713;color:whit
     <div class="mic speaking"><div class="avatar">👑</div><strong>Host</strong><span>Jesús</span></div>
     <div class="mic"><div class="avatar">🛡️</div><strong>Admin</strong><span>Ruth</span></div>
     <div class="mic"><div class="avatar">🛡️</div><strong>Admin</strong><span>Yandira</span></div>
-    <div class="mic" onclick="joinMic(4)"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 4</span></div>
+    <div class="mic" id="mic4" onclick="joinMic(4)"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 4</span></div>
     <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 5</span></div>
     <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 6</span></div>
     <div class="mic"><div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 7</span></div>
@@ -210,9 +210,27 @@ document.getElementById("chatText").addEventListener("keydown", function(e){
     sendMessage();
   }
 });
+let mic4Busy = false;
+
 function joinMic(number){
-  addSystemMsg("🎙️ Has solicitado subir a la Plaza " + number + ".");
+  if(number !== 4){
+    return;
   }
+
+  const mic = document.getElementById("mic4");
+
+  if(!mic4Busy){
+    mic4Busy = true;
+    mic.classList.add("speaking");
+    mic.innerHTML = '<div class="avatar">👤</div><strong>Jesús</strong><span>En micrófono</span>';
+    addSystemMsg("🎙️ Jesús ha subido a la Plaza 4.");
+  }else{
+    mic4Busy = false;
+    mic.classList.remove("speaking");
+    mic.innerHTML = '<div class="avatar">🎤</div><strong>Libre</strong><span>Plaza 4</span>';
+    addSystemMsg("⬇️ Jesús ha bajado de la Plaza 4.");
+  }
+}
 function giftAction(){
   addSystemMsg("🎁 Regalos: función preparada para conectar más adelante.");
 }
