@@ -533,6 +533,37 @@ function sendMessage(){
     return;
   }
 
+  const safeText = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  const hour = new Date().toLocaleTimeString("es-ES", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  const newMsg = document.createElement("div");
+  newMsg.className = "msg";
+  newMsg.innerHTML = `
+    <strong>Tú:</strong> ${safeText}
+    <small style="display:block;color:#8fb7e8;margin-top:4px;font-size:10px;">${hour}</small>
+  `;
+
+  messages.appendChild(newMsg);
+  messages.scrollTop = messages.scrollHeight;
+
+  input.value = "";
+      }
+  const input = document.getElementById("chatText");
+  const messages = document.getElementById("messages");
+
+  const text = input.value.trim();
+
+  if(text === ""){
+    return;
+  }
+
   const newMsg = document.createElement("div");
   newMsg.className = "msg";
   newMsg.innerHTML = "<strong>Tú:</strong> " + text;
