@@ -210,7 +210,9 @@ document.getElementById("chatText").addEventListener("keydown", function(e){
     sendMessage();
   }
 });
-
+function joinMic(number){
+  addSystemMsg("🎙️ Has solicitado subir a la Plaza " + number + ".");
+  }
 function giftAction(){
   addSystemMsg("🎁 Regalos: función preparada para conectar más adelante.");
 }
