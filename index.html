@@ -328,6 +328,7 @@ body{
   <div class="side-menu">
     <button class="active" onclick="showPanel('inicio')">🏠 INICIO</button>
     <button onclick="showPanel('panel')">▦ PANEL PRINCIPAL</button>
+    <button onclick="openSala()">🎙️ SALA</button>
     <button onclick="showPanel('perfil')">👤 MI PERFIL</button>
     <button onclick="showPanel('emisoras')">📡 MIS EMISORAS</button>
     <button onclick="showPanel('academia')">🎓 ACADEMIA JMM</button>
@@ -383,11 +384,32 @@ body{
 </div>
 
 <nav class="bottom">
-  <button class="active" onclick="showPanel('inicio')"><span>🏠</span>Inicio</button>
-  <button onclick="showPanel('panel')"><span>▦</span>Panel</button>
-  <button onclick="showPanel('emisoras')"><span>📡</span>Emisoras</button>
-  <button onclick="showPanel('academia')"><span>🎓</span>Academia</button>
-  <button onclick="showPanel('perfil')"><span>👤</span>Perfil</button>
+
+<button class="active" onclick="showPanel('inicio')">
+<span>🏠</span>
+Inicio
+</button>
+
+<button onclick="openSala()">
+<span>🎙️</span>
+Sala
+</button>
+
+<button onclick="showPanel('emisoras')">
+<span>📡</span>
+Emisoras
+</button>
+
+<button onclick="showPanel('avisos')">
+<span>💬</span>
+Chat
+</button>
+
+<button onclick="showPanel('perfil')">
+<span>👤</span>
+Perfil
+</button>
+
 </nav>
 
 </div>
@@ -403,19 +425,28 @@ function closeMenu(){
   document.getElementById("overlay").classList.remove("show");
 }
 
+function openSala(){
+  window.location.href = "sala.html";
+}
+
 function showPanel(id){
-  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".panel").forEach(function(panel){
+    panel.classList.remove("active");
+  });
 
   const panel=document.getElementById(id);
+
   if(panel){
     panel.classList.add("active");
   }
 
-  document.querySelectorAll(".side-menu button").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".side-menu button").forEach(function(btn){
+    btn.classList.remove("active");
+  });
 
   closeMenu();
 }
+  
 </script>
-
 </body>
   </html>
