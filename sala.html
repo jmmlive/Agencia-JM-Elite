@@ -292,6 +292,9 @@ body{min-height:100vh;font-family:Arial,sans-serif;background:#020713;color:whit
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
   getFirestore,
+  doc,
+setDoc,
+deleteDoc,
   collection,
   addDoc,
   serverTimestamp,
@@ -313,7 +316,26 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const myUser = "Jesús";
 
+async function userOnline(){
+  await setDoc(doc(db,"usuariosOnline",myUser),{
+    nombre: myUser,
+    conectado: true,
+    hora: serverTimestamp()
+  });
+}
+
+async function userOffline(){
+  await deleteDoc(doc(db,"usuariosOnline",myUser));
+}
+
+window.addEventListener("load", userOnline);
+window.addEventListener("beforeunload", userOffline);
+
+onSnapshot(collection(db,"usuariosOnline"), (snapshot)=>{
+  document.querySelector(".stat strong").textContent = snapshot.size;
+});
 let currentMic = null;
 let isMuted = false;
 
