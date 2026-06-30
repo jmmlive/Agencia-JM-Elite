@@ -544,29 +544,11 @@ function sendMessage(){
   });
 
   const newMsg = document.createElement("div");
-newMsg.className = "msg";
-newMsg.innerHTML = `
-<strong>Tú:</strong> ${safeText}
-<small style="display:block;color:#888">${hour}</small>
-`;
-
-  messages.appendChild(newMsg);
-  messages.scrollTop = messages.scrollHeight;
-
-  input.value = "";
-      }
-  const input = document.getElementById("chatText");
-  const messages = document.getElementById("messages");
-
-  const text = input.value.trim();
-
-  if(text === ""){
-    return;
-  }
-
-  const newMsg = document.createElement("div");
   newMsg.className = "msg";
-  newMsg.innerHTML = "<strong>Tú:</strong> " + text;
+  newMsg.innerHTML = `
+    <strong>Tú:</strong> ${safeText}
+    <small style="display:block;color:#888;margin-top:4px;font-size:10px;">${hour}</small>
+  `;
 
   messages.appendChild(newMsg);
   messages.scrollTop = messages.scrollHeight;
@@ -579,7 +561,7 @@ document.getElementById("chatText").addEventListener("keydown", function(e){
     sendMessage();
   }
 });
-</script>
+  </script>
 
 </div>
 
