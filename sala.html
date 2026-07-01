@@ -658,10 +658,13 @@ let selectedPerson = "Jesús";
 let selectedRole = "Host";
 let selectedIcon = "👑";
 
+const const savedUserId = localStorage.getItem("jm_user_id") || "user-" + Date.now() + "-" + Math.floor(Math.random() * 9999);
+localStorage.setItem("jm_user_id", savedUserId);
+
 const currentUser = {
-  id: "jesus-host",
-  nombre: "Jesús",
-  rol: "host"
+  id: savedUserId,
+  nombre: localStorage.getItem("jm_user_name") || "Invitado",
+  rol: "invitado"
 };
 
 const messagesBox = document.getElementById("messages");
