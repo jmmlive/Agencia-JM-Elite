@@ -726,6 +726,76 @@ function listenOnlineUsers() {
     }
   });
 }
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp,
+  doc,
+  setDoc,
+  deleteDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain: "agencia-jm-elite.firebaseapp.com",
+  projectId: "agencia-jm-elite",
+  storageBucket: "agencia-jm-elite.firebasestorage.app",
+  messagingSenderId: "171676205335",
+  appId: "1:171676205335:web:95443528659ab804fe7752"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+let selectedPerson = "Jesús";
+let selectedRole = "Host";
+let selectedIcon = "👑";
+
+const currentUser = {
+  id: "jesus-host",
+  nombre: "Jesús",
+  rol: "host"
+};
+
+const messagesBox = document.getElementById("messages");
+const chatInput = document.getElementById("chatText");
+const connectedCount = document.getElementById("connectedCount");
+
+let onlineUsers = [];
+let micRequests = [];
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function renderMessage(usuario, texto) {
+  const msg = document.createElement("div");
+  msg.className = "msg";
+  msg.innerHTML = "<strong>" + escapeHtml(usuario) + ":</strong> " + escapeHtml(texto);
+  messagesBox.appendChild(msg);
+  messagesBox.scrollTop = messagesBox.scrollHeight;
+}
+
+function listenMessages() {
+  const q = query(collection(db, "mensajes"), orderBy("fecha", "asc"), limit(50));
+
+  onSnapshot(q, function(snapshot) {
+    messagesBox.innerHTML = "";
+    snapshot.forEach(function(docItem) {
+      const data = docItem.data();
+      renderMessage(data.usuario || "Sistema", data.texto || "");
+    });
+  });
+}
 
 async function sendMessage() {
   const text = chatInput.value.trim();
@@ -750,6 +820,65 @@ function addSystemMessage(text) {
     texto: text,
     fecha: serverTimestamp()
   });
+}
+
+async function registerOnlineUser() {
+  await setDoc(doc(db, "usuarios_conectados", currentUser.id), {
+    nombre: currentUser.nombre,
+    rol: currentUser.rol,
+    estado: "conectado",
+    ultimaConexion: serverTimestamp()
+  });
+}
+
+function listenOnlineUsers() {
+  const q = query(collection(db, "usuarios_conectados"));
+
+  onSnapshot(q, function(snapshot) {
+    onlineUsers = [];
+
+    snapshot.forEach(function(docItem) {
+      onlineUsers.push(docItem.data());
+    });
+
+    if (connectedCount) {
+      connectedCount.innerText = onlineUsers.length;
+    }
+  });
+}
+
+function listenMicRequests() {
+  const q = query(collection(db, "solicitudes_micro"), orderBy("fecha", "desc"), limit(20));
+
+  onSnapshot(q, function(snapshot) {
+    micRequests = [];
+
+    snapshot.forEach(function(docItem) {
+      const data = docItem.data();
+
+      if (data.estado === "pendiente") {
+        micRequests.push({
+          id: docItem.id,
+          usuario: data.usuario || "Usuario",
+          plaza: data.plaza || "Micro",
+          estado: data.estado || "pendiente"
+        });
+      }
+    });
+  });
+}
+
+async function createMicRequest(place) {
+  await addDoc(collection(db, "solicitudes_micro"), {
+    usuarioId: currentUser.id,
+    usuario: currentUser.nombre,
+    rol: currentUser.rol,
+    plaza: place,
+    estado: "pendiente",
+    fecha: serverTimestamp()
+  });
+
+  addSystemMessage(currentUser.nombre + " solicitó subir al micrófono: " + place + ".");
 }
 
 function goHome() {
@@ -857,11 +986,9 @@ function stopScreen() {
   addSystemMessage("Pantalla principal restaurada.");
 }
 
-function micRequest(place) {
-  micRequests.push(place);
-
-  openModal("Solicitud de micrófono", "Solicitud enviada para " + place + ".", function() {
-    addSystemMessage("Nueva solicitud de micrófono: " + place + ".");
+async function micRequest(place) {
+  openModal("Solicitud de micrófono", "Solicitud enviada para " + place + ".", async function() {
+    await createMicRequest(place);
   });
 }
 
@@ -877,7 +1004,10 @@ function openUsers() {
   }
 
   if (micRequests.length > 0) {
-    text += "\n\nSolicitudes de micro:\n" + micRequests.join(" · ");
+    text += "\n\nSolicitudes de micro pendientes:\n";
+    text += micRequests.map(function(req) {
+      return "• " + req.usuario + " pidió " + req.plaza;
+    }).join("\n");
   }
 
   openModal("Usuarios conectados", text);
@@ -922,12 +1052,12 @@ window.pinMessage = pinMessage;
 
 registerOnlineUser();
 listenOnlineUsers();
+listenMicRequests();
 listenMessages();
 
 window.addEventListener("beforeunload", function() {
   deleteDoc(doc(db, "usuarios_conectados", currentUser.id));
 });
 </script>
-
 </body>
 </html>
