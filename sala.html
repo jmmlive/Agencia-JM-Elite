@@ -631,6 +631,9 @@ let selectedPerson = "Jesús";
 let selectedRole = "Host";
 let selectedIcon = "👑";
 
+let usersOnline = ["Jesús", "Ruth", "Yandira", "Emisora 1", "Emisora 2"];
+let micRequests = [];
+
 function goHome() {
   window.location.href = "index.html";
 }
@@ -646,9 +649,7 @@ function openModal(title, text, okAction) {
   const okBtn = document.getElementById("modalOk");
   okBtn.onclick = function() {
     closeModal();
-    if (typeof okAction === "function") {
-      okAction();
-    }
+    if (typeof okAction === "function") okAction();
   };
 
   document.getElementById("modalBg").classList.add("active");
@@ -656,28 +657,6 @@ function openModal(title, text, okAction) {
 
 function closeModal() {
   document.getElementById("modalBg").classList.remove("active");
-}
-
-function sendMessage() {
-  const input = document.getElementById("chatText");
-  const messages = document.getElementById("messages");
-  const text = input.value.trim();
-
-  if (text === "") return;
-
-  const msg = document.createElement("div");
-  msg.className = "msg";
-  msg.innerHTML = "<strong>Tú:</strong> " + escapeHtml(text);
-
-  messages.appendChild(msg);
-  messages.scrollTop = messages.scrollHeight;
-  input.value = "";
-}
-
-function enterSend(event) {
-  if (event.key === "Enter") {
-    sendMessage();
-  }
 }
 
 function escapeHtml(text) {
@@ -695,6 +674,24 @@ function addSystemMessage(text) {
   messages.scrollTop = messages.scrollHeight;
 }
 
+function sendMessage() {
+  const input = document.getElementById("chatText");
+  const text = input.value.trim();
+  if (text === "") return;
+
+  const msg = document.createElement("div");
+  msg.className = "msg";
+  msg.innerHTML = "<strong>Tú:</strong> " + escapeHtml(text);
+
+  document.getElementById("messages").appendChild(msg);
+  document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+  input.value = "";
+}
+
+function enterSend(event) {
+  if (event.key === "Enter") sendMessage();
+}
+
 function selectMic(name, role, icon) {
   selectedPerson = name;
   selectedRole = role;
@@ -702,9 +699,9 @@ function selectMic(name, role, icon) {
 
   openModal(
     "Micrófono seleccionado",
-    name + " está marcada como " + role + ". Desde el panel puedes subirla a pantalla.",
+    name + " está seleccionada como " + role + ". Ahora puedes invitarla a pantalla.",
     function() {
-      addSystemMessage(name + " seleccionada para control de pantalla.");
+      addSystemMessage(name + " seleccionada para control del host.");
     }
   );
 }
@@ -714,24 +711,34 @@ function showHost() {
   selectedRole = "Host";
   selectedIcon = "👑";
 
-  document.getElementById("screenStatus").innerText = "● HOST EN VIVO";
-  document.getElementById("screenAvatar").innerText = "👑";
-  document.getElementById("screenTitle").innerText = "Jesús en pantalla principal";
-  document.getElementById("screenText").innerText = "El host controla la sala, los avisos, las invitaciones y los turnos de micrófono.";
+  setMainScreen("● HOST EN VIVO", "👑", "Jesús en pantalla principal",
+    "El host controla la sala, los avisos, las invitaciones y los turnos de micrófono.");
 
   addSystemMessage("Host mostrado en pantalla principal.");
+}
+
+function setMainScreen(status, icon, title, text) {
+  document.getElementById("screenStatus").innerText = status;
+  document.getElementById("screenAvatar").innerText = icon;
+  document.getElementById("screenTitle").innerText = title;
+  document.getElementById("screenText").innerText = text;
 }
 
 function inviteToScreen() {
   openModal(
     "Invitar a pantalla",
-    "Se enviará una invitación a " + selectedPerson + ". Cuando conectemos Firebase, esa persona tendrá que aceptar antes de aparecer.",
+    "Enviar invitación a " + selectedPerson + ". En esta versión de prueba se aceptará simuladamente.",
     function() {
-      document.getElementById("screenStatus").innerText = "⏳ INVITACIÓN";
-      document.getElementById("screenAvatar").innerText = selectedIcon;
-      document.getElementById("screenTitle").innerText = "Invitación enviada a " + selectedPerson;
-      document.getElementById("screenText").innerText = "Esperando confirmación para subir a la pantalla principal.";
-      addSystemMessage("Invitación enviada a " + selectedPerson + " para subir a pantalla.");
+      setMainScreen("⏳ INVITACIÓN", selectedIcon, "Invitación enviada a " + selectedPerson,
+        "Esperando confirmación para subir a la pantalla principal.");
+
+      addSystemMessage("Invitación enviada a " + selectedPerson + ".");
+
+      setTimeout(function() {
+        setMainScreen("📺 EN PANTALLA", selectedIcon, selectedPerson + " en pantalla principal",
+          selectedPerson + " aceptó la invitación y ahora aparece en la pantalla.");
+        addSystemMessage(selectedPerson + " aceptó la invitación y subió a pantalla.");
+      }, 1500);
     }
   );
 }
@@ -739,55 +746,56 @@ function inviteToScreen() {
 function shareScreen() {
   openModal(
     "Compartir pantalla",
-    "La estructura está lista. En el siguiente paso se podrá conectar WebRTC para compartir pantalla real con permisos del navegador.",
+    "Modo compartir pantalla activado en vista previa. Luego conectaremos WebRTC para hacerlo real.",
     function() {
-      document.getElementById("screenStatus").innerText = "🖥️ PANTALLA";
-      document.getElementById("screenAvatar").innerText = "🖥️";
-      document.getElementById("screenTitle").innerText = "Pantalla compartida preparada";
-      document.getElementById("screenText").innerText = "Aquí se mostrará la pantalla compartida cuando conectemos la función real.";
-      addSystemMessage("Modo compartir pantalla activado en vista previa.");
+      setMainScreen("🖥️ PANTALLA", "🖥️", "Pantalla compartida activa",
+        "Aquí aparecerá la pantalla compartida cuando conectemos la función real.");
+      addSystemMessage("Pantalla compartida activada en modo prueba.");
     }
   );
 }
 
 function stopScreen() {
-  document.getElementById("screenStatus").innerText = "● EN VIVO";
-  document.getElementById("screenAvatar").innerText = "👑";
-  document.getElementById("screenTitle").innerText = "Sala oficial de la agencia";
-  document.getElementById("screenText").innerText = "Pantalla principal para formación, reuniones, apoyo entre emisoras y comunicación directa.";
+  setMainScreen("● EN VIVO", "👑", "Sala oficial de la agencia",
+    "Pantalla principal para formación, reuniones, apoyo entre emisoras y comunicación directa.");
   addSystemMessage("Pantalla principal restaurada.");
 }
 
 function micRequest(place) {
+  micRequests.push(place);
+
   openModal(
     "Solicitud de micrófono",
-    "Solicitud enviada para " + place + ". Cuando conectemos Firebase, el host podrá aceptar o rechazar.",
+    "Solicitud enviada para " + place + ". El host puede aceptarla o rechazarla.",
     function() {
-      addSystemMessage("Solicitud de micrófono recibida: " + place + ".");
+      addSystemMessage("Nueva solicitud de micrófono: " + place + ".");
     }
   );
 }
 
 function openUsers() {
-  openModal(
-    "Usuarios conectados",
-    "Aquí aparecerá la lista real de usuarios conectados cuando conectemos Firebase."
-  );
+  let text = "Usuarios conectados ahora:\n\n" + usersOnline.join(" · ");
+
+  if (micRequests.length > 0) {
+    text += "\n\nSolicitudes de micro pendientes:\n" + micRequests.join(" · ");
+  }
+
+  openModal("Usuarios conectados", text);
 }
 
 function openRules() {
   openModal(
     "Normas de la sala",
-    "Respeto, orden, apoyo entre emisoras y uso correcto de los micrófonos."
+    "1. Respeto siempre.\n2. No interrumpir.\n3. El host organiza los micros.\n4. Las administradoras pueden ayudar a moderar."
   );
 }
 
 function gift() {
   openModal(
     "Regalos",
-    "Zona de regalos preparada. Luego podremos conectarla con puntos, monedas o reconocimientos internos.",
+    "Regalo enviado a la sala.",
     function() {
-      addSystemMessage("🎁 Regalo enviado a la sala.");
+      addSystemMessage("🎁 Regalo enviado.");
     }
   );
 }
@@ -799,9 +807,9 @@ function focusChat() {
 function pinMessage() {
   openModal(
     "Mensaje fijado",
-    "Más adelante se podrán fijar hasta tres mensajes con enlaces, documentos y caducidad automática.",
+    "Función preparada. Luego pondremos hasta 3 mensajes fijados con enlaces, documentos y caducidad.",
     function() {
-      addSystemMessage("📌 Función de mensajes fijados preparada.");
+      addSystemMessage("📌 Mensaje fijado preparado.");
     }
   );
 }
