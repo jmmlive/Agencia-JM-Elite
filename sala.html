@@ -626,13 +626,97 @@ body {
   </div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain: "agencia-jm-elite.firebaseapp.com",
+  projectId: "agencia-jm-elite",
+  storageBucket: "agencia-jm-elite.firebasestorage.app",
+  messagingSenderId: "171676205335",
+  appId: "1:171676205335:web:95443528659ab804fe7752"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 let selectedPerson = "Jesús";
 let selectedRole = "Host";
 let selectedIcon = "👑";
-
-let usersOnline = ["Jesús", "Ruth", "Yandira", "Emisora 1", "Emisora 2"];
+let usersOnline = ["Jesús", "Ruth", "Yandira"];
 let micRequests = [];
+
+const messagesBox = document.getElementById("messages");
+const chatInput = document.getElementById("chatText");
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function renderMessage(usuario, texto) {
+  const msg = document.createElement("div");
+  msg.className = "msg";
+  msg.innerHTML = "<strong>" + escapeHtml(usuario) + ":</strong> " + escapeHtml(texto);
+  messagesBox.appendChild(msg);
+  messagesBox.scrollTop = messagesBox.scrollHeight;
+}
+
+function listenMessages() {
+  messagesBox.innerHTML = "";
+
+  const q = query(
+    collection(db, "mensajes"),
+    orderBy("fecha", "asc"),
+    limit(50)
+  );
+
+  onSnapshot(q, function(snapshot) {
+    messagesBox.innerHTML = "";
+
+    snapshot.forEach(function(doc) {
+      const data = doc.data();
+      renderMessage(data.usuario || "Sistema", data.texto || "");
+    });
+  });
+}
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (text === "") return;
+
+  await addDoc(collection(db, "mensajes"), {
+    usuario: "Jesús",
+    texto: text,
+    fecha: serverTimestamp()
+  });
+
+  chatInput.value = "";
+}
+
+function enterSend(event) {
+  if (event.key === "Enter") sendMessage();
+}
+
+function addSystemMessage(text) {
+  addDoc(collection(db, "mensajes"), {
+    usuario: "Sistema",
+    texto: text,
+    fecha: serverTimestamp()
+  });
+}
 
 function goHome() {
   window.location.href = "index.html";
@@ -659,37 +743,11 @@ function closeModal() {
   document.getElementById("modalBg").classList.remove("active");
 }
 
-function escapeHtml(text) {
-  const div = document.createElement("div");
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-function addSystemMessage(text) {
-  const messages = document.getElementById("messages");
-  const msg = document.createElement("div");
-  msg.className = "msg";
-  msg.innerHTML = "<strong>Sistema:</strong> " + escapeHtml(text);
-  messages.appendChild(msg);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-function sendMessage() {
-  const input = document.getElementById("chatText");
-  const text = input.value.trim();
-  if (text === "") return;
-
-  const msg = document.createElement("div");
-  msg.className = "msg";
-  msg.innerHTML = "<strong>Tú:</strong> " + escapeHtml(text);
-
-  document.getElementById("messages").appendChild(msg);
-  document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
-  input.value = "";
-}
-
-function enterSend(event) {
-  if (event.key === "Enter") sendMessage();
+function setMainScreen(status, icon, title, text) {
+  document.getElementById("screenStatus").innerText = status;
+  document.getElementById("screenAvatar").innerText = icon;
+  document.getElementById("screenTitle").innerText = title;
+  document.getElementById("screenText").innerText = text;
 }
 
 function selectMic(name, role, icon) {
@@ -697,13 +755,9 @@ function selectMic(name, role, icon) {
   selectedRole = role;
   selectedIcon = icon;
 
-  openModal(
-    "Micrófono seleccionado",
-    name + " está seleccionada como " + role + ". Ahora puedes invitarla a pantalla.",
-    function() {
-      addSystemMessage(name + " seleccionada para control del host.");
-    }
-  );
+  openModal("Micrófono seleccionado", name + " está seleccionada como " + role + ".", function() {
+    addSystemMessage(name + " seleccionada para control del host.");
+  });
 }
 
 function showHost() {
@@ -717,42 +771,27 @@ function showHost() {
   addSystemMessage("Host mostrado en pantalla principal.");
 }
 
-function setMainScreen(status, icon, title, text) {
-  document.getElementById("screenStatus").innerText = status;
-  document.getElementById("screenAvatar").innerText = icon;
-  document.getElementById("screenTitle").innerText = title;
-  document.getElementById("screenText").innerText = text;
-}
-
 function inviteToScreen() {
-  openModal(
-    "Invitar a pantalla",
-    "Enviar invitación a " + selectedPerson + ". En esta versión de prueba se aceptará simuladamente.",
-    function() {
-      setMainScreen("⏳ INVITACIÓN", selectedIcon, "Invitación enviada a " + selectedPerson,
-        "Esperando confirmación para subir a la pantalla principal.");
+  openModal("Invitar a pantalla", "Enviar invitación a " + selectedPerson + ".", function() {
+    setMainScreen("⏳ INVITACIÓN", selectedIcon, "Invitación enviada a " + selectedPerson,
+      "Esperando confirmación para subir a la pantalla principal.");
 
-      addSystemMessage("Invitación enviada a " + selectedPerson + ".");
+    addSystemMessage("Invitación enviada a " + selectedPerson + ".");
 
-      setTimeout(function() {
-        setMainScreen("📺 EN PANTALLA", selectedIcon, selectedPerson + " en pantalla principal",
-          selectedPerson + " aceptó la invitación y ahora aparece en la pantalla.");
-        addSystemMessage(selectedPerson + " aceptó la invitación y subió a pantalla.");
-      }, 1500);
-    }
-  );
+    setTimeout(function() {
+      setMainScreen("📺 EN PANTALLA", selectedIcon, selectedPerson + " en pantalla principal",
+        selectedPerson + " aceptó la invitación y ahora aparece en pantalla.");
+      addSystemMessage(selectedPerson + " aceptó la invitación y subió a pantalla.");
+    }, 1500);
+  });
 }
 
 function shareScreen() {
-  openModal(
-    "Compartir pantalla",
-    "Modo compartir pantalla activado en vista previa. Luego conectaremos WebRTC para hacerlo real.",
-    function() {
-      setMainScreen("🖥️ PANTALLA", "🖥️", "Pantalla compartida activa",
-        "Aquí aparecerá la pantalla compartida cuando conectemos la función real.");
-      addSystemMessage("Pantalla compartida activada en modo prueba.");
-    }
-  );
+  openModal("Compartir pantalla", "Modo compartir pantalla activado en vista previa.", function() {
+    setMainScreen("🖥️ PANTALLA", "🖥️", "Pantalla compartida activa",
+      "Aquí aparecerá la pantalla compartida cuando conectemos la función real.");
+    addSystemMessage("Pantalla compartida activada en modo prueba.");
+  });
 }
 
 function stopScreen() {
@@ -764,55 +803,59 @@ function stopScreen() {
 function micRequest(place) {
   micRequests.push(place);
 
-  openModal(
-    "Solicitud de micrófono",
-    "Solicitud enviada para " + place + ". El host puede aceptarla o rechazarla.",
-    function() {
-      addSystemMessage("Nueva solicitud de micrófono: " + place + ".");
-    }
-  );
+  openModal("Solicitud de micrófono", "Solicitud enviada para " + place + ".", function() {
+    addSystemMessage("Nueva solicitud de micrófono: " + place + ".");
+  });
 }
 
 function openUsers() {
-  let text = "Usuarios conectados ahora:\n\n" + usersOnline.join(" · ");
+  let text = "Usuarios conectados:\n\n" + usersOnline.join(" · ");
 
   if (micRequests.length > 0) {
-    text += "\n\nSolicitudes de micro pendientes:\n" + micRequests.join(" · ");
+    text += "\n\nSolicitudes de micro:\n" + micRequests.join(" · ");
   }
 
   openModal("Usuarios conectados", text);
 }
 
 function openRules() {
-  openModal(
-    "Normas de la sala",
-    "1. Respeto siempre.\n2. No interrumpir.\n3. El host organiza los micros.\n4. Las administradoras pueden ayudar a moderar."
-  );
+  openModal("Normas de la sala", "Respeto, orden, apoyo entre emisoras y uso correcto de los micrófonos.");
 }
 
 function gift() {
-  openModal(
-    "Regalos",
-    "Regalo enviado a la sala.",
-    function() {
-      addSystemMessage("🎁 Regalo enviado.");
-    }
-  );
+  openModal("Regalos", "Regalo enviado a la sala.", function() {
+    addSystemMessage("🎁 Regalo enviado.");
+  });
 }
 
 function focusChat() {
-  document.getElementById("chatText").focus();
+  chatInput.focus();
 }
 
 function pinMessage() {
-  openModal(
-    "Mensaje fijado",
-    "Función preparada. Luego pondremos hasta 3 mensajes fijados con enlaces, documentos y caducidad.",
-    function() {
-      addSystemMessage("📌 Mensaje fijado preparado.");
-    }
-  );
+  openModal("Mensaje fijado", "Función preparada para fijar hasta 3 mensajes.", function() {
+    addSystemMessage("📌 Mensaje fijado preparado.");
+  });
 }
+
+window.goHome = goHome;
+window.toggleHostPanel = toggleHostPanel;
+window.closeModal = closeModal;
+window.sendMessage = sendMessage;
+window.enterSend = enterSend;
+window.selectMic = selectMic;
+window.showHost = showHost;
+window.inviteToScreen = inviteToScreen;
+window.shareScreen = shareScreen;
+window.stopScreen = stopScreen;
+window.micRequest = micRequest;
+window.openUsers = openUsers;
+window.openRules = openRules;
+window.gift = gift;
+window.focusChat = focusChat;
+window.pinMessage = pinMessage;
+
+listenMessages();
 </script>
 
 </body>
