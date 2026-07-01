@@ -636,7 +636,10 @@ import {
   orderBy,
   limit,
   onSnapshot,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  setDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -654,11 +657,19 @@ const db = getFirestore(app);
 let selectedPerson = "Jesús";
 let selectedRole = "Host";
 let selectedIcon = "👑";
-let usersOnline = ["Jesús", "Ruth", "Yandira"];
 let micRequests = [];
+
+const currentUser = {
+  id: "jesus-host",
+  nombre: "Jesús",
+  rol: "host"
+};
 
 const messagesBox = document.getElementById("messages");
 const chatInput = document.getElementById("chatText");
+const connectedCount = document.getElementById("connectedCount");
+
+let onlineUsers = [];
 
 function escapeHtml(text) {
   const div = document.createElement("div");
@@ -675,8 +686,6 @@ function renderMessage(usuario, texto) {
 }
 
 function listenMessages() {
-  messagesBox.innerHTML = "";
-
   const q = query(
     collection(db, "mensajes"),
     orderBy("fecha", "asc"),
@@ -686,10 +695,35 @@ function listenMessages() {
   onSnapshot(q, function(snapshot) {
     messagesBox.innerHTML = "";
 
-    snapshot.forEach(function(doc) {
-      const data = doc.data();
+    snapshot.forEach(function(docItem) {
+      const data = docItem.data();
       renderMessage(data.usuario || "Sistema", data.texto || "");
     });
+  });
+}
+
+async function registerOnlineUser() {
+  await setDoc(doc(db, "usuarios_conectados", currentUser.id), {
+    nombre: currentUser.nombre,
+    rol: currentUser.rol,
+    estado: "conectado",
+    ultimaConexion: serverTimestamp()
+  });
+}
+
+function listenOnlineUsers() {
+  const q = query(collection(db, "usuarios_conectados"));
+
+  onSnapshot(q, function(snapshot) {
+    onlineUsers = [];
+
+    snapshot.forEach(function(docItem) {
+      onlineUsers.push(docItem.data());
+    });
+
+    if (connectedCount) {
+      connectedCount.innerText = onlineUsers.length;
+    }
   });
 }
 
@@ -698,7 +732,7 @@ async function sendMessage() {
   if (text === "") return;
 
   await addDoc(collection(db, "mensajes"), {
-    usuario: "Jesús",
+    usuario: currentUser.nombre,
     texto: text,
     fecha: serverTimestamp()
   });
@@ -765,22 +799,35 @@ function showHost() {
   selectedRole = "Host";
   selectedIcon = "👑";
 
-  setMainScreen("● HOST EN VIVO", "👑", "Jesús en pantalla principal",
-    "El host controla la sala, los avisos, las invitaciones y los turnos de micrófono.");
+  setMainScreen(
+    "● HOST EN VIVO",
+    "👑",
+    "Jesús en pantalla principal",
+    "El host controla la sala, los avisos, las invitaciones y los turnos de micrófono."
+  );
 
   addSystemMessage("Host mostrado en pantalla principal.");
 }
 
 function inviteToScreen() {
   openModal("Invitar a pantalla", "Enviar invitación a " + selectedPerson + ".", function() {
-    setMainScreen("⏳ INVITACIÓN", selectedIcon, "Invitación enviada a " + selectedPerson,
-      "Esperando confirmación para subir a la pantalla principal.");
+    setMainScreen(
+      "⏳ INVITACIÓN",
+      selectedIcon,
+      "Invitación enviada a " + selectedPerson,
+      "Esperando confirmación para subir a la pantalla principal."
+    );
 
     addSystemMessage("Invitación enviada a " + selectedPerson + ".");
 
     setTimeout(function() {
-      setMainScreen("📺 EN PANTALLA", selectedIcon, selectedPerson + " en pantalla principal",
-        selectedPerson + " aceptó la invitación y ahora aparece en pantalla.");
+      setMainScreen(
+        "📺 EN PANTALLA",
+        selectedIcon,
+        selectedPerson + " en pantalla principal",
+        selectedPerson + " aceptó la invitación y ahora aparece en pantalla."
+      );
+
       addSystemMessage(selectedPerson + " aceptó la invitación y subió a pantalla.");
     }, 1500);
   });
@@ -788,15 +835,25 @@ function inviteToScreen() {
 
 function shareScreen() {
   openModal("Compartir pantalla", "Modo compartir pantalla activado en vista previa.", function() {
-    setMainScreen("🖥️ PANTALLA", "🖥️", "Pantalla compartida activa",
-      "Aquí aparecerá la pantalla compartida cuando conectemos la función real.");
+    setMainScreen(
+      "🖥️ PANTALLA",
+      "🖥️",
+      "Pantalla compartida activa",
+      "Aquí aparecerá la pantalla compartida cuando conectemos la función real."
+    );
+
     addSystemMessage("Pantalla compartida activada en modo prueba.");
   });
 }
 
 function stopScreen() {
-  setMainScreen("● EN VIVO", "👑", "Sala oficial de la agencia",
-    "Pantalla principal para formación, reuniones, apoyo entre emisoras y comunicación directa.");
+  setMainScreen(
+    "● EN VIVO",
+    "👑",
+    "Sala oficial de la agencia",
+    "Pantalla principal para formación, reuniones, apoyo entre emisoras y comunicación directa."
+  );
+
   addSystemMessage("Pantalla principal restaurada.");
 }
 
@@ -809,7 +866,15 @@ function micRequest(place) {
 }
 
 function openUsers() {
-  let text = "Usuarios conectados:\n\n" + usersOnline.join(" · ");
+  let text = "Usuarios conectados ahora:\n\n";
+
+  if (onlineUsers.length === 0) {
+    text += "No hay usuarios conectados todavía.";
+  } else {
+    text += onlineUsers.map(function(user) {
+      return "• " + (user.nombre || "Usuario") + " (" + (user.rol || "invitado") + ")";
+    }).join("\n");
+  }
 
   if (micRequests.length > 0) {
     text += "\n\nSolicitudes de micro:\n" + micRequests.join(" · ");
@@ -855,7 +920,13 @@ window.gift = gift;
 window.focusChat = focusChat;
 window.pinMessage = pinMessage;
 
+registerOnlineUser();
+listenOnlineUsers();
 listenMessages();
+
+window.addEventListener("beforeunload", function() {
+  deleteDoc(doc(db, "usuarios_conectados", currentUser.id));
+});
 </script>
 
 </body>
