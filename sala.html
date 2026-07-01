@@ -657,7 +657,6 @@ const db = getFirestore(app);
 let selectedPerson = "Jesús";
 let selectedRole = "Host";
 let selectedIcon = "👑";
-let micRequests = [];
 
 const currentUser = {
   id: "jesus-host",
@@ -670,106 +669,6 @@ const chatInput = document.getElementById("chatText");
 const connectedCount = document.getElementById("connectedCount");
 
 let onlineUsers = [];
-
-function escapeHtml(text) {
-  const div = document.createElement("div");
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-function renderMessage(usuario, texto) {
-  const msg = document.createElement("div");
-  msg.className = "msg";
-  msg.innerHTML = "<strong>" + escapeHtml(usuario) + ":</strong> " + escapeHtml(texto);
-  messagesBox.appendChild(msg);
-  messagesBox.scrollTop = messagesBox.scrollHeight;
-}
-
-function listenMessages() {
-  const q = query(
-    collection(db, "mensajes"),
-    orderBy("fecha", "asc"),
-    limit(50)
-  );
-
-  onSnapshot(q, function(snapshot) {
-    messagesBox.innerHTML = "";
-
-    snapshot.forEach(function(docItem) {
-      const data = docItem.data();
-      renderMessage(data.usuario || "Sistema", data.texto || "");
-    });
-  });
-}
-
-async function registerOnlineUser() {
-  await setDoc(doc(db, "usuarios_conectados", currentUser.id), {
-    nombre: currentUser.nombre,
-    rol: currentUser.rol,
-    estado: "conectado",
-    ultimaConexion: serverTimestamp()
-  });
-}
-
-function listenOnlineUsers() {
-  const q = query(collection(db, "usuarios_conectados"));
-
-  onSnapshot(q, function(snapshot) {
-    onlineUsers = [];
-
-    snapshot.forEach(function(docItem) {
-      onlineUsers.push(docItem.data());
-    });
-
-    if (connectedCount) {
-      connectedCount.innerText = onlineUsers.length;
-    }
-  });
-}
-  <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  limit,
-  onSnapshot,
-  serverTimestamp,
-  doc,
-  setDoc,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain: "agencia-jm-elite.firebaseapp.com",
-  projectId: "agencia-jm-elite",
-  storageBucket: "agencia-jm-elite.firebasestorage.app",
-  messagingSenderId: "171676205335",
-  appId: "1:171676205335:web:95443528659ab804fe7752"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let selectedPerson = "Jesús";
-let selectedRole = "Host";
-let selectedIcon = "👑";
-
-const currentUser = {
-  id: "jesus-host",
-  nombre: "Jesús",
-  rol: "host"
-};
-
-const messagesBox = document.getElementById("messages");
-const chatInput = document.getElementById("chatText");
-const connectedCount = document.getElementById("connectedCount");
-
-let onlineUsers = [];
-let micRequests = [];
 
 function escapeHtml(text) {
   const div = document.createElement("div");
@@ -836,7 +735,6 @@ function listenOnlineUsers() {
 
   onSnapshot(q, function(snapshot) {
     onlineUsers = [];
-
     snapshot.forEach(function(docItem) {
       onlineUsers.push(docItem.data());
     });
@@ -845,40 +743,6 @@ function listenOnlineUsers() {
       connectedCount.innerText = onlineUsers.length;
     }
   });
-}
-
-function listenMicRequests() {
-  const q = query(collection(db, "solicitudes_micro"), orderBy("fecha", "desc"), limit(20));
-
-  onSnapshot(q, function(snapshot) {
-    micRequests = [];
-
-    snapshot.forEach(function(docItem) {
-      const data = docItem.data();
-
-      if (data.estado === "pendiente") {
-        micRequests.push({
-          id: docItem.id,
-          usuario: data.usuario || "Usuario",
-          plaza: data.plaza || "Micro",
-          estado: data.estado || "pendiente"
-        });
-      }
-    });
-  });
-}
-
-async function createMicRequest(place) {
-  await addDoc(collection(db, "solicitudes_micro"), {
-    usuarioId: currentUser.id,
-    usuario: currentUser.nombre,
-    rol: currentUser.rol,
-    plaza: place,
-    estado: "pendiente",
-    fecha: serverTimestamp()
-  });
-
-  addSystemMessage(currentUser.nombre + " solicitó subir al micrófono: " + place + ".");
 }
 
 function goHome() {
@@ -924,91 +788,40 @@ function selectMic(name, role, icon) {
 }
 
 function showHost() {
-  selectedPerson = "Jesús";
-  selectedRole = "Host";
-  selectedIcon = "👑";
-
-  setMainScreen(
-    "● HOST EN VIVO",
-    "👑",
-    "Jesús en pantalla principal",
-    "El host controla la sala, los avisos, las invitaciones y los turnos de micrófono."
-  );
-
+  setMainScreen("● HOST EN VIVO", "👑", "Jesús en pantalla principal", "El host controla la sala.");
   addSystemMessage("Host mostrado en pantalla principal.");
 }
 
 function inviteToScreen() {
   openModal("Invitar a pantalla", "Enviar invitación a " + selectedPerson + ".", function() {
-    setMainScreen(
-      "⏳ INVITACIÓN",
-      selectedIcon,
-      "Invitación enviada a " + selectedPerson,
-      "Esperando confirmación para subir a la pantalla principal."
-    );
-
-    addSystemMessage("Invitación enviada a " + selectedPerson + ".");
-
-    setTimeout(function() {
-      setMainScreen(
-        "📺 EN PANTALLA",
-        selectedIcon,
-        selectedPerson + " en pantalla principal",
-        selectedPerson + " aceptó la invitación y ahora aparece en pantalla."
-      );
-
-      addSystemMessage(selectedPerson + " aceptó la invitación y subió a pantalla.");
-    }, 1500);
+    setMainScreen("📺 EN PANTALLA", selectedIcon, selectedPerson + " en pantalla principal", selectedPerson + " fue subida a pantalla.");
+    addSystemMessage(selectedPerson + " subió a pantalla.");
   });
 }
 
 function shareScreen() {
-  openModal("Compartir pantalla", "Modo compartir pantalla activado en vista previa.", function() {
-    setMainScreen(
-      "🖥️ PANTALLA",
-      "🖥️",
-      "Pantalla compartida activa",
-      "Aquí aparecerá la pantalla compartida cuando conectemos la función real."
-    );
-
+  openModal("Compartir pantalla", "Modo compartir pantalla preparado.", function() {
+    setMainScreen("🖥️ PANTALLA", "🖥️", "Pantalla compartida preparada", "Aquí aparecerá la pantalla compartida.");
     addSystemMessage("Pantalla compartida activada en modo prueba.");
   });
 }
 
 function stopScreen() {
-  setMainScreen(
-    "● EN VIVO",
-    "👑",
-    "Sala oficial de la agencia",
-    "Pantalla principal para formación, reuniones, apoyo entre emisoras y comunicación directa."
-  );
-
+  setMainScreen("● EN VIVO", "👑", "Sala oficial de la agencia", "Pantalla principal restaurada.");
   addSystemMessage("Pantalla principal restaurada.");
 }
 
-async function micRequest(place) {
-  openModal("Solicitud de micrófono", "Solicitud enviada para " + place + ".", async function() {
-    await createMicRequest(place);
+function micRequest(place) {
+  openModal("Solicitud de micrófono", "Solicitud enviada para " + place + ".", function() {
+    addSystemMessage(currentUser.nombre + " solicitó micrófono: " + place + ".");
   });
 }
 
 function openUsers() {
   let text = "Usuarios conectados ahora:\n\n";
-
-  if (onlineUsers.length === 0) {
-    text += "No hay usuarios conectados todavía.";
-  } else {
-    text += onlineUsers.map(function(user) {
-      return "• " + (user.nombre || "Usuario") + " (" + (user.rol || "invitado") + ")";
-    }).join("\n");
-  }
-
-  if (micRequests.length > 0) {
-    text += "\n\nSolicitudes de micro pendientes:\n";
-    text += micRequests.map(function(req) {
-      return "• " + req.usuario + " pidió " + req.plaza;
-    }).join("\n");
-  }
+  text += onlineUsers.map(function(user) {
+    return "• " + (user.nombre || "Usuario") + " (" + (user.rol || "invitado") + ")";
+  }).join("\n");
 
   openModal("Usuarios conectados", text);
 }
@@ -1028,7 +841,7 @@ function focusChat() {
 }
 
 function pinMessage() {
-  openModal("Mensaje fijado", "Función preparada para fijar hasta 3 mensajes.", function() {
+  openModal("Mensaje fijado", "Función preparada para fijar mensajes.", function() {
     addSystemMessage("📌 Mensaje fijado preparado.");
   });
 }
@@ -1052,7 +865,6 @@ window.pinMessage = pinMessage;
 
 registerOnlineUser();
 listenOnlineUsers();
-listenMicRequests();
 listenMessages();
 
 window.addEventListener("beforeunload", function() {
