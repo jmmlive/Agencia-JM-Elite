@@ -616,9 +616,18 @@ function registerUserNow(){
 
     saveProfile(profile);
 
-    document.getElementById("loginScreen").style.display = "none";
+    saveProfile(profile);
 
-    alert("Cuenta creada correctamente.");
+const login = document.getElementById("loginScreen");
+if(login){
+  login.style.display = "none";
+}
+
+window.scrollTo(0,0);
+
+setTimeout(function(){
+  alert("Cuenta creada correctamente.");
+}, 100);
   };
 
   if(photoFile){
