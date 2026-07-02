@@ -314,7 +314,10 @@ function renderMessage(usuario, texto) {
 }
 
 function listenMessages() {
-  const q = query(collection(db, "mensajes"), orderBy("fecha", "asc"), limit(80));
+  const q = query(
+  collection(db,"mensajes"),
+  limit(80)
+);
 
   onSnapshot(q, function(snapshot) {
     messagesBox.innerHTML = "";
