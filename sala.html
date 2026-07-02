@@ -342,7 +342,9 @@ async function sendMessage() {
 }
 
 function enterSend(event) {
-  if (event.key === "Enter") sendMessage();
+  if (event.key === "Enter") {
+    sendMessage();
+  }
 }
 
 async function addSystemMessage(text) {
