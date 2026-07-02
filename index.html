@@ -300,6 +300,109 @@ body{
 .overlay.show{
   display:block;
 }
+  /* ===== LOGIN AGENCIA JM ELITE ===== */
+
+.login-screen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:
+linear-gradient(rgba(5,12,35,.78),rgba(5,12,35,.88)),
+url("teide.jpg") center/cover no-repeat;
+z-index:99999;
+}
+
+.login-overlay{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.20);
+backdrop-filter:blur(2px);
+}
+
+.login-box{
+position:relative;
+z-index:2;
+width:92%;
+max-width:420px;
+padding:24px;
+border-radius:24px;
+background:rgba(5,15,45,.55);
+backdrop-filter:blur(12px);
+border:1px solid rgba(212,175,55,.45);
+text-align:center;
+}
+
+.login-logo{
+width:120px;
+margin-bottom:15px;
+}
+
+.login-box h1{
+color:#d4af37;
+font-size:30px;
+margin-bottom:5px;
+}
+
+.login-subtitle{
+color:#9fc7ff;
+font-size:14px;
+margin-bottom:25px;
+}
+
+.login-field,
+.login-box input{
+width:100%;
+margin-top:12px;
+padding:14px;
+border-radius:14px;
+border:1px solid #1d5cff;
+background:#071630;
+color:white;
+font-size:16px;
+outline:none;
+}
+
+.login-box input::placeholder{
+color:#8eb9ff;
+}
+
+.login-button{
+width:100%;
+margin-top:22px;
+padding:15px;
+border:none;
+border-radius:14px;
+font-size:18px;
+font-weight:bold;
+background:linear-gradient(90deg,#005cff,#0a86ff);
+color:white;
+cursor:pointer;
+transition:.3s;
+}
+
+.login-button:hover{
+transform:scale(1.02);
+box-shadow:0 0 18px rgba(0,120,255,.5);
+}
+
+.forgot-password{
+margin-top:16px;
+color:#d4af37;
+font-size:15px;
+cursor:pointer;
+}
+
+.private-text{
+margin-top:18px;
+font-size:13px;
+color:#9bb7d9;
+text-align:center;
+}
 </style>
 </head>
 <body>
@@ -448,5 +551,48 @@ function showPanel(id){
 }
   
 </script>
+  <!-- ================= LOGIN AGENCIA JM ELITE ================= -->
+
+<div id="loginScreen" class="login-screen">
+
+  <div class="login-overlay"></div>
+
+  <div class="login-box">
+
+    <img src="logo.png" class="login-logo">
+
+    <h1>Agencia JM Elite</h1>
+
+    <p class="login-subtitle">
+      Exclusividad • Estrategia • Resultados
+    </p>
+
+    <input
+      id="loginUser"
+      type="text"
+      placeholder="Correo electrónico o teléfono">
+
+    <input
+      id="loginPass"
+      type="password"
+      placeholder="Contraseña">
+
+    <button class="login-button">
+      Iniciar sesión
+    </button>
+
+    <p class="forgot-password">
+      ¿Olvidaste tu contraseña?
+    </p>
+
+    <p class="private-text">
+      Acceso privado exclusivo para miembros autorizados.
+    </p>
+
+</div>
+
+</div>
+
+<!-- =============== FIN LOGIN ================= -->
 </body>
   </html>
