@@ -217,7 +217,11 @@ import {
   getDocs,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+if(localStorage.getItem("jm_logged") !== "yes"){
+  window.location.href = "index.html";
+}
 
+const firebaseConfig = {
 const firebaseConfig = {
   apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
   authDomain: "agencia-jm-elite.firebaseapp.com",
