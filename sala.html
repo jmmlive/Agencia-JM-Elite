@@ -16,37 +16,49 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 .sala-title p{font-size:10px;color:#9fc8ff}
 .live-pill{font-size:11px;color:#2dff88;border:1px solid rgba(45,255,136,.35);background:rgba(45,255,136,.12);padding:7px 8px;border-radius:999px;text-align:center}
 .sala-main{padding:10px 10px 84px;display:flex;flex-direction:column;gap:10px}
+
 .main-screen{min-height:35vh;border-radius:26px;border:1px solid rgba(247,215,116,.3);background:linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.72)),radial-gradient(circle at center,rgba(0,125,255,.55),rgba(3,8,18,.9) 64%);position:relative;overflow:hidden;display:flex;align-items:flex-end}
-.screen-avatar{position:absolute;top:38px;left:50%;transform:translateX(-50%);width:118px;height:118px;border-radius:50%;border:3px solid #f7d774;display:flex;align-items:center;justify-content:center;font-size:48px;background:#07111f;overflow:hidden}
+.screen-avatar{position:absolute;top:36px;left:50%;transform:translateX(-50%);width:122px;height:122px;border-radius:50%;border:3px solid #f7d774;display:flex;align-items:center;justify-content:center;background:#07111f;overflow:hidden}
 .screen-avatar img{width:100%;height:100%;object-fit:cover}
+.screen-avatar span{font-size:46px}
 .screen-status{position:absolute;top:14px;left:14px;font-size:11px;font-weight:bold;background:#e83252;padding:7px 11px;border-radius:999px}
 .screen-menu{position:absolute;top:14px;right:14px}
 .screen-info{padding:18px;position:relative}
 .screen-info h2{font-size:22px;margin-bottom:6px}
 .screen-info p{font-size:13px;line-height:1.35;color:#d9e5ff}
+
 .host-panel{display:none;border-radius:22px;background:rgba(3,8,18,.95);border:1px solid rgba(247,215,116,.24);padding:12px}
 .host-panel.active{display:block}
 .host-panel h3,.section-title,.chat-head h3,.pinned h3{color:#f7d774}
 .panel-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
 .panel-grid button{border:none;border-radius:15px;background:rgba(255,255,255,.08);color:#e8f0ff;padding:12px 8px;font-size:12px}
+
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .stat-card{border-radius:18px;padding:11px 6px;text-align:center;background:rgba(255,255,255,.06);border:1px solid rgba(0,132,255,.35)}
 .stat-card strong{color:#f7d774;display:block;font-size:17px}
 .stat-card span{color:#d9e5ff;font-size:10px}
-.pinned,.mic-section,.chat-box{border-radius:23px;padding:12px;background:rgba(3,8,18,.8);border:1px solid rgba(247,215,116,.2)}
+
+.pinned,.mic-section,.chat-box,.media-panel{border-radius:23px;padding:12px;background:rgba(3,8,18,.8);border:1px solid rgba(247,215,116,.2)}
 .pin-item{font-size:12px;color:#e8f0ff;padding:7px 0;border-top:1px solid rgba(255,255,255,.08)}
-.mic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
-.mic{min-height:96px;border-radius:18px;background:linear-gradient(180deg,rgba(18,52,92,.8),rgba(3,8,18,.95));border:1px solid rgba(247,215,116,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10px;color:#d9e5ff;text-align:center;position:relative;overflow:hidden;padding:6px}
+
+.media-panel{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.media-panel button{border:none;border-radius:15px;padding:12px 8px;background:rgba(255,255,255,.08);color:#e8f0ff;font-size:12px}
+.media-panel button.active{background:linear-gradient(135deg,#f7d774,#b98725);color:#07111f;font-weight:bold}
+
+.mic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mic{min-height:118px;border-radius:18px;background:linear-gradient(180deg,rgba(18,52,92,.8),rgba(3,8,18,.95));border:1px solid rgba(247,215,116,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10px;color:#d9e5ff;text-align:center;position:relative;overflow:hidden;padding:6px}
 .mic.host{border-color:#2dff88}
 .mic.ocupada{border-color:#f7d774}
-.mic.speaking{box-shadow:0 0 18px rgba(45,255,136,.45)}
-.mic-avatar{width:42px;height:42px;border-radius:50%;border:2px solid rgba(247,215,116,.65);overflow:hidden;background:#07111f;display:flex;align-items:center;justify-content:center;font-size:20px}
+.mic.speaking{box-shadow:0 0 20px rgba(45,255,136,.55)}
+.mic-avatar{width:48px;height:48px;border-radius:50%;border:2px solid rgba(247,215,116,.65);overflow:hidden;background:#07111f;display:flex;align-items:center;justify-content:center}
 .mic-avatar img{width:100%;height:100%;object-fit:cover}
+.mic-avatar span{font-size:22px}
 .mic strong{color:#f7d774;font-size:11px}
 .mic .estado{font-size:9px;color:#9fc8ff}
 .mic .badge{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.5);border-radius:999px;padding:3px 5px;font-size:10px}
-.mic-actions{display:flex;gap:4px;margin-top:3px}
+.mic-actions{display:flex;gap:4px;margin-top:3px;flex-wrap:wrap;justify-content:center}
 .mic-actions button{border:none;border-radius:9px;background:rgba(255,255,255,.1);color:white;font-size:9px;padding:5px 6px}
+
 .chat-box{min-height:230px;display:flex;flex-direction:column}
 .chat-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .chat-head button{border:none;border-radius:999px;padding:7px 10px;color:#07111f;background:linear-gradient(135deg,#f7d774,#b98725)}
@@ -56,9 +68,11 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 .chat-input{margin-top:10px;display:flex;gap:8px}
 .chat-input input{flex:1;border:none;outline:none;border-radius:15px;padding:12px;color:white;background:rgba(255,255,255,.1)}
 .chat-input button{width:50px;border:none;border-radius:15px;background:linear-gradient(135deg,#f7d774,#b98725);font-size:18px}
+
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;height:70px;background:#030812;border-top:1px solid rgba(247,215,116,.24);display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:8px;z-index:60}
 .bottom-nav button{border:none;border-radius:16px;background:rgba(255,255,255,.08);color:#d9e5ff;font-size:10px}
 .bottom-nav button.active{background:rgba(0,132,255,.18);color:#f7d774}
+
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;align-items:center;justify-content:center;padding:18px}
 .modal-bg.active{display:flex}
 .modal{width:100%;max-width:370px;border-radius:24px;background:#07111f;border:1px solid rgba(247,215,116,.3);padding:18px}
@@ -70,57 +84,723 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 .ok{background:linear-gradient(135deg,#f7d774,#b98725);color:#07111f}
 </style>
 </head>
-
 <body>
 <div class="sala-app">
 
 <header class="sala-header">
-<button class="icon-btn" onclick="goHome()">←</button>
-<div class="sala-title"><h1>SALA JM ELITE</h1><p>Directo oficial de la agencia</p></div>
-<div class="live-pill">● LIVE</div>
+  <button class="icon-btn" onclick="goHome()">←</button>
+  <div class="sala-title">
+    <h1>SALA JM ELITE</h1>
+    <p>Directo oficial de la agencia</p>
+  </div>
+  <div class="live-pill">● LIVE</div>
 </header>
 
 <main class="sala-main">
 
 <section class="main-screen">
-<div class="screen-status" id="screenStatus">● HOST EN VIVO</div>
-<button class="icon-btn screen-menu" onclick="toggleHostPanel()">⋮</button>
-<div class="screen-avatar" id="screenAvatar">👑</div>
-<div class="screen-info">
-<h2 id="screenTitle">Jesús en pantalla principal</h2>
-<p id="screenText">Sala oficial para formación, reuniones, apoyo a emisoras y control de la comunidad JM Elite.</p>
-</div>
+  <div class="screen-status" id="screenStatus">● HOST EN VIVO</div>
+  <button class="icon-btn screen-menu" onclick="toggleHostPanel()">⋮</button>
+
+  <div class="screen-avatar" id="screenAvatar">
+    <span>👑</span>
+  </div>
+
+  <div class="screen-info">
+    <h2 id="screenTitle">Jesús en pantalla principal</h2>
+    <p id="screenText">
+      Sala oficial para formación, reuniones, apoyo a emisoras y control de la comunidad JM Elite.
+    </p>
+  </div>
 </section>
 
 <section class="host-panel" id="hostPanel">
-<h3>⚙️ Control del host</h3>
-<div class="panel-grid">
-<button onclick="showHost()">👑 Mostrar host</button>
-<button onclick="inviteSelectedToScreen()">📺 Subir seleccionada</button>
-<button onclick="shareScreen()">🖥️ Compartir pantalla</button>
-<button onclick="stopScreen()">⛔ Quitar pantalla</button>
-<button onclick="openUsers()">👥 Usuarios</button>
-<button onclick="openRules()">📜 Normas</button>
-</div>
+  <h3>⚙️ Control del host</h3>
+  <div class="panel-grid">
+    <button onclick="showHost()">👑 Mostrar host</button>
+    <button onclick="inviteSelectedToScreen()">📺 Subir seleccionada</button>
+    <button onclick="toggleCamera()">📷 Cámara</button>
+    <button onclick="shareScreen()">🖥️ Compartir pantalla</button>
+    <button onclick="stopScreen()">⛔ Quitar pantalla</button>
+    <button onclick="openUsers()">👥 Usuarios</button>
+    <button onclick="openRules()">📜 Normas</button>
+    <button onclick="openBotInfo()">🤖 Chatbot</button>
+  </div>
 </section>
 
 <section class="stats">
-<div class="stat-card"><strong id="connectedCount">0</strong><span>Conectados</span></div>
-<div class="stat-card"><strong>12</strong><span>Micrófonos</span></div>
-<div class="stat-card"><strong id="seatsCount">1</strong><span>En silla</span></div>
+  <div class="stat-card">
+    <strong id="connectedCount">0</strong>
+    <span>Conectados</span>
+  </div>
+  <div class="stat-card">
+    <strong>12</strong>
+    <span>Micrófonos</span>
+  </div>
+  <div class="stat-card">
+    <strong id="seatsCount">1</strong>
+    <span>En silla</span>
+  </div>
+</section>
+
+<section class="media-panel">
+  <button id="btnMic" onclick="toggleMyMic()">🔇 Silenciar / Abrir</button>
+  <button id="btnCamera" onclick="toggleCamera()">📷 Cámara</button>
+  <button onclick="takeFreeSeat()">🎙️ Subir a silla</button>
+  <button onclick="leaveMySeat()">⬇️ Bajar de silla</button>
 </section>
 
 <section class="pinned">
-<h3>📌 Avisos fijados</h3>
-<div class="pin-item">Bienvenidas todas las emisoras nuevas de JM Elite.</div>
-<div class="pin-item">Respeto, orden y apoyo entre compañeras.</div>
-<div class="pin-item">Chat y conectados funcionando con Firebase.</div>
+  <h3>📌 Avisos fijados</h3>
+  <div class="pin-item">Bienvenidas todas las emisoras nuevas de JM Elite.</div>
+  <div class="pin-item">Respeto, orden y apoyo entre compañeras.</div>
+  <div class="pin-item">Chat, conectados, sillas y micro preparados con Firebase.</div>
 </section>
 
 <section class="mic-section">
-<div class="section-title">🎙️ Micrófonos de la sala</div>
-<div class="mic-grid" id="micGrid"></div>
+  <div class="section-title">🎙️ Micrófonos de la sala</div>
+  <div class="mic-grid" id="micGrid"></div>
 </section>
 
 <section class="chat-box">
-<div class="chat-head"><h3>💬 Chat de la sala</h3><button onclick="pinMessage()">📌 F
+  <div class="chat-head">
+    <h3>💬 Chat de la sala</h3>
+    <button onclick="pinMessage()">📌 Fijar</button>
+  </div>
+
+  <div class="messages" id="messages">
+    <div class="msg"><strong>Sistema:</strong> Cargando chat...</div>
+  </div>
+
+  <div class="chat-input">
+    <input id="chatText" type="text" placeholder="Escribe un mensaje..." onkeydown="enterSend(event)">
+    <button onclick="sendMessage()">➤</button>
+  </div>
+</section>
+
+</main>
+
+<nav class="bottom-nav">
+  <button onclick="goHome()">🏠<br>Inicio</button>
+  <button onclick="takeFreeSeat()" class="active">🎙️<br>Subir</button>
+  <button onclick="toggleMyMic()">🔇<br>Micro</button>
+  <button onclick="focusChat()">💬<br>Chat</button>
+  <button onclick="gift()">🎁<br>Regalo</button>
+</nav>
+
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">Aviso</h3>
+    <p id="modalText">Mensaje del sistema.</p>
+    <div class="modal-actions">
+      <button class="cancel" onclick="closeModal()">Cerrar</button>
+      <button class="ok" id="modalOk" onclick="closeModal()">Aceptar</button>
+    </div>
+  </div>
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp,
+  doc,
+  setDoc,
+  deleteDoc,
+  getDocs,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain: "agencia-jm-elite.firebaseapp.com",
+  projectId: "agencia-jm-elite",
+  storageBucket: "agencia-jm-elite.firebasestorage.app",
+  messagingSenderId: "171676205335",
+  appId: "1:171676205335:web:95443528659ab804fe7752"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* CAMBIA ESTOS NOMBRES POR LOS ARCHIVOS REALES */
+const LOGO_SALA = "logo.png";
+const FOTO_JESUS = "jesus.png";
+const FOTO_RUTH = "ruth.png";
+const FOTO_YANDIRA = "yandira.png";
+
+function normalizeName(name){
+  return String(name || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+let storedName = localStorage.getItem("jm_user_name");
+
+if (!storedName) {
+  storedName = prompt("Escribe tu nombre para entrar a la sala:", "Invitado") || "Invitado";
+  localStorage.setItem("jm_user_name", storedName);
+}
+
+const cleanName = normalizeName(storedName);
+const isHost = cleanName.includes("jesus") || cleanName.includes("chus");
+
+const userId = isHost ? "host-jesus" : "user-" + cleanName.replace(/\s+/g,"-");
+localStorage.setItem("jm_user_id", userId);
+
+const currentUser = {
+  id: userId,
+  nombre: isHost ? "Jesús" : storedName,
+  rol: isHost ? "host" : "invitado",
+  foto: isHost ? FOTO_JESUS : ""
+};
+
+let onlineUsers = [];
+let seats = {};
+let selectedSeat = 1;
+let cameraOn = false;
+
+const messagesBox = document.getElementById("messages");
+const chatInput = document.getElementById("chatText");
+const connectedCount = document.getElementById("connectedCount");
+const seatsCount = document.getElementById("seatsCount");
+const micGrid = document.getElementById("micGrid");
+
+const defaultSeats = [
+  {id:1, label:"Host", lockedHost:true},
+  {id:2, label:"Ruth", admin:true},
+  {id:3, label:"Yandira", admin:true},
+  {id:4, label:"Plaza 4"},
+  {id:5, label:"Plaza 5"},
+  {id:6, label:"Plaza 6"},
+  {id:7, label:"Plaza 7"},
+  {id:8, label:"Plaza 8"},
+  {id:9, label:"Plaza 9"},
+  {id:10, label:"Plaza 10"},
+  {id:11, label:"Plaza 11"},
+  {id:12, label:"Plaza 12"}
+];
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text || "";
+  return div.innerHTML;
+}
+
+function imageOrIcon(src, alt, icon){
+  if (!src) return `<span>${icon}</span>`;
+  return `<img src="${src}" alt="${alt}" onerror="this.style.display='none';this.parentElement.innerHTML='<span>${icon}</span>'">`;
+}
+
+function renderMessage(usuario, texto) {
+  const msg = document.createElement("div");
+  msg.className = "msg";
+  msg.innerHTML = "<strong>" + escapeHtml(usuario) + ":</strong> " + escapeHtml(texto);
+  messagesBox.appendChild(msg);
+  messagesBox.scrollTop = messagesBox.scrollHeight;
+}
+
+function listenMessages() {
+  const q = query(collection(db, "mensajes"), orderBy("fecha", "asc"), limit(80));
+
+  onSnapshot(q, function(snapshot) {
+    messagesBox.innerHTML = "";
+    snapshot.forEach(function(docItem) {
+      const data = docItem.data();
+      renderMessage(data.usuario || "Usuario", data.texto || "");
+    });
+  }, function(error) {
+    messagesBox.innerHTML = "";
+    renderMessage("Error", error.message);
+  });
+}
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  await addDoc(collection(db, "mensajes"), {
+    usuario: currentUser.nombre,
+    texto: text,
+    fecha: serverTimestamp()
+  });
+
+  chatInput.value = "";
+}
+
+function enterSend(event) {
+  if (event.key === "Enter") sendMessage();
+}
+
+async function addSystemMessage(text) {
+  await addDoc(collection(db, "mensajes"), {
+    usuario: "Sistema",
+    texto: text,
+    fecha: serverTimestamp()
+  });
+}
+
+async function registerOnlineUser() {
+  await setDoc(doc(db, "usuarios_conectados", currentUser.id), {
+    id: currentUser.id,
+    nombre: currentUser.nombre,
+    rol: currentUser.rol,
+    estado: "conectado",
+    foto: currentUser.foto || "",
+    ultimaConexion: serverTimestamp()
+  });
+}
+
+function listenOnlineUsers() {
+  const q = query(collection(db, "usuarios_conectados"));
+
+  onSnapshot(q, function(snapshot) {
+    onlineUsers = [];
+    const namesUsed = {};
+
+    snapshot.forEach(function(docItem) {
+      const data = docItem.data();
+      const key = normalizeName(data.nombre);
+      if (!namesUsed[key]) {
+        namesUsed[key] = true;
+        onlineUsers.push(data);
+      }
+    });
+
+    connectedCount.innerText = onlineUsers.length;
+  });
+}
+
+async function cleanDuplicateSeatsForUser() {
+  const snap = await getDocs(collection(db, "sala_sillas"));
+  const deletes = [];
+
+  snap.forEach(function(item){
+    const data = item.data();
+    if (data.userId === currentUser.id) {
+      deletes.push(deleteDoc(doc(db, "sala_sillas", item.id)));
+    }
+  });
+
+  await Promise.all(deletes);
+}
+
+async function ensureHostSeat() {
+  if (!isHost) return;
+
+  await cleanDuplicateSeatsForUser();
+
+  await setDoc(doc(db, "sala_sillas", "silla-1"), {
+    seatId: 1,
+    userId: currentUser.id,
+    nombre: "Jesús",
+    rol: "host",
+    foto: FOTO_JESUS,
+    muted: false,
+    camera: false,
+    speaking: false,
+    ocupado: true,
+    actualizado: serverTimestamp()
+  });
+
+  setMainScreen(
+    "● HOST EN VIVO",
+    FOTO_JESUS,
+    "Jesús en pantalla principal",
+    "El host controla la sala, los avisos y los turnos."
+  );
+}
+
+function listenSeats() {
+  const q = query(collection(db, "sala_sillas"));
+
+  onSnapshot(q, function(snapshot) {
+    seats = {};
+
+    snapshot.forEach(function(item) {
+      const data = item.data();
+      seats[data.seatId] = data;
+    });
+
+    renderSeats();
+  });
+}
+
+function renderSeats() {
+  micGrid.innerHTML = "";
+  let occupied = 0;
+
+  defaultSeats.forEach(function(seat) {
+    const data = seats[seat.id];
+    const ocupado = data && data.ocupado;
+    if (ocupado) occupied++;
+
+    const isMine = ocupado && data.userId === currentUser.id;
+    const muted = ocupado ? data.muted : true;
+    const camera = ocupado ? data.camera : false;
+    const speaking = ocupado && data.speaking;
+
+    const card = document.createElement("div");
+    card.className =
+      "mic" +
+      (seat.lockedHost ? " host" : "") +
+      (ocupado ? " ocupada" : "") +
+      (speaking ? " speaking" : "");
+
+    const avatarContent = ocupado
+      ? imageOrIcon(data.foto, data.nombre, data.rol === "host" ? "👑" : "🎙️")
+      : imageOrIcon(LOGO_SALA, "Logo JM Elite", "🏛️");
+
+    let actions = "";
+
+    if (ocupado && isMine) {
+      actions = `
+        <div class="mic-actions">
+          <button onclick="toggleMyMic()">${muted ? "🎙️ Abrir" : "🔇 Silenciar"}</button>
+          <button onclick="toggleCamera()">${camera ? "📷 Quitar" : "📷 Cámara"}</button>
+          ${!seat.lockedHost ? `<button onclick="leaveSeat(${seat.id})">Bajar</button>` : ""}
+        </div>`;
+    } else if (!ocupado && !seat.lockedHost) {
+      actions = `<div class="mic-actions"><button onclick="takeSeat(${seat.id})">Subir</button></div>`;
+    } else if (ocupado && isHost) {
+      actions = `
+        <div class="mic-actions">
+          <button onclick="selectSeat(${seat.id})">Elegir</button>
+          <button onclick="inviteSeatToScreen(${seat.id})">Pantalla</button>
+        </div>`;
+    }
+
+    card.innerHTML = `
+      <div class="badge">${ocupado ? (muted ? "🔇" : "🎙️") : "Libre"}</div>
+      <div class="mic-avatar">${avatarContent}</div>
+      <strong>${ocupado ? escapeHtml(data.nombre) : escapeHtml(seat.label)}</strong>
+      <div>${ocupado ? escapeHtml(data.rol) : "Silla libre"}</div>
+      <div class="estado">
+        ${ocupado ? (muted ? "Silenciado" : "Micro abierto") : "Logo JM Elite"}
+        ${camera ? " · Cámara ON" : ""}
+      </div>
+      ${actions}
+    `;
+
+    card.onclick = function(e) {
+      if (e.target.tagName.toLowerCase() === "button") return;
+      if (ocupado) selectSeat(seat.id);
+      else if (!seat.lockedHost) takeSeat(seat.id);
+    };
+
+    micGrid.appendChild(card);
+  });
+
+  seatsCount.innerText = occupied;
+}
+
+async function takeSeat(seatId) {
+  if (seatId === 1 && !isHost) {
+    openModal("Silla reservada", "La silla principal es solo para Jesús / Host.");
+    return;
+  }
+
+  await cleanDuplicateSeatsForUser();
+
+  await setDoc(doc(db, "sala_sillas", "silla-" + seatId), {
+    seatId: seatId,
+    userId: currentUser.id,
+    nombre: currentUser.nombre,
+    rol: currentUser.rol,
+    foto: currentUser.foto || "",
+    muted: false,
+    camera: false,
+    speaking: false,
+    ocupado: true,
+    actualizado: serverTimestamp()
+  });
+
+  await addSystemMessage(currentUser.nombre + " subió a la silla " + seatId + ".");
+}
+
+async function takeFreeSeat() {
+  if (isHost) {
+    await takeSeat(1);
+    return;
+  }
+
+  for (const seat of defaultSeats) {
+    if (seat.id === 1) continue;
+    if (!seats[seat.id]) {
+      await takeSeat(seat.id);
+      return;
+    }
+  }
+
+  openModal("Sala llena", "Ahora mismo no hay sillas libres.");
+}
+
+async function leaveSeat(seatId) {
+  const data = seats[seatId];
+
+  if (!data || data.userId !== currentUser.id) {
+    openModal("Aviso", "Solo puedes bajarte de tu propia silla.");
+    return;
+  }
+
+  if (seatId === 1 && isHost) {
+    openModal("Host fijo", "La silla del host queda fija para Jesús.");
+    return;
+  }
+
+  await deleteDoc(doc(db, "sala_sillas", "silla-" + seatId));
+  await addSystemMessage(currentUser.nombre + " bajó de la silla " + seatId + ".");
+}
+
+async function leaveMySeat() {
+  let mySeatId = null;
+
+  Object.keys(seats).forEach(function(key){
+    if (seats[key].userId === currentUser.id) {
+      mySeatId = seats[key].seatId;
+    }
+  });
+
+  if (!mySeatId) {
+    openModal("Aviso", "No estás subido a ninguna silla.");
+    return;
+  }
+
+  await leaveSeat(mySeatId);
+}
+
+function selectSeat(seatId) {
+  const data = seats[seatId];
+  if (!data) return;
+
+  selectedSeat = seatId;
+  openModal("Silla seleccionada", data.nombre + " está seleccionada.");
+}
+
+async function toggleMyMic() {
+  let mySeatId = null;
+
+  Object.keys(seats).forEach(function(key){
+    if (seats[key].userId === currentUser.id) {
+      mySeatId = seats[key].seatId;
+    }
+  });
+
+  if (!mySeatId) {
+    openModal("No estás en silla", "Primero tienes que subir a una silla para usar el micrófono.");
+    return;
+  }
+
+  const current = seats[mySeatId];
+  const newMuted = !current.muted;
+
+  await updateDoc(doc(db, "sala_sillas", "silla-" + mySeatId), {
+    muted: newMuted,
+    actualizado: serverTimestamp()
+  });
+
+  await addSystemMessage(currentUser.nombre + (newMuted ? " silenció su micrófono." : " abrió su micrófono."));
+}
+
+async function toggleCamera() {
+  let mySeatId = null;
+
+  Object.keys(seats).forEach(function(key){
+    if (seats[key].userId === currentUser.id) {
+      mySeatId = seats[key].seatId;
+    }
+  });
+
+  if (!mySeatId) {
+    openModal("Cámara", "Primero tienes que subir a una silla para activar la cámara.");
+    return;
+  }
+
+  const current = seats[mySeatId];
+  cameraOn = !current.camera;
+
+  await updateDoc(doc(db, "sala_sillas", "silla-" + mySeatId), {
+    camera: cameraOn,
+    actualizado: serverTimestamp()
+  });
+
+  const btn = document.getElementById("btnCamera");
+  if (btn) btn.classList.toggle("active", cameraOn);
+
+  await addSystemMessage(currentUser.nombre + (cameraOn ? " activó la cámara." : " apagó la cámara."));
+}
+
+function setMainScreen(status, photo, title, text) {
+  document.getElementById("screenStatus").innerText = status;
+
+  const avatar = document.getElementById("screenAvatar");
+  avatar.innerHTML = photo
+    ? `<img src="${photo}" onerror="this.style.display='none';this.parentElement.innerHTML='<span>👑</span>'">`
+    : "<span>👑</span>";
+
+  document.getElementById("screenTitle").innerText = title;
+  document.getElementById("screenText").innerText = text;
+}
+
+function showHost() {
+  setMainScreen(
+    "● HOST EN VIVO",
+    FOTO_JESUS,
+    "Jesús en pantalla principal",
+    "El host controla la sala, los avisos y los turnos."
+  );
+
+  addSystemMessage("Host mostrado en pantalla principal.");
+}
+
+function inviteSeatToScreen(seatId) {
+  const data = seats[seatId];
+
+  if (!data) {
+    openModal("Silla libre", "No hay nadie en esa silla para subir a pantalla.");
+    return;
+  }
+
+  setMainScreen(
+    "📺 EN PANTALLA",
+    data.foto || "",
+    data.nombre + " en pantalla principal",
+    data.nombre + " fue subida a pantalla por el host."
+  );
+
+  addSystemMessage(data.nombre + " subió a pantalla principal.");
+}
+
+function inviteSelectedToScreen() {
+  inviteSeatToScreen(selectedSeat);
+}
+
+function shareScreen() {
+  setMainScreen(
+    "🖥️ PANTALLA",
+    "",
+    "Pantalla compartida preparada",
+    "Aquí conectaremos la función real de compartir pantalla con WebRTC."
+  );
+
+  addSystemMessage("Pantalla compartida activada en modo prueba.");
+}
+
+function stopScreen() {
+  showHost();
+  addSystemMessage("Pantalla principal restaurada.");
+}
+
+function goHome() {
+  window.location.href = "index.html";
+}
+
+function toggleHostPanel() {
+  document.getElementById("hostPanel").classList.toggle("active");
+}
+
+function openModal(title, text, okAction) {
+  document.getElementById("modalTitle").innerText = title;
+  document.getElementById("modalText").innerText = text;
+
+  const okBtn = document.getElementById("modalOk");
+  okBtn.onclick = function() {
+    closeModal();
+    if (typeof okAction === "function") okAction();
+  };
+
+  document.getElementById("modalBg").classList.add("active");
+}
+
+function closeModal() {
+  document.getElementById("modalBg").classList.remove("active");
+}
+
+function openUsers() {
+  let text = "Usuarios conectados ahora:\n\n";
+
+  if (onlineUsers.length === 0) {
+    text += "No hay usuarios conectados.";
+  } else {
+    text += onlineUsers.map(function(user) {
+      return "• " + (user.nombre || "Usuario") + " (" + (user.rol || "invitado") + ")";
+    }).join("\n");
+  }
+
+  openModal("Usuarios conectados", text);
+}
+
+function openRules() {
+  openModal(
+    "Normas de la sala",
+    "Respeto, orden, apoyo entre emisoras y uso correcto de los micrófonos."
+  );
+}
+
+function openBotInfo() {
+  openModal(
+    "Chatbot JM Elite",
+    "Aquí irá el chatbot de ayuda para Poppo: reglas, pagos, dudas frecuentes, soporte y aviso urgente por WhatsApp."
+  );
+}
+
+function gift() {
+  openModal("Regalos", "Regalo enviado a la sala.", function() {
+    addSystemMessage("🎁 Regalo enviado por " + currentUser.nombre + ".");
+  });
+}
+
+function focusChat() {
+  chatInput.focus();
+}
+
+function pinMessage() {
+  openModal("Mensaje fijado", "Función preparada para fijar mensajes.");
+}
+
+window.goHome = goHome;
+window.toggleHostPanel = toggleHostPanel;
+window.closeModal = closeModal;
+window.sendMessage = sendMessage;
+window.enterSend = enterSend;
+window.showHost = showHost;
+window.inviteSelectedToScreen = inviteSelectedToScreen;
+window.inviteSeatToScreen = inviteSeatToScreen;
+window.shareScreen = shareScreen;
+window.stopScreen = stopScreen;
+window.openUsers = openUsers;
+window.openRules = openRules;
+window.openBotInfo = openBotInfo;
+window.gift = gift;
+window.focusChat = focusChat;
+window.pinMessage = pinMessage;
+window.takeSeat = takeSeat;
+window.takeFreeSeat = takeFreeSeat;
+window.leaveSeat = leaveSeat;
+window.leaveMySeat = leaveMySeat;
+window.toggleMyMic = toggleMyMic;
+window.toggleCamera = toggleCamera;
+window.selectSeat = selectSeat;
+
+registerOnlineUser();
+listenOnlineUsers();
+listenSeats();
+listenMessages();
+ensureHostSeat();
+
+window.addEventListener("beforeunload", function() {
+  deleteDoc(doc(db, "usuarios_conectados", currentUser.id));
+});
+</script>
+
+</body>
+</html>
