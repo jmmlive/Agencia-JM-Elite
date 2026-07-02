@@ -17,7 +17,8 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 .live-pill{font-size:11px;color:#2dff88;border:1px solid rgba(45,255,136,.35);background:rgba(45,255,136,.12);padding:7px 8px;border-radius:999px;text-align:center}
 .sala-main{padding:10px 10px 84px;display:flex;flex-direction:column;gap:10px}
 .main-screen{min-height:35vh;border-radius:26px;border:1px solid rgba(247,215,116,.3);background:linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.72)),radial-gradient(circle at center,rgba(0,125,255,.55),rgba(3,8,18,.9) 64%);position:relative;overflow:hidden;display:flex;align-items:flex-end}
-.screen-avatar{position:absolute;top:42px;left:50%;transform:translateX(-50%);width:108px;height:108px;border-radius:50%;border:3px solid #f7d774;display:flex;align-items:center;justify-content:center;font-size:48px}
+.screen-avatar{position:absolute;top:38px;left:50%;transform:translateX(-50%);width:118px;height:118px;border-radius:50%;border:3px solid #f7d774;display:flex;align-items:center;justify-content:center;font-size:48px;background:#07111f;overflow:hidden}
+.screen-avatar img{width:100%;height:100%;object-fit:cover}
 .screen-status{position:absolute;top:14px;left:14px;font-size:11px;font-weight:bold;background:#e83252;padding:7px 11px;border-radius:999px}
 .screen-menu{position:absolute;top:14px;right:14px}
 .screen-info{padding:18px;position:relative}
@@ -35,8 +36,17 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 .pinned,.mic-section,.chat-box{border-radius:23px;padding:12px;background:rgba(3,8,18,.8);border:1px solid rgba(247,215,116,.2)}
 .pin-item{font-size:12px;color:#e8f0ff;padding:7px 0;border-top:1px solid rgba(255,255,255,.08)}
 .mic-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
-.mic{min-height:78px;border-radius:18px;background:linear-gradient(180deg,rgba(18,52,92,.8),rgba(3,8,18,.95));border:1px solid rgba(247,215,116,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10px;color:#d9e5ff;text-align:center}
-.mic span{font-size:23px}.mic strong{color:#f7d774;font-size:11px}.mic.host{border-color:#2dff88}.mic.admin{border-color:rgba(247,215,116,.5)}
+.mic{min-height:96px;border-radius:18px;background:linear-gradient(180deg,rgba(18,52,92,.8),rgba(3,8,18,.95));border:1px solid rgba(247,215,116,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10px;color:#d9e5ff;text-align:center;position:relative;overflow:hidden;padding:6px}
+.mic.host{border-color:#2dff88}
+.mic.ocupada{border-color:#f7d774}
+.mic.speaking{box-shadow:0 0 18px rgba(45,255,136,.45)}
+.mic-avatar{width:42px;height:42px;border-radius:50%;border:2px solid rgba(247,215,116,.65);overflow:hidden;background:#07111f;display:flex;align-items:center;justify-content:center;font-size:20px}
+.mic-avatar img{width:100%;height:100%;object-fit:cover}
+.mic strong{color:#f7d774;font-size:11px}
+.mic .estado{font-size:9px;color:#9fc8ff}
+.mic .badge{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.5);border-radius:999px;padding:3px 5px;font-size:10px}
+.mic-actions{display:flex;gap:4px;margin-top:3px}
+.mic-actions button{border:none;border-radius:9px;background:rgba(255,255,255,.1);color:white;font-size:9px;padding:5px 6px}
 .chat-box{min-height:230px;display:flex;flex-direction:column}
 .chat-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .chat-head button{border:none;border-radius:999px;padding:7px 10px;color:#07111f;background:linear-gradient(135deg,#f7d774,#b98725)}
@@ -73,7 +83,7 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 <main class="sala-main">
 
 <section class="main-screen">
-<div class="screen-status" id="screenStatus">● EN VIVO</div>
+<div class="screen-status" id="screenStatus">● HOST EN VIVO</div>
 <button class="icon-btn screen-menu" onclick="toggleHostPanel()">⋮</button>
 <div class="screen-avatar" id="screenAvatar">👑</div>
 <div class="screen-info">
@@ -86,7 +96,7 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 <h3>⚙️ Control del host</h3>
 <div class="panel-grid">
 <button onclick="showHost()">👑 Mostrar host</button>
-<button onclick="inviteToScreen()">📺 Invitar a pantalla</button>
+<button onclick="inviteSelectedToScreen()">📺 Subir seleccionada</button>
 <button onclick="shareScreen()">🖥️ Compartir pantalla</button>
 <button onclick="stopScreen()">⛔ Quitar pantalla</button>
 <button onclick="openUsers()">👥 Usuarios</button>
@@ -97,7 +107,7 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 <section class="stats">
 <div class="stat-card"><strong id="connectedCount">0</strong><span>Conectados</span></div>
 <div class="stat-card"><strong>12</strong><span>Micrófonos</span></div>
-<div class="stat-card"><strong>37</strong><span>Nivel sala</span></div>
+<div class="stat-card"><strong id="seatsCount">1</strong><span>En silla</span></div>
 </section>
 
 <section class="pinned">
@@ -109,301 +119,8 @@ body{font-family:Arial,sans-serif;background:#020711;color:white;min-height:100v
 
 <section class="mic-section">
 <div class="section-title">🎙️ Micrófonos de la sala</div>
-<div class="mic-grid">
-<div class="mic host" onclick="selectMic('Jesús','Host','👑')"><span>👑</span><strong>Host</strong>Jesús</div>
-<div class="mic admin" onclick="selectMic('Ruth','Admin','🛡️')"><span>🛡️</span><strong>Admin</strong>Ruth</div>
-<div class="mic admin" onclick="selectMic('Yandira','Admin','🛡️')"><span>🛡️</span><strong>Admin</strong>Yandira</div>
-<div class="mic" onclick="micRequest('Plaza 4')"><span>🎤</span><strong>Libre</strong>Plaza 4</div>
-<div class="mic" onclick="micRequest('Plaza 5')"><span>🎤</span><strong>Libre</strong>Plaza 5</div>
-<div class="mic" onclick="micRequest('Plaza 6')"><span>🎤</span><strong>Libre</strong>Plaza 6</div>
-<div class="mic" onclick="micRequest('Plaza 7')"><span>🎤</span><strong>Libre</strong>Plaza 7</div>
-<div class="mic" onclick="micRequest('Plaza 8')"><span>🎤</span><strong>Libre</strong>Plaza 8</div>
-<div class="mic" onclick="micRequest('Plaza 9')"><span>🎤</span><strong>Libre</strong>Plaza 9</div>
-<div class="mic" onclick="micRequest('Plaza 10')"><span>🎤</span><strong>Libre</strong>Plaza 10</div>
-<div class="mic" onclick="micRequest('Plaza 11')"><span>🎤</span><strong>Libre</strong>Plaza 11</div>
-<div class="mic" onclick="micRequest('Plaza 12')"><span>🎤</span><strong>Libre</strong>Plaza 12</div>
-</div>
+<div class="mic-grid" id="micGrid"></div>
 </section>
 
 <section class="chat-box">
-<div class="chat-head"><h3>💬 Chat de la sala</h3><button onclick="pinMessage()">📌 Fijar</button></div>
-<div class="messages" id="messages"><div class="msg"><strong>Sistema:</strong> Cargando chat...</div></div>
-<div class="chat-input">
-<input id="chatText" type="text" placeholder="Escribe un mensaje..." onkeydown="enterSend(event)">
-<button onclick="sendMessage()">➤</button>
-</div>
-</section>
-
-</main>
-
-<nav class="bottom-nav">
-<button onclick="goHome()">🏠<br>Inicio</button>
-<button onclick="micRequest('Solicitud general')" class="active">🎙️<br>Micro</button>
-<button onclick="focusChat()">💬<br>Chat</button>
-<button onclick="openUsers()">👥<br>Usuarios</button>
-<button onclick="gift()">🎁<br>Regalo</button>
-</nav>
-</div>
-
-<div class="modal-bg" id="modalBg">
-<div class="modal">
-<h3 id="modalTitle">Aviso</h3>
-<p id="modalText">Mensaje del sistema.</p>
-<div class="modal-actions">
-<button class="cancel" onclick="closeModal()">Cerrar</button>
-<button class="ok" id="modalOk" onclick="closeModal()">Aceptar</button>
-</div>
-</div>
-  </div>
-  <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  limit,
-  onSnapshot,
-  serverTimestamp,
-  doc,
-  setDoc,
-  deleteDoc
-} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain: "agencia-jm-elite.firebaseapp.com",
-  projectId: "agencia-jm-elite",
-  storageBucket: "agencia-jm-elite.firebasestorage.app",
-  messagingSenderId: "171676205335",
-  appId: "1:171676205335:web:95443528659ab804fe7752"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const userId = localStorage.getItem("jm_user_id") || "user-" + Date.now() + "-" + Math.floor(Math.random() * 99999);
-localStorage.setItem("jm_user_id", userId);
-
-let userName = localStorage.getItem("jm_user_name");
-if (!userName) {
-  userName = prompt("Escribe tu nombre para entrar a la sala:", "Invitado") || "Invitado";
-  localStorage.setItem("jm_user_name", userName);
-}
-
-const currentUser = {
-  id: userId,
-  nombre: userName,
-  rol: userName.toLowerCase().includes("jes") ? "host" : "invitado"
-};
-
-let selectedPerson = "Jesús";
-let selectedIcon = "👑";
-let onlineUsers = [];
-
-const messagesBox = document.getElementById("messages");
-const chatInput = document.getElementById("chatText");
-const connectedCount = document.getElementById("connectedCount");
-
-function escapeHtml(text) {
-  const div = document.createElement("div");
-  div.textContent = text || "";
-  return div.innerHTML;
-}
-
-function renderMessage(usuario, texto) {
-  const msg = document.createElement("div");
-  msg.className = "msg";
-  msg.innerHTML = "<strong>" + escapeHtml(usuario) + ":</strong> " + escapeHtml(texto);
-  messagesBox.appendChild(msg);
-  messagesBox.scrollTop = messagesBox.scrollHeight;
-}
-
-function listenMessages() {
-  const q = query(collection(db, "mensajes"), orderBy("fecha", "asc"), limit(80));
-
-  onSnapshot(q, function(snapshot) {
-    messagesBox.innerHTML = "";
-    snapshot.forEach(function(docItem) {
-      const data = docItem.data();
-      renderMessage(data.usuario || "Usuario", data.texto || "");
-    });
-  }, function(error) {
-    messagesBox.innerHTML = "";
-    renderMessage("Error", error.message);
-  });
-}
-
-async function sendMessage() {
-  const text = chatInput.value.trim();
-  if (!text) return;
-
-  await addDoc(collection(db, "mensajes"), {
-    usuario: currentUser.nombre,
-    texto: text,
-    fecha: serverTimestamp()
-  });
-
-  chatInput.value = "";
-}
-
-function enterSend(event) {
-  if (event.key === "Enter") sendMessage();
-}
-
-async function addSystemMessage(text) {
-  await addDoc(collection(db, "mensajes"), {
-    usuario: "Sistema",
-    texto: text,
-    fecha: serverTimestamp()
-  });
-}
-
-async function registerOnlineUser() {
-  await setDoc(doc(db, "usuarios_conectados", currentUser.id), {
-    nombre: currentUser.nombre,
-    rol: currentUser.rol,
-    estado: "conectado",
-    ultimaConexion: serverTimestamp()
-  });
-}
-
-function listenOnlineUsers() {
-  const q = query(collection(db, "usuarios_conectados"));
-
-  onSnapshot(q, function(snapshot) {
-    onlineUsers = [];
-    snapshot.forEach(function(docItem) {
-      onlineUsers.push(docItem.data());
-    });
-    connectedCount.innerText = onlineUsers.length;
-  });
-}
-
-function goHome() {
-  window.location.href = "index.html";
-}
-
-function toggleHostPanel() {
-  document.getElementById("hostPanel").classList.toggle("active");
-}
-
-function openModal(title, text, okAction) {
-  document.getElementById("modalTitle").innerText = title;
-  document.getElementById("modalText").innerText = text;
-
-  const okBtn = document.getElementById("modalOk");
-  okBtn.onclick = function() {
-    closeModal();
-    if (typeof okAction === "function") okAction();
-  };
-
-  document.getElementById("modalBg").classList.add("active");
-}
-
-function closeModal() {
-  document.getElementById("modalBg").classList.remove("active");
-}
-
-function setMainScreen(status, icon, title, text) {
-  document.getElementById("screenStatus").innerText = status;
-  document.getElementById("screenAvatar").innerText = icon;
-  document.getElementById("screenTitle").innerText = title;
-  document.getElementById("screenText").innerText = text;
-}
-
-function selectMic(name, role, icon) {
-  selectedPerson = name;
-  selectedIcon = icon;
-  openModal("Micrófono seleccionado", name + " está seleccionada como " + role + ".");
-}
-
-function showHost() {
-  selectedPerson = "Jesús";
-  selectedIcon = "👑";
-  setMainScreen("● HOST EN VIVO", "👑", "Jesús en pantalla principal", "El host controla la sala, los avisos y los turnos.");
-  addSystemMessage("Host mostrado en pantalla principal.");
-}
-
-function inviteToScreen() {
-  setMainScreen("📺 EN PANTALLA", selectedIcon, selectedPerson + " en pantalla principal", selectedPerson + " fue subida a pantalla.");
-  addSystemMessage(selectedPerson + " subió a pantalla.");
-}
-
-function shareScreen() {
-  setMainScreen("🖥️ PANTALLA", "🖥️", "Pantalla compartida preparada", "Aquí aparecerá la pantalla compartida cuando conectemos WebRTC.");
-  addSystemMessage("Pantalla compartida activada en modo prueba.");
-}
-
-function stopScreen() {
-  setMainScreen("● EN VIVO", "👑", "Sala oficial de la agencia", "Pantalla principal para formación, reuniones y apoyo.");
-  addSystemMessage("Pantalla principal restaurada.");
-}
-
-function micRequest(place) {
-  openModal("Solicitud de micrófono", "Solicitud enviada para " + place + ".", function() {
-    addSystemMessage(currentUser.nombre + " solicitó micrófono: " + place + ".");
-  });
-}
-
-function openUsers() {
-  let text = "Usuarios conectados ahora:\n\n";
-
-  if (onlineUsers.length === 0) {
-    text += "No hay usuarios conectados.";
-  } else {
-    text += onlineUsers.map(function(user) {
-      return "• " + (user.nombre || "Usuario") + " (" + (user.rol || "invitado") + ")";
-    }).join("\n");
-  }
-
-  openModal("Usuarios conectados", text);
-}
-
-function openRules() {
-  openModal("Normas de la sala", "Respeto, orden, apoyo entre emisoras y uso correcto de los micrófonos.");
-}
-
-function gift() {
-  openModal("Regalos", "Regalo enviado a la sala.", function() {
-    addSystemMessage("🎁 Regalo enviado por " + currentUser.nombre + ".");
-  });
-}
-
-function focusChat() {
-  chatInput.focus();
-}
-
-function pinMessage() {
-  openModal("Mensaje fijado", "Función preparada para fijar mensajes.");
-}
-
-window.goHome = goHome;
-window.toggleHostPanel = toggleHostPanel;
-window.closeModal = closeModal;
-window.sendMessage = sendMessage;
-window.enterSend = enterSend;
-window.selectMic = selectMic;
-window.showHost = showHost;
-window.inviteToScreen = inviteToScreen;
-window.shareScreen = shareScreen;
-window.stopScreen = stopScreen;
-window.micRequest = micRequest;
-window.openUsers = openUsers;
-window.openRules = openRules;
-window.gift = gift;
-window.focusChat = focusChat;
-window.pinMessage = pinMessage;
-
-registerOnlineUser();
-listenOnlineUsers();
-listenMessages();
-
-window.addEventListener("beforeunload", function() {
-  deleteDoc(doc(db, "usuarios_conectados", currentUser.id));
-});
-</script>
-
-</body>
-</html>
+<div class="chat-head"><h3>💬 Chat de la sala</h3><button onclick="pinMessage()">📌 F
