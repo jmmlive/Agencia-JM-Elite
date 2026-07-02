@@ -983,21 +983,22 @@ async function sendMessage(){
   if(!text) return;
 
   if(!currentUser){
-    openModal("Chat privado", "Primero inicia sesión para escribir.");
+    openModal("Chat privado","Primero inicia sesión para escribir.");
     return;
-  }
+}
 
-  try{
-    await addDoc(collection(db, "mensajes"), {
-      usuario: currentUser.nombre,
-      texto: text,
-      fecha: serverTimestamp()
+try{
+    await addDoc(collection(db,"mensajes"),{
+        usuario: currentUser.name || currentUser.nombre || "Invitado",
+        texto: text,
+        fecha: serverTimestamp()
     });
 
-    chatInput.value = "";
-  }catch(error){
-    openModal("Error del chat", error.message);
-  }
+  chatInput.value = "";
+
+}catch(error){
+  openModal("Error del chat", error.message);
+}
 }
 
 function enterSend(event){
@@ -1008,24 +1009,26 @@ function enterSend(event){
 
 async function addSystemMessage(text){
   try{
-    await addDoc(collection(db, "mensajes"), {
+    await addDoc(collection(db,"mensajes"),{
       usuario: "Sistema",
       texto: text,
       fecha: serverTimestamp()
     });
   }catch(error){}
-  }
-  async function registerOnlineUser(){
+}
+
+async function registerOnlineUser(){
   if(!currentUser) return;
 
-  await setDoc(doc(db, "usuarios_conectados", currentUser.id), {
+  await setDoc(doc(db,"usuarios_conectados",currentUser.id),{
     id: currentUser.id,
-    nombre: currentUser.nombre,
-    rol: currentUser.rol,
-    foto: currentUser.foto || "",
+    nombre: currentUser.name || currentUser.nombre || "Invitado",
+    rol: currentUser.role || currentUser.rol || "emisora",
+    foto: currentUser.photo || currentUser.foto || "",
     estado: "conectado",
     ultimaConexion: serverTimestamp()
   });
+}
 }
 
 function listenOnlineUsers(){
