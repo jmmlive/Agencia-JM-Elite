@@ -7,548 +7,744 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;max-width:100%;overflow-x:hidden}
-body{min-height:100vh;font-family:Arial,sans-serif;background:#020713;color:white}
+html,body{width:100%;min-height:100%;overflow-x:hidden}
+body{font-family:Arial,sans-serif;background:#020713;color:white}
+
+:root{
+  --blue:#168cff;
+  --gold:#f7d774;
+  --dark:#020713;
+  --card:#061326;
+  --soft:#d9e5ff;
+}
+
+.hidden{display:none!important}
 
 .app{
-width:100%;
-min-height:100vh;
-background:radial-gradient(circle at top,#0d58bd 0%,#061326 38%,#020713 100%);
-padding-bottom:72px;
+  min-height:100vh;
+  background:radial-gradient(circle at top,#0d58bd 0%,#061326 40%,#020713 100%);
+  padding-bottom:74px;
 }
 
 .topbar{
-height:58px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 12px;
-background:rgba(0,0,0,.86);
-border-bottom:1px solid rgba(0,130,255,.75);
-position:sticky;
-top:0;
-z-index:100;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+  background:rgba(0,0,0,.86);
+  border-bottom:1px solid rgba(0,130,255,.75);
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
 .icon-btn{
-width:38px;
-height:38px;
-border-radius:12px;
-border:1px solid #168cff;
-background:#06162c;
-color:white;
-font-size:20px;
+  width:40px;
+  height:40px;
+  border-radius:14px;
+  border:1px solid var(--blue);
+  background:#06162c;
+  color:white;
+  font-size:20px;
 }
 
 .brand-title{text-align:center}
-.brand-title h1{font-family:Georgia,serif;font-size:14px;letter-spacing:.8px}
-.brand-title p{font-size:8px;color:#27aaff;letter-spacing:1.2px;margin-top:3px}
+.brand-title h1{font-family:Georgia,serif;font-size:15px;color:var(--gold)}
+.brand-title p{font-size:8px;color:#9fc8ff;margin-top:3px;letter-spacing:1px}
 
-.sidebar{
-width:250px;
-max-width:78vw;
-height:calc(100vh - 58px);
-position:fixed;
-top:58px;
-left:-270px;
-z-index:200;
-overflow-y:auto;
-padding:12px;
-background:radial-gradient(circle at top,#0c4fa8 0%,#061326 42%,#020713 100%);
-border-right:1px solid rgba(0,130,255,.85);
-transition:left .25s ease;
-}
-.sidebar.open{left:0}
-
-.side-logo{text-align:center;padding:14px 0 12px;border-bottom:1px solid rgba(0,130,255,.45);margin-bottom:10px}
-.side-logo-img{width:138px;height:138px;object-fit:contain;display:block;margin:0 auto;border-radius:16px}
-
-.side-menu{display:flex;flex-direction:column;gap:7px}
-.side-menu button{
-width:100%;
-min-height:39px;
-border-radius:11px;
-border:1px solid rgba(0,125,255,.48);
-background:linear-gradient(90deg,#082145,#020914);
-color:white;
-text-align:left;
-padding:0 10px;
-font-size:12px;
-font-weight:bold;
-}
-.side-menu button.active{background:linear-gradient(90deg,#0072ff,#003675)}
-
-.content{width:100%;padding:12px}
+.content{padding:12px}
 
 .hero{
-border-radius:18px;
-overflow:hidden;
-border:1px solid rgba(28,132,255,.55);
-background:linear-gradient(135deg,rgba(0,78,170,.35),rgba(0,0,0,.78));
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid rgba(247,215,116,.45);
+  background:linear-gradient(135deg,rgba(0,78,170,.35),rgba(0,0,0,.78));
 }
-.hero-banner img{width:100%;display:block}
+.hero img{width:100%;display:block}
+
+.notice,.panel,.card,.profile-card,.sala-card,.chat-box,.mic-section,.media-panel{
+  border-radius:18px;
+  border:1px solid rgba(247,215,116,.28);
+  background:rgba(3,8,18,.82);
+}
 
 .notice{
-margin:12px 0;
-padding:12px;
-border-radius:14px;
-border:1px solid rgba(255,193,7,.55);
-background:linear-gradient(90deg,#1c1200,#06172c);
-display:flex;
-gap:10px;
-align-items:center;
+  margin:12px 0;
+  padding:12px;
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 .notice .nicon{font-size:28px}
-.notice h3{color:#ffc94a;font-size:15px}
-.notice p{font-size:12px;color:#eaf4ff}
+.notice h3{color:var(--gold);font-size:15px}
+.notice p{font-size:12px;color:var(--soft)}
 
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
 .card{
-min-height:105px;
-border-radius:15px;
-border:1px solid rgba(255,198,65,.45);
-background:linear-gradient(180deg,#102644,#030813);
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:10px 6px;
+  min-height:105px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:10px 6px;
+  background:linear-gradient(180deg,#102644,#030813);
 }
 .card .emoji{font-size:28px;margin-bottom:7px}
-.card h3{font-size:12px;color:#ffd56b}
-.card p{font-size:10px;color:#dbeeff;margin-top:5px}
+.card h3{font-size:12px;color:var(--gold)}
+.card p{font-size:10px;color:var(--soft);margin-top:5px}
 
 .panel{
-display:none;
-margin-top:12px;
-border:1px solid rgba(0,130,255,.65);
-border-radius:15px;
-padding:14px;
-background:rgba(0,10,28,.82);
+  display:none;
+  margin-top:12px;
+  padding:14px;
 }
 .panel.active{display:block}
-.panel h2{color:#ffd56b;margin-bottom:8px;font-size:19px}
+.panel h2{color:var(--gold);margin-bottom:8px;font-size:20px}
 .panel p{font-size:13px;line-height:1.5;color:#e6f2ff}
 
 .profile-card{
-display:flex;
-gap:12px;
-align-items:center;
-margin-top:10px;
-padding:12px;
-border-radius:15px;
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,213,107,.35);
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:12px;
+  margin:12px 0;
 }
 .profile-card img{
-width:72px;
-height:72px;
-border-radius:50%;
-object-fit:cover;
-border:2px solid #ffd56b;
-background:#061326;
+  width:76px;
+  height:76px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--gold);
+  background:#061326;
 }
-.profile-card strong{color:#ffd56b}
+.profile-card strong{color:var(--gold);font-size:17px}
+.profile-card span{font-size:12px;color:var(--soft)}
 
 .bottom{
-position:fixed;
-left:0;
-right:0;
-bottom:0;
-height:62px;
-background:rgba(0,5,15,.97);
-border-top:1px solid rgba(0,130,255,.75);
-display:flex;
-justify-content:space-around;
-align-items:center;
-z-index:150;
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:66px;
+  background:rgba(0,5,15,.98);
+  border-top:1px solid rgba(0,130,255,.75);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+  padding:7px;
+  z-index:150;
 }
-.bottom button{background:none;border:0;color:#a8b4c5;font-size:11px}
-.bottom button span{display:block;font-size:21px;margin-bottom:3px}
-.bottom button.active{color:#168cff}
-
-.overlay{
-display:none;
-position:fixed;
-inset:58px 0 0 0;
-background:rgba(0,0,0,.45);
-z-index:180;
+.bottom button{
+  border:0;
+  border-radius:16px;
+  background:rgba(255,255,255,.07);
+  color:#a8b4c5;
+  font-size:10px;
 }
-.overlay.show{display:block}
-
-/* LOGIN / REGISTRO */
+.bottom button span{display:block;font-size:20px;margin-bottom:2px}
+.bottom button.active{background:rgba(0,132,255,.18);color:var(--gold)}
+  /* LOGIN */
 .login-screen{
-position:fixed;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-background:linear-gradient(180deg,#04152f,#020713);
-z-index:99999;
-overflow:auto;
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:linear-gradient(180deg,#04152f,#020713);
+  z-index:99999;
+  overflow:auto;
 }
 
 .login-screen::before{
-content:"";
-position:absolute;
-inset:0;
-background:
-linear-gradient(rgba(0,25,70,.55),rgba(0,5,20,.90)),
-url("file_00000000c2f871f485def986ae1c9774.png") center center/cover no-repeat;
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,25,70,.58),rgba(0,5,20,.92)),
+    url("file_00000000c2f871f485def986ae1c9774.png") center/cover no-repeat;
 }
 
 .login-box{
-position:relative;
-z-index:2;
-width:100%;
-max-width:390px;
-padding:24px;
-border-radius:28px;
-background:rgba(5,18,45,.88);
-border:1px solid rgba(212,175,55,.45);
-text-align:center;
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:390px;
+  padding:24px;
+  border-radius:28px;
+  background:rgba(5,18,45,.9);
+  border:1px solid rgba(247,215,116,.45);
+  text-align:center;
 }
 
 .login-logo{
-width:90px;
-height:90px;
-object-fit:contain;
-margin:0 auto 12px;
-display:block;
+  width:92px;
+  height:92px;
+  object-fit:contain;
+  margin:0 auto 12px;
+  display:block;
 }
 
-.login-box h1{color:#d4af37;font-size:30px;margin-bottom:8px}
+.login-box h1{color:var(--gold);font-size:30px;margin-bottom:8px}
 .login-subtitle{color:#b9d6ff;font-size:14px;margin-bottom:18px}
 
 .login-tabs{display:flex;gap:8px;margin-bottom:12px}
 .login-tabs button{
-flex:1;
-border:none;
-border-radius:14px;
-padding:12px;
-font-weight:bold;
+  flex:1;
+  border:none;
+  border-radius:14px;
+  padding:12px;
+  font-weight:bold;
 }
 .tab-blue{background:linear-gradient(90deg,#005cff,#148bff);color:white}
 .tab-gold{background:linear-gradient(90deg,#d4af37,#ffcc55);color:#061326}
 
 .login-box input{
-width:100%;
-padding:15px;
-margin-top:12px;
-border-radius:16px;
-border:1px solid #0c63ff;
-background:#081b45;
-color:#fff;
-font-size:15px;
+  width:100%;
+  padding:15px;
+  margin-top:12px;
+  border-radius:16px;
+  border:1px solid #0c63ff;
+  background:#081b45;
+  color:#fff;
+  font-size:15px;
 }
 .login-box input::placeholder{color:#8fb7ff}
 
 .login-button{
-width:100%;
-margin-top:18px;
-padding:16px;
-border:none;
-border-radius:16px;
-background:linear-gradient(90deg,#005cff,#148bff);
-color:white;
-font-size:18px;
-font-weight:bold;
+  width:100%;
+  margin-top:18px;
+  padding:16px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(90deg,#005cff,#148bff);
+  color:white;
+  font-size:18px;
+  font-weight:bold;
 }
 
 .small-text{margin-top:15px;color:#c8d6ec;font-size:13px;line-height:1.4}
-.gold-text{margin-top:14px;color:#d4af37;font-size:14px}
-.hidden{display:none}
+.gold-text{margin-top:14px;color:var(--gold);font-size:14px}
+
+/* SALA */
+.sala-screen{display:none}
+.sala-screen.active{display:block}
+
+.sala-main{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.main-screen{
+  min-height:34vh;
+  border-radius:26px;
+  border:1px solid rgba(247,215,116,.35);
+  background:
+    linear-gradient(rgba(0,0,0,.05),rgba(0,0,0,.72)),
+    radial-gradient(circle at center,rgba(0,125,255,.55),rgba(3,8,18,.9) 64%);
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:flex-end;
+}
+
+.screen-avatar{
+  position:absolute;
+  top:36px;
+  left:50%;
+  transform:translateX(-50%);
+  width:122px;
+  height:122px;
+  border-radius:50%;
+  border:3px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#07111f;
+  overflow:hidden;
+}
+.screen-avatar img{width:100%;height:100%;object-fit:cover}
+.screen-avatar span{font-size:46px}
+
+.screen-status{
+  position:absolute;
+  top:14px;
+  left:14px;
+  font-size:11px;
+  font-weight:bold;
+  background:#e83252;
+  padding:7px 11px;
+  border-radius:999px;
+}
+
+.screen-info{padding:18px;position:relative}
+.screen-info h2{font-size:22px;margin-bottom:6px}
+.screen-info p{font-size:13px;line-height:1.35;color:var(--soft)}
+
+.media-panel{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  padding:12px;
+}
+.media-panel button{
+  border:none;
+  border-radius:15px;
+  padding:12px 8px;
+  background:rgba(255,255,255,.08);
+  color:#e8f0ff;
+  font-size:12px;
+}
+.media-panel button.active{
+  background:linear-gradient(135deg,var(--gold),#b98725);
+  color:#07111f;
+  font-weight:bold;
+}
+
+.mic-section{padding:12px}
+.section-title{color:var(--gold);margin-bottom:10px;font-weight:bold}
+
+.mic-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.mic{
+  min-height:120px;
+  border-radius:18px;
+  background:linear-gradient(180deg,rgba(18,52,92,.85),rgba(3,8,18,.96));
+  border:1px solid rgba(247,215,116,.2);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  font-size:10px;
+  color:var(--soft);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  padding:6px;
+}
+.mic.host{border-color:#2dff88}
+.mic.ocupada{border-color:var(--gold)}
+.mic.speaking{box-shadow:0 0 20px rgba(45,255,136,.55)}
+
+.mic-avatar{
+  width:50px;
+  height:50px;
+  border-radius:50%;
+  border:2px solid rgba(247,215,116,.7);
+  overflow:hidden;
+  background:#07111f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.mic-avatar img{width:100%;height:100%;object-fit:cover}
+.mic-avatar span{font-size:22px}
+.mic strong{color:var(--gold);font-size:11px}
+.mic .estado{font-size:9px;color:#9fc8ff}
+.mic .badge{
+  position:absolute;
+  top:5px;
+  right:5px;
+  background:rgba(0,0,0,.55);
+  border-radius:999px;
+  padding:3px 5px;
+  font-size:10px;
+}
+.mic-actions{
+  display:flex;
+  gap:4px;
+  margin-top:3px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.mic-actions button{
+  border:none;
+  border-radius:9px;
+  background:rgba(255,255,255,.1);
+  color:white;
+  font-size:9px;
+  padding:5px 6px;
+}
+
+.chat-box{
+  min-height:230px;
+  display:flex;
+  flex-direction:column;
+  padding:12px;
+}
+.chat-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+.chat-head h3{color:var(--gold)}
+.chat-head button{
+  border:none;
+  border-radius:999px;
+  padding:7px 10px;
+  color:#07111f;
+  background:linear-gradient(135deg,var(--gold),#b98725);
+}
+.messages{
+  flex:1;
+  max-height:180px;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+.msg{
+  background:rgba(255,255,255,.07);
+  padding:8px 10px;
+  border-radius:13px;
+  font-size:13px;
+  color:#e8f0ff;
+}
+.msg strong{color:var(--gold)}
+.chat-input{margin-top:10px;display:flex;gap:8px}
+.chat-input input{
+  flex:1;
+  border:none;
+  outline:none;
+  border-radius:15px;
+  padding:12px;
+  color:white;
+  background:rgba(255,255,255,.1);
+}
+.chat-input button{
+  width:50px;
+  border:none;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--gold),#b98725);
+  font-size:18px;
+}
+
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  z-index:100000;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.modal-bg.active{display:flex}
+.modal{
+  width:100%;
+  max-width:370px;
+  border-radius:24px;
+  background:#07111f;
+  border:1px solid rgba(247,215,116,.3);
+  padding:18px;
+}
+.modal h3{color:var(--gold);margin-bottom:10px}
+.modal p{white-space:pre-line;color:var(--soft);font-size:14px;line-height:1.4;margin-bottom:14px}
+.modal-actions{display:flex;gap:8px}
+.modal-actions button{flex:1;border:none;border-radius:14px;padding:12px}
+.cancel{background:rgba(255,255,255,.1);color:white}
+.ok{background:linear-gradient(135deg,var(--gold),#b98725);color:#07111f}
+
 </style>
 </head>
 <body>
 
 <div id="loginScreen" class="login-screen">
+  <div class="login-box">
+    <img src="file_00000000971871f48b6a36f7fcf68d51.png" class="login-logo">
 
-<div class="login-box">
+    <h1>Agencia JM Elite</h1>
+    <p class="login-subtitle">Acceso privado de la agencia</p>
 
-<img src="file_00000000971871f48b6a36f7fcf68d51.png" class="login-logo">
+    <div class="login-tabs">
+      <button class="tab-blue" onclick="showLogin()">Entrar</button>
+      <button class="tab-gold" onclick="showRegister()">Registrarse</button>
+    </div>
 
-<h1>Agencia JM Elite</h1>
+    <div id="loginForm">
+      <input id="loginUser" type="text" placeholder="Correo electrónico o teléfono">
+      <input id="loginPass" type="password" placeholder="Contraseña">
+      <button class="login-button" onclick="loginUserNow()">Iniciar sesión</button>
+      <p class="gold-text">¿Olvidaste tu contraseña?</p>
+    </div>
 
-<p class="login-subtitle">
-Acceso privado de la agencia
-</p>
+    <div id="registerForm" class="hidden">
+      <input id="regName" type="text" placeholder="Nombre completo">
+      <input id="regUser" type="text" placeholder="Correo electrónico o teléfono">
+      <input id="regPass" type="password" placeholder="Contraseña">
+      <input id="regCountry" type="text" placeholder="País">
+      <input id="regPhoto" type="file" accept="image/*">
+      <button class="login-button" onclick="registerUserNow()">Crear cuenta</button>
+    </div>
 
-<div class="login-tabs">
-<button class="tab-blue" onclick="showLogin()">Entrar</button>
-<button class="tab-gold" onclick="showRegister()">Registrarse</button>
-</div>
-
-<div id="loginForm">
-
-<input id="loginUser" type="text" placeholder="Correo electrónico o teléfono">
-
-<input id="loginPass" type="password" placeholder="Contraseña">
-
-<button class="login-button" onclick="loginUserNow()">
-Iniciar sesión
-</button>
-
-<p class="gold-text">
-¿Olvidaste tu contraseña?
-</p>
-
-</div>
-
-<div id="registerForm" class="hidden">
-
-<input id="regName" type="text" placeholder="Nombre completo">
-
-<input id="regUser" type="text" placeholder="Correo electrónico o teléfono">
-
-<input id="regPass" type="password" placeholder="Contraseña">
-
-<input id="regCountry" type="text" placeholder="País">
-
-<input id="regPhoto" type="file" accept="image/*">
-
-<button class="login-button" onclick="registerUserNow()">
-Crear cuenta
-</button>
-
-</div>
-
-<p class="small-text">
-Acceso exclusivo para miembros autorizados de Agencia JM Elite.
-</p>
-
-</div>
-
+    <p class="small-text">Acceso exclusivo para miembros autorizados de Agencia JM Elite.</p>
+  </div>
 </div>
 
 <div class="app">
 
 <header class="topbar">
+  <button class="icon-btn" onclick="toggleMenu()">☰</button>
 
-<button class="icon-btn" onclick="toggleMenu()">☰</button>
+  <div class="brand-title">
+    <h1>AGENCIA JM ELITE</h1>
+    <p>DISCIPLINA · ENFOQUE · RESULTADOS</p>
+  </div>
 
-<div class="brand-title">
-<h1>AGENCIA JM ELITE</h1>
-<p>DISCIPLINA · ENFOQUE · RESULTADOS</p>
-</div>
-
-<button class="icon-btn" onclick="showPanel('avisos')">🔔</button>
-
+  <button class="icon-btn" onclick="showSection('avisos')">🔔</button>
 </header>
-
-<div id="overlay" class="overlay" onclick="closeMenu()"></div>
-
-<aside class="sidebar" id="sidebar">
-
-<div class="side-logo">
-
-<img
-src="file_00000000971871f48b6a36f7fcf68d51.png"
-class="side-logo-img">
-
-</div>
-
-<div class="side-menu">
-
-<button class="active" onclick="showPanel('inicio')">🏠 Inicio</button>
-
-<button onclick="showPanel('panel')">📊 Panel</button>
-
-<button onclick="openSala()">🎙 Sala</button>
-
-<button onclick="showPanel('perfil')">👤 Mi perfil</button>
-
-<button onclick="showPanel('emisoras')">📡 Mis emisoras</button>
-
-<button onclick="showPanel('academia')">🎓 Academia</button>
-
-<button onclick="showPanel('pagos')">💰 Pagos</button>
-
-<button onclick="showPanel('ranking')">🏆 Ranking</button>
-
-<button onclick="showPanel('avisos')">📢 Avisos</button>
-
-<button onclick="showPanel('normas')">📜 Normas</button>
-
-<button onclick="showPanel('soporte')">🎧 Soporte</button>
-
-<button onclick="logoutJM()">🚪 Cerrar sesión</button>
-
-</div>
-
-</aside>
 
 <main class="content">
 
-<section class="hero">
+<section id="homeScreen">
 
-<div class="hero-banner">
+  <section class="hero">
+    <img src="file_00000000ea3871fdb1f5a962f6c6a80b.png" alt="Agencia JM Elite">
+  </section>
 
-<img src="file_00000000ea3871fdb1f5a962f6c6a80b.png">
+  <section class="notice">
+    <div class="nicon">📢</div>
+    <div>
+      <h3>Bienvenido</h3>
+      <p>Panel central de Agencia JM Elite.</p>
+    </div>
+  </section>
 
-</div>
+  <div id="profileCard" class="profile-card hidden">
+    <img id="profilePhoto" src="file_00000000971871f48b6a36f7fcf68d51.png">
+    <div>
+      <strong id="profileName">Invitado</strong><br>
+      <span id="profileRole">Rol: —</span><br>
+      <span id="profileCountry">País: —</span>
+    </div>
+  </div>
 
-</section>
+  <section class="grid">
+    <div class="card" onclick="showSection('perfil')">
+      <div class="emoji">👤</div><h3>Mi perfil</h3><p>Datos personales</p>
+    </div>
 
-<section class="notice">
+    <div class="card" onclick="showSala()">
+      <div class="emoji">🎙️</div><h3>Sala</h3><p>Entrar a directo</p>
+    </div>
 
-<div class="nicon">📢</div>
+    <div class="card" onclick="showSection('emisoras')">
+      <div class="emoji">📡</div><h3>Mis emisoras</h3><p>Gestión</p>
+    </div>
 
-<div>
+    <div class="card" onclick="showSection('academia')">
+      <div class="emoji">🎓</div><h3>Academia</h3><p>Formación</p>
+    </div>
 
-<h3>Bienvenido</h3>
+    <div class="card" onclick="showSection('pagos')">
+      <div class="emoji">💰</div><h3>Pagos</h3><p>Bonos</p>
+    </div>
 
-<p>
-Toda la información de la agencia estará disponible desde este panel.
-</p>
+    <div class="card" onclick="showSection('ranking')">
+      <div class="emoji">🏆</div><h3>Ranking</h3><p>Top</p>
+    </div>
+  </section>
 
-</div>
+  <section id="inicio" class="panel active">
+    <h2>Inicio</h2>
+    <p>Bienvenido a Agencia JM Elite. Desde aquí controlamos perfil, sala, emisoras, academia, pagos y soporte.</p>
+  </section>
 
-</section>
+  <section id="perfil" class="panel">
+    <h2>Mi perfil</h2>
+    <p id="perfilText">Aquí aparecerán tus datos registrados.</p>
+  </section>
 
-<div id="profileCard" class="profile-card hidden">
+  <section id="emisoras" class="panel">
+    <h2>Mis emisoras</h2>
+    <p>Listado y control de emisoras de la agencia.</p>
+  </section>
 
-<img id="profilePhoto"
-src="file_00000000971871f48b6a36f7fcf68d51.png">
+  <section id="academia" class="panel">
+    <h2>Academia</h2>
+    <p>Cursos, tareas, normas y formación para emisoras.</p>
+  </section>
 
-<div>
+  <section id="pagos" class="panel">
+    <h2>Pagos y bonos</h2>
+    <p>Zona de pagos, metas, comisiones y bonos.</p>
+  </section>
 
-<strong id="profileName">
-Invitado
-</strong>
+  <section id="ranking" class="panel">
+    <h2>Ranking</h2>
+    <p>Top de emisoras y resultados destacados.</p>
+  </section>
 
-<br>
+  <section id="avisos" class="panel">
+    <h2>Avisos</h2>
+    <p>Comunicados importantes de la agencia.</p>
+  </section>
 
-<span id="profileRole">
-Sin iniciar sesión
-</span>
+  <section id="soporte" class="panel">
+    <h2>Soporte</h2>
+    <p>Ayuda técnica y contacto con administración.</p>
+  </section>
 
-<br>
+                                                                                                                 </section>
+                                                                                                                 <section id="salaScreen" class="sala-screen">
 
-<span id="profileCountry">
-—
-</span>
+  <div class="sala-main">
 
-</div>
+    <section class="main-screen">
+      <div class="screen-status" id="screenStatus">● SALA EN VIVO</div>
 
-</div>
+      <div class="screen-avatar" id="screenAvatar">
+        <span>👑</span>
+      </div>
 
-<section class="grid">
+      <div class="screen-info">
+        <h2 id="screenTitle">Sala JM Elite</h2>
+        <p id="screenText">
+          Sala oficial para formación, reuniones, apoyo a emisoras y control de la comunidad.
+        </p>
+      </div>
+    </section>
 
-<div class="card" onclick="showPanel('perfil')">
-<div class="emoji">👤</div>
-<h3>Mi perfil</h3>
-<p>Editar datos</p>
-</div>
+    <section class="media-panel">
+      <button onclick="showHome()">🏠 Volver al inicio</button>
+      <button onclick="takeFreeSeat()">🎙️ Subir a silla</button>
+      <button id="btnMic" onclick="toggleMyMic()">🔇 Silenciar / Abrir</button>
+      <button id="btnCamera" onclick="toggleCamera()">📷 Cámara</button>
+    </section>
 
-<div class="card" onclick="openSala()">
-<div class="emoji">🎙</div>
-<h3>Sala</h3>
-<p>Entrar</p>
-</div>
+    <section class="notice">
+      <div class="nicon">📌</div>
+      <div>
+        <h3>Avisos de sala</h3>
+        <p>Respeto, orden y apoyo entre todas las emisoras.</p>
+      </div>
+    </section>
 
-<div class="card" onclick="showPanel('emisoras')">
-<div class="emoji">📡</div>
-<h3>Mis emisoras</h3>
-<p>Administrar</p>
-</div>
+    <section class="mic-section">
+      <div class="section-title">🎙️ Micrófonos de la sala</div>
+      <div class="mic-grid" id="micGrid"></div>
+    </section>
 
-<div class="card" onclick="showPanel('academia')">
-<div class="emoji">🎓</div>
-<h3>Academia</h3>
-<p>Cursos</p>
-</div>
+    <section class="chat-box">
+      <div class="chat-head">
+        <h3>💬 Chat de la sala</h3>
+        <button onclick="addSystemMessage('📌 Mensaje fijado preparado.')">📌 Fijar</button>
+      </div>
 
-<div class="card" onclick="showPanel('pagos')">
-<div class="emoji">💰</div>
-<h3>Pagos</h3>
-<p>Bonos</p>
-</div>
+      <div class="messages" id="messages">
+        <div class="msg"><strong>Sistema:</strong> Chat cargando...</div>
+      </div>
 
-<div class="card" onclick="showPanel('ranking')">
-<div class="emoji">🏆</div>
-<h3>Ranking</h3>
-<p>Top</p>
-</div>
-
-</section>
-
-<section id="inicio" class="panel active">
-<h2>Inicio</h2>
-<p>Bienvenido a Agencia JM Elite.</p>
-</section>
-
-<section id="panel" class="panel">
-<h2>Panel Principal</h2>
-<p>Resumen general.</p>
-</section>
-
-<section id="perfil" class="panel">
-<h2>Mi Perfil</h2>
-<p>Perfil del usuario.</p>
-</section>
-
-<section id="emisoras" class="panel">
-<h2>Mis Emisoras</h2>
-<p>Listado de emisoras.</p>
-</section>
-
-<section id="academia" class="panel">
-<h2>Academia</h2>
-<p>Formación.</p>
-</section>
-
-<section id="pagos" class="panel">
-<h2>Pagos</h2>
-<p>Bonos y comisiones.</p>
-</section>
-
-<section id="ranking" class="panel">
-<h2>Ranking</h2>
-<p>Top emisoras.</p>
-</section>
-
-<section id="avisos" class="panel">
-<h2>Avisos</h2>
-<p>Noticias.</p>
-</section>
-
-<section id="normas" class="panel">
-<h2>Normas</h2>
-<p>Normas oficiales.</p>
-</section>
-
-<section id="soporte" class="panel">
-<h2>Soporte</h2>
-<p>Ayuda técnica.</p>
-</section>
-
-</main>
-
-<nav class="bottom">
-
-<button class="active" onclick="showPanel('inicio')"><span>🏠</span>Inicio</button>
-
-<button onclick="openSala()"><span>🎙</span>Sala</button>
-
-<button onclick="showPanel('emisoras')"><span>📡</span>Emisoras</button>
-
-<button onclick="showPanel('avisos')"><span>💬</span>Chat</button>
-
-<button onclick="showPanel('perfil')"><span>👤</span>Perfil</button>
-
-</nav>
+      <div class="chat-input">
+        <input id="chatText" type="text" placeholder="Escribe un mensaje..." onkeydown="enterSend(event)">
+        <button onclick="sendMessage()">➤</button>
+      </div>
+    </section>
 
   </div>
-  <script>
-function normalizeName(name){
+
+</section>
+
+<nav class="bottom">
+  <button class="active" onclick="showHome()"><span>🏠</span>Inicio</button>
+  <button onclick="showSala()"><span>🎙️</span>Sala</button>
+  <button onclick="showSection('emisoras')"><span>📡</span>Emisoras</button>
+  <button onclick="showSection('avisos')"><span>💬</span>Avisos</button>
+  <button onclick="showSection('perfil')"><span>👤</span>Perfil</button>
+</nav>
+
+</main>
+</div>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3 id="modalTitle">Aviso</h3>
+    <p id="modalText">Mensaje del sistema.</p>
+    <div class="modal-actions">
+      <button class="cancel" onclick="closeModal()">Cerrar</button>
+      <button class="ok" id="modalOk" onclick="closeModal()">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp,
+  doc,
+  setDoc,
+  deleteDoc,
+  getDocs,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain: "agencia-jm-elite.firebaseapp.com",
+  projectId: "agencia-jm-elite",
+  storageBucket: "agencia-jm-elite.firebasestorage.app",
+  messagingSenderId: "171676205335",
+  appId: "1:171676205335:web:95443528659ab804fe7752"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const LOGO_APP = "file_00000000971871f48b6a36f7fcf68d51.png";
+
+let currentUser = null;
+let onlineUsers = [];
+let seats = {};
+let selectedSeat = 1;
+let cameraOn = false;
+
+const defaultSeats = [
+  {id:1, label:"Host", lockedHost:true},
+  {id:2, label:"Ruth", admin:true},
+  {id:3, label:"Yandira", admin:true},
+  {id:4, label:"Plaza 4"},
+  {id:5, label:"Plaza 5"},
+  {id:6, label:"Plaza 6"},
+  {id:7, label:"Plaza 7"},
+  {id:8, label:"Plaza 8"},
+  {id:9, label:"Plaza 9"},
+  {id:10, label:"Plaza 10"},
+  {id:11, label:"Plaza 11"},
+  {id:12, label:"Plaza 12"}
+];
+  function normalizeName(name){
   return String(name || "")
     .trim()
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
+}
+
+function escapeHtml(text){
+  const div = document.createElement("div");
+  div.textContent = text || "";
+  return div.innerHTML;
 }
 
 function getRoleByName(name){
@@ -579,13 +775,14 @@ function saveProfile(profile){
   localStorage.setItem("jm_profile", JSON.stringify(profile));
   localStorage.setItem("jm_logged", "yes");
 
-  localStorage.setItem("jm_user_id", profile.id);
-  localStorage.setItem("jm_user_name", profile.nombre);
-  localStorage.setItem("jm_user_role", profile.rol);
-  localStorage.setItem("jm_user_photo", profile.foto || "");
-  localStorage.setItem("jm_user_country", profile.pais || "");
+  currentUser = profile;
 
   updateProfileCard();
+
+  const login = document.getElementById("loginScreen");
+  if(login){
+    login.style.display = "none";
+  }
 }
 
 function registerUserNow(){
@@ -615,27 +812,14 @@ function registerUserNow(){
     };
 
     saveProfile(profile);
-
-
-const login = document.getElementById("loginScreen");
-if(login){
-  login.style.display = "none";
-}
-
-window.scrollTo(0,0);
-
-setTimeout(function(){
-  alert("Cuenta creada correctamente.");
-}, 100);
+    openModal("Cuenta creada", "Cuenta creada correctamente.");
   };
 
   if(photoFile){
     const reader = new FileReader();
-
     reader.onload = function(e){
       finishRegister(e.target.result);
     };
-
     reader.readAsDataURL(photoFile);
   }else{
     finishRegister("");
@@ -656,7 +840,7 @@ function loginUserNow(){
 
   if(saved.usuario === user && saved.pass === pass){
     saveProfile(saved);
-    document.getElementById("loginScreen").style.display = "none";
+    openModal("Bienvenido", "Inicio de sesión correcto.");
   }else{
     alert("Usuario o contraseña incorrectos.");
   }
@@ -664,67 +848,75 @@ function loginUserNow(){
 
 function logoutJM(){
   localStorage.removeItem("jm_logged");
+  currentUser = null;
 
   document.getElementById("loginScreen").style.display = "flex";
-
   showLogin();
+  showHome();
+}
+
+function loadProfile(){
+  const saved = JSON.parse(localStorage.getItem("jm_profile") || "null");
+
+  if(saved && localStorage.getItem("jm_logged") === "yes"){
+    currentUser = saved;
+    updateProfileCard();
+    document.getElementById("loginScreen").style.display = "none";
+  }else{
+    document.getElementById("loginScreen").style.display = "flex";
+  }
 }
 
 function updateProfileCard(){
-  const profile = JSON.parse(localStorage.getItem("jm_profile") || "null");
+  if(!currentUser) return;
 
-  if(!profile){
-    return;
-  }
+  const profileCard = document.getElementById("profileCard");
+  const profilePhoto = document.getElementById("profilePhoto");
+  const profileName = document.getElementById("profileName");
+  const profileRole = document.getElementById("profileRole");
+  const profileCountry = document.getElementById("profileCountry");
+  const perfilText = document.getElementById("perfilText");
 
-  const card = document.getElementById("profileCard");
-  const photo = document.getElementById("profilePhoto");
-  const name = document.getElementById("profileName");
-  const role = document.getElementById("profileRole");
-  const country = document.getElementById("profileCountry");
+  if(profileCard) profileCard.classList.remove("hidden");
+  if(profilePhoto) profilePhoto.src = currentUser.foto || LOGO_APP;
+  if(profileName) profileName.innerText = currentUser.nombre || "Usuario";
+  if(profileRole) profileRole.innerText = "Rol: " + (currentUser.rol || "emisora");
+  if(profileCountry) profileCountry.innerText = "País: " + (currentUser.pais || "Sin país");
 
-  if(card){
-    card.classList.remove("hidden");
-  }
-
-  if(photo){
-    photo.src = profile.foto || "file_00000000971871f48b6a36f7fcf68d51.png";
-  }
-
-  if(name){
-    name.innerText = profile.nombre || "Usuario";
-  }
-
-  if(role){
-    role.innerText = "Rol: " + (profile.rol || "emisora");
-  }
-
-  if(country){
-    country.innerText = "País: " + (profile.pais || "Sin país");
+  if(perfilText){
+    perfilText.innerText =
+      "Nombre: " + (currentUser.nombre || "Usuario") +
+      "\nRol: " + (currentUser.rol || "emisora") +
+      "\nPaís: " + (currentUser.pais || "Sin país") +
+      "\nUsuario: " + (currentUser.usuario || "Sin usuario");
   }
 }
 
-function toggleMenu(){
-  document.getElementById("sidebar").classList.toggle("open");
-  document.getElementById("overlay").classList.toggle("show");
+function showHome(){
+  document.getElementById("homeScreen").style.display = "block";
+  document.getElementById("salaScreen").classList.remove("active");
+  setActiveBottom(0);
 }
 
-function closeMenu(){
-  document.getElementById("sidebar").classList.remove("open");
-  document.getElementById("overlay").classList.remove("show");
-}
-
-function openSala(){
-  if(localStorage.getItem("jm_logged") !== "yes"){
-    alert("Primero inicia sesión.");
+function showSala(){
+  if(!currentUser){
+    openModal("Acceso privado", "Primero inicia sesión o crea una cuenta.");
     document.getElementById("loginScreen").style.display = "flex";
     return;
   }
-localStorage.setItem("jm_allow_sala","yes");
-  window.location.href = "sala.html";
+
+  document.getElementById("homeScreen").style.display = "none";
+  document.getElementById("salaScreen").classList.add("active");
+  setActiveBottom(1);
+
+  registerOnlineUser();
+  ensureUserSeatIfHost();
+  setMainScreenFromUser(currentUser, "● SALA EN VIVO");
 }
 
-function showPanel(id){
+function showSection(id){
+  showHome();
+
   document.querySelectorAll(".panel").forEach(function(panel){
     panel.classList.remove("active");
   });
@@ -734,21 +926,417 @@ function showPanel(id){
   if(panel){
     panel.classList.add("active");
   }
-
-  document.querySelectorAll(".side-menu button").forEach(function(btn){
-    btn.classList.remove("active");
-  });
-
-  closeMenu();
 }
 
-window.addEventListener("load", function(){
-  updateProfileCard();
+function setActiveBottom(index){
+  document.querySelectorAll(".bottom button").forEach(function(btn,i){
+    btn.classList.toggle("active", i === index);
+  });
+}
 
-  if(localStorage.getItem("jm_logged") === "yes"){
-    document.getElementById("loginScreen").style.display = "none";
-  }else{
-    document.getElementById("loginScreen").style.display = "flex";
+function toggleMenu(){
+  openModal(
+    "Menú",
+    "Usa los botones inferiores para moverte: Inicio, Sala, Emisoras, Avisos y Perfil.\n\nEl menú lateral lo añadiremos después si hace falta."
+  );
+}
+
+function imageOrIcon(src, alt, icon){
+  if(!src){
+    return `<span>${icon}</span>`;
+  }
+
+  return `<img src="${src}" alt="${alt}" onerror="this.style.display='none';this.parentElement.innerHTML='<span>${icon}</span>'">`;
+}
+
+function renderMessage(usuario, texto){
+  const messagesBox = document.getElementById("messages");
+  const msg = document.createElement("div");
+  msg.className = "msg";
+  msg.innerHTML = "<strong>" + escapeHtml(usuario) + ":</strong> " + escapeHtml(texto);
+  messagesBox.appendChild(msg);
+  messagesBox.scrollTop = messagesBox.scrollHeight;
+}
+
+function listenMessages(){
+  const q = query(collection(db, "mensajes"), orderBy("fecha", "asc"), limit(80));
+
+  onSnapshot(q, function(snapshot){
+    const messagesBox = document.getElementById("messages");
+    messagesBox.innerHTML = "";
+
+    snapshot.forEach(function(docItem){
+      const data = docItem.data();
+      renderMessage(data.usuario || "Usuario", data.texto || "");
+    });
+  }, function(error){
+    const messagesBox = document.getElementById("messages");
+    messagesBox.innerHTML = "";
+    renderMessage("Error", error.message);
+  });
+}
+
+async function sendMessage(){
+  const chatInput = document.getElementById("chatText");
+  const text = chatInput.value.trim();
+
+  if(!text) return;
+
+  if(!currentUser){
+    openModal("Chat privado", "Primero inicia sesión para escribir.");
+    return;
+  }
+
+  try{
+    await addDoc(collection(db, "mensajes"), {
+      usuario: currentUser.nombre,
+      texto: text,
+      fecha: serverTimestamp()
+    });
+
+    chatInput.value = "";
+  }catch(error){
+    openModal("Error del chat", error.message);
+  }
+}
+
+function enterSend(event){
+  if(event.key === "Enter"){
+    sendMessage();
+  }
+}
+
+async function addSystemMessage(text){
+  try{
+    await addDoc(collection(db, "mensajes"), {
+      usuario: "Sistema",
+      texto: text,
+      fecha: serverTimestamp()
+    });
+  }catch(error){}
+  }
+  async function registerOnlineUser(){
+  if(!currentUser) return;
+
+  await setDoc(doc(db, "usuarios_conectados", currentUser.id), {
+    id: currentUser.id,
+    nombre: currentUser.nombre,
+    rol: currentUser.rol,
+    foto: currentUser.foto || "",
+    estado: "conectado",
+    ultimaConexion: serverTimestamp()
+  });
+}
+
+function listenOnlineUsers(){
+  const q = query(collection(db, "usuarios_conectados"));
+
+  onSnapshot(q, function(snapshot){
+    onlineUsers = [];
+
+    snapshot.forEach(function(docItem){
+      onlineUsers.push(docItem.data());
+    });
+  });
+}
+
+async function cleanDuplicateSeatsForUser(){
+  if(!currentUser) return;
+
+  const snap = await getDocs(collection(db, "sala_sillas"));
+  const deletes = [];
+
+  snap.forEach(function(item){
+    const data = item.data();
+    if(data.userId === currentUser.id){
+      deletes.push(deleteDoc(doc(db, "sala_sillas", item.id)));
+    }
+  });
+
+  await Promise.all(deletes);
+}
+
+async function ensureUserSeatIfHost(){
+  if(!currentUser || currentUser.rol !== "host") return;
+
+  await cleanDuplicateSeatsForUser();
+
+  await setDoc(doc(db, "sala_sillas", "silla-1"), {
+    seatId: 1,
+    userId: currentUser.id,
+    nombre: currentUser.nombre,
+    rol: currentUser.rol,
+    foto: currentUser.foto || "",
+    muted: false,
+    camera: false,
+    speaking: false,
+    ocupado: true,
+    actualizado: serverTimestamp()
+  });
+}
+
+function listenSeats(){
+  const q = query(collection(db, "sala_sillas"));
+
+  onSnapshot(q, function(snapshot){
+    seats = {};
+
+    snapshot.forEach(function(item){
+      const data = item.data();
+      seats[data.seatId] = data;
+    });
+
+    renderSeats();
+  });
+}
+
+function renderSeats(){
+  const micGrid = document.getElementById("micGrid");
+  micGrid.innerHTML = "";
+
+  defaultSeats.forEach(function(seat){
+    const data = seats[seat.id];
+    const ocupado = data && data.ocupado;
+    const isMine = ocupado && currentUser && data.userId === currentUser.id;
+    const muted = ocupado ? data.muted : true;
+    const camera = ocupado ? data.camera : false;
+
+    const card = document.createElement("div");
+    card.className =
+      "mic" +
+      (seat.lockedHost ? " host" : "") +
+      (ocupado ? " ocupada" : "");
+
+    const avatarContent = ocupado
+      ? imageOrIcon(data.foto, data.nombre, data.rol === "host" ? "👑" : "🎙️")
+      : imageOrIcon(LOGO_APP, "Logo JM Elite", "🏛️");
+
+    let actions = "";
+
+    if(ocupado && isMine){
+      actions = `
+        <div class="mic-actions">
+          <button onclick="toggleMyMic()">${muted ? "🎙️ Abrir" : "🔇 Silenciar"}</button>
+          <button onclick="toggleCamera()">${camera ? "📷 Quitar" : "📷 Cámara"}</button>
+          ${!seat.lockedHost ? `<button onclick="leaveSeat(${seat.id})">Bajar</button>` : ""}
+        </div>`;
+    }else if(!ocupado && !seat.lockedHost){
+      actions = `<div class="mic-actions"><button onclick="takeSeat(${seat.id})">Subir</button></div>`;
+    }else if(ocupado && currentUser && currentUser.rol === "host"){
+      actions = `
+        <div class="mic-actions">
+          <button onclick="selectSeat(${seat.id})">Elegir</button>
+          <button onclick="inviteSeatToScreen(${seat.id})">Pantalla</button>
+        </div>`;
+    }
+
+    card.innerHTML = `
+      <div class="badge">${ocupado ? (muted ? "🔇" : "🎙️") : "Libre"}</div>
+      <div class="mic-avatar">${avatarContent}</div>
+      <strong>${ocupado ? escapeHtml(data.nombre) : escapeHtml(seat.label)}</strong>
+      <div>${ocupado ? escapeHtml(data.rol) : "Silla libre"}</div>
+      <div class="estado">
+        ${ocupado ? (muted ? "Silenciado" : "Micro abierto") : "Logo JM Elite"}
+        ${camera ? " · Cámara ON" : ""}
+      </div>
+      ${actions}
+    `;
+
+    card.onclick = function(e){
+      if(e.target.tagName.toLowerCase() === "button") return;
+      if(ocupado) selectSeat(seat.id);
+      else if(!seat.lockedHost) takeSeat(seat.id);
+    };
+
+    micGrid.appendChild(card);
+  });
+}
+
+async function takeSeat(seatId){
+  if(!currentUser){
+    openModal("Acceso privado", "Primero inicia sesión.");
+    return;
+  }
+
+  if(seatId === 1 && currentUser.rol !== "host"){
+    openModal("Silla reservada", "La silla principal es solo para Jesús / Host.");
+    return;
+  }
+
+  await cleanDuplicateSeatsForUser();
+
+  await setDoc(doc(db, "sala_sillas", "silla-" + seatId), {
+    seatId: seatId,
+    userId: currentUser.id,
+    nombre: currentUser.nombre,
+    rol: currentUser.rol,
+    foto: currentUser.foto || "",
+    muted: false,
+    camera: false,
+    speaking: false,
+    ocupado: true,
+    actualizado: serverTimestamp()
+  });
+
+  await addSystemMessage(currentUser.nombre + " subió a la silla " + seatId + ".");
+}
+
+async function takeFreeSeat(){
+  if(!currentUser){
+    openModal("Acceso privado", "Primero inicia sesión.");
+    return;
+  }
+
+  if(currentUser.rol === "host"){
+    await takeSeat(1);
+    return;
+  }
+
+  for(const seat of defaultSeats){
+    if(seat.id === 1) continue;
+    if(!seats[seat.id]){
+      await takeSeat(seat.id);
+      return;
+    }
+  }
+
+  openModal("Sala llena", "Ahora mismo no hay sillas libres.");
+}
+
+async function leaveSeat(seatId){
+  const data = seats[seatId];
+
+  if(!data || !currentUser || data.userId !== currentUser.id){
+    openModal("Aviso", "Solo puedes bajarte de tu propia silla.");
+    return;
+  }
+
+  if(seatId === 1 && currentUser.rol === "host"){
+    openModal("Host fijo", "La silla del host queda fija para Jesús.");
+    return;
+  }
+
+  await deleteDoc(doc(db, "sala_sillas", "silla-" + seatId));
+  await addSystemMessage(currentUser.nombre + " bajó de la silla " + seatId + ".");
+}
+
+function selectSeat(seatId){
+  const data = seats[seatId];
+  if(!data) return;
+
+  selectedSeat = seatId;
+  openModal("Silla seleccionada", data.nombre + " está seleccionada.");
+}
+
+async function toggleMyMic(){
+  let mySeatId = null;
+
+  Object.keys(seats).forEach(function(key){
+    if(currentUser && seats[key].userId === currentUser.id){
+      mySeatId = seats[key].seatId;
+    }
+  });
+
+  if(!mySeatId){
+    openModal("No estás en silla", "Primero tienes que subir a una silla.");
+    return;
+  }
+
+  const current = seats[mySeatId];
+  const newMuted = !current.muted;
+
+  await updateDoc(doc(db, "sala_sillas", "silla-" + mySeatId), {
+    muted: newMuted,
+    actualizado: serverTimestamp()
+  });
+}
+
+async function toggleCamera(){
+  let mySeatId = null;
+
+  Object.keys(seats).forEach(function(key){
+    if(currentUser && seats[key].userId === currentUser.id){
+      mySeatId = seats[key].seatId;
+    }
+  });
+
+  if(!mySeatId){
+    openModal("Cámara", "Primero sube a una silla.");
+    return;
+  }
+
+  const current = seats[mySeatId];
+  const newCamera = !current.camera;
+
+  await updateDoc(doc(db, "sala_sillas", "silla-" + mySeatId), {
+    camera: newCamera,
+    actualizado: serverTimestamp()
+  });
+}
+
+function setMainScreenFromUser(user,status){
+  const avatar = document.getElementById("screenAvatar");
+  avatar.innerHTML = user && user.foto
+    ? `<img src="${user.foto}">`
+    : "<span>👑</span>";
+
+  document.getElementById("screenStatus").innerText = status || "● SALA EN VIVO";
+  document.getElementById("screenTitle").innerText = user ? user.nombre + " en sala" : "Sala JM Elite";
+  document.getElementById("screenText").innerText = user
+    ? "Rol: " + user.rol + " · País: " + (user.pais || "Sin país")
+    : "Sala oficial de la agencia.";
+}
+
+function inviteSeatToScreen(seatId){
+  const data = seats[seatId];
+
+  if(!data){
+    openModal("Silla libre", "No hay nadie en esa silla.");
+    return;
+  }
+
+  setMainScreenFromUser(data, "📺 EN PANTALLA");
+}
+
+function openModal(title,text){
+  document.getElementById("modalTitle").innerText = title;
+  document.getElementById("modalText").innerText = text;
+  document.getElementById("modalBg").classList.add("active");
+}
+
+function closeModal(){
+  document.getElementById("modalBg").classList.remove("active");
+}
+
+window.showLogin = showLogin;
+window.showRegister = showRegister;
+window.registerUserNow = registerUserNow;
+window.loginUserNow = loginUserNow;
+window.logoutJM = logoutJM;
+window.showHome = showHome;
+window.showSala = showSala;
+window.showSection = showSection;
+window.toggleMenu = toggleMenu;
+window.sendMessage = sendMessage;
+window.enterSend = enterSend;
+window.takeFreeSeat = takeFreeSeat;
+window.takeSeat = takeSeat;
+window.leaveSeat = leaveSeat;
+window.toggleMyMic = toggleMyMic;
+window.toggleCamera = toggleCamera;
+window.selectSeat = selectSeat;
+window.inviteSeatToScreen = inviteSeatToScreen;
+window.closeModal = closeModal;
+window.addSystemMessage = addSystemMessage;
+
+loadProfile();
+listenMessages();
+listenSeats();
+listenOnlineUsers();
+
+window.addEventListener("beforeunload", function(){
+  if(currentUser){
+    deleteDoc(doc(db, "usuarios_conectados", currentUser.id));
   }
 });
 </script>
