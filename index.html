@@ -9,225 +9,72 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#020713;color:white}
 .hidden{display:none!important}
+:root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff}
 
-:root{
-  --blue:#168cff;
-  --gold:#f7d774;
-  --soft:#d9e5ff;
+.login{
+position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;
+padding:20px;background:linear-gradient(rgba(0,15,40,.65),rgba(0,0,0,.92)),url("file_00000000c2f871f485def986ae1c9774.png") center/cover no-repeat
 }
-
-/* LOGIN */
-.login-screen{
-  position:fixed;
-  inset:0;
-  z-index:999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:
-    linear-gradient(rgba(0,15,40,.65),rgba(0,0,0,.92)),
-    url("file_00000000c2f871f485def986ae1c9774.png") center/cover no-repeat;
-}
-
-.login-box{
-  width:100%;
-  max-width:390px;
-  padding:24px;
-  border-radius:28px;
-  background:rgba(5,18,45,.93);
-  border:1px solid rgba(247,215,116,.5);
-  text-align:center;
-}
-
-.logo{
-  width:92px;
-  height:92px;
-  object-fit:contain;
-  margin-bottom:12px;
-}
-
+.box{width:100%;max-width:390px;padding:24px;border-radius:28px;background:rgba(5,18,45,.94);border:1px solid rgba(247,215,116,.5);text-align:center}
+.logo{width:92px;height:92px;object-fit:contain;margin-bottom:12px}
 h1{color:var(--gold);font-size:30px;margin-bottom:8px}
-.subtitle{color:#b9d6ff;margin-bottom:16px}
-
+.sub{color:#b9d6ff;margin-bottom:16px}
 .tabs{display:flex;gap:8px;margin-bottom:12px}
-.tabs button{
-  flex:1;
-  border:0;
-  border-radius:15px;
-  padding:13px;
-  font-weight:bold;
-}
-
+button{cursor:pointer}
+.tabs button,.mainbtn{border:0;border-radius:16px;padding:14px;font-weight:bold;font-size:16px}
+.tabs button{flex:1}
 .blue{background:linear-gradient(90deg,#005cff,#148bff);color:white}
 .gold{background:linear-gradient(90deg,#d4af37,#ffcc55);color:#061326}
-
-input{
-  width:100%;
-  margin-top:12px;
-  padding:15px;
-  border-radius:16px;
-  border:1px solid var(--blue);
-  background:#081b45;
-  color:white;
-  font-size:15px;
-}
-
-.main-btn{
-  width:100%;
-  margin-top:16px;
-  padding:16px;
-  border:0;
-  border-radius:16px;
-  background:linear-gradient(90deg,#005cff,#148bff);
-  color:white;
-  font-weight:bold;
-  font-size:17px;
-}
-
+input{width:100%;margin-top:12px;padding:15px;border-radius:16px;border:1px solid var(--blue);background:#081b45;color:white;font-size:15px}
+.mainbtn{width:100%;margin-top:16px;background:linear-gradient(90deg,#005cff,#148bff);color:white}
 .small{margin-top:14px;color:var(--gold);font-size:14px}
 
-/* APP */
-.app{
-  min-height:100vh;
-  background:radial-gradient(circle at top,#0d58bd 0%,#061326 42%,#020713 100%);
-}
-
-.topbar{
-  height:60px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 14px;
-  background:rgba(0,0,0,.9);
-  border-bottom:1px solid var(--blue);
-}
-
-.icon{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  border:1px solid var(--blue);
-  background:#06162c;
-  color:white;
-  font-size:22px;
-}
-
-.brand{text-align:center}
-.brand h2{font-size:16px;color:var(--gold)}
-.brand p{font-size:9px;color:#9fc8ff;letter-spacing:1px}
-
-.menu{
-  position:fixed;
-  top:0;
-  left:-270px;
-  width:260px;
-  height:100vh;
-  z-index:50;
-  padding:20px;
-  background:#050b16;
-  border-right:1px solid var(--gold);
-  transition:.3s;
-}
-.menu.active{left:0}
-.menu h2{color:var(--gold);margin-bottom:20px}
-.menu button{
-  width:100%;
-  margin:7px 0;
-  padding:13px;
-  border:0;
-  border-radius:14px;
-  background:#0b1c38;
-  color:white;
-  text-align:left;
-}
-
+.app{min-height:100vh;background:radial-gradient(circle at top,#0d58bd 0%,#061326 42%,#020713 100%)}
+.topbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(0,0,0,.9);border-bottom:1px solid var(--blue)}
+.icon{width:42px;height:42px;border-radius:14px;border:1px solid var(--blue);background:#06162c;color:white;font-size:22px}
+.brand{text-align:center}.brand h2{font-size:16px;color:var(--gold)}.brand p{font-size:9px;color:#9fc8ff;letter-spacing:1px}
+.menu{position:fixed;top:0;left:-270px;width:260px;height:100vh;z-index:50;padding:20px;background:#050b16;border-right:1px solid var(--gold);transition:.3s}
+.menu.active{left:0}.menu h2{color:var(--gold);margin-bottom:20px}
+.menu button{width:100%;margin:7px 0;padding:13px;border:0;border-radius:14px;background:#0b1c38;color:white;text-align:left}
 .content{padding:14px}
-
-.hero{
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid rgba(247,215,116,.5);
-  margin-bottom:14px;
-}
+.hero{border-radius:22px;overflow:hidden;border:1px solid rgba(247,215,116,.5);margin-bottom:14px}
 .hero img{width:100%;display:block}
-
-.panel{
-  background:rgba(3,8,18,.84);
-  border:1px solid rgba(247,215,116,.28);
-  border-radius:20px;
-  padding:14px;
-  margin-bottom:14px;
-}
-.panel h2{color:var(--gold);margin-bottom:8px}
-.panel p{color:var(--soft);font-size:14px;line-height:1.5}
-
-.person{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:linear-gradient(180deg,#102644,#030813);
-  border:1px solid rgba(247,215,116,.28);
-  border-radius:18px;
-  padding:12px;
-  margin-top:10px;
-}
-
-.avatar{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  background:#07111f;
-  border:2px solid var(--gold);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-}
-
-.person strong{color:var(--gold);font-size:17px}
-.person span{color:var(--soft);font-size:13px}
-
-.logout{
-  width:100%;
-  margin-top:12px;
-  padding:13px;
-  border:0;
-  border-radius:14px;
-  background:var(--gold);
-  color:#07111f;
-  font-weight:bold;
-}
+.panel{background:rgba(3,8,18,.84);border:1px solid rgba(247,215,116,.28);border-radius:20px;padding:14px;margin-bottom:14px}
+.panel h2{color:var(--gold);margin-bottom:8px}.panel p{color:var(--soft);font-size:14px;line-height:1.5}
+.person{display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,#102644,#030813);border:1px solid rgba(247,215,116,.28);border-radius:18px;padding:12px;margin-top:10px}
+.avatar{width:64px;height:64px;border-radius:50%;background:#07111f;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:30px}
+.person strong{color:var(--gold);font-size:17px}.person span{color:var(--soft);font-size:13px}
+.logout{width:100%;margin-top:12px;padding:13px;border:0;border-radius:14px;background:var(--gold);color:#07111f;font-weight:bold}
 </style>
 </head>
 
 <body>
 
-<div id="loginScreen" class="login-screen">
-  <div class="login-box">
+<div id="loginScreen" class="login">
+  <div class="box">
     <img class="logo" src="file_00000000971871f48b6a36f7fcf68d51.png">
-
     <h1>Agencia JM Elite</h1>
-    <p class="subtitle">Acceso privado de la agencia</p>
+    <p class="sub">Acceso privado de la agencia</p>
 
     <div class="tabs">
-      <button class="blue" onclick="showLogin()">Entrar</button>
-      <button class="gold" onclick="showRegister()">Registrarse</button>
+      <button class="blue" onclick="mostrarLogin()">Entrar</button>
+      <button class="gold" onclick="mostrarRegistro()">Registrarse</button>
     </div>
 
     <div id="loginForm">
-      <input id="loginUser" placeholder="Correo electrónico o teléfono">
-      <input id="loginPass" type="password" placeholder="Contraseña">
-      <button class="main-btn" onclick="loginNow()">Iniciar sesión</button>
-      <p class="small">¿Olvidaste tu contraseña?</p>
+      <input id="loginEmail" type="email" placeholder="Correo electrónico">
+      <input id="loginPassword" type="password" placeholder="Contraseña">
+      <button class="mainbtn" onclick="iniciarSesion()">Iniciar sesión</button>
+      <p class="small" onclick="recuperarPassword()">¿Olvidaste tu contraseña?</p>
     </div>
 
     <div id="registerForm" class="hidden">
-      <input id="regName" placeholder="Nombre completo">
-      <input id="regUser" placeholder="Correo electrónico o teléfono">
-      <input id="regPass" type="password" placeholder="Contraseña">
-      <input id="regCountry" placeholder="País">
-      <button class="main-btn" onclick="registerNow()">Crear cuenta</button>
+      <input id="regNombre" placeholder="Nombre completo">
+      <input id="regEmail" type="email" placeholder="Correo electrónico">
+      <input id="regPassword" type="password" placeholder="Contraseña">
+      <input id="regPoppoId" placeholder="ID de Poppo">
+      <input id="regPais" placeholder="País">
+      <button class="mainbtn" onclick="registrarEmisora()">Crear cuenta</button>
     </div>
   </div>
 </div>
@@ -238,158 +85,179 @@ input{
   <button onclick="alert('Perfil preparado')">👤 Perfil</button>
   <button onclick="alert('Mis emisoras preparado')">📡 Mis emisoras</button>
   <button onclick="alert('Academia preparada')">🎓 Academia</button>
-  <button onclick="logoutJM()">🚪 Cerrar sesión</button>
+  <button onclick="cerrarSesion()">🚪 Cerrar sesión</button>
 </div>
 
 <div class="app">
-  <header class="topbar">
-    <button class="icon" onclick="toggleMenu()">☰</button>
-    <div class="brand">
-      <h2>AGENCIA JM ELITE</h2>
-      <p>DISCIPLINA · ENFOQUE · RESULTADOS</p>
-    </div>
-    <button class="icon" onclick="alert('Avisos preparado')">🔔</button>
-  </header>
+<header class="topbar">
+  <button class="icon" onclick="toggleMenu()">☰</button>
+  <div class="brand">
+    <h2>AGENCIA JM ELITE</h2>
+    <p>DISCIPLINA · ENFOQUE · RESULTADOS</p>
+  </div>
+  <button class="icon" onclick="alert('Avisos preparado')">🔔</button>
+</header>
 
-  <main class="content">
-    <section class="hero">
-      <img src="file_00000000c2f871f485def986ae1c9774.png">
-    </section>
+<main class="content">
+  <section class="hero">
+    <img src="file_00000000c2f871f485def986ae1c9774.png">
+  </section>
 
-    <section class="panel">
-      <h2>Inicio</h2>
-      <p>Bienvenido a Agencia JM Elite. Esta es la base limpia del proyecto. Primero comprobamos que login, registro, perfil y menú funcionen perfecto.</p>
-    </section>
+  <section class="panel">
+    <h2>Inicio</h2>
+    <p>Bienvenido a Agencia JM Elite. Base limpia con Firebase real funcionando.</p>
+  </section>
 
-    <section class="panel">
-      <h2>Mi perfil</h2>
-      <p id="profileText">No has iniciado sesión.</p>
-      <button class="logout" onclick="logoutJM()">Cerrar sesión</button>
-    </section>
+  <section class="panel">
+    <h2>Mi perfil</h2>
+    <p id="profileText">No has iniciado sesión.</p>
+    <button class="logout" onclick="cerrarSesion()">Cerrar sesión</button>
+  </section>
 
-    <section class="panel">
-      <h2>Equipo principal</h2>
-
-      <div class="person">
-        <div class="avatar">👑</div>
-        <div>
-          <strong>Jesús</strong><br>
-          <span>Host / Administrador principal</span>
-        </div>
-      </div>
-
-      <div class="person">
-        <div class="avatar">🌟</div>
-        <div>
-          <strong>Yandira</strong><br>
-          <span>Administradora de agencia</span>
-        </div>
-      </div>
-
-      <div class="person">
-        <div class="avatar">💎</div>
-        <div>
-          <strong>Ruth</strong><br>
-          <span>Administradora de agencia</span>
-        </div>
-      </div>
-    </section>
-  </main>
+  <section class="panel">
+    <h2>Equipo principal</h2>
+    <div class="person"><div class="avatar">👑</div><div><strong>Jesús</strong><br><span>Host / Administrador principal</span></div></div>
+    <div class="person"><div class="avatar">🌟</div><div><strong>Yandira</strong><br><span>Administradora de agencia</span></div></div>
+    <div class="person"><div class="avatar">💎</div><div><strong>Ruth</strong><br><span>Administradora de agencia</span></div></div>
+  </section>
+</main>
 </div>
 
-<script>
-let currentUser=null;
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-function showLogin(){
+const firebaseConfig = {
+  apiKey: "AIzaSyBLjbeb1x9a5cMb-iSEq4NfQu-5Sqtv63w",
+  authDomain: "agencia-jm-8076e.firebaseapp.com",
+  projectId: "agencia-jm-8076e",
+  storageBucket: "agencia-jm-8076e.firebasestorage.app",
+  messagingSenderId: "925714422714",
+  appId: "1:925714422714:web:a62c6c30738e759ecf9b83",
+  measurementId: "G-9O9H4ZDOMN"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const CORREO_CREADOR = "elpepolan35@gmail.com";
+
+window.mostrarLogin = function(){
   document.getElementById("loginForm").classList.remove("hidden");
   document.getElementById("registerForm").classList.add("hidden");
-}
+};
 
-function showRegister(){
+window.mostrarRegistro = function(){
   document.getElementById("loginForm").classList.add("hidden");
   document.getElementById("registerForm").classList.remove("hidden");
-}
+};
 
-function saveUser(profile){
-  currentUser=profile;
-  localStorage.setItem("jm_logged","yes");
-  localStorage.setItem("jm_profile",JSON.stringify(profile));
-  document.getElementById("loginScreen").style.display="none";
-  updateProfile();
-}
+window.registrarEmisora = async function(){
+  const nombre = document.getElementById("regNombre").value.trim();
+  const email = document.getElementById("regEmail").value.trim().toLowerCase();
+  const password = document.getElementById("regPassword").value.trim();
+  const poppoId = document.getElementById("regPoppoId").value.trim();
+  const pais = document.getElementById("regPais").value.trim();
 
-function loginNow(){
-  const user=document.getElementById("loginUser").value.trim();
-  const pass=document.getElementById("loginPass").value.trim();
-
-  if(!user || !pass){
-    alert("Pon correo/teléfono y contraseña.");
+  if(!nombre || !email || !password || !poppoId || !pais){
+    alert("Completa todos los datos.");
     return;
   }
 
-  saveUser({
-    name:user,
-    user:user,
-    country:"—",
-    role:user.toLowerCase().includes("jesus") ? "Host" : "Emisora"
-  });
-}
+  try{
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    const rol = email === CORREO_CREADOR ? "creador" : "emisora";
 
-function registerNow(){
-  const name=document.getElementById("regName").value.trim();
-  const user=document.getElementById("regUser").value.trim();
-  const pass=document.getElementById("regPass").value.trim();
-  const country=document.getElementById("regCountry").value.trim();
+    await setDoc(doc(db, "usuarios", cred.user.uid), {
+      uid: cred.user.uid,
+      nombre,
+      email,
+      poppoId,
+      pais,
+      rol,
+      estado: "activo",
+      creado: serverTimestamp()
+    });
 
-  if(!name || !user || !pass){
-    alert("Falta nombre, correo/teléfono o contraseña.");
+    alert("Cuenta creada correctamente.");
+  }catch(error){
+    alert("Error al registrar: " + error.message);
+  }
+};
+
+window.iniciarSesion = async function(){
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password = document.getElementById("loginPassword").value.trim();
+
+  if(!email || !password){
+    alert("Escribe correo y contraseña.");
     return;
   }
 
-  saveUser({
-    name:name,
-    user:user,
-    country:country || "—",
-    role:name.toLowerCase().includes("jesus") ? "Host" : "Emisora"
-  });
-}
-
-function updateProfile(){
-  if(!currentUser)return;
-
-  document.getElementById("profileText").innerHTML =
-    "Nombre: <b>"+currentUser.name+"</b><br>" +
-    "Usuario: <b>"+currentUser.user+"</b><br>" +
-    "País: <b>"+currentUser.country+"</b><br>" +
-    "Rol: <b>"+currentUser.role+"</b>";
-}
-
-function loadUser(){
-  const logged=localStorage.getItem("jm_logged");
-  const saved=localStorage.getItem("jm_profile");
-
-  if(logged==="yes" && saved){
-    currentUser=JSON.parse(saved);
-    document.getElementById("loginScreen").style.display="none";
-    updateProfile();
+  try{
+    await signInWithEmailAndPassword(auth, email, password);
+  }catch(error){
+    alert("Error al iniciar sesión: " + error.message);
   }
-}
+};
 
-function logoutJM(){
-  localStorage.removeItem("jm_logged");
-  localStorage.removeItem("jm_profile");
+window.recuperarPassword = async function(){
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  if(!email){
+    alert("Escribe tu correo para recuperar la contraseña.");
+    return;
+  }
+
+  try{
+    await sendPasswordResetEmail(auth, email);
+    alert("Correo de recuperación enviado.");
+  }catch(error){
+    alert("Error: " + error.message);
+  }
+};
+
+window.cerrarSesion = async function(){
+  await signOut(auth);
   location.reload();
-}
+};
 
-function toggleMenu(){
+window.toggleMenu = function(){
   document.getElementById("sideMenu").classList.toggle("active");
-}
+};
 
-function closeMenu(){
+window.closeMenu = function(){
   document.getElementById("sideMenu").classList.remove("active");
-}
+};
 
-loadUser();
+onAuthStateChanged(auth, async function(user){
+  if(!user){
+    document.getElementById("loginScreen").style.display = "flex";
+    return;
+  }
+
+  const ref = doc(db, "usuarios", user.uid);
+  const snap = await getDoc(ref);
+
+  let perfil = {
+    nombre: user.email,
+    email: user.email,
+    pais: "—",
+    rol: user.email === CORREO_CREADOR ? "creador" : "emisora"
+  };
+
+  if(snap.exists()){
+    perfil = snap.data();
+  }
+
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("profileText").innerHTML =
+    "Nombre: <b>" + (perfil.nombre || "—") + "</b><br>" +
+    "Correo: <b>" + (perfil.email || user.email) + "</b><br>" +
+    "País: <b>" + (perfil.pais || "—") + "</b><br>" +
+    "Rol: <b>" + (perfil.rol || "emisora") + "</b>";
+});
 </script>
 
 </body>
