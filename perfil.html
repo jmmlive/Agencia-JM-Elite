@@ -110,7 +110,11 @@ async function cargarPerfil(){
     const u = snap.data();
 
     if(u.fotoPerfil){
-      avatar.innerHTML = '<img src="' + u.fotoPerfil + '">';
+    if(u.fotoPerfil){
+  avatar.style.display = "flex";
+  avatar.innerHTML = '<img src="' + u.fotoPerfil + '">';
+}else{
+  avatar.style.display = "none";
     }
 
     if(u.fotoPortada){
