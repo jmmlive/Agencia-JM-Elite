@@ -111,7 +111,9 @@ window.cargarEmisoras = async function(){
 
   <div class="badge">🟢 Activa</div>
 `;
-
+card.onclick = () => {
+    location.href = "perfil.html?id=" + docu.id;
+};
       lista.appendChild(card);
     });
 
