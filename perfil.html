@@ -138,17 +138,22 @@ async function cargarPerfil(){
   }
 
   const u = snap.data();
+
 const avatar = document.getElementById("avatar");
 const cover = document.getElementById("cover");
 
-if(u.fotoPerfil){
-  avatar.innerHTML = `<img src="${u.fotoPerfil}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+if(u.fotoPerfil && avatar){
+  avatar.innerHTML = '<img src="' + u.fotoPerfil + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
 }
 
-if(u.fotoPortada){
-  cover.style.background = `linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.70)), url('${u.fotoPortada}') center/cover no-repeat`;
-  }
-  cont.className = "";
+if(u.fotoPortada && cover){
+  cover.style.backgroundImage = 'linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.70)), url("' + u.fotoPortada + '")';
+  cover.style.backgroundSize = "cover";
+  cover.style.backgroundPosition = "center";
+}
+
+cont.className = "";
+cont.innerHTML = `
   cont.innerHTML = `
     <section class="name">
       <h2>${u.nombre || "Emisora Elite"}</h2>
