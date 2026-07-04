@@ -228,6 +228,73 @@ color:var(--soft);
 margin-bottom:18px;
 line-height:1.5;
 }
+  .live-stage{
+position:relative;
+min-height:420px;
+background:radial-gradient(circle at center,#15304a,#030713 70%);
+border:2px solid rgba(247,215,116,.45);
+overflow:hidden;
+}
+
+.live-badge{
+position:absolute;
+top:18px;
+left:18px;
+background:#ff2f63;
+color:white;
+font-weight:bold;
+padding:10px 18px;
+border-radius:999px;
+font-size:16px;
+}
+
+.stage-menu{
+position:absolute;
+top:18px;
+right:18px;
+width:58px;
+height:58px;
+border:0;
+border-radius:18px;
+background:rgba(255,255,255,.08);
+color:var(--gold);
+font-size:34px;
+}
+
+.stage-avatar{
+width:128px;
+height:128px;
+border-radius:50%;
+border:4px solid var(--gold);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:58px;
+margin:52px auto 34px;
+box-shadow:0 0 35px rgba(247,215,116,.35);
+}
+
+.live-stage h2{
+font-size:30px;
+color:white;
+margin-bottom:12px;
+}
+
+.live-stage p{
+font-size:18px;
+color:var(--soft);
+line-height:1.35;
+}
+
+.stage-content{
+margin-top:18px;
+padding:14px;
+border-radius:18px;
+background:rgba(0,0,0,.28);
+border:1px solid rgba(22,140,255,.35);
+color:#d9e5ff;
+font-size:14px;
+  }
 </style>
 </head>
 <body>
@@ -246,13 +313,22 @@ line-height:1.5;
   <section class="hero">
     <img src="agencia-jm-equipo-banner.png" alt="Agencia JM Elite">
   </section>
-<section class="panel main-screen">
-  <h2>Pantalla principal</h2>
-  <div class="stage-screen">
-    <div class="stage-icon">📺</div>
-    <h3>Espacio central de la sala</h3>
-    <p>Aquí se podrá mostrar un aviso, una imagen, una transmisión o una pantalla compartida.</p>
-    <button class="main-btn" onclick="setMainScreen()">Publicar en pantalla</button>
+<section class="panel live-stage">
+  <div class="live-badge">● EN VIVO</div>
+
+  <button class="stage-menu" onclick="openStageMenu()">⋮</button>
+
+  <div class="stage-avatar">👑</div>
+
+  <h2>Jesús en pantalla principal</h2>
+
+  <p>
+    Sala oficial para formación, reuniones, apoyo a emisoras
+    y control de la comunidad JM Elite.
+  </p>
+
+  <div id="stageContent" class="stage-content">
+    Pantalla lista para compartir cámara, imagen, tarea o aviso.
   </div>
 </section>
   <section class="panel">
