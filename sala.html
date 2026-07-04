@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agencia JM Elite</title>
+<title>Sala Agencia JM Elite</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#020713;color:white}
 .hidden{display:none!important}
 
@@ -18,364 +18,302 @@ body{background:#020713;color:white}
   --soft:#d9e5ff;
 }
 
-.login{
-  position:fixed;
-  inset:0;
-  z-index:99;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:
-    linear-gradient(rgba(0,10,30,.65),rgba(0,0,0,.92)),
-    url("file_00000000c2f871f485def986ae1c9774.png") center/cover no-repeat;
-}
-
-.login-box{
-  width:100%;
-  max-width:390px;
-  padding:24px;
-  border-radius:28px;
-  background:rgba(5,18,45,.92);
-  border:1px solid rgba(247,215,116,.45);
-  text-align:center;
-}
-
-.logo{
-  width:90px;
-  height:90px;
-  object-fit:contain;
-  margin-bottom:12px;
-}
-
-h1{color:var(--gold);font-size:30px;margin-bottom:8px}
-.subtitle{color:#b9d6ff;margin-bottom:16px}
-
-.tabs{display:flex;gap:8px;margin-bottom:12px}
-.tabs button,.main-btn{
-  border:0;
-  border-radius:16px;
-  padding:14px;
-  font-weight:bold;
-  font-size:16px;
-}
-.tabs button{flex:1}
-.blue{background:linear-gradient(90deg,#005cff,#148bff);color:white}
-.gold{background:linear-gradient(90deg,#d4af37,#ffcc55);color:#061326}
-
-input{
-  width:100%;
-  margin-top:12px;
-  padding:15px;
-  border-radius:16px;
-  border:1px solid #168cff;
-  background:#081b45;
-  color:white;
-  font-size:15px;
-}
-
-.main-btn{
-  width:100%;
-  margin-top:16px;
-  background:linear-gradient(90deg,#005cff,#148bff);
-  color:white;
-}
-
-.app{min-height:100vh;background:radial-gradient(circle at top,#0d58bd 0%,#061326 40%,#020713 100%)}
-
 .topbar{
-  height:60px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 14px;
-  background:rgba(0,0,0,.9);
-  border-bottom:1px solid var(--blue);
+  position:sticky;top:0;z-index:50;
+  height:74px;background:#020713;
+  border-bottom:2px solid var(--blue);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 18px;
 }
 
 .icon{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  border:1px solid var(--blue);
-  background:#06162c;
-  color:white;
-  font-size:22px;
+  width:54px;height:54px;border-radius:15px;
+  border:2px solid var(--blue);
+  background:#061427;color:white;
+  font-size:28px;
+  box-shadow:0 0 15px rgba(22,140,255,.7);
 }
 
 .brand{text-align:center}
-.brand h2{font-size:16px;color:var(--gold)}
-.brand p{font-size:9px;color:#9fc8ff;letter-spacing:1px}
+.brand h1{font-size:20px;color:var(--gold);letter-spacing:1px}
+.brand p{font-size:12px;color:#9ecbff;letter-spacing:2px;margin-top:4px}
 
-.menu{
-  position:fixed;
-  top:0;
-  left:-270px;
-  width:260px;
-  height:100vh;
-  background:#050b16;
-  border-right:1px solid var(--gold);
-  z-index:50;
-  padding:20px;
-  transition:.3s;
+.wrap{
+  padding:16px;
+  max-width:780px;
+  margin:auto;
+  padding-bottom:90px;
 }
-.menu.active{left:0}
-.menu h2{color:var(--gold);margin-bottom:20px}
-.menu button{
-  width:100%;
-  margin:7px 0;
-  padding:13px;
-  border:0;
-  border-radius:14px;
-  background:#0b1c38;
-  color:white;
-  text-align:left;
-}
-
-.content{padding:14px}
 
 .hero{
-  border-radius:22px;
+  border:1px solid rgba(247,215,116,.55);
+  border-radius:26px;
   overflow:hidden;
-  border:1px solid rgba(247,215,116,.5);
-  margin-bottom:14px;
+  margin-bottom:16px;
+  background:#061427;
 }
 .hero img{width:100%;display:block}
 
-.panel,.profile{
-  background:rgba(3,8,18,.82);
-  border:1px solid rgba(247,215,116,.28);
-  border-radius:20px;
-  padding:14px;
-  margin-bottom:14px;
+.panel{
+  background:#050c18;
+  border:1px solid rgba(247,215,116,.4);
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:16px;
 }
 
-.panel h2{color:var(--gold);margin-bottom:8px}
-.panel p{color:var(--soft);font-size:14px;line-height:1.5}
-
-.people{
-  display:grid;
-  gap:12px;
+.panel h2{
+  color:var(--gold);
+  font-size:27px;
+  margin-bottom:8px;
 }
 
-.person{
+.panel p{
+  color:var(--soft);
+  font-size:15px;
+  line-height:1.4;
+}
+
+.room-title{
   display:flex;
   align-items:center;
-  gap:12px;
-  background:linear-gradient(180deg,#102644,#030813);
-  border:1px solid rgba(247,215,116,.28);
-  border-radius:18px;
-  padding:12px;
+  justify-content:space-between;
+  gap:10px;
 }
 
-.avatar{
-  width:64px;
-  height:64px;
-  border-radius:50%;
-  background:#07111f;
-  border:2px solid var(--gold);
+.badge{
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(22,140,255,.18);
+  border:1px solid rgba(22,140,255,.55);
+  color:#9ecbff;
+  font-weight:bold;
+  font-size:13px;
+}
+
+.mic-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:14px;
+}
+
+.mic{
+  min-height:95px;
+  border-radius:18px;
+  background:linear-gradient(#09213e,#030814);
+  border:1px solid rgba(247,215,116,.35);
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  font-size:30px;
+  text-align:center;
+  padding:10px;
 }
 
-.person strong{color:var(--gold);font-size:17px}
-.person span{color:var(--soft);font-size:13px}
+.mic .emoji{font-size:30px;margin-bottom:5px}
+.mic strong{color:var(--gold);font-size:14px}
+.mic span{color:var(--soft);font-size:12px;margin-top:3px}
 
-.logout{
-  background:#f7d774;
-  color:#07111f;
+.gifts{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:12px;
+}
+
+.gift{
+  border:1px solid rgba(247,215,116,.4);
+  background:#081b35;
+  color:white;
+  border-radius:14px;
+  padding:10px 6px;
+  font-size:22px;
+}
+
+.chat-box{
+  height:280px;
+  overflow-y:auto;
+  background:#020713;
+  border:1px solid rgba(22,140,255,.45);
+  border-radius:18px;
+  padding:12px;
+  margin-top:12px;
+}
+
+.msg{
+  background:#081b35;
+  border:1px solid rgba(247,215,116,.18);
+  border-radius:14px;
+  padding:9px 10px;
+  margin-bottom:8px;
+}
+
+.msg strong{color:var(--gold)}
+.msg span{color:var(--soft);font-size:14px}
+
+.chat-form{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.chat-form input{
+  flex:1;
+  padding:13px;
+  border-radius:14px;
+  border:1px solid var(--blue);
+  background:#07111f;
+  color:white;
+  outline:none;
+}
+
+.chat-form button,.main-btn{
   border:0;
   border-radius:14px;
-  padding:12px;
+  padding:13px 16px;
+  background:linear-gradient(90deg,#e9bd28,#ffd86b);
+  color:#07111f;
   font-weight:bold;
-  width:100%;
-  margin-top:10px;
+}
+
+.bottom-nav{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:#020713;
+  border-top:2px solid var(--blue);
+  display:flex;
+  justify-content:space-around;
+  padding:8px 0 10px;
+  z-index:60;
+}
+
+.bottom-nav button{
+  background:transparent;
+  border:0;
+  color:#d9e5ff;
+  font-size:12px;
+}
+
+.bottom-nav span{
+  display:block;
+  font-size:25px;
+  margin-bottom:2px;
 }
 </style>
 </head>
-
 <body>
 
-<div id="loginScreen" class="login">
-  <div class="login-box">
-    <img class="logo" src="file_00000000971871f48b6a36f7fcf68d51.png">
-
-    <h1>Agencia JM Elite</h1>
-    <p class="subtitle">Acceso privado de la agencia</p>
-
-    <div class="tabs">
-      <button class="blue" onclick="showLogin()">Entrar</button>
-      <button class="gold" onclick="showRegister()">Registrarse</button>
-    </div>
-
-    <div id="loginForm">
-      <input id="loginUser" placeholder="Correo electrónico o teléfono">
-      <input id="loginPass" type="password" placeholder="Contraseña">
-      <button class="main-btn" onclick="loginNow()">Iniciar sesión</button>
-    </div>
-
-    <div id="registerForm" class="hidden">
-      <input id="regName" placeholder="Nombre completo">
-      <input id="regUser" placeholder="Correo electrónico o teléfono">
-      <input id="regPass" type="password" placeholder="Contraseña">
-      <input id="regCountry" placeholder="País">
-      <button class="main-btn" onclick="registerNow()">Crear cuenta</button>
-    </div>
+<header class="topbar">
+  <button class="icon" onclick="location.href='index.html'">←</button>
+  <div class="brand">
+    <h1>SALA JM ELITE</h1>
+    <p>CHAT · REGALOS · EQUIPO</p>
   </div>
-</div>
+  <button class="icon" onclick="alert('Avisos preparado')">🔔</button>
+</header>
 
-<div id="sideMenu" class="menu">
-  <h2>JM Elite</h2>
-  <button onclick="closeMenu()">🏠 Inicio</button>
-  <button onclick="alert('Perfil preparado')">👤 Perfil</button>
-  <button onclick="alert('Mis emisoras preparado')">📡 Mis emisoras</button>
-  <button onclick="alert('Academia preparada')">🎓 Academia</button>
-  <button onclick="logoutJM()">🚪 Cerrar sesión</button>
-</div>
+<div class="wrap">
 
-<div class="app">
-  <header class="topbar">
-    <button class="icon" onclick="toggleMenu()">☰</button>
-    <div class="brand">
-      <h2>AGENCIA JM ELITE</h2>
-      <p>DISCIPLINA · ENFOQUE · RESULTADOS</p>
-    </div>
-    <button class="icon" onclick="alert('Avisos preparado')">🔔</button>
-  </header>
+  <section class="hero">
+    <img src="agencia-jm-equipo-banner.png" alt="Agencia JM Elite">
+  </section>
 
-  <main class="content">
-    <section class="hero">
-      <img src="file_00000000c2f871f485def986ae1c9774.png" alt="Agencia JM Elite">
-    </section>
-
-    <section class="panel">
-      <h2>Inicio</h2>
-      <p>Bienvenido a Agencia JM Elite. Esta es una versión limpia de prueba para comprobar que GitHub Pages publica bien y que el inicio de sesión funciona.</p>
-    </section>
-
-    <section class="profile">
-      <h2 style="color:var(--gold);margin-bottom:8px">Mi perfil</h2>
-      <p id="profileText" style="color:var(--soft)">No has iniciado sesión.</p>
-      <button class="logout" onclick="logoutJM()">Cerrar sesión</button>
-    </section>
-
-    <section class="panel">
-      <h2>Equipo principal</h2>
-      <div class="people">
-        <div class="person">
-          <div class="avatar">👑</div>
-          <div><strong>Jesús</strong><br><span>Host / Administrador principal</span></div>
-        </div>
-
-        <div class="person">
-          <div class="avatar">🌟</div>
-          <div><strong>Yandira</strong><br><span>Administradora de agencia</span></div>
-        </div>
-
-        <div class="person">
-          <div class="avatar">💎</div>
-          <div><strong>Ruth</strong><br><span>Administradora de agencia</span></div>
-        </div>
+  <section class="panel">
+    <div class="room-title">
+      <div>
+        <h2>Sala principal</h2>
+        <p>Espacio oficial para reuniones, mensajes, regalos y coordinación del equipo.</p>
       </div>
-    </section>
-  </main>
+      <div class="badge">EN VIVO</div>
+    </div>
+
+    <div class="mic-grid">
+      <div class="mic"><div class="emoji">👑</div><strong>Jesús</strong><span>Host</span></div>
+      <div class="mic"><div class="emoji">🌟</div><strong>Yandira</strong><span>Admin</span></div>
+      <div class="mic"><div class="emoji">💎</div><strong>Ruth</strong><span>Admin</span></div>
+      <div class="mic"><div class="emoji">🎙️</div><strong>Libre</strong><span>Micrófono</span></div>
+      <div class="mic"><div class="emoji">🎙️</div><strong>Libre</strong><span>Micrófono</span></div>
+      <div class="mic"><div class="emoji">🎙️</div><strong>Libre</strong><span>Micrófono</span></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Regalos</h2>
+    <p>Envía un detalle simbólico a la sala.</p>
+
+    <div class="gifts">
+      <button class="gift" onclick="sendGift('🌹 Rosa')">🌹</button>
+      <button class="gift" onclick="sendGift('💎 Diamante')">💎</button>
+      <button class="gift" onclick="sendGift('👑 Corona')">👑</button>
+      <button class="gift" onclick="sendGift('🔥 Fuego')">🔥</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Chat de la sala</h2>
+
+    <div id="chatBox" class="chat-box">
+      <div class="msg"><strong>Sistema</strong><br><span>Bienvenido a la Sala JM Elite.</span></div>
+    </div>
+
+    <div class="chat-form">
+      <input id="chatInput" type="text" placeholder="Escribe tu mensaje...">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </section>
+
 </div>
 
+<nav class="bottom-nav">
+  <button onclick="location.href='index.html'"><span>🏠</span>Inicio</button>
+  <button onclick="scrollToTop()"><span>🎙️</span>Sala</button>
+  <button onclick="focusChat()"><span>💬</span>Chat</button>
+  <button onclick="alert('Regalos preparados')"><span>🎁</span>Regalos</button>
+</nav>
 <script>
-let currentUser = null;
-
-function showLogin(){
-  document.getElementById("loginForm").classList.remove("hidden");
-  document.getElementById("registerForm").classList.add("hidden");
+function getUserName(){
+  try{
+    const profile = JSON.parse(localStorage.getItem("jm_profile") || "{}");
+    return profile.name || profile.nombre || profile.user || "Usuario";
+  }catch(e){
+    return "Usuario";
+  }
 }
 
-function showRegister(){
-  document.getElementById("loginForm").classList.add("hidden");
-  document.getElementById("registerForm").classList.remove("hidden");
+function addChat(name,text){
+  const box = document.getElementById("chatBox");
+  const div = document.createElement("div");
+  div.className = "msg";
+  div.innerHTML = "<strong>" + name + "</strong><br><span>" + text + "</span>";
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
 }
 
-function saveUser(profile){
-  currentUser = profile;
-  localStorage.setItem("jm_logged","yes");
-  localStorage.setItem("jm_profile",JSON.stringify(profile));
-  document.getElementById("loginScreen").style.display = "none";
-  updateProfile();
-}
+function sendMessage(){
+  const input = document.getElementById("chatInput");
+  const text = input.value.trim();
 
-function loginNow(){
-  const user = document.getElementById("loginUser").value.trim();
-  const pass = document.getElementById("loginPass").value.trim();
-
-  if(!user || !pass){
-    alert("Pon correo/teléfono y contraseña.");
+  if(!text){
+    alert("Escribe un mensaje.");
     return;
   }
 
-  saveUser({
-    name:user,
-    user:user,
-    country:"—",
-    role:user.toLowerCase().includes("jesus") ? "Host" : "Emisora"
-  });
+  addChat(getUserName(), text);
+  input.value = "";
 }
 
-function registerNow(){
-  const name = document.getElementById("regName").value.trim();
-  const user = document.getElementById("regUser").value.trim();
-  const pass = document.getElementById("regPass").value.trim();
-  const country = document.getElementById("regCountry").value.trim();
-
-  if(!name || !user || !pass){
-    alert("Falta nombre, correo/teléfono o contraseña.");
-    return;
-  }
-
-  saveUser({
-    name:name,
-    user:user,
-    country:country || "—",
-    role:name.toLowerCase().includes("jesus") ? "Host" : "Emisora"
-  });
+function sendGift(gift){
+  addChat(getUserName(), "envió " + gift + " a la sala.");
 }
 
-function updateProfile(){
-  if(!currentUser) return;
-
-  document.getElementById("profileText").innerHTML =
-    "Nombre: <b>" + currentUser.name + "</b><br>" +
-    "Usuario: <b>" + currentUser.user + "</b><br>" +
-    "País: <b>" + currentUser.country + "</b><br>" +
-    "Rol: <b>" + currentUser.role + "</b>";
+function focusChat(){
+  document.getElementById("chatInput").focus();
 }
 
-function loadUser(){
-  const logged = localStorage.getItem("jm_logged");
-  const saved = localStorage.getItem("jm_profile");
-
-  if(logged === "yes" && saved){
-    currentUser = JSON.parse(saved);
-    document.getElementById("loginScreen").style.display = "none";
-    updateProfile();
-  }
+function scrollToTop(){
+  window.scrollTo({top:0,behavior:"smooth"});
 }
-
-function logoutJM(){
-  localStorage.removeItem("jm_logged");
-  localStorage.removeItem("jm_profile");
-  location.reload();
-}
-
-function toggleMenu(){
-  document.getElementById("sideMenu").classList.toggle("active");
-}
-
-function closeMenu(){
-  document.getElementById("sideMenu").classList.remove("active");
-}
-
-loadUser();
 </script>
 
 </body>
