@@ -153,7 +153,22 @@ async function cargarPerfil(){
       <div class="row"><span>✉️ Correo</span><b>${u.email || "No indicado"}</b></div>
       <div class="row"><span>🎙️ Estado</span><b>${u.estado || "activo"}</b></div>
     </section>
-
+<section class="card">
+  <h3>🛡️ Estado del perfil</h3>
+  <div class="row">
+    <span>Revisión</span>
+    <b>${
+      u.estadoRevision === "aprobado" ? "🟢 Aprobado" :
+      u.estadoRevision === "rechazado" ? "🔴 Rechazado" :
+      "🟡 Pendiente"
+    }</b>
+  </div>
+  <p class="bio">${
+    u.estadoRevision === "aprobado" ? "Este perfil ya fue aprobado por la administración." :
+    u.estadoRevision === "rechazado" ? "Este perfil necesita cambios antes de publicarse." :
+    "Tu perfil está esperando revisión del administrador."
+  }</p>
+</section>
     <section class="card">
       <h3>📝 Presentación</h3>
       <p class="bio">${u.descripcion || "Esta emisora todavía no ha escrito su presentación. Muy pronto podrá personalizar su perfil con una descripción, redes sociales y foto oficial."}</p>
