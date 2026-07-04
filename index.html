@@ -356,10 +356,12 @@ window.cerrarSesion = async function(){
 
 window.toggleMenu = function(){
   document.getElementById("sideMenu").classList.toggle("active");
+  document.body.style.overflow = "hidden";
 };
 
 window.closeMenu = function(){
   document.getElementById("sideMenu").classList.remove("active");
+  document.body.style.overflow = "auto";
 };
 
 onAuthStateChanged(auth, async function(user){
