@@ -163,7 +163,7 @@ color:#d9e5ff;
 
 <button onclick="closeMenu()">🏠 Inicio</button>
 
-<button onclick="location.href='sala-pro.html'">🎙️ Sala</button>
+<button onclick="alert('Sala Pro preparada. Siguiente fase.')">🎙️ Sala</button>
 
 <button onclick="location.href='emisoras.html'">👥 Mis emisoras</button>
 
@@ -392,7 +392,14 @@ document.getElementById("loginScreen").style.display = "none";
   }
 
   document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("profileText").innerHTML =
+  const profileBox = document.getElementById("profileText");
+if(profileBox){
+  profileBox.innerHTML =
+    "Nombre: <b>" + (perfil.nombre || "—") + "</b><br>" +
+    "Correo: <b>" + (perfil.email || user.email) + "</b><br>" +
+    "País: <b>" + (perfil.pais || "—") + "</b><br>" +
+    "Rol: <b>" + (perfil.rol || "emisora") + "</b>";
+}
     "Nombre: <b>" + (perfil.nombre || "—") + "</b><br>" +
     "Correo: <b>" + (perfil.email || user.email) + "</b><br>" +
     "País: <b>" + (perfil.pais || "—") + "</b><br>" +
