@@ -4,46 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Perfil Elite</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#020713;color:white}
 :root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff}
+
 .topbar{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#020713;border-bottom:2px solid var(--blue)}
 .icon{width:52px;height:52px;border-radius:16px;border:1px solid var(--blue);background:#07162c;color:white;font-size:24px}
 .title{text-align:center}.title h1{color:var(--gold);font-size:24px}.title p{color:var(--soft);font-size:13px}
-.avatar{
-position:absolute;
-bottom:-55px;
-width:116px;
-height:116px;
-border-radius:50%;
-border:4px solid var(--gold);
-background:#07162c;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:54px;
-overflow:hidden;
-box-shadow:0 0 25px rgba(22,140,255,.8);
-}
 
-.avatar img{
-width:100%;
-height:100%;
-object-fit:cover;
-border-radius:50%;
-display:block;
-}
-  }
+.cover{height:210px;margin:16px;border-radius:28px;border:1px solid rgba(247,215,116,.45);background:radial-gradient(circle at top,#168cff,#07162c 45%,#020713);position:relative;display:flex;align-items:flex-end;justify-content:center}
+.cover:before{content:"JM";position:absolute;font-size:125px;font-weight:bold;color:rgba(255,255,255,.04);top:28px}
+
+.avatar{position:absolute;bottom:-55px;width:116px;height:116px;border-radius:50%;border:4px solid var(--gold);background:#07162c;display:none;align-items:center;justify-content:center;font-size:54px;overflow:hidden;box-shadow:0 0 25px rgba(22,140,255,.8)}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+
 .content{padding:62px 16px 90px}
-.name{text-align:center;margin-bottom:18px}.name h2{font-size:32px;color:var(--gold)}.name p{color:var(--soft);margin-top:5px}
+.name{text-align:center;margin-bottom:18px}
+.name h2{font-size:32px;color:var(--gold)}
+.name p{color:var(--soft);margin-top:5px}
+
 .card{background:linear-gradient(180deg,#102644,#030813);border:1px solid rgba(247,215,116,.35);border-radius:24px;padding:18px;margin-bottom:14px}
 .card h3{color:var(--gold);font-size:21px;margin-bottom:12px}
 .row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.row:last-child{border-bottom:0}.row span{color:var(--soft)}.row b{text-align:right}
+.row:last-child{border-bottom:0}
+.row span{color:var(--soft)}
+.row b{text-align:right}
 .bio{color:var(--soft);font-size:15px;line-height:1.55}
+
 .socials{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .social{padding:14px;border-radius:16px;background:#07162c;border:1px solid rgba(22,140,255,.55);text-align:center;color:var(--soft);font-weight:bold}
+
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
 .btn{border:0;border-radius:18px;padding:16px;font-size:16px;font-weight:bold}
 .blue{background:linear-gradient(90deg,#005cff,#148bff);color:white}
@@ -55,7 +47,7 @@ display:block;
 <body>
 
 <header class="topbar">
-  <button class="icon" onclick="location.replace('emisoras.html')">←</button>
+  <button class="icon" onclick="location.href='emisoras.html'">←</button>
   <div class="title">
     <h1>PERFIL ELITE</h1>
     <p>Ficha oficial de emisora</p>
@@ -64,7 +56,7 @@ display:block;
 </header>
 
 <section class="cover" id="cover">
-  <div class="avatar" id="avatar">👤</div>
+  <div class="avatar" id="avatar"></div>
 </section>
 
 <main class="content">
@@ -91,6 +83,7 @@ const db = getFirestore(app);
 
 const params = new URLSearchParams(window.location.search);
 let perfilId = params.get("id");
+
 const cont = document.getElementById("perfilContenido");
 const avatar = document.getElementById("avatar");
 const cover = document.getElementById("cover");
@@ -99,7 +92,6 @@ async function cargarPerfil(){
   try{
     const user = auth.currentUser;
     const idFinal = perfilId || user.uid;
-
     const snap = await getDoc(doc(db, "usuarios", idFinal));
 
     if(!snap.exists()){
@@ -109,12 +101,12 @@ async function cargarPerfil(){
 
     const u = snap.data();
 
-    
     if(u.fotoPerfil){
-  avatar.style.display = "flex";
-  avatar.innerHTML = '<img src="' + u.fotoPerfil + '">';
-}else{
-  avatar.style.display = "none";
+      avatar.style.display = "flex";
+      avatar.innerHTML = '<img src="' + u.fotoPerfil + '">';
+    }else{
+      avatar.style.display = "none";
+      avatar.innerHTML = "";
     }
 
     if(u.fotoPortada){
@@ -166,7 +158,7 @@ async function cargarPerfil(){
 
       <div class="actions">
         <button class="btn blue" onclick="alert('Chat privado próximamente')">💬 Mensaje</button>
-        <button class="btn gold" onclick="location.replace('editar-perfil.html')">📝 Editar perfil</button>
+        <button class="btn gold" onclick="location.href='editar-perfil.html'">📝 Editar perfil</button>
       </div>
     `;
   }catch(error){
