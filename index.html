@@ -33,9 +33,41 @@ input{width:100%;margin-top:12px;padding:15px;border-radius:16px;border:1px soli
 .topbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(0,0,0,.9);border-bottom:1px solid var(--blue)}
 .icon{width:42px;height:42px;border-radius:14px;border:1px solid var(--blue);background:#06162c;color:white;font-size:22px}
 .brand{text-align:center}.brand h2{font-size:16px;color:var(--gold)}.brand p{font-size:9px;color:#9fc8ff;letter-spacing:1px}
-.menu{position:fixed;top:0;left:-270px;width:260px;height:100vh;z-index:50;padding:20px;background:#050b16;border-right:1px solid var(--gold);transition:.3s}
-.menu.active{left:0}.menu h2{color:var(--gold);margin-bottom:20px}
-.menu button{width:100%;margin:7px 0;padding:13px;border:0;border-radius:14px;background:#0b1c38;color:white;text-align:left}
+.menu{
+position:fixed;
+top:0;
+left:-340px;
+width:320px;
+height:100%;
+overflow-y:auto;
+background:linear-gradient(180deg,#061326,#020b18);
+border-right:2px solid #f7d774;
+transition:left .35s ease;
+z-index:999;
+box-shadow:8px 0 30px rgba(0,0,0,.6);
+}
+
+.menu.active{
+left:0;
+}
+
+.menu button{
+width:100%;
+margin:8px 0;
+padding:15px;
+background:#10284b;
+border:1px solid rgba(247,215,116,.20);
+border-radius:16px;
+color:#fff;
+font-size:16px;
+text-align:left;
+transition:.25s;
+}
+
+.menu button:hover{
+background:#18457b;
+transform:translateX(4px);
+}
 .content{padding:14px}
 .hero{border-radius:22px;overflow:hidden;border:1px solid rgba(247,215,116,.5);margin-bottom:14px}
 .hero img{width:100%;display:block}
