@@ -200,6 +200,34 @@ body{background:#020713;color:white}
   font-size:25px;
   margin-bottom:2px;
 }
+  .main-screen{
+margin-bottom:16px;
+}
+
+.stage-screen{
+background:linear-gradient(#0b2346,#040b18);
+border:2px solid rgba(247,215,116,.35);
+border-radius:22px;
+padding:30px 20px;
+text-align:center;
+}
+
+.stage-icon{
+font-size:70px;
+margin-bottom:15px;
+}
+
+.stage-screen h3{
+color:var(--gold);
+margin-bottom:10px;
+font-size:24px;
+}
+
+.stage-screen p{
+color:var(--soft);
+margin-bottom:18px;
+line-height:1.5;
+}
 </style>
 </head>
 <body>
@@ -218,7 +246,15 @@ body{background:#020713;color:white}
   <section class="hero">
     <img src="agencia-jm-equipo-banner.png" alt="Agencia JM Elite">
   </section>
-
+<section class="panel main-screen">
+  <h2>Pantalla principal</h2>
+  <div class="stage-screen">
+    <div class="stage-icon">📺</div>
+    <h3>Espacio central de la sala</h3>
+    <p>Aquí se podrá mostrar un aviso, una imagen, una transmisión o una pantalla compartida.</p>
+    <button class="main-btn" onclick="setMainScreen()">Publicar en pantalla</button>
+  </div>
+</section>
   <section class="panel">
     <div class="room-title">
       <div>
