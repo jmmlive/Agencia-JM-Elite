@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar Perfil - Agencia JM Elite</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#020713;color:white}
+:root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff}
+.topbar{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#020713;border-bottom:2px solid var(--blue)}
+.icon{width:52px;height:52px;border-radius:16px;border:1px solid var(--blue);background:#07162c;color:white;font-size:24px}
+.title{text-align:center}.title h1{font-size:22px;color:var(--gold)}.title p{font-size:12px;color:var(--soft)}
+.content{padding:16px 16px 90px}
+.card{background:linear-gradient(180deg,#102644,#030813);border:1px solid rgba(247,215,116,.35);border-radius:24px;padding:18px;margin-bottom:14px}
+.card h2{color:var(--gold);margin-bottom:12px}
+label{display:block;color:var(--soft);margin-top:12px;font-size:14px}
+input,textarea{width:100%;margin-top:7px;padding:14px;border-radius:15px;border:1px solid var(--blue);background:#07162c;color:white;font-size:15px}
+textarea{min-height:110px;resize:none}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:16px;color:var(--soft);line-height:1.4}
+.check input{width:auto;margin-top:3px}
+.btn{width:100%;border:0;border-radius:18px;padding:16px;margin-top:14px;font-size:17px;font-weight:bold;background:linear-gradient(90deg,#d4af37,#ffcc55);color:#07111f}
+.small{color:#ffcf7a;font-size:13px;margin-top:10px;line-height:1.4}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <button class="icon" onclick="location.replace('perfil.html')">←</button>
+  <div class="title">
+    <h1>EDITAR PERFIL</h1>
+    <p>Personaliza tu ficha Elite</p>
+  </div>
+  <button class="icon" onclick="guardarPerfil()">✓</button>
+</header>
+
+<main class="content">
+
+<section class="card">
+  <h2>👤 Datos principales</h2>
+
+  <label>Nombre visible</label>
+  <input id="nombre" placeholder="Ej: Ruth María">
+
+  <label>País</label>
+  <input id="pais" placeholder="Ej: Cuba">
+
+  <label>ID de Poppo</label>
+  <input id="poppoId" placeholder="Ej: 123456">
+
+  <label>Descripción</label>
+  <textarea id="descripcion" placeholder="Escribe una presentación bonita para tu perfil..."></textarea>
+</section>
+
+<section class="card">
+  <h2>🖼️ Imágenes</h2>
+
+  <label>Foto de perfil URL</label>
+  <input id="fotoPerfil" placeholder="Pega aquí el enlace de tu foto">
+
+  <label>Portada URL</label>
+  <input id="fotoPortada" placeholder="Pega aquí el enlace de tu portada">
+
+  <p class="small">Luego haremos subida directa de fotos. De momento usamos enlace para probar rápido.</p>
+</section>
+
+<section class="card">
+  <h2>📲 Redes sociales</h2>
+
+  <label>WhatsApp</label>
+  <input id="whatsapp" placeholder="Número o enlace">
+
+  <label>Instagram</label>
+  <input id="instagram" placeholder="@usuario o enlace">
+
+  <label>TikTok</label>
+  <input id="tiktok" placeholder="@usuario o enlace">
+
+  <label>Facebook</label>
+  <input id="facebook" placeholder="Perfil o enlace">
+</section>
+
+<section class="card">
+  <h2>🛡️ Normas de Agencia JM Elite</h2>
+  <p class="small">
+    No se permiten fotos provocativas, desnudos, drogas, violencia, insultos, contenido ilegal
+    o cualquier cosa que dañe la imagen de la agencia.
+  </p>
+
+  <label class="check">
+    <input id="aceptaNormas" type="checkbox">
+    <span>Acepto las normas de Agencia JM Elite y entiendo que mi perfil puede quedar pendiente de revisión.</span>
+  </label>
+
+  <button class="btn" onclick="guardarPerfil()">Guardar perfil</button>
+</section>
+
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain: "agencia-jm-elite.firebaseapp.com",
+  projectId: "agencia-jm-elite",
+  storageBucket: "agencia-jm-elite.firebasestorage.app",
+  messagingSenderId: "171676205335",
+  appId: "1:171676205335:web:95443528659ab804fe7752"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let usuarioActual = null;
+
+function valor(id){
+  return document.getElementById(id).value.trim();
+}
+
+onAuthStateChanged(auth, async function(user){
+  if(!user){
+    location.replace("index.html");
+    return;
+  }
+
+  usuarioActual = user;
+
+  const ref = doc(db, "usuarios", user.uid);
+  const snap = await getDoc(ref);
+
+  if(snap.exists()){
+    const u = snap.data();
+    document.getElementById("nombre").value = u.nombre || "";
+    document.getElementById("pais").value = u.pais || "";
+    document.getElementById("poppoId").value = u.poppoId || "";
+    document.getElementById("descripcion").value = u.descripcion || "";
+    document.getElementById("fotoPerfil").value = u.fotoPerfil || "";
+    document.getElementById("fotoPortada").value = u.fotoPortada || "";
+    document.getElementById("whatsapp").value = u.whatsapp || "";
+    document.getElementById("instagram").value = u.instagram || "";
+    document.getElementById("tiktok").value = u.tiktok || "";
+    document.getElementById("facebook").value = u.facebook || "";
+    document.getElementById("aceptaNormas").checked = u.aceptaNormas === true;
+  }
+});
+
+window.guardarPerfil = async function(){
+  if(!usuarioActual){
+    alert("No hay sesión iniciada.");
+    return;
+  }
+
+  if(!document.getElementById("aceptaNormas").checked){
+    alert("Debes aceptar las normas de la agencia.");
+    return;
+  }
+
+  const ref = doc(db, "usuarios", usuarioActual.uid);
+
+  await setDoc(ref, {
+    uid: usuarioActual.uid,
+    email: usuarioActual.email,
+    nombre: valor("nombre"),
+    pais: valor("pais"),
+    poppoId: valor("poppoId"),
+    descripcion: valor("descripcion"),
+    fotoPerfil: valor("fotoPerfil"),
+    fotoPortada: valor("fotoPortada"),
+    whatsapp: valor("whatsapp"),
+    instagram: valor("instagram"),
+    tiktok: valor("tiktok"),
+    facebook: valor("facebook"),
+    aceptaNormas: true,
+    estadoRevision: "pendiente",
+    actualizado: serverTimestamp()
+  }, { merge:true });
+
+  alert("Perfil guardado correctamente.");
+  location.replace("perfil.html?id=" + usuarioActual.uid);
+};
+</script>
+
+</body>
+</html>
