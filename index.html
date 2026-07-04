@@ -276,7 +276,7 @@ onAuthStateChanged(auth, async function(user){
     document.getElementById("loginScreen").style.display = "flex";
     return;
   }
-
+document.getElementById("loginScreen").style.display = "none";
   const ref = doc(db, "usuarios", user.uid);
   const snap = await getDoc(ref);
 
