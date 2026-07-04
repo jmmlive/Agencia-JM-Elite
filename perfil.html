@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil Emisora - Agencia JM Elite</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#020713;color:white}
+:root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff}
+
+.topbar{
+height:70px;display:flex;align-items:center;justify-content:space-between;
+padding:0 16px;background:#020713;border-bottom:2px solid var(--blue)
+}
+.icon{
+width:52px;height:52px;border-radius:16px;border:1px solid var(--blue);
+background:#07162c;color:white;font-size:24px
+}
+.title{text-align:center}
+.title h1{font-size:23px;color:var(--gold)}
+.title p{font-size:12px;color:var(--soft)}
+
+.cover{
+height:190px;margin:16px;border-radius:28px;
+background:linear-gradient(rgba(0,20,50,.25),rgba(0,0,0,.75)),
+radial-gradient(circle at top,#168cff,#07162c 45%,#020713);
+border:1px solid rgba(247,215,116,.45);
+display:flex;align-items:end;justify-content:center;
+position:relative;overflow:hidden
+}
+.cover:before{
+content:"JM";position:absolute;font-size:120px;font-weight:bold;
+color:rgba(255,255,255,.04);top:20px
+}
+.avatar{
+position:absolute;bottom:-52px;width:112px;height:112px;border-radius:50%;
+border:4px solid var(--gold);background:#07162c;
+display:flex;align-items:center;justify-content:center;
+font-size:58px;box-shadow:0 0 25px rgba(22,140,255,.7)
+}
+
+.content{padding:58px 16px 90px}
+.name{text-align:center;margin-bottom:18px}
+.name h2{font-size:32px;color:var(--gold)}
+.name p{color:var(--soft);font-size:15px;margin-top:5px}
+
+.card{
+background:linear-gradient(180deg,#102644,#030813);
+border:1px solid rgba(247,215,116,.35);
+border-radius:24px;padding:18px;margin-bottom:14px;
+box-shadow:0 0 18px rgba(0,0,0,.35)
+}
+.card h3{color:var(--gold);font-size:20px;margin-bottom:12px}
+.row{
+display:flex;justify-content:space-between;gap:12px;
+padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08)
+}
+.row:last-child{border-bottom:0}
+.row span{color:var(--soft)}
+.row b{color:white;text-align:right}
+
+.bio{
+color:var(--soft);line-height:1.55;font-size:15px
+}
+
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.btn{
+border:0;border-radius:18px;padding:15px;font-size:15px;font-weight:bold
+}
+.blue{background:linear-gradient(90deg,#005cff,#148bff);color:white}
+.gold{background:linear-gradient(90deg,#d4af37,#ffcc55);color:#07111f}
+
+.socials{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.social{
+padding:14px;border-radius:16px;background:#07162c;
+border:1px solid rgba(22,140,255,.55);
+text-align:center;color:var(--soft);font-weight:bold
+}
+.empty{text-align:center;color:var(--soft);padding:30px}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <button class="icon" onclick="location.replace('emisoras.html')">←</button>
+  <div class="title">
+    <h1>PERFIL ELITE</h1>
+    <p>Ficha oficial de emisora</p>
+  </div>
+  <button class="icon" onclick="location.reload()">⟳</button>
+</header>
+
+<section class="cover">
+  <div class="avatar" id="avatar">👤</div>
+</section>
+
+<main class="content">
+  <div id="perfilContenido" class="empty">Cargando perfil...</div>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain: "agencia-jm-elite.firebaseapp.com",
+  projectId: "agencia-jm-elite",
+  storageBucket: "agencia-jm-elite.firebasestorage.app",
+  messagingSenderId: "171676205335",
+  appId: "1:171676205335:web:95443528659ab804fe7752"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const params = new URLSearchParams(window.location.search);
+const perfilId = params.get("id");
+const cont = document.getElementById("perfilContenido");
+
+async function cargarPerfil(){
+  if(!perfilId){
+    cont.innerHTML = "No se encontró el perfil.";
+    return;
+  }
+
+  const ref = doc(db, "usuarios", perfilId);
+  const snap = await getDoc(ref);
+
+  if(!snap.exists()){
+    cont.innerHTML = "Este perfil no existe.";
+    return;
+  }
+
+  const u = snap.data();
+
+  cont.className = "";
+  cont.innerHTML = `
+    <section class="name">
+      <h2>${u.nombre || "Emisora Elite"}</h2>
+      <p>${u.rol || "emisora"} · Agencia JM Elite</p>
+    </section>
+
+    <section class="card">
+      <h3>✨ Información principal</h3>
+      <div class="row"><span>🌍 País</span><b>${u.pais || "No indicado"}</b></div>
+      <div class="row"><span>🆔 Poppo ID</span><b>${u.poppoId || "No indicado"}</b></div>
+      <div class="row"><span>✉️ Correo</span><b>${u.email || "No indicado"}</b></div>
+      <div class="row"><span>🎙️ Estado</span><b>${u.estado || "activo"}</b></div>
+    </section>
+
+    <section class="card">
+      <h3>📝 Presentación</h3>
+      <p class="bio">${u.descripcion || "Esta emisora todavía no ha escrito su presentación. Muy pronto podrá personalizar su perfil con una descripción, redes sociales y foto oficial."}</p>
+    </section>
+
+    <section class="card">
+      <h3>📲 Redes y contacto</h3>
+      <div class="socials">
+        <div class="social">WhatsApp</div>
+        <div class="social">Instagram</div>
+        <div class="social">TikTok</div>
+        <div class="social">Facebook</div>
+      </div>
+    </section>
+
+    <div class="actions">
+      <button class="btn blue" onclick="alert('Chat privado preparado para la siguiente fase')">💬 Mensaje</button>
+      <button class="btn gold" onclick="alert('Editar perfil será la próxima mejora')">✏️ Editar perfil</button>
+    </div>
+  `;
+}
+
+onAuthStateChanged(auth, function(user){
+  if(!user){
+    location.replace("index.html");
+    return;
+  }
+  cargarPerfil();
+});
+</script>
+
+</body>
+  </html>
