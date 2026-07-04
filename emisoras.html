@@ -92,14 +92,7 @@ window.cargarEmisoras = async function(){
   location.href = "perfil.html?id=" + docu.id;
 };
 
-      card.innerHTML = `
-        <div class="avatar">👤</div>
-        <div class="info">
-          <h3>${u.nombre || "Sin nombre"}</h3>
-          <p>🌍 País: ${u.pais || "—"}</p>
-          <p>🆔 Poppo ID: ${u.poppoId || "—"}</p>
-          <p>✉️ ${u.email || "—"}</p>
-        </div>
+      
         card.innerHTML = `
   <div class="avatar">
     ${u.fotoPerfil ? '<img src="' + u.fotoPerfil + '">' : '👤'}
