@@ -90,40 +90,78 @@ text-align:center;color:var(--soft);font-weight:bold
     <h1>PERFIL ELITE</h1>
     <p>Ficha oficial de emisora</p>
   </div>
-  <button class="icon" onclick="location.reload()">⟳</button>
-</header>
+  async function cargarPerfil(){
+  try{
+    const idFinal = perfilId || auth.currentUser.uid;
 
-<section class="cover" id="cover">
-  <div class="avatar" id="avatar">👤</div>
-</section>
+    const ref = doc(db, "usuarios", idFinal);
+    const snap = await getDoc(ref);
 
-<main class="content">
-  <div id="perfilContenido" class="empty">Cargando perfil...</div>
-</main>
+    if(!snap.exists()){
+      cont.innerHTML = "Este perfil no existe.";
+      return;
+    }
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    const u = snap.data();
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain: "agencia-jm-elite.firebaseapp.com",
-  projectId: "agencia-jm-elite",
-  storageBucket: "agencia-jm-elite.firebasestorage.app",
-  messagingSenderId: "171676205335",
-  appId: "1:171676205335:web:95443528659ab804fe7752"
-};
+    const avatar = document.getElementById("avatar");
+    const cover = document.getElementById("cover");
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    if(u.fotoPerfil && avatar){
+      avatar.innerHTML = '<img src="' + u.fotoPerfil + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    }
 
-const params = new URLSearchParams(window.location.search);
-const perfilId = params.get("id");
-const cont = document.getElementById("perfilContenido");
+    if(u.fotoPortada && cover){
+      cover.style.backgroundImage = 'linear-gradient(rgba(0,0,0,.15),rgba(0,0,0,.70)), url("' + u.fotoPortada + '")';
+      cover.style.backgroundSize = "cover";
+      cover.style.backgroundPosition = "center";
+    }
 
-async function cargarPerfil(){
+    cont.className = "";
+    cont.innerHTML = `
+      <section class="name">
+        <h2>${u.nombre || "Emisora Elite"}</h2>
+        <p>${u.rol || "emisora"} · Agencia JM Elite</p>
+      </section>
+
+      <section class="card">
+        <h3>✨ Información principal</h3>
+        <div class="row"><span>🌍 País</span><b>${u.pais || "No indicado"}</b></div>
+        <div class="row"><span>🆔 Poppo ID</span><b>${u.poppoId || "No indicado"}</b></div>
+        <div class="row"><span>✉️ Correo</span><b>${u.email || "No indicado"}</b></div>
+        <div class="row"><span>🎙️ Estado</span><b>${u.estado || "activo"}</b></div>
+      </section>
+
+      <section class="card">
+        <h3>🛡️ Estado del perfil</h3>
+        <div class="row"><span>Revisión</span><b>${u.estadoRevision === "aprobado" ? "🟢 Aprobado" : u.estadoRevision === "rechazado" ? "🔴 Rechazado" : "🟡 Pendiente"}</b></div>
+        <p class="bio">${u.estadoRevision === "aprobado" ? "Este perfil ha sido aprobado por la administración." : u.estadoRevision === "rechazado" ? "Este perfil necesita correcciones antes de publicarse." : "Tu perfil está esperando revisión del administrador."}</p>
+      </section>
+
+      <section class="card">
+        <h3>📝 Presentación</h3>
+        <p class="bio">${u.descripcion || "Esta emisora todavía no ha escrito su presentación."}</p>
+      </section>
+
+      <section class="card">
+        <h3>📲 Redes y contacto</h3>
+        <div class="socials">
+          <div class="social">WhatsApp</div>
+          <div class="social">Instagram</div>
+          <div class="social">TikTok</div>
+          <div class="social">Facebook</div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="btn blue" onclick="alert('Chat privado próximamente')">💬 Mensaje</button>
+        <button class="btn gold" onclick="location.replace('editar-perfil.html')">📝 Editar perfil</button>
+      </div>
+    `;
+  }catch(error){
+    cont.innerHTML = "Error cargando perfil: " + error.message;
+  }
+}
   if(!perfilId){
     cont.innerHTML = "No se encontró el perfil.";
     return;
