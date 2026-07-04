@@ -100,7 +100,20 @@ window.cargarEmisoras = async function(){
           <p>🆔 Poppo ID: ${u.poppoId || "—"}</p>
           <p>✉️ ${u.email || "—"}</p>
         </div>
-        <div class="badge">${u.rol || "emisora"}</div>
+        card.innerHTML = `
+  <div class="avatar">
+    ${u.fotoPerfil ? '<img src="' + u.fotoPerfil + '">' : '👤'}
+  </div>
+
+  <div class="info">
+    <h3>${u.nombre || "Sin nombre"} ✅</h3>
+    <p>🌍 ${u.pais || "País no indicado"}</p>
+    <p>🆔 ID Poppo: ${u.poppoId || "—"}</p>
+    <p>⭐ Nivel: ${u.nivel || "—"}</p>
+  </div>
+
+  <div class="badge">🟢 Activa</div>
+`;
       `;
 
       lista.appendChild(card);
