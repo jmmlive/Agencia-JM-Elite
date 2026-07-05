@@ -86,12 +86,13 @@ color:var(--soft);
 }
 
 .profile{
-padding:18px;
+padding:10px 14px 18px;
 }
 
 .cover{
-height:250px;
-border-radius:30px;
+height:210px;
+margin:0 -6px;
+border-radius:26px;
 overflow:hidden;
 background:linear-gradient(135deg,#003a94,#061326);
 border:1px solid rgba(247,215,116,.45);
@@ -137,9 +138,12 @@ text-align:center;
 }
 
 .identity h2{
-font-size:34px;
+font-size:31px;
 color:var(--gold);
-margin-bottom:6px;
+margin-bottom:4px;
+font-family:Georgia,serif;
+letter-spacing:.5px;
+text-shadow:0 0 14px rgba(247,215,116,.35);
 }
 
 .identity p{
@@ -152,16 +156,18 @@ margin-bottom:10px;
 display:flex;
 justify-content:center;
 flex-wrap:wrap;
-gap:7px;
-margin:12px 0 16px;
+gap:6px;
+margin:10px 0 12px;
+max-height:116px;
+overflow:hidden;
 }
 
 .badges span{
-font-size:13px;
-padding:7px 11px;
+font-size:12px;
+padding:6px 10px;
 border-radius:999px;
-background:rgba(255,255,255,.08);
-border:1px solid rgba(247,215,116,.25);
+background:rgba(255,255,255,.07);
+border:1px solid rgba(247,215,116,.20);
 backdrop-filter:blur(8px);
 }
 
