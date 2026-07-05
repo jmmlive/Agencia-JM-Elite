@@ -6,366 +6,527 @@
 <title>Agencia JM Elite</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#020713;color:white}
-.hidden{display:none!important}
-:root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+:root{
+--azul:#008cff;
+--azul2:#003cff;
+--oro:#f7d774;
+--blanco:#ffffff;
+--suave:#d9e5ff;
+--fondo:#020713;
+}
+
+body{
+min-height:100vh;
+background:
+radial-gradient(circle at 20% 10%,rgba(0,140,255,.95),transparent 28%),
+radial-gradient(circle at 90% 15%,rgba(0,60,255,.75),transparent 30%),
+linear-gradient(180deg,#007bff 0%,#003a94 38%,#020713 100%);
+color:white;
+overflow-x:hidden;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+background:
+linear-gradient(120deg,rgba(255,255,255,.08),transparent 20%,rgba(255,255,255,.05),transparent 60%),
+radial-gradient(circle at 50% 50%,rgba(255,255,255,.08),transparent 40%);
+mix-blend-mode:screen;
+pointer-events:none;
+z-index:-1;
+}
+
+.hidden{
+display:none!important;
+}
+
+button{
+cursor:pointer;
+}
+
+/* LOGIN */
 
 .login{
-position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;
-padding:20px;background:linear-gradient(rgba(0,15,40,.65),rgba(0,0,0,.92)),url("file_00000000c2f871f485def986ae1c9774.png") center/cover no-repeat
+position:fixed;
+inset:0;
+z-index:999;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:
+linear-gradient(rgba(0,40,100,.58),rgba(0,0,0,.9)),
+url("file_00000000c2f871f485def986ae1c9774.png") center/cover no-repeat;
 }
-.box{width:100%;max-width:390px;padding:24px;border-radius:28px;background:rgba(5,18,45,.94);border:1px solid rgba(247,215,116,.5);text-align:center}
-.logo{width:92px;height:92px;object-fit:contain;margin-bottom:12px}
-h1{color:var(--gold);font-size:30px;margin-bottom:8px}
-.sub{color:#b9d6ff;margin-bottom:16px}
-.tabs{display:flex;gap:8px;margin-bottom:12px}
-button{cursor:pointer}
-.tabs button,.mainbtn{border:0;border-radius:16px;padding:14px;font-weight:bold;font-size:16px}
-.tabs button{flex:1}
-.blue{background:linear-gradient(90deg,#005cff,#148bff);color:white}
-.gold{background:linear-gradient(90deg,#d4af37,#ffcc55);color:#061326}
-input{width:100%;margin-top:12px;padding:15px;border-radius:16px;border:1px solid var(--blue);background:#081b45;color:white;font-size:15px}
-.mainbtn{width:100%;margin-top:16px;background:linear-gradient(90deg,#005cff,#148bff);color:white}
-.small{margin-top:14px;color:var(--gold);font-size:14px}
 
-.app{min-height:100vh;background:radial-gradient(circle at top,#0d58bd 0%,#061326 42%,#020713 100%)}
-.topbar{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(0,0,0,.9);border-bottom:1px solid var(--blue)}
-.icon{width:42px;height:42px;border-radius:14px;border:1px solid var(--blue);background:#06162c;color:white;font-size:22px}
-.brand{text-align:center}.brand h2{font-size:16px;color:var(--gold)}.brand p{font-size:9px;color:#9fc8ff;letter-spacing:1px}
+.login-box{
+width:100%;
+max-width:390px;
+padding:24px;
+border-radius:30px;
+background:rgba(2,10,30,.92);
+border:1px solid rgba(247,215,116,.5);
+box-shadow:0 0 45px rgba(0,140,255,.45);
+text-align:center;
+}
+
+.login-logo{
+width:92px;
+height:92px;
+object-fit:contain;
+margin-bottom:12px;
+filter:drop-shadow(0 0 18px #00aaff);
+}
+
+.login-box h1{
+color:var(--oro);
+font-size:30px;
+margin-bottom:8px;
+}
+
+.login-box p{
+color:var(--suave);
+margin-bottom:14px;
+}
+
+.tabs{
+display:flex;
+gap:8px;
+margin-bottom:12px;
+}
+
+.tabs button{
+flex:1;
+border:0;
+border-radius:16px;
+padding:14px;
+font-weight:bold;
+font-size:15px;
+}
+
+.blue{
+background:linear-gradient(90deg,#005cff,#00aaff);
+color:white;
+}
+
+.gold{
+background:linear-gradient(90deg,#d4af37,#ffcc55);
+color:#061326;
+}
+
+input{
+width:100%;
+margin-top:12px;
+padding:15px;
+border-radius:16px;
+border:1px solid var(--azul);
+background:#061a40;
+color:white;
+font-size:15px;
+}
+
+.mainbtn{
+width:100%;
+margin-top:16px;
+padding:15px;
+border:0;
+border-radius:16px;
+background:linear-gradient(90deg,#005cff,#00aaff);
+color:white;
+font-size:16px;
+font-weight:bold;
+}
+
+.small{
+margin-top:14px;
+color:var(--oro)!important;
+font-size:14px;
+}
+
+/* APP */
+
+.loading{
+position:fixed;
+inset:0;
+z-index:9999;
+background:#020713;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+color:var(--oro);
+}
+
+.loading p{
+color:var(--suave);
+margin-top:8px;
+}
+
+.app{
+min-height:100vh;
+padding-bottom:92px;
+}
+
+/* TOP */
+
+.topbar{
+height:64px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 14px;
+background:rgba(0,0,0,.45);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(247,215,116,.22);
+position:sticky;
+top:0;
+z-index:50;
+}
+
+.icon{
+width:44px;
+height:44px;
+border-radius:16px;
+border:1px solid rgba(247,215,116,.35);
+background:rgba(0,40,100,.55);
+color:white;
+font-size:22px;
+box-shadow:0 0 18px rgba(0,140,255,.3);
+}
+
+.brand{
+text-align:center;
+}
+
+.brand h2{
+font-size:16px;
+color:var(--oro);
+}
+
+.brand p{
+font-size:9px;
+color:#d9e5ff;
+letter-spacing:1px;
+}
+
+/* MENU */
+
 .menu{
 position:fixed;
 top:0;
-left:-265px;
-width:250px;
+left:-270px;
+width:255px;
 height:100%;
 overflow-y:auto;
-background:linear-gradient(180deg,#061326,#020b18);
-border-right:2px solid #f7d774;
-transition:left .35s ease;
+background:linear-gradient(180deg,#003a94,#020713);
+border-right:2px solid var(--oro);
+transition:.35s;
 z-index:999;
-box-shadow:8px 0 30px rgba(0,0,0,.6);
+box-shadow:8px 0 35px rgba(0,0,0,.6);
+padding-bottom:20px;
 }
 
 .menu.active{
 left:0;
 }
 
+.menu-head{
+text-align:center;
+padding:14px;
+border-bottom:1px solid rgba(247,215,116,.25);
+}
+
+.menu-head img{
+width:82px;
+display:block;
+margin:0 auto 8px;
+filter:drop-shadow(0 0 20px #00bfff);
+}
+
+.menu-head h3{
+color:var(--oro);
+font-size:23px;
+}
+
 .menu button{
 width:100%;
-margin:8px 0;
-padding:12px 14px;
-background:#10284b;
-border:1px solid rgba(247,215,116,.20);
-border-radius:16px;
-color:#fff;
+margin:7px 0;
+padding:12px 16px;
+background:transparent;
+border:0;
+color:white;
 font-size:15px;
 text-align:left;
-transition:.25s;
 }
 
-.menu button:hover{
-background:#18457b;
-transform:translateX(4px);
-}
-.content{padding:14px}
-.hero{border-radius:22px;overflow:hidden;border:1px solid rgba(247,215,116,.5);margin-bottom:14px}
-.hero img{width:100%;display:block}
-  .elite-profile{
-margin-bottom:18px;
+/* CONTENT */
+
+.content{
+padding:16px;
 }
 
-.elite-cover{
+/* PERFIL */
+
+.profile-card{
+text-align:center;
+padding:18px 12px 12px;
+}
+
+.cover{
 height:170px;
-border-radius:24px;
+border-radius:30px;
 overflow:hidden;
 border:1px solid rgba(247,215,116,.45);
-position:relative;
+box-shadow:0 0 35px rgba(0,140,255,.35);
+background:#061326;
 }
 
-.elite-cover img{
+.cover img{
 width:100%;
 height:100%;
-object-fit:contain;
-background:#061326;
+object-fit:cover;
 display:block;
 }
 
-.elite-avatar{
-width:95px;
-height:95px;
-margin:-48px auto 12px;
-border-radius:50%;
+.avatar{
+width:110px;
+height:110px;
+margin:-55px auto 12px;
+border-radius:26px;
 overflow:hidden;
-border:3px solid #f7d774;
+border:3px solid var(--oro);
 background:#061326;
-box-shadow:0 0 20px rgba(22,140,255,.6);
+box-shadow:0 0 25px rgba(0,170,255,.8);
 position:relative;
-z-index:10;
+z-index:2;
 }
 
-.elite-avatar img{
+.avatar img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-.elite-info{
-text-align:center;
+.profile-card h1{
+font-size:30px;
+color:var(--oro);
+text-shadow:0 0 14px rgba(247,215,116,.35);
 }
 
-.elite-info h2{
-font-size:28px;
-color:#f7d774;
-margin-bottom:6px;
+.profile-card p{
+color:var(--suave);
+margin-top:5px;
 }
 
-.elite-info p{
-color:#d9e5ff;
-margin-bottom:12px;
-}
-
-.elite-badges,
-.elite-stats{
+.badges{
 display:flex;
 justify-content:center;
-flex-wrap:wrap;
 gap:8px;
-margin-top:10px;
+flex-wrap:wrap;
+margin-top:12px;
 }
 
-.elite-badges span,
-.elite-stats span{
-padding:8px 14px;
+.badges span{
+padding:8px 13px;
 border-radius:999px;
-background:rgba(255,255,255,.06);
-border:1px solid rgba(247,215,116,.25);
+background:rgba(255,255,255,.09);
+border:1px solid rgba(247,215,116,.28);
 font-size:13px;
-backdrop-filter:blur(8px);
-  }
-.panel{background:rgba(3,8,18,.84);border:1px solid rgba(247,215,116,.28);border-radius:20px;padding:14px;margin-bottom:14px}
-.panel h2{color:var(--gold);margin-bottom:8px}.panel p{color:var(--soft);font-size:14px;line-height:1.5}
-.person{display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,#102644,#030813);border:1px solid rgba(247,215,116,.28);border-radius:18px;padding:12px;margin-top:10px}
-.avatar{width:64px;height:64px;border-radius:50%;background:#07111f;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:30px}
-.person strong{color:var(--gold);font-size:17px}.person span{color:var(--soft);font-size:13px}
-.logout{width:100%;margin-top:12px;padding:13px;border:0;border-radius:14px;background:var(--gold);color:#07111f;font-weight:bold}   .dashboard{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
-.dash-card{
-background:rgba(255,255,255,.06);
-border:1px solid rgba(247,215,116,.22);
-border-radius:22px;
-padding:13px 8px;
-text-align:center;
+}
+
+/* SALA */
+
+.sala-big{
+width:100%;
+margin:10px 0 18px;
+padding:20px;
+border:0;
+border-radius:30px;
+background:
+linear-gradient(135deg,#004cff,#00aaff,#003a94);
 color:white;
-backdrop-filter:blur(10px);
-box-shadow:0 0 18px rgba(22,140,255,.16);
-transition:.25s;
+box-shadow:0 0 35px rgba(0,170,255,.65);
+text-align:left;
 }
 
-.dash-card:hover{
-transform:translateY(-3px);
-box-shadow:0 0 25px rgba(22,140,255,.32);
-border-color:rgba(247,215,116,.45);
-}
-
-.dash-card .big{
-font-size:26px;
-margin-bottom:6px;
-}
-
-.dash-card h3{
-color:var(--gold);
-font-size:14px;
-}
-
-.dash-card p{
-color:var(--soft);
-font-size:12px;
-margin-top:4px;
-}
-
-.section-btn{width:100%;margin-top:10px;padding:15px;border:0;border-radius:16px;background:linear-gradient(90deg,#d4af37,#ffcc55);color:#07111f;font-weight:bold;font-size:16px}
-
-.sala-box{margin-top:14px;background:rgba(3,8,18,.9);border:1px solid rgba(247,215,116,.35);border-radius:22px;padding:16px}
-.sala-screen{height:220px;border-radius:20px;background:radial-gradient(circle,#0d58bd,#020713 70%);border:1px solid rgba(247,215,116,.45);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
-.sala-screen h2{color:var(--gold);font-size:24px}
-.sala-screen p{color:var(--soft);font-size:13px;margin-top:8px}
-
-.mic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
-.mic{min-height:90px;border-radius:16px;background:#081b35;border:1px solid rgba(247,215,116,.28);display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:12px;color:var(--soft)}
-.mic span{font-size:24px;margin-bottom:4px}
-  .loading{
-position:fixed;
-inset:0;
-background:#020713;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-z-index:9999;
-color:#f7d774;
-text-align:center;
-}
-
-.loading h1{
-font-size:28px;
-margin-bottom:10px;
-}
-
-.loading p{
-color:#d9e5ff;
-}
-  .elite-stats-bar{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px;
-margin:18px 0 22px;
-}
-
-.stat-item{
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,255,255,.12);
-border-radius:22px;
-padding:14px 8px;
-text-align:center;
-backdrop-filter:blur(12px);
-}
-
-.stat-icon{
-font-size:28px;
-margin-bottom:8px;
-}
-
-.stat-item b{
+.sala-big b{
 display:block;
 font-size:24px;
-color:#f7d774;
+color:white;
+}
+
+.sala-big span{
+display:block;
+margin-top:5px;
+color:#e5f2ff;
+font-size:13px;
+}
+
+/* STATS */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin-bottom:22px;
+}
+
+.stat{
+text-align:center;
+}
+
+.stat div{
+font-size:26px;
 margin-bottom:4px;
 }
 
-.stat-item span{
-font-size:12px;
-color:#d9e5ff;
-}
-  /* ====== BOTÓN SALA ====== */
-
-.sala-main-btn{
-width:100%;
-margin:14px 0 18px;
-padding:18px;
-border-radius:24px;
-border:2px solid #f7d774;
-background:linear-gradient(135deg,#004cff,#00aaff,#061326);
-color:#fff;
-font-weight:bold;
-box-shadow:0 0 25px rgba(0,170,255,.45);
-text-align:left;
-cursor:pointer;
-}
-
-.sala-main-btn span{
+.stat b{
 display:block;
-font-size:22px;
-margin-bottom:6px;
-}
-
-.sala-main-btn small{
-display:block;
-font-size:13px;
-font-weight:normal;
-color:#d9e5ff;
-}
-
-/* ====== ACCESOS RÁPIDOS ====== */
-
-.quick-zone{
-margin-top:18px;
-}
-
-.quick-zone h2{
-color:#f7d774;
-margin-bottom:14px;
 font-size:20px;
+color:var(--oro);
 }
 
-.quick-grid{
+.stat span{
+font-size:11px;
+color:var(--suave);
+}
+
+/* ICONOS FLOTANTES */
+
+.float-zone{
+padding:10px 0 20px;
+}
+
+.float-title{
+color:var(--oro);
+font-size:18px;
+margin-bottom:16px;
+text-align:center;
+}
+
+.float-grid{
 display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
+grid-template-columns:repeat(4,1fr);
+gap:22px 10px;
 }
 
-.quick-btn{
-background:rgba(255,255,255,.06);
-border:1px solid rgba(247,215,116,.25);
-border-radius:22px;
-padding:16px 10px;
+.float-btn{
+border:0;
+background:transparent;
 color:white;
 text-align:center;
-backdrop-filter:blur(10px);
-transition:.25s;
 }
 
-.quick-btn span{
-display:block;
+.float-btn span{
+width:54px;
+height:54px;
+display:flex;
+align-items:center;
+justify-content:center;
+margin:0 auto 7px;
 font-size:30px;
-margin-bottom:8px;
+border-radius:50%;
+background:radial-gradient(circle,#00aaff,#004cff);
+box-shadow:0 0 22px rgba(0,170,255,.75);
 }
 
-.quick-btn b{
-display:block;
-font-size:15px;
-color:#f7d774;
-margin-bottom:5px;
-}
-
-.quick-btn small{
+.float-btn b{
 font-size:12px;
-color:#d9e5ff;
+color:white;
+font-weight:bold;
 }
 
-.quick-btn:hover{
-transform:translateY(-3px);
-box-shadow:0 0 18px rgba(22,140,255,.35);
-}
-
-/* ====== FRASE ====== */
+/* MENSAJE */
 
 .elite-message{
 display:flex;
 align-items:center;
 gap:14px;
-margin-top:18px;
+margin-top:22px;
 padding:16px;
-background:rgba(255,255,255,.05);
+border-radius:26px;
+background:rgba(0,40,100,.28);
 border:1px solid rgba(247,215,116,.25);
-border-radius:22px;
+backdrop-filter:blur(10px);
 }
 
 .message-icon{
-font-size:42px;
+font-size:44px;
 }
 
 .elite-message p{
 font-size:16px;
 line-height:1.5;
-color:#d9e5ff;
+color:var(--suave);
 }
 
 .elite-message b{
-color:#f7d774;
+color:var(--oro);
+}
+
+/* BARRA INFERIOR POP */
+
+.bottom-nav{
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+height:78px;
+z-index:90;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+background:rgba(0,25,70,.76);
+backdrop-filter:blur(16px);
+border-top:1px solid rgba(247,215,116,.25);
+box-shadow:0 -8px 30px rgba(0,140,255,.25);
+}
+
+.nav-btn{
+border:0;
+background:transparent;
+color:white;
+font-size:11px;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+gap:4px;
+}
+
+.nav-btn span{
+font-size:25px;
+filter:drop-shadow(0 0 8px #00aaff);
+}
+
+.nav-btn.active{
+color:var(--oro);
+}
+
+.nav-btn.active span{
+transform:translateY(-4px);
 }
 </style>
 </head>
 
 <body>
+
 <div id="loadingScreen" class="loading">
   <h1>Agencia JM Elite</h1>
   <p>Cargando...</p>
 </div>
 <div id="loginScreen" class="login">
-  <div class="box">
-    <img class="logo" src="file_00000000971871f48b6a36f7fcf68d51.png">
+  <div class="login-box">
+    <img class="login-logo" src="file_00000000971871f48b6a36f7fcf68d51.png">
     <h1>Agencia JM Elite</h1>
-    <p class="sub">Acceso privado de la agencia</p>
+    <p>Acceso privado de la agencia</p>
 
     <div class="tabs">
       <button class="blue" onclick="mostrarLogin()">Entrar</button>
@@ -391,171 +552,137 @@ color:#f7d774;
 </div>
 
 <div id="sideMenu" class="menu">
-  <div style="text-align:center;padding:4px 15px;border-bottom:1px solid rgba(247,215,116,.25);">
+  <div class="menu-head">
+    <img src="file_00000000b3c871f48b055c58a3c52bfa.png">
+    <h3>Jesús</h3>
+  </div>
 
-    <img src="file_00000000b3c871f48b055c58a3c52bfa.png" style="width:82px;display:block;margin:0 auto 8px;filter:drop-shadow(0 0 20px #00bfff);">
-
-<h3 style="color:#f7d774;margin-top:0;font-size:24px;">Jesús</h3>
-
-<p style="color:#d9e5ff;margin-bottom:18px;">
-
-</div>
-
-<button onclick="closeMenu()">🏠 Inicio</button>
-<button onclick="location.href='perfil.html'">👤 Mi Perfil</button>
-<button onclick="alert('Sala Pro preparada. Siguiente fase.')">🎙️ Sala</button>
-
-<button onclick="location.replace('emisoras.html')">👥 Mis emisoras</button>
-
-<button>🎓 Academia</button>
-
-<button>🤖 ChatBot IA</button>
-
-<button>💬 Chat Agencia</button>
-
-<button>🏆 Ranking</button>
-
-<button>💰 Pagos</button>
-
-<button>📢 Avisos</button>
-
-<button>📅 Eventos</button>
-
-<button>📜 Normas</button>
-
-<button>🛠️ Soporte</button>
-
-<button>⚙️ Configuración</button>
-
-<div style="height:18px"></div>
-
-<button onclick="cerrarSesion()" style="color:#ff6b6b;">🚪 Cerrar sesión</button>
+  <button onclick="closeMenu()">🏠 Inicio</button>
+  <button onclick="location.href='perfil.html'">👤 Mi Perfil</button>
+  <button onclick="location.href='sala-pro.html'">🎙️ Sala</button>
+  <button onclick="location.replace('emisoras.html')">👥 Mis Emisoras</button>
+  <button onclick="alert('Academia preparada')">🎓 Academia</button>
+  <button onclick="alert('ChatBot IA preparado')">🤖 ChatBot IA</button>
+  <button onclick="alert('Chat Agencia preparado')">💬 Chat Agencia</button>
+  <button onclick="alert('Ranking preparado')">🏆 Ranking</button>
+  <button onclick="alert('Pagos preparado')">💰 Pagos</button>
+  <button onclick="alert('Avisos preparado')">📢 Avisos</button>
+  <button onclick="alert('Eventos preparado')">📅 Eventos</button>
+  <button onclick="alert('Normas preparado')">📜 Normas</button>
+  <button onclick="alert('Soporte preparado')">🛠️ Soporte</button>
+  <button onclick="alert('Configuración preparada')">⚙️ Configuración</button>
+  <button onclick="cerrarSesion()" style="color:#ff6b6b;">🚪 Cerrar sesión</button>
 </div>
 
 <div class="app">
+
 <header class="topbar">
   <button class="icon" onclick="toggleMenu()">☰</button>
+
   <div class="brand">
     <h2>AGENCIA JM ELITE</h2>
     <p>DISCIPLINA · ENFOQUE · RESULTADOS</p>
   </div>
+
   <button class="icon" onclick="alert('Avisos preparado')">🔔</button>
 </header>
 
 <main class="content">
-<section class="elite-profile">
-  <div class="elite-cover">
+
+<section class="profile-card">
+  <div class="cover">
     <img src="agencia-jm-equipo-banner.png" alt="Agencia JM Elite">
   </div>
 
-  <div class="elite-avatar">
+  <div class="avatar">
     <img src="agencia-jm-logo-800.png" alt="Jesús">
   </div>
 
-  <div class="elite-info">
-    <h2>Jesús Melián</h2>
-    <p>👑 Fundador • Agencia JM Tenerife</p>
+  <h1>Jesús Melián</h1>
+  <p>👑 Fundador • Agencia JM Tenerife</p>
 
-    <div class="elite-badges">
-      <span>🟣 Nivel 45</span>
-      <span>💎 VIP 3</span>
-      <span>🆔 19758906</span>
-    </div>
-
-    <div class="elite-stats">
-      <span>🏅 Star 7</span>
-      <span>💛 Fan 1</span>
-      <span>⏳ 845 días</span>
-    </div>
+  <div class="badges">
+    <span>🟣 Nivel 45</span>
+    <span>💎 VIP 3</span>
+    <span>🆔 19758906</span>
+    <span>🏅 Star 7</span>
   </div>
 </section>
 
-<button onclick="location.href='sala-pro.html'" class="sala-main-btn">
-  <span>🎙️ ENTRAR A LA SALA</span>
-  <small>Reuniones, directos y sala principal de Agencia JM Elite</small>
+<button class="sala-big" onclick="location.href='sala-pro.html'">
+  <b>🎙️ ENTRAR A LA SALA</b>
+  <span>Reuniones, directos, formación y control de agencia</span>
 </button>
 
-<div class="elite-stats-bar">
-
-  <div class="stat-item">
-    <div class="stat-icon">👥</div>
+<section class="stats">
+  <div class="stat">
+    <div>👥</div>
     <b>34</b>
     <span>Emisoras</span>
   </div>
 
-  <div class="stat-item">
-    <div class="stat-icon">🟢</div>
+  <div class="stat">
+    <div>🟢</div>
     <b>29</b>
     <span>Online</span>
   </div>
 
-  <div class="stat-item">
-    <div class="stat-icon">👑</div>
+  <div class="stat">
+    <div>👑</div>
     <b>12</b>
     <span>Top</span>
   </div>
 
-  <div class="stat-item">
-    <div class="stat-icon">💎</div>
+  <div class="stat">
+    <div>💎</div>
     <b>125K</b>
     <span>Diamantes</span>
   </div>
+</section>
 
-</div>
+<section class="float-zone">
+  <h2 class="float-title">Accesos de Agencia</h2>
 
-<section class="quick-zone">
-  <h2>⭐ ACCESOS RÁPIDOS</h2>
-
-  <div class="quick-grid">
-
-    <button class="quick-btn" onclick="location.replace('emisoras.html')">
+  <div class="float-grid">
+    <button class="float-btn" onclick="location.replace('emisoras.html')">
       <span>👥</span>
-      <b>Mis Emisoras</b>
-      <small>Control y seguimiento</small>
+      <b>Emisoras</b>
     </button>
 
-    <button class="quick-btn" onclick="alert('Academia preparada')">
+    <button class="float-btn" onclick="alert('Academia preparada')">
       <span>🎓</span>
       <b>Academia</b>
-      <small>Formación y guías</small>
     </button>
 
-    <button class="quick-btn" onclick="alert('ChatBot IA preparado')">
+    <button class="float-btn" onclick="alert('ChatBot IA preparado')">
       <span>🤖</span>
-      <b>ChatBot IA</b>
-      <small>Ayuda inteligente</small>
+      <b>IA</b>
     </button>
 
-    <button class="quick-btn" onclick="alert('Chat Agencia preparado')">
-      <span>💬</span>
-      <b>Chat Agencia</b>
-      <small>Comunicación interna</small>
-    </button>
-
-    <button class="quick-btn" onclick="alert('Ranking preparado')">
-      <span>🏆</span>
-      <b>Ranking</b>
-      <small>Top emisoras</small>
-    </button>
-
-    <button class="quick-btn" onclick="alert('Pagos preparado')">
+    <button class="float-btn" onclick="alert('Pagos preparado')">
       <span>💰</span>
       <b>Pagos</b>
-      <small>Control económico</small>
     </button>
 
-    <button class="quick-btn" onclick="alert('Avisos preparado')">
+    <button class="float-btn" onclick="alert('Ranking preparado')">
+      <span>🏆</span>
+      <b>Ranking</b>
+    </button>
+
+    <button class="float-btn" onclick="alert('Avisos preparado')">
       <span>📢</span>
       <b>Avisos</b>
-      <small>Novedades importantes</small>
     </button>
 
-    <button class="quick-btn" onclick="alert('Soporte preparado')">
+    <button class="float-btn" onclick="alert('Eventos preparado')">
+      <span>📅</span>
+      <b>Eventos</b>
+    </button>
+
+    <button class="float-btn" onclick="alert('Soporte preparado')">
       <span>🛠️</span>
       <b>Soporte</b>
-      <small>Ayuda y contacto</small>
     </button>
-
   </div>
 </section>
 
@@ -568,12 +695,53 @@ color:#f7d774;
 </section>
 
 </main>
-</div>
 
-<script type="module">
+<nav class="bottom-nav">
+  <button class="nav-btn active" onclick="closeMenu()">
+    <span>🏠</span>
+    Inicio
+  </button>
+
+  <button class="nav-btn" onclick="location.href='sala-pro.html'">
+    <span>🎙️</span>
+    Sala
+  </button>
+
+  <button class="nav-btn" onclick="location.replace('emisoras.html')">
+    <span>👥</span>
+    Emisoras
+  </button>
+
+  <button class="nav-btn" onclick="alert('Chat preparado')">
+    <span>💬</span>
+    Chat
+  </button>
+
+  <button class="nav-btn" onclick="toggleMenu()">
+    <span>☰</span>
+    Más
+  </button>
+</nav>
+
+  </div>
+  <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
@@ -651,6 +819,7 @@ window.iniciarSesion = async function(){
 
 window.recuperarPassword = async function(){
   const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+
   if(!email){
     alert("Escribe tu correo para recuperar la contraseña.");
     return;
@@ -671,45 +840,39 @@ window.cerrarSesion = async function(){
 
 window.toggleMenu = function(){
   document.getElementById("sideMenu").classList.toggle("active");
-  document.body.style.overflow = "hidden";
 };
 
 window.closeMenu = function(){
   document.getElementById("sideMenu").classList.remove("active");
-  document.body.style.overflow = "auto";
 };
 
 onAuthStateChanged(auth, async function(user){
+  const loading = document.getElementById("loadingScreen");
+  const login = document.getElementById("loginScreen");
+
   if(!user){
-  document.getElementById("loadingScreen").style.display = "none";  document.getElementById("loginScreen").style.display = "flex";
+    loading.style.display = "none";
+    login.style.display = "flex";
     return;
   }
-document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("loadingScreen").style.display = "none";
+
+  login.style.display = "none";
+  loading.style.display = "none";
+
   const ref = doc(db, "usuarios", user.uid);
   const snap = await getDoc(ref);
 
   let perfil = {
-    nombre: user.email,
+    nombre: "Jesús Melián",
     email: user.email,
-    pais: "—",
+    pais: "España",
     rol: user.email === CORREO_CREADOR ? "creador" : "emisora"
   };
 
   if(snap.exists()){
     perfil = snap.data();
   }
-
-  document.getElementById("loginScreen").style.display = "none";
-  const profileBox = document.getElementById("profileText");
-if(profileBox){
-  profileBox.innerHTML =
-    "Nombre: <b>" + (perfil.nombre || "—") + "</b><br>" +
-    "Correo: <b>" + (perfil.email || user.email) + "</b><br>" +
-    "País: <b>" + (perfil.pais || "—") + "</b><br>" +
-    "Rol: <b>" + (perfil.rol || "emisora") + "</b>";
-}
-    });
+});
 </script>
 
 </body>
