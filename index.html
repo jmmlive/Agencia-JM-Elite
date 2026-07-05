@@ -149,10 +149,39 @@ backdrop-filter:blur(8px);
 .avatar{width:64px;height:64px;border-radius:50%;background:#07111f;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:30px}
 .person strong{color:var(--gold);font-size:17px}.person span{color:var(--soft);font-size:13px}
 .logout{width:100%;margin-top:12px;padding:13px;border:0;border-radius:14px;background:var(--gold);color:#07111f;font-weight:bold}   .dashboard{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px}
-.dash-card{background:linear-gradient(180deg,#102644,#030813);border:1px solid rgba(247,215,116,.35);border-radius:18px;padding:16px;text-align:center}
-.dash-card .big{font-size:30px;margin-bottom:8px}
-.dash-card h3{color:var(--gold);font-size:16px}
-.dash-card p{color:var(--soft);font-size:13px;margin-top:5px}
+.dash-card{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(247,215,116,.22);
+border-radius:22px;
+padding:13px 8px;
+text-align:center;
+color:white;
+backdrop-filter:blur(10px);
+box-shadow:0 0 18px rgba(22,140,255,.16);
+transition:.25s;
+}
+
+.dash-card:hover{
+transform:translateY(-3px);
+box-shadow:0 0 25px rgba(22,140,255,.32);
+border-color:rgba(247,215,116,.45);
+}
+
+.dash-card .big{
+font-size:26px;
+margin-bottom:6px;
+}
+
+.dash-card h3{
+color:var(--gold);
+font-size:14px;
+}
+
+.dash-card p{
+color:var(--soft);
+font-size:12px;
+margin-top:4px;
+}
 
 .section-btn{width:100%;margin-top:10px;padding:15px;border:0;border-radius:16px;background:linear-gradient(90deg,#d4af37,#ffcc55);color:#07111f;font-weight:bold;font-size:16px}
 
