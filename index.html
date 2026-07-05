@@ -249,7 +249,10 @@ color:#d9e5ff;
     <button class="dash-card" onclick="alert('Eventos preparado')"><div class="big">📅</div><h3>Eventos</h3></button>
   </div>
 </section>
-
+<section class="panel">
+  <h2>👤 Mi perfil</h2>
+  <p id="profileText">Cargando perfil...</p>
+</section>
 <section class="panel" style="display:flex;align-items:center;gap:14px;">
   <div style="font-size:42px;">🦅</div>
   <p style="font-size:16px;color:#d9e5ff;">
@@ -400,11 +403,7 @@ if(profileBox){
     "País: <b>" + (perfil.pais || "—") + "</b><br>" +
     "Rol: <b>" + (perfil.rol || "emisora") + "</b>";
 }
-    "Nombre: <b>" + (perfil.nombre || "—") + "</b><br>" +
-    "Correo: <b>" + (perfil.email || user.email) + "</b><br>" +
-    "País: <b>" + (perfil.pais || "—") + "</b><br>" +
-    "Rol: <b>" + (perfil.rol || "emisora") + "</b>";
-});
+    });
 </script>
 
 </body>
