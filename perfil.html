@@ -168,7 +168,29 @@ async function cargarPerfil(){
         <div class="social">Facebook</div>
       </div>
     </section>
+<section class="card">
+  <h3>🏅 Logros Poppo</h3>
 
+  <div class="info-row">
+    <span>🗓️ Miembro desde</span>
+    <b>12/03/2024</b>
+  </div>
+
+  <div class="info-row">
+    <span>⏳ Tiempo en Poppo</span>
+    <b id="diasPoppo">Calculando...</b>
+  </div>
+
+  <div class="info-row">
+    <span>🏅 Star Activo</span>
+    <b>Nivel 7</b>
+  </div>
+
+  <div class="info-row">
+    <span>💛 Poder del Fan</span>
+    <b>Nivel 1</b>
+  </div>
+</section>
     <div class="actions">
       <button class="btn blue" onclick="alert('Chat privado próximamente')">💬 Mensaje</button>
       <button class="btn gold" onclick="location.href='editar-perfil.html'">📝 Editar perfil</button>
@@ -183,7 +205,17 @@ onAuthStateChanged(auth,function(user){
   }
   cargarPerfil();
 });
+const fechaInicioPoppo = new Date("2024-03-12T00:00:00");
+const hoy = new Date();
 
+const diferencia = hoy - fechaInicioPoppo;
+const diasPoppo = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+
+const diasPoppoBox = document.getElementById("diasPoppo");
+
+if(diasPoppoBox){
+  diasPoppoBox.textContent = diasPoppo + " días";
+}
 </script>
 </body>
 </html>
