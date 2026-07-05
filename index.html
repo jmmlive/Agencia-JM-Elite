@@ -214,6 +214,38 @@ margin-bottom:10px;
 .loading p{
 color:#d9e5ff;
 }
+  .elite-stats-bar{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin:18px 0 22px;
+}
+
+.stat-item{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.12);
+border-radius:22px;
+padding:14px 8px;
+text-align:center;
+backdrop-filter:blur(12px);
+}
+
+.stat-icon{
+font-size:28px;
+margin-bottom:8px;
+}
+
+.stat-item b{
+display:block;
+font-size:24px;
+color:#f7d774;
+margin-bottom:4px;
+}
+
+.stat-item span{
+font-size:12px;
+color:#d9e5ff;
+}
 </style>
 </head>
 
@@ -337,11 +369,32 @@ color:#d9e5ff;
   <span style="font-size:13px;font-weight:normal;color:#d9e5ff;">Reuniones, directos y más</span>
 </button>
 
-<div class="dashboard">
-  <div class="dash-card"><div class="big">👥</div><h3>34</h3><p>Emisoras</p></div>
-  <div class="dash-card"><div class="big">🟢</div><h3>29</h3><p>Conectadas</p></div>
-  <div class="dash-card"><div class="big">👑</div><h3>12</h3><p>Top hoy</p></div>
-  <div class="dash-card"><div class="big">💎</div><h3>125K</h3><p>Diamantes</p></div>
+<div class="elite-stats-bar">
+
+  <div class="stat-item">
+    <div class="stat-icon">👥</div>
+    <b>34</b>
+    <span>Emisoras</span>
+  </div>
+
+  <div class="stat-item">
+    <div class="stat-icon">🟢</div>
+    <b>29</b>
+    <span>Online</span>
+  </div>
+
+  <div class="stat-item">
+    <div class="stat-icon">👑</div>
+    <b>12</b>
+    <span>Top</span>
+  </div>
+
+  <div class="stat-item">
+    <div class="stat-icon">💎</div>
+    <b>125K</b>
+    <span>Diamantes</span>
+  </div>
+
 </div>
 
 <section class="panel">
