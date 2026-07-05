@@ -196,6 +196,7 @@ async function cargarPerfil(){
       <button class="btn gold" onclick="location.href='editar-perfil.html'">📝 Editar perfil</button>
     </div>
   `;
+  actualizarDiasPoppo();
 }
 
 onAuthStateChanged(auth,function(user){
@@ -205,16 +206,18 @@ onAuthStateChanged(auth,function(user){
   }
   cargarPerfil();
 });
-const fechaInicioPoppo = new Date("2024-03-12T00:00:00");
-const hoy = new Date();
+function actualizarDiasPoppo(){
+  const fechaInicioPoppo = new Date("2024-03-12T00:00:00");
+  const hoy = new Date();
 
-const diferencia = hoy - fechaInicioPoppo;
-const diasPoppo = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+  const diferencia = hoy - fechaInicioPoppo;
+  const diasPoppo = Math.floor(diferencia / (1000 * 60 * 60 * 24));
 
-const diasPoppoBox = document.getElementById("diasPoppo");
+  const diasPoppoBox = document.getElementById("diasPoppo");
 
-if(diasPoppoBox){
-  diasPoppoBox.textContent = diasPoppo + " días";
+  if(diasPoppoBox){
+    diasPoppoBox.textContent = diasPoppo + " días";
+  }
 }
 </script>
 </body>
