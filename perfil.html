@@ -6,231 +6,495 @@
 <title>Perfil Elite</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#020713;color:white}
-:root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
-.topbar{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#020713;border-bottom:2px solid var(--blue)}
-.icon{width:52px;height:52px;border-radius:16px;border:1px solid var(--blue);background:#07162c;color:white;font-size:24px}
-.title{text-align:center}
-.title h1{color:var(--gold);font-size:24px}
-.title p{color:var(--soft);font-size:13px}
+:root{
+--blue:#008cff;
+--blue2:#004cff;
+--gold:#f7d774;
+--soft:#d9e5ff;
+--dark:#020713;
+}
+
+body{
+background:
+radial-gradient(circle at top,#008cff 0%,#0042b8 28%,#020713 70%),
+linear-gradient(180deg,#005dff,#020713);
+color:white;
+min-height:100vh;
+padding-bottom:90px;
+overflow-x:hidden;
+}
+
+body:before{
+content:"";
+position:fixed;
+inset:0;
+background:
+linear-gradient(120deg,rgba(255,255,255,.08),transparent 30%,rgba(255,255,255,.04),transparent 70%);
+pointer-events:none;
+z-index:-1;
+}
+
+button{
+cursor:pointer;
+border:0;
+}
+
+.topbar{
+height:72px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+background:rgba(0,15,45,.78);
+backdrop-filter:blur(14px);
+border-bottom:2px solid var(--blue);
+position:sticky;
+top:0;
+z-index:50;
+}
+
+.top-btn{
+width:54px;
+height:54px;
+border-radius:18px;
+background:rgba(0,40,100,.55);
+border:1px solid rgba(247,215,116,.35);
+color:white;
+font-size:28px;
+box-shadow:0 0 18px rgba(0,140,255,.35);
+}
+
+.top-title{
+text-align:center;
+}
+
+.top-title h1{
+font-size:26px;
+color:var(--gold);
+}
+
+.top-title p{
+font-size:13px;
+color:var(--soft);
+}
+
+.profile{
+padding:18px;
+}
 
 .cover{
-height:210px;margin:16px;border-radius:28px;
+height:250px;
+border-radius:30px;
+overflow:hidden;
+background:linear-gradient(135deg,#003a94,#061326);
 border:1px solid rgba(247,215,116,.45);
-background:radial-gradient(circle at top,#168cff,#07162c 45%,#020713);
-position:relative;display:flex;align-items:flex-end;justify-content:center;
-overflow:visible;
+box-shadow:0 0 35px rgba(0,140,255,.35);
+position:relative;
 }
-.cover:before{
-content:"JM";position:absolute;font-size:125px;font-weight:bold;
-color:rgba(255,255,255,.04);top:28px;
+
+.cover img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.cover:after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.65));
 }
 
 .avatar{
-position:absolute;bottom:-55px;width:116px;height:116px;border-radius:50%;
-border:4px solid var(--gold);background:#07162c;display:none;
-align-items:center;justify-content:center;overflow:hidden;
-box-shadow:0 0 25px rgba(22,140,255,.8);
+width:118px;
+height:118px;
+border-radius:50%;
+overflow:hidden;
+border:4px solid var(--gold);
+background:#061326;
+box-shadow:0 0 25px rgba(0,170,255,.85);
+margin:-62px auto 12px;
+position:relative;
+z-index:2;
 }
-.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 
-.content{padding:62px 16px 90px}
-.name{text-align:center;margin-bottom:18px}
-.name h2{font-size:32px;color:var(--gold)}
-.name p{color:var(--soft);margin-top:5px}
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
 
-.card{background:linear-gradient(180deg,#102644,#030813);border:1px solid rgba(247,215,116,.35);border-radius:24px;padding:18px;margin-bottom:14px}
-.card h3{color:var(--gold);font-size:21px;margin-bottom:12px}
-.row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.row:last-child{border-bottom:0}
-.row span{color:var(--soft)}
-.row b{text-align:right}
-.bio{color:var(--soft);font-size:15px;line-height:1.55}
+.identity{
+text-align:center;
+}
 
-.socials{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.social{padding:14px;border-radius:16px;background:#07162c;border:1px solid rgba(22,140,255,.55);text-align:center;color:var(--soft);font-weight:bold}
+.identity h2{
+font-size:34px;
+color:var(--gold);
+margin-bottom:6px;
+}
 
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.btn{border:0;border-radius:18px;padding:16px;font-size:16px;font-weight:bold}
-.blue{background:linear-gradient(90deg,#005cff,#148bff);color:white}
-.gold{background:linear-gradient(90deg,#d4af37,#ffcc55);color:#07111f}
-.empty{text-align:center;color:var(--soft);padding:30px}
-</style>
+.identity p{
+color:var(--soft);
+font-size:16px;
+margin-bottom:10px;
+}
+
+.badges{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:7px;
+margin:12px 0 16px;
+}
+
+.badges span{
+font-size:13px;
+padding:7px 11px;
+border-radius:999px;
+background:rgba(255,255,255,.08);
+border:1px solid rgba(247,215,116,.25);
+backdrop-filter:blur(8px);
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+margin:16px 0;
+}
+
+.stat{
+text-align:center;
+padding:10px 4px;
+}
+
+.stat b{
+display:block;
+font-size:22px;
+color:white;
+}
+
+.stat span{
+font-size:12px;
+color:var(--soft);
+}
+
+.actions{
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:10px;
+margin:18px 0;
+}
+
+.action-blue,
+.action-gold,
+.action-dark{
+padding:14px 8px;
+border-radius:18px;
+font-size:14px;
+font-weight:bold;
+}
+
+.action-blue{
+background:linear-gradient(90deg,#006dff,#00aaff);
+color:white;
+}
+
+.action-gold{
+background:linear-gradient(90deg,#d4af37,#ffcc55);
+color:#061326;
+}
+
+.action-dark{
+background:rgba(255,255,255,.08);
+color:white;
+border:1px solid rgba(247,215,116,.25);
+}
+  .cards{
+display:flex;
+flex-direction:column;
+gap:18px;
+margin-top:22px;
+}
+
+.card{
+background:rgba(8,24,55,.82);
+border:1px solid rgba(247,215,116,.28);
+border-radius:24px;
+padding:18px;
+box-shadow:0 10px 35px rgba(0,0,0,.25);
+backdrop-filter:blur(10px);
+}
+
+.card h3{
+color:var(--gold);
+font-size:24px;
+margin-bottom:16px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 0;
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.row:last-child{
+border-bottom:none;
+}
+
+.row span{
+color:var(--soft);
+}
+
+.row b{
+color:white;
+font-weight:600;
+}
+
+.tabs{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin:22px 0;
+}
+
+.tab{
+padding:14px 6px;
+text-align:center;
+border-radius:18px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(247,215,116,.25);
+color:white;
+font-weight:bold;
+}
+
+.tab.active{
+background:linear-gradient(90deg,#007dff,#00b7ff);
+}
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-bottom:30px;
+}
+
+.post{
+aspect-ratio:1;
+border-radius:18px;
+overflow:hidden;
+background:#0d1d3c;
+border:1px solid rgba(247,215,116,.18);
+}
+
+.post img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.bottom-space{
+height:100px;
+}
+  </style>
 </head>
+
 <body>
 
 <header class="topbar">
-  <button class="icon" onclick="location.href='emisoras.html'">←</button>
+  <button class="top-btn" onclick="location.href='index.html'">‹</button>
 
-  <div class="title">
-    <h1>PERFIL ELITE</h1>
-    <p>Ficha oficial de emisora</p>
+  <div class="top-title">
+    <h1>Perfil Elite</h1>
+    <p>Agencia JM Elite</p>
   </div>
 
-  <button class="icon" onclick="location.reload()">⟳</button>
+  <button class="top-btn" onclick="alert('Opciones del perfil preparadas')">⋯</button>
 </header>
 
-<section class="cover" id="cover">
-  <div class="avatar" id="avatar"></div>
-</section>
+<main class="profile">
 
-<main class="content">
-  <div id="perfilContenido" class="empty">
-    Cargando perfil...
-  </div>
+  <section class="cover">
+    <img src="agencia-jm-equipo-banner.png" alt="Portada">
+  </section>
+
+  <section class="avatar">
+    <img src="agencia-jm-logo-800.png" alt="Foto de perfil">
+  </section>
+
+  <section class="identity">
+    <h2>Jesús Melián</h2>
+    <p>👑 Fundador • Agencia JM Tenerife</p>
+
+    <div class="badges">
+      <span>💙 Fan azul</span>
+      <span>⭐ Insignia Star</span>
+      <span>★ Agencia Tenerife JMM</span>
+      <span>💎 VIP 3</span>
+      <span>🟣 Nivel 45</span>
+      <span>🆔 19758906</span>
+      <span>🏅 Star Activo Nivel 7</span>
+      <span>💛 Poder del Fan Nivel 1</span>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat">
+      <b>1981</b>
+      <span>Seguidores</span>
+    </div>
+
+    <div class="stat">
+      <b>34</b>
+      <span>Emisoras</span>
+    </div>
+
+    <div class="stat">
+      <b>125K</b>
+      <span>Diamantes</span>
+    </div>
+
+    <div class="stat">
+      <b>845</b>
+      <span>Días</span>
+    </div>
+  </section>
+
+  <section class="actions">
+    <button class="action-blue" onclick="alert('Mensaje preparado')">💬 Mensaje</button>
+    <button class="action-gold" onclick="alert('Editar perfil preparado')">✏️ Editar</button>
+    <button class="action-dark" onclick="alert('Compartir preparado')">🔗 Compartir</button>
+  </section>
+
+  <section class="cards">
+
+    <div class="card">
+      <h3>Información</h3>
+
+      <div class="row">
+        <span>ID Poppo</span>
+        <b>19758906</b>
+      </div>
+
+      <div class="row">
+        <span>País</span>
+        <b>España</b>
+      </div>
+
+      <div class="row">
+        <span>Miembro desde</span>
+        <b>12/03/2024</b>
+      </div>
+
+      <div class="row">
+        <span>Rol</span>
+        <b>Fundador</b>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Logros Poppo</h3>
+
+      <div class="row">
+        <span>Nivel de cuenta</span>
+        <b>🟣 Nivel 45</b>
+      </div>
+
+      <div class="row">
+        <span>VIP</span>
+        <b>💎 VIP 3</b>
+      </div>
+
+      <div class="row">
+        <span>Star</span>
+        <b>🏅 Nivel 7</b>
+      </div>
+
+      <div class="row">
+        <span>Poder del fan</span>
+        <b>💛 Nivel 1</b>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="tabs">
+    <button class="tab active">📷 Fotos</button>
+    <button class="tab">🎥 Videos</button>
+    <button class="tab">📝 Posts</button>
+    <button class="tab">🏆 Logros</button>
+  </section>
+
+  <section class="gallery">
+    <div class="post"><img src="agencia-jm-equipo-banner.png" alt="Foto"></div>
+    <div class="post"><img src="agencia-jm-logo-800.png" alt="Foto"></div>
+    <div class="post"><img src="file_00000000b3c871f48b055c58a3c52bfa.png" alt="Foto"></div>
+    <div class="post"><img src="agencia-jm-equipo-banner.png" alt="Foto"></div>
+    <div class="post"><img src="agencia-jm-logo-800.png" alt="Foto"></div>
+    <div class="post"><img src="file_00000000971871f48b6a36f7fcf68d51.png" alt="Foto"></div>
+  </section>
+
+  <div class="bottom-space"></div>
+
 </main>
+<nav class="bottom-nav">
 
-<script type="module">
+  <button class="nav-btn" onclick="location.href='index.html'">
+    <span>🏠</span>
+    Inicio
+  </button>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  <button class="nav-btn">
+    <span>🎙️</span>
+    Sala
+  </button>
 
-const firebaseConfig = {
-  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain:"agencia-jm-elite.firebaseapp.com",
-  projectId:"agencia-jm-elite",
-  storageBucket:"agencia-jm-elite.firebasestorage.app",
-  messagingSenderId:"171676205335",
-  appId:"1:171676205335:web:95443528659ab804fe7752"
+  <button class="nav-btn active">
+    <span>👤</span>
+    Perfil
+  </button>
+
+  <button class="nav-btn">
+    <span>💬</span>
+    Chat
+  </button>
+
+  <button class="nav-btn">
+    <span>☰</span>
+    Más
+  </button>
+
+</nav>
+
+<script>
+
+const tabs=document.querySelectorAll(".tab");
+
+tabs.forEach(tab=>{
+
+tab.onclick=function(){
+
+tabs.forEach(t=>t.classList.remove("active"));
+
+this.classList.add("active");
+
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const avatar = document.getElementById("avatar");
-const cover = document.getElementById("cover");
-const cont = document.getElementById("perfilContenido");
-
-const params = new URLSearchParams(location.search);
-const perfilId = params.get("id");
-
-async function cargarPerfil(){
-
-  const id = perfilId || auth.currentUser.uid;
-
-  const snap = await getDoc(doc(db,"usuarios",id));
-
-  if(!snap.exists()){
-    cont.innerHTML="Perfil no encontrado";
-    return;
-  }
-
-  const u = snap.data();
-
-  if(u.fotoPerfil){
-    avatar.style.display="flex";
-    avatar.innerHTML='<img src="'+u.fotoPerfil+'">';
-  }
-
-  if(u.fotoPortada){
-    cover.style.backgroundImage='linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.6)),url("'+u.fotoPortada+'")';
-    cover.style.backgroundSize="cover";
-    cover.style.backgroundPosition="center";
-  }
-
-  const revision = u.estadoRevision || "pendiente";
-    cont.className="";
-  cont.innerHTML=`
-    <section class="name">
-      <h2>${u.nombre || "Emisora Elite"}</h2>
-      <p>👑 Fundador • Agencia JM Tenerife</p>
-      <div class="badges">
-  <span>💙 Fan azul</span>
-  <span>⭐ Insignia Star</span>
-  <span>★ Agencia Tenerife JMM</span>
-  <span>💎 VIP 3</span>
-  <span>🟣 Nivel 45</span>
-  <span>🆔 19758906</span>
-  <span>👥 1981 Seguidores</span>
-  <span>📅 Miembro desde 12/03/2024</span>
-  <span>🏅 Star Activo Nivel 7</span>
-  <span>💛 Poder del Fan Nivel 1</span>
-</div>
-    </section>
-
-    <section class="card">
-      <h3>✨ Información principal</h3>
-      <div class="row"><span>🌍 País</span><b>${u.pais || "No indicado"}</b></div>
-      <div class="row"><span>🆔 Poppo ID</span><b>${u.poppoId || "No indicado"}</b></div>
-      <div class="row"><span>✉️ Correo</span><b>${u.email || "No indicado"}</b></div>
-      <div class="row"><span>🎙️ Estado</span><b>${u.estado || "activo"}</b></div>
-    </section>
-
-    <section class="card">
-      <h3>🛡️ Estado del perfil</h3>
-      <div class="row"><span>Revisión</span><b>${revision==="aprobado" ? "🟢 Aprobado" : revision==="rechazado" ? "🔴 Rechazado" : "🟡 Pendiente"}</b></div>
-      <p class="bio">${revision==="aprobado" ? "Perfil aprobado por la administración." : revision==="rechazado" ? "Este perfil necesita cambios." : "Perfil pendiente de revisión."}</p>
-    </section>
-
-    <section class="card">
-      <h3>📝 Presentación</h3>
-      <p class="bio">${u.descripcion || "Esta emisora todavía no ha escrito su presentación."}</p>
-    </section>
-
-    <section class="card">
-      <h3>📲 Redes y contacto</h3>
-      <div class="socials">
-        <div class="social">WhatsApp</div>
-        <div class="social">Instagram</div>
-        <div class="social">TikTok</div>
-        <div class="social">Facebook</div>
-      </div>
-    </section>
-<section class="card">
-  <h3>🏅 Logros Poppo</h3>
-
-  <div class="info-row">
-    <span>🗓️ Miembro desde</span>
-    <b>12/03/2024</b>
-  </div>
-
-  <div class="info-row">
-    <span>⏳ Tiempo en Poppo</span>
-    <b id="diasPoppo">Calculando...</b>
-  </div>
-
-  <div class="info-row">
-    <span>🏅 Star Activo</span>
-    <b>Nivel 7</b>
-  </div>
-
-  <div class="info-row">
-    <span>💛 Poder del Fan</span>
-    <b>Nivel 1</b>
-  </div>
-</section>
-    <div class="actions">
-      <button class="btn blue" onclick="alert('Chat privado próximamente')">💬 Mensaje</button>
-      <button class="btn gold" onclick="location.href='editar-perfil.html'">📝 Editar perfil</button>
-    </div>
-  `;
-  actualizarDiasPoppo();
-}
-
-onAuthStateChanged(auth,function(user){
-  if(!user){
-    location.replace("index.html");
-    return;
-  }
-  cargarPerfil();
 });
-function actualizarDiasPoppo(){
-  const fechaInicioPoppo = new Date("2024-03-12T00:00:00");
-  const hoy = new Date();
 
-  const diferencia = hoy - fechaInicioPoppo;
-  const diasPoppo = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-
-  const diasPoppoBox = document.getElementById("diasPoppo");
-
-  if(diasPoppoBox){
-    diasPoppoBox.textContent = diasPoppo + " días";
-  }
-}
 </script>
+
 </body>
 </html>
