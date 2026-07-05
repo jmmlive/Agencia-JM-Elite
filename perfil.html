@@ -314,6 +314,45 @@ display:block;
 .bottom-space{
 height:100px;
 }
+  .bottom-nav{
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+height:78px;
+z-index:90;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+background:rgba(0,25,70,.82);
+backdrop-filter:blur(16px);
+border-top:1px solid rgba(247,215,116,.25);
+box-shadow:0 -8px 30px rgba(0,140,255,.25);
+}
+
+.nav-btn{
+border:0;
+background:transparent;
+color:white;
+font-size:11px;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+gap:4px;
+}
+
+.nav-btn span{
+font-size:25px;
+filter:drop-shadow(0 0 8px #00aaff);
+}
+
+.nav-btn.active{
+color:var(--gold);
+}
+
+.nav-btn.active span{
+transform:translateY(-4px);
+}
   </style>
 </head>
 
