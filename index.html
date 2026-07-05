@@ -246,6 +246,113 @@ margin-bottom:4px;
 font-size:12px;
 color:#d9e5ff;
 }
+  /* ====== BOTÓN SALA ====== */
+
+.sala-main-btn{
+width:100%;
+margin:14px 0 18px;
+padding:18px;
+border-radius:24px;
+border:2px solid #f7d774;
+background:linear-gradient(135deg,#004cff,#00aaff,#061326);
+color:#fff;
+font-weight:bold;
+box-shadow:0 0 25px rgba(0,170,255,.45);
+text-align:left;
+cursor:pointer;
+}
+
+.sala-main-btn span{
+display:block;
+font-size:22px;
+margin-bottom:6px;
+}
+
+.sala-main-btn small{
+display:block;
+font-size:13px;
+font-weight:normal;
+color:#d9e5ff;
+}
+
+/* ====== ACCESOS RÁPIDOS ====== */
+
+.quick-zone{
+margin-top:18px;
+}
+
+.quick-zone h2{
+color:#f7d774;
+margin-bottom:14px;
+font-size:20px;
+}
+
+.quick-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.quick-btn{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(247,215,116,.25);
+border-radius:22px;
+padding:16px 10px;
+color:white;
+text-align:center;
+backdrop-filter:blur(10px);
+transition:.25s;
+}
+
+.quick-btn span{
+display:block;
+font-size:30px;
+margin-bottom:8px;
+}
+
+.quick-btn b{
+display:block;
+font-size:15px;
+color:#f7d774;
+margin-bottom:5px;
+}
+
+.quick-btn small{
+font-size:12px;
+color:#d9e5ff;
+}
+
+.quick-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 0 18px rgba(22,140,255,.35);
+}
+
+/* ====== FRASE ====== */
+
+.elite-message{
+display:flex;
+align-items:center;
+gap:14px;
+margin-top:18px;
+padding:16px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(247,215,116,.25);
+border-radius:22px;
+}
+
+.message-icon{
+font-size:42px;
+}
+
+.elite-message p{
+font-size:16px;
+line-height:1.5;
+color:#d9e5ff;
+}
+
+.elite-message b{
+color:#f7d774;
+}
 </style>
 </head>
 
@@ -363,10 +470,9 @@ color:#d9e5ff;
   </div>
 </section>
 
-<button onclick="location.href='sala-pro.html'" style="width:100%;margin:14px 0;padding:18px;border-radius:22px;border:2px solid #f7d774;background:linear-gradient(90deg,#004cff,#00aaff,#003a8c);color:white;font-size:22px;font-weight:bold;box-shadow:0 0 25px #00aaff;text-align:left;">
-  🎙️ ENTRAR A LA SALA
-  <br>
-  <span style="font-size:13px;font-weight:normal;color:#d9e5ff;">Reuniones, directos y más</span>
+<button onclick="location.href='sala-pro.html'" class="sala-main-btn">
+  <span>🎙️ ENTRAR A LA SALA</span>
+  <small>Reuniones, directos y sala principal de Agencia JM Elite</small>
 </button>
 
 <div class="elite-stats-bar">
@@ -397,27 +503,67 @@ color:#d9e5ff;
 
 </div>
 
-<section class="panel">
-  <h2>⭐ Accesos rápidos</h2>
+<section class="quick-zone">
+  <h2>⭐ ACCESOS RÁPIDOS</h2>
 
-  <div class="dashboard">
-    <button class="dash-card" onclick="location.replace('emisoras.html')"><div class="big">👥</div><h3>Mis Emisoras</h3></button>
-    <button class="dash-card" onclick="alert('Academia preparada')"><div class="big">🎓</div><h3>Academia</h3></button>
-    <button class="dash-card" onclick="alert('ChatBot IA preparado')"><div class="big">🤖</div><h3>ChatBot IA</h3></button>
-    <button class="dash-card" onclick="alert('Chat Agencia preparado')"><div class="big">💬</div><h3>Chat Agencia</h3></button>
-    <button class="dash-card" onclick="alert('Ranking preparado')"><div class="big">🏆</div><h3>Ranking</h3></button>
-    <button class="dash-card" onclick="alert('Pagos preparado')"><div class="big">💰</div><h3>Pagos</h3></button>
-    <button class="dash-card" onclick="alert('Avisos preparado')"><div class="big">📢</div><h3>Avisos</h3></button>
-    <button class="dash-card" onclick="alert('Eventos preparado')"><div class="big">📅</div><h3>Eventos</h3></button>
+  <div class="quick-grid">
+
+    <button class="quick-btn" onclick="location.replace('emisoras.html')">
+      <span>👥</span>
+      <b>Mis Emisoras</b>
+      <small>Control y seguimiento</small>
+    </button>
+
+    <button class="quick-btn" onclick="alert('Academia preparada')">
+      <span>🎓</span>
+      <b>Academia</b>
+      <small>Formación y guías</small>
+    </button>
+
+    <button class="quick-btn" onclick="alert('ChatBot IA preparado')">
+      <span>🤖</span>
+      <b>ChatBot IA</b>
+      <small>Ayuda inteligente</small>
+    </button>
+
+    <button class="quick-btn" onclick="alert('Chat Agencia preparado')">
+      <span>💬</span>
+      <b>Chat Agencia</b>
+      <small>Comunicación interna</small>
+    </button>
+
+    <button class="quick-btn" onclick="alert('Ranking preparado')">
+      <span>🏆</span>
+      <b>Ranking</b>
+      <small>Top emisoras</small>
+    </button>
+
+    <button class="quick-btn" onclick="alert('Pagos preparado')">
+      <span>💰</span>
+      <b>Pagos</b>
+      <small>Control económico</small>
+    </button>
+
+    <button class="quick-btn" onclick="alert('Avisos preparado')">
+      <span>📢</span>
+      <b>Avisos</b>
+      <small>Novedades importantes</small>
+    </button>
+
+    <button class="quick-btn" onclick="alert('Soporte preparado')">
+      <span>🛠️</span>
+      <b>Soporte</b>
+      <small>Ayuda y contacto</small>
+    </button>
+
   </div>
 </section>
-<section class="panel">
-  
-<section class="panel" style="display:flex;align-items:center;gap:14px;">
-  <div style="font-size:42px;">🦅</div>
-  <p style="font-size:16px;color:#d9e5ff;">
+
+<section class="elite-message">
+  <div class="message-icon">🦅</div>
+  <p>
     La disciplina de hoy es el éxito de mañana.<br>
-    <b style="color:#f7d774;">— Jesús</b>
+    <b>Jesús</b>
   </p>
 </section>
 
