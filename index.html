@@ -7,888 +7,516 @@
 
 <style>
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
 
 :root{
---azul:#008cff;
---azul2:#003cff;
---oro:#f7d774;
---blanco:#ffffff;
---suave:#d9e5ff;
---fondo:#020713;
+  --gold:#f7d774;
+  --gold2:#ffcc3d;
+  --blue:#008cff;
+  --blue2:#005dff;
+  --deep:#020713;
+  --navy:#061326;
+  --soft:#dce8ff;
 }
 
 body{
-min-height:100vh;
-background:
-radial-gradient(circle at 20% 10%,rgba(0,140,255,.95),transparent 28%),
-radial-gradient(circle at 90% 15%,rgba(0,60,255,.75),transparent 30%),
-linear-gradient(180deg,#007bff 0%,#003a94 38%,#020713 100%);
-color:white;
-overflow-x:hidden;
+  background:#020713;
+  color:white;
+  min-height:100vh;
+  padding-bottom:78px;
 }
 
-body:before{
-content:"";
-position:fixed;
-inset:0;
-background:
-linear-gradient(120deg,rgba(255,255,255,.08),transparent 20%,rgba(255,255,255,.05),transparent 60%),
-radial-gradient(circle at 50% 50%,rgba(255,255,255,.08),transparent 40%);
-mix-blend-mode:screen;
-pointer-events:none;
-z-index:-1;
-}
-
-.hidden{
-display:none!important;
+a{
+  color:inherit;
+  text-decoration:none;
 }
 
 button{
-cursor:pointer;
-}
-
-/* LOGIN */
-
-.login{
-position:fixed;
-inset:0;
-z-index:999;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-background:
-linear-gradient(rgba(0,40,100,.58),rgba(0,0,0,.9)),
-url("file_00000000c2f871f485def986ae1c9774.png") center/cover no-repeat;
-}
-
-.login-box{
-width:100%;
-max-width:390px;
-padding:24px;
-border-radius:30px;
-background:rgba(2,10,30,.92);
-border:1px solid rgba(247,215,116,.5);
-box-shadow:0 0 45px rgba(0,140,255,.45);
-text-align:center;
-}
-
-.login-logo{
-width:92px;
-height:92px;
-object-fit:contain;
-margin-bottom:12px;
-filter:drop-shadow(0 0 18px #00aaff);
-}
-
-.login-box h1{
-color:var(--oro);
-font-size:30px;
-margin-bottom:8px;
-}
-
-.login-box p{
-color:var(--suave);
-margin-bottom:14px;
-}
-
-.tabs{
-display:flex;
-gap:8px;
-margin-bottom:12px;
-}
-
-.tabs button{
-flex:1;
-border:0;
-border-radius:16px;
-padding:14px;
-font-weight:bold;
-font-size:15px;
-}
-
-.blue{
-background:linear-gradient(90deg,#005cff,#00aaff);
-color:white;
-}
-
-.gold{
-background:linear-gradient(90deg,#d4af37,#ffcc55);
-color:#061326;
-}
-
-input{
-width:100%;
-margin-top:12px;
-padding:15px;
-border-radius:16px;
-border:1px solid var(--azul);
-background:#061a40;
-color:white;
-font-size:15px;
-}
-
-.mainbtn{
-width:100%;
-margin-top:16px;
-padding:15px;
-border:0;
-border-radius:16px;
-background:linear-gradient(90deg,#005cff,#00aaff);
-color:white;
-font-size:16px;
-font-weight:bold;
-}
-
-.small{
-margin-top:14px;
-color:var(--oro)!important;
-font-size:14px;
-}
-
-/* APP */
-
-.loading{
-position:fixed;
-inset:0;
-z-index:9999;
-background:#020713;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-color:var(--oro);
-}
-
-.loading p{
-color:var(--suave);
-margin-top:8px;
+  border:0;
+  cursor:pointer;
 }
 
 .app{
-min-height:100vh;
-padding-bottom:92px;
+  min-height:100vh;
+  padding:12px;
+  background:
+    radial-gradient(circle at top,#008cff 0%,#004dff 32%,#020713 78%);
 }
 
-/* TOP */
-
-.topbar{
-height:64px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:0 14px;
-background:rgba(0,0,0,.45);
-backdrop-filter:blur(14px);
-border-bottom:1px solid rgba(247,215,116,.22);
-position:sticky;
-top:0;
-z-index:50;
+/* CABECERA */
+.top{
+  border:1px solid rgba(247,215,116,.38);
+  border-radius:22px;
+  padding:14px;
+  background:rgba(0,12,38,.86);
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 0 22px rgba(0,140,255,.25);
+  margin-bottom:12px;
 }
 
-.icon{
-width:44px;
-height:44px;
-border-radius:16px;
-border:1px solid rgba(247,215,116,.35);
-background:rgba(0,40,100,.55);
-color:white;
-font-size:22px;
-box-shadow:0 0 18px rgba(0,140,255,.3);
+.menu-btn,
+.notify-btn{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:rgba(0,25,80,.75);
+  border:1px solid rgba(247,215,116,.32);
+  color:white;
+  font-size:22px;
 }
 
-.brand{
-text-align:center;
+.welcome small{
+  color:white;
+  font-size:13px;
 }
 
-.brand h2{
-font-size:16px;
-color:var(--oro);
+.welcome h1{
+  color:var(--gold);
+  font-size:27px;
+  line-height:1;
+  margin-top:3px;
 }
 
-.brand p{
-font-size:9px;
-color:#d9e5ff;
-letter-spacing:1px;
+.role{
+  margin-top:8px;
+  display:inline-flex;
+  padding:7px 11px;
+  border-radius:999px;
+  background:rgba(0,93,255,.38);
+  border:1px solid rgba(0,170,255,.45);
+  color:var(--gold);
+  font-size:12px;
+  font-weight:bold;
 }
 
-/* MENU */
-
-.menu{
-position:fixed;
-top:0;
-left:-270px;
-width:255px;
-height:100%;
-overflow-y:auto;
-background:linear-gradient(180deg,#003a94,#020713);
-border-right:2px solid var(--oro);
-transition:.35s;
-z-index:999;
-box-shadow:8px 0 35px rgba(0,0,0,.6);
-padding-bottom:20px;
+.logo{
+  width:86px;
+  height:86px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:radial-gradient(circle,#005dff 0%,#061326 70%);
+  border:2px solid var(--gold);
+  box-shadow:0 0 22px rgba(0,140,255,.75);
+  font-size:42px;
 }
 
-.menu.active{
-left:0;
+.quick-stats{
+  justify-self:end;
+  display:flex;
+  gap:8px;
 }
 
-.menu-head{
-text-align:center;
-padding:14px;
-border-bottom:1px solid rgba(247,215,116,.25);
+.quick-box{
+  min-width:62px;
+  padding:8px 7px;
+  border-radius:15px;
+  background:rgba(0,18,55,.78);
+  border:1px solid rgba(247,215,116,.25);
+  text-align:center;
 }
 
-.menu-head img{
-width:82px;
-display:block;
-margin:0 auto 8px;
-filter:drop-shadow(0 0 20px #00bfff);
+.quick-box b{
+  display:block;
+  color:white;
+  font-size:16px;
 }
 
-.menu-head h3{
-color:var(--oro);
-font-size:23px;
+.quick-box span{
+  color:var(--soft);
+  font-size:10px;
 }
 
-.menu button{
-width:100%;
-margin:7px 0;
-padding:12px 16px;
-background:transparent;
-border:0;
-color:white;
-font-size:15px;
-text-align:left;
+/* BANNER */
+.hero{
+  position:relative;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid rgba(0,170,255,.55);
+  background:#061326;
+  margin-bottom:14px;
+  box-shadow:0 0 24px rgba(0,140,255,.38);
 }
 
-/* CONTENT */
-
-.content{
-padding:16px;
+.hero img{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  filter:saturate(1.22) contrast(1.08);
 }
 
-/* PERFIL */
-
-.profile-card{
-text-align:center;
-padding:18px 12px 12px;
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.72),rgba(0,35,150,.18),rgba(0,0,0,.18));
 }
 
-.cover{
-height:170px;
-border-radius:30px;
-overflow:hidden;
-border:1px solid rgba(247,215,116,.45);
-box-shadow:0 0 35px rgba(0,140,255,.35);
-background:#061326;
+.hero-content{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:18px;
 }
 
-.cover img{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
+.hero-content h2{
+  font-size:25px;
+  color:white;
+  line-height:1.05;
 }
 
-.avatar{
-width:110px;
-height:110px;
-margin:-55px auto 12px;
-border-radius:26px;
-overflow:hidden;
-border:3px solid var(--oro);
-background:#061326;
-box-shadow:0 0 25px rgba(0,170,255,.8);
-position:relative;
-z-index:2;
+.hero-content h2 span{
+  color:var(--gold);
+  display:block;
 }
 
-.avatar img{
-width:100%;
-height:100%;
-object-fit:cover;
+.hero-content p{
+  margin-top:8px;
+  font-size:13px;
+  color:white;
+  max-width:210px;
 }
 
-.profile-card h1{
-font-size:30px;
-color:var(--oro);
-text-shadow:0 0 14px rgba(247,215,116,.35);
+.hero-panel{
+  position:absolute;
+  right:14px;
+  top:22px;
+  bottom:22px;
+  width:105px;
+  z-index:3;
+  border-radius:18px;
+  background:rgba(0,10,35,.76);
+  border:1px solid rgba(247,215,116,.32);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:12px;
+  text-align:center;
 }
 
-.profile-card p{
-color:var(--suave);
-margin-top:5px;
+.hero-panel b{
+  color:white;
+  font-size:18px;
 }
 
-.badges{
-display:flex;
-justify-content:center;
-gap:8px;
-flex-wrap:wrap;
-margin-top:12px;
+.hero-panel span{
+  color:var(--soft);
+  font-size:11px;
 }
 
-.badges span{
-padding:8px 13px;
-border-radius:999px;
-background:rgba(255,255,255,.09);
-border:1px solid rgba(247,215,116,.28);
-font-size:13px;
+/* SECCIONES */
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--gold);
+  font-size:16px;
+  margin:16px 0 10px;
+  letter-spacing:.4px;
 }
 
-/* SALA */
-
-.sala-big{
-width:100%;
-margin:10px 0 18px;
-padding:20px;
-border:0;
-border-radius:30px;
-background:
-linear-gradient(135deg,#004cff,#00aaff,#003a94);
-color:white;
-box-shadow:0 0 35px rgba(0,170,255,.65);
-text-align:left;
+.section-title::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,var(--gold),transparent);
 }
 
-.sala-big b{
-display:block;
-font-size:24px;
-color:white;
+/* TARJETAS */
+.grid-main{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
 }
 
-.sala-big span{
-display:block;
-margin-top:5px;
-color:#e5f2ff;
-font-size:13px;
+.grid-small{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
 
-/* STATS */
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:10px;
-margin-bottom:22px;
+.card{
+  min-height:108px;
+  border-radius:19px;
+  background:linear-gradient(180deg,rgba(0,68,210,.58),rgba(0,18,70,.86));
+  border:1px solid rgba(0,170,255,.50);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:10px 6px;
+  box-shadow:
+    0 0 16px rgba(0,140,255,.25),
+    inset 0 0 18px rgba(0,140,255,.12);
 }
 
-.stat{
-text-align:center;
+.card.gold{
+  background:linear-gradient(180deg,rgba(90,55,0,.70),rgba(20,12,0,.86));
+  border-color:rgba(247,215,116,.55);
 }
 
-.stat div{
-font-size:26px;
-margin-bottom:4px;
+.card.purple{
+  background:linear-gradient(180deg,rgba(85,0,190,.65),rgba(20,0,60,.86));
+  border-color:rgba(190,80,255,.55);
 }
 
-.stat b{
-display:block;
-font-size:20px;
-color:var(--oro);
+.card.green{
+  background:linear-gradient(180deg,rgba(0,130,120,.55),rgba(0,35,45,.88));
+  border-color:rgba(70,255,235,.45);
 }
 
-.stat span{
-font-size:11px;
-color:var(--suave);
+.card.red{
+  background:linear-gradient(180deg,rgba(190,35,35,.58),rgba(65,0,0,.88));
+  border-color:rgba(255,100,80,.50);
 }
 
-/* ICONOS FLOTANTES */
-
-.float-zone{
-padding:10px 0 20px;
+.card .ico{
+  font-size:32px;
+  margin-bottom:8px;
 }
 
-.float-title{
-color:var(--oro);
-font-size:18px;
-margin-bottom:16px;
-text-align:center;
+.card b{
+  font-size:14px;
+  color:white;
 }
 
-.float-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:22px 10px;
+.card small{
+  margin-top:4px;
+  font-size:10.5px;
+  color:var(--soft);
 }
 
-.float-btn{
-border:0;
-background:transparent;
-color:white;
-text-align:center;
-}
-
-.float-btn span{
-width:54px;
-height:54px;
-display:flex;
-align-items:center;
-justify-content:center;
-margin:0 auto 7px;
-font-size:30px;
-border-radius:50%;
-background:radial-gradient(circle,#00aaff,#004cff);
-box-shadow:0 0 22px rgba(0,170,255,.75);
-}
-
-.float-btn b{
-font-size:12px;
-color:white;
-font-weight:bold;
-}
-
-/* MENSAJE */
-
-.elite-message{
-display:flex;
-align-items:center;
-gap:14px;
-margin-top:22px;
-padding:16px;
-border-radius:26px;
-background:rgba(0,40,100,.28);
-border:1px solid rgba(247,215,116,.25);
-backdrop-filter:blur(10px);
-}
-
-.message-icon{
-font-size:44px;
-}
-
-.elite-message p{
-font-size:16px;
-line-height:1.5;
-color:var(--suave);
-}
-
-.elite-message b{
-color:var(--oro);
-}
-
-/* BARRA INFERIOR POP */
-
+/* MENÚ INFERIOR */
 .bottom-nav{
-position:fixed;
-left:0;
-right:0;
-bottom:0;
-height:78px;
-z-index:90;
-display:grid;
-grid-template-columns:repeat(5,1fr);
-background:rgba(0,25,70,.76);
-backdrop-filter:blur(16px);
-border-top:1px solid rgba(247,215,116,.25);
-box-shadow:0 -8px 30px rgba(0,140,255,.25);
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:74px;
+  background:rgba(0,12,38,.98);
+  border-top:1px solid rgba(247,215,116,.25);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:999;
 }
 
-.nav-btn{
-border:0;
-background:transparent;
-color:white;
-font-size:11px;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-gap:4px;
+.nav-item{
+  color:white;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
 }
 
-.nav-btn span{
-font-size:25px;
-filter:drop-shadow(0 0 8px #00aaff);
+.nav-item .icon{
+  font-size:24px;
 }
 
-.nav-btn.active{
-color:var(--oro);
+.nav-item.active{
+  color:var(--gold);
 }
 
-.nav-btn.active span{
-transform:translateY(-4px);
+@media(max-width:390px){
+  .top{
+    padding:12px;
+  }
+
+  .logo{
+    width:74px;
+    height:74px;
+    font-size:36px;
+  }
+
+  .welcome h1{
+    font-size:24px;
+  }
+
+  .quick-stats{
+    flex-direction:column;
+  }
+
+  .quick-box{
+    min-width:56px;
+    padding:6px;
+  }
+
+  .hero img{
+    height:175px;
+  }
+
+  .hero-panel{
+    width:92px;
+  }
+
+  .card{
+    min-height:96px;
+  }
+
+  .card .ico{
+    font-size:28px;
+  }
+
+  .card b{
+    font-size:12.5px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div id="loadingScreen" class="loading">
-  <h1>Agencia JM Elite</h1>
-  <p>Cargando...</p>
-</div>
-<div id="loginScreen" class="login">
-  <div class="login-box">
-    <img class="login-logo" src="file_00000000971871f48b6a36f7fcf68d51.png">
-    <h1>Agencia JM Elite</h1>
-    <p>Acceso privado de la agencia</p>
+<main class="app">
 
-    <div class="tabs">
-      <button class="blue" onclick="mostrarLogin()">Entrar</button>
-      <button class="gold" onclick="mostrarRegistro()">Registrarse</button>
+  <header class="top">
+    <button class="menu-btn" onclick="location.href='menu.html'">☰</button>
+
+    <div class="welcome">
+      <small>Bienvenido</small>
+      <h1>Jesús</h1>
+      <span class="role">👑 Host Principal</span>
     </div>
 
-    <div id="loginForm">
-      <input id="loginEmail" type="email" placeholder="Correo electrónico">
-      <input id="loginPassword" type="password" placeholder="Contraseña">
-      <button class="mainbtn" onclick="iniciarSesion()">Iniciar sesión</button>
-      <p class="small" onclick="recuperarPassword()">¿Olvidaste tu contraseña?</p>
+    <div class="logo">🦅</div>
+
+    <div class="quick-stats">
+      <div class="quick-box">
+        <b>125K</b>
+        <span>Coins</span>
+      </div>
+      <div class="quick-box">
+        <b>15</b>
+        <span>En sala</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <img src="agencia-jm-equipo-banner.png" alt="Agencia JM Elite">
+
+    <div class="hero-content">
+      <h2>AGENCIA <span>JM ELITE</span></h2>
+      <p>Un equipo, una visión, un mismo objetivo.</p>
     </div>
 
-    <div id="registerForm" class="hidden">
-      <input id="regNombre" placeholder="Nombre completo">
-      <input id="regEmail" type="email" placeholder="Correo electrónico">
-      <input id="regPassword" type="password" placeholder="Contraseña">
-      <input id="regPoppoId" placeholder="ID de Poppo">
-      <input id="regPais" placeholder="País">
-      <button class="mainbtn" onclick="registrarEmisora()">Crear cuenta</button>
+    <div class="hero-panel">
+      <div>
+        <b>🟢 Sala Pro</b>
+        <span>En vivo</span>
+      </div>
+      <div>
+        <b>👥 15</b>
+        <span>En sala</span>
+      </div>
+      <div>
+        <b>🎙️ 15</b>
+        <span>Micrófonos</span>
+      </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<div id="sideMenu" class="menu">
-  <div class="menu-head">
-    <img src="file_00000000b3c871f48b055c58a3c52bfa.png">
-    <h3>Jesús</h3>
-  </div>
+  <h2 class="section-title">⭐ Accesos principales</h2>
 
-  <button onclick="closeMenu()">🏠 Inicio</button>
-  <button onclick="location.href='perfil.html'">👤 Mi Perfil</button>
-  <button onclick="location.href='sala-pro.html'">🎙️ Sala</button>
-  <button onclick="location.replace('emisoras.html')">👥 Mis Emisoras</button>
-  <button onclick="alert('Academia preparada')">🎓 Academia</button>
-  <button onclick="alert('ChatBot IA preparado')">🤖 ChatBot IA</button>
-  <button onclick="alert('Chat Agencia preparado')">💬 Chat Agencia</button>
-  <button onclick="alert('Ranking preparado')">🏆 Ranking</button>
-  <button onclick="alert('Pagos preparado')">💰 Pagos</button>
-  <button onclick="alert('Avisos preparado')">📢 Avisos</button>
-  <button onclick="alert('Eventos preparado')">📅 Eventos</button>
-  <button onclick="alert('Normas preparado')">📜 Normas</button>
-  <button onclick="alert('Soporte preparado')">🛠️ Soporte</button>
-  <button onclick="alert('Configuración preparada')">⚙️ Configuración</button>
-  <button onclick="cerrarSesion()" style="color:#ff6b6b;">🚪 Cerrar sesión</button>
-</div>
+  <section class="grid-main">
+    <a class="card" href="sala-pro.html">
+      <span class="ico">🎙️</span>
+      <b>Sala Pro</b>
+      <small>Entrar a la sala</small>
+    </a>
 
-<div class="app">
+    <a class="card purple" href="chatbot.html">
+      <span class="ico">🤖</span>
+      <b>ChatBot IA</b>
+      <small>Asistente inteligente</small>
+    </a>
 
-<header class="topbar">
-  <button class="icon" onclick="toggleMenu()">☰</button>
+    <a class="card green" href="emisoras.html">
+      <span class="ico">👥</span>
+      <b>Mis Emisoras</b>
+      <small>Gestionar equipo</small>
+    </a>
+  </section>
 
-  <div class="brand">
-    <h2>AGENCIA JM ELITE</h2>
-    <p>DISCIPLINA · ENFOQUE · RESULTADOS</p>
-  </div>
+  <h2 class="section-title">⭐ Gestión y comunidad</h2>
 
-  <button class="icon" onclick="alert('Avisos preparado')">🔔</button>
-</header>
-
-<main class="content">
-
-<section class="profile-card">
-  <div class="cover">
-    <img src="file_000000001bc071f4827cb9929d14bd8c.png" alt="Agencia JM Elite">
-  </div>
-
-  <div class="avatar">
-    <img src="file_00000000f71471f499e5839986bab33b.png" alt="Jesús">
-  </div>
-
-  <h1>Jesús Melián</h1>
-  <p>👑 Fundador • Agencia JM Tenerife</p>
-
-  <div class="badges">
-  <span>💙 Fan azul</span>
-  <span>⭐ Insignia Star</span>
-  <span>★ Agencia Tenerife JMM</span>
-  <span>💎 VIP 3</span>
-  <span>🟣 Nivel 45</span>
-  <span>🆔 19758906</span>
-  <span>👥 1981 Seguidores</span>
-  <span>📅 Miembro desde 12/03/2024</span>
-  <span>🏅 Star Activo Nivel 7</span>
-  <span>💛 Poder del Fan Nivel 1</span>
-  </div>
-</section>
-
-<button class="sala-big" onclick="location.href='sala-pro.html'">
-  <b>🎙️ ENTRAR A LA SALA</b>
-  <span>Reuniones, directos, formación y control de agencia</span>
-</button>
-
-<section class="stats">
-  <div class="stat">
-    <div>👥</div>
-    <b>34</b>
-    <span>Emisoras</span>
-  </div>
-
-  <div class="stat">
-    <div>🟢</div>
-    <b>29</b>
-    <span>Online</span>
-  </div>
-
-  <div class="stat">
-    <div>👑</div>
-    <b>12</b>
-    <span>Top</span>
-  </div>
-
-  <div class="stat">
-    <div>💎</div>
-    <b>125K</b>
-    <span>Diamantes</span>
-  </div>
-</section>
-
-<section class="float-zone">
-  <h2 class="float-title">Accesos de Agencia</h2>
-
-  <div class="float-grid">
-    <button class="float-btn" onclick="location.replace('emisoras.html')">
-      <span>👥</span>
-      <b>Emisoras</b>
-    </button>
-
-    <button class="float-btn" onclick="alert('Academia preparada')">
-      <span>🎓</span>
-      <b>Academia</b>
-    </button>
-
-    <button class="float-btn" onclick="alert('ChatBot IA preparado')">
-      <span>🤖</span>
-      <b>IA</b>
-    </button>
-
-    <button class="float-btn" onclick="alert('Pagos preparado')">
-      <span>💰</span>
+  <section class="grid-small">
+    <a class="card green" href="pagos.html">
+      <span class="ico">💰</span>
       <b>Pagos</b>
-    </button>
+      <small>Historial y retiros</small>
+    </a>
 
-    <button class="float-btn" onclick="alert('Ranking preparado')">
-      <span>🏆</span>
+    <a class="card purple" href="ranking.html">
+      <span class="ico">🏆</span>
       <b>Ranking</b>
-    </button>
+      <small>Top emisoras</small>
+    </a>
 
-    <button class="float-btn" onclick="alert('Avisos preparado')">
-      <span>📢</span>
+    <a class="card gold" href="avisos.html">
+      <span class="ico">📢</span>
       <b>Avisos</b>
-    </button>
+      <small>Noticias importantes</small>
+    </a>
 
-    <button class="float-btn" onclick="alert('Eventos preparado')">
-      <span>📅</span>
+    <a class="card red" href="eventos.html">
+      <span class="ico">🎉</span>
       <b>Eventos</b>
-    </button>
+      <small>Próximos eventos</small>
+    </a>
+  </section>
 
-    <button class="float-btn" onclick="alert('Soporte preparado')">
-      <span>🛠️</span>
+  <h2 class="section-title">⭐ Formación y soporte</h2>
+
+  <section class="grid-small">
+    <a class="card" href="academia.html">
+      <span class="ico">🎓</span>
+      <b>Academia</b>
+      <small>Cursos y formación</small>
+    </a>
+
+    <a class="card green" href="soporte.html">
+      <span class="ico">🛟</span>
       <b>Soporte</b>
-    </button>
-  </div>
-</section>
+      <small>Ayuda y contacto</small>
+    </a>
 
-<section class="elite-message">
-  <div class="message-icon">🦅</div>
-  <p>
-    La disciplina de hoy es el éxito de mañana.<br>
-    <b>Jesús</b>
-  </p>
-</section>
+    <a class="card purple" href="normas.html">
+      <span class="ico">📖</span>
+      <b>Normas</b>
+      <small>Reglas de agencia</small>
+    </a>
+
+    <a class="card" href="menu.html">
+      <span class="ico">☰</span>
+      <b>Más opciones</b>
+      <small>Configuración y más</small>
+    </a>
+  </section>
 
 </main>
 
 <nav class="bottom-nav">
-  <button class="nav-btn active" onclick="closeMenu()">
-    <span>🏠</span>
-    Inicio
-  </button>
-
-  <button class="nav-btn" onclick="location.href='sala-pro.html'">
-    <span>🎙️</span>
-    Sala
-  </button>
-
-  <button class="nav-btn" onclick="location.replace('emisoras.html')">
-    <span>👥</span>
-    Emisoras
-  </button>
-
-  <button class="nav-btn" onclick="alert('Chat preparado')">
-    <span>💬</span>
-    Chat
-  </button>
-
-  <button class="nav-btn" onclick="toggleMenu()">
-    <span>☰</span>
-    Más
-  </button>
+  <a class="nav-item active" href="index.html"><span class="icon">🏠</span><span>Inicio</span></a>
+  <a class="nav-item" href="sala-pro.html"><span class="icon">🎙️</span><span>Sala Pro</span></a>
+  <a class="nav-item" href="perfil.html"><span class="icon">👤</span><span>Perfil</span></a>
+  <a class="nav-item" href="chat.html"><span class="icon">💬</span><span>Chat</span></a>
+  <a class="nav-item" href="menu.html"><span class="icon">☰</span><span>Más</span></a>
 </nav>
 
-  </div>
-  <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain: "agencia-jm-elite.firebaseapp.com",
-  projectId: "agencia-jm-elite",
-  storageBucket: "agencia-jm-elite.firebasestorage.app",
-  messagingSenderId: "171676205335",
-  appId: "1:171676205335:web:95443528659ab804fe7752"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const CORREO_CREADOR = "elpepolan35@gmail.com";
-
-window.mostrarLogin = function(){
-  document.getElementById("loginForm").classList.remove("hidden");
-  document.getElementById("registerForm").classList.add("hidden");
-};
-
-window.mostrarRegistro = function(){
-  document.getElementById("loginForm").classList.add("hidden");
-  document.getElementById("registerForm").classList.remove("hidden");
-};
-
-window.registrarEmisora = async function(){
-  const nombre = document.getElementById("regNombre").value.trim();
-  const email = document.getElementById("regEmail").value.trim().toLowerCase();
-  const password = document.getElementById("regPassword").value.trim();
-  const poppoId = document.getElementById("regPoppoId").value.trim();
-  const pais = document.getElementById("regPais").value.trim();
-
-  if(!nombre || !email || !password || !poppoId || !pais){
-    alert("Completa todos los datos.");
-    return;
-  }
-
-  try{
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    const rol = email === CORREO_CREADOR ? "creador" : "emisora";
-
-    await setDoc(doc(db, "usuarios", cred.user.uid), {
-      uid: cred.user.uid,
-      nombre,
-      email,
-      poppoId,
-      pais,
-      rol,
-      estado: "activo",
-      creado: serverTimestamp()
-    });
-
-    alert("Cuenta creada correctamente.");
-  }catch(error){
-    alert("Error al registrar: " + error.message);
-  }
-};
-
-window.iniciarSesion = async function(){
-  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-  const password = document.getElementById("loginPassword").value.trim();
-
-  if(!email || !password){
-    alert("Escribe correo y contraseña.");
-    return;
-  }
-
-  try{
-    await signInWithEmailAndPassword(auth, email, password);
-  }catch(error){
-    alert("Error al iniciar sesión: " + error.message);
-  }
-};
-
-window.recuperarPassword = async function(){
-  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-
-  if(!email){
-    alert("Escribe tu correo para recuperar la contraseña.");
-    return;
-  }
-
-  try{
-    await sendPasswordResetEmail(auth, email);
-    alert("Correo de recuperación enviado.");
-  }catch(error){
-    alert("Error: " + error.message);
-  }
-};
-
-window.cerrarSesion = async function(){
-  await signOut(auth);
-  location.reload();
-};
-
-window.toggleMenu = function(){
-  const menu = document.getElementById("sideMenu");
-
-  menu.classList.toggle("active");
-
-  if(menu.classList.contains("active")){
-    document.body.style.overflow = "hidden";
-  }else{
-    document.body.style.overflow = "auto";
-  }
-};
-
-window.closeMenu = function(){
-  document.getElementById("sideMenu").classList.remove("active");
-  document.body.style.overflow = "auto";
-};
-
-onAuthStateChanged(auth, async function(user){
-  const loading = document.getElementById("loadingScreen");
-  const login = document.getElementById("loginScreen");
-
-  if(!user){
-    loading.style.display = "none";
-    login.style.display = "flex";
-    return;
-  }
-
-  login.style.display = "none";
-  loading.style.display = "none";
-
-  const ref = doc(db, "usuarios", user.uid);
-  const snap = await getDoc(ref);
-
-  let perfil = {
-    nombre: "Jesús Melián",
-    email: user.email,
-    pais: "España",
-    rol: user.email === CORREO_CREADOR ? "creador" : "emisora"
-  };
-
-  if(snap.exists()){
-    perfil = snap.data();
-  }
-});
-</script>
-
 </body>
-</html>
+                   </html>
