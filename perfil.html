@@ -14,17 +14,17 @@
 }
 
 :root{
-  --blue:#008cff;
   --gold:#f7d774;
   --soft:#d9e5ff;
+  --blue:#007bff;
   --dark:#020713;
 }
 
 body{
-  background:linear-gradient(180deg,#001b45 0%,#005eea 38%,#003fba 100%);
+  background:linear-gradient(180deg,#00142f 0%,#005fe8 45%,#003ba8 100%);
   color:white;
   min-height:100vh;
-  padding-bottom:110px;
+  padding-bottom:96px;
 }
 
 button{
@@ -34,22 +34,21 @@ button{
 
 .profile{
   width:100%;
+  overflow:hidden;
 }
 
 /* CABECERA */
-.header{
+.hero{
   position:relative;
-  height:520px;
   width:100%;
-  overflow:visible;
+  height:365px;
 }
 
 .cover{
   position:absolute;
-  top:0;
-  left:0;
+  inset:0;
   width:100%;
-  height:430px;
+  height:100%;
   overflow:hidden;
   background:#061326;
 }
@@ -68,9 +67,9 @@ button{
   inset:0;
   background:linear-gradient(
     180deg,
-    rgba(0,0,0,.05) 20%,
-    rgba(0,70,180,.35) 70%,
-    rgba(0,94,234,1) 100%
+    rgba(0,0,0,.05) 0%,
+    rgba(0,35,95,.30) 55%,
+    rgba(0,102,235,.96) 100%
   );
 }
 
@@ -79,30 +78,30 @@ button{
   top:18px;
   right:18px;
   z-index:10;
-  width:78px;
-  height:78px;
-  border-radius:28px;
-  background:rgba(0,15,40,.45);
-  border:1px solid rgba(247,215,116,.35);
+  width:54px;
+  height:54px;
+  border-radius:20px;
+  background:rgba(0,15,40,.48);
+  border:1px solid rgba(247,215,116,.32);
   color:white;
-  font-size:36px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 0 22px rgba(0,140,255,.35);
+  font-size:28px;
+  line-height:1;
+  box-shadow:0 0 18px rgba(0,140,255,.28);
 }
 
 .avatar{
   position:absolute;
   left:50%;
-  top:340px;
+  bottom:-64px;
   transform:translateX(-50%);
-  width:155px;
-  height:155px;
+  width:132px;
+  height:132px;
   border-radius:50%;
   overflow:hidden;
   border:5px solid var(--gold);
   background:#061326;
-  box-shadow:0 0 28px rgba(0,170,255,.95);
-  z-index:20;
+  box-shadow:0 0 24px rgba(0,170,255,.85);
+  z-index:12;
 }
 
 .avatar img{
@@ -114,22 +113,21 @@ button{
 /* IDENTIDAD */
 .identity{
   text-align:center;
-  padding:0 16px;
-  margin-top:-6px;
+  padding:74px 14px 0;
 }
 
-.identity h2{
-  font-size:40px;
+.identity h1{
+  font-size:33px;
   color:var(--gold);
-  margin-bottom:8px;
+  margin-bottom:6px;
   font-weight:800;
-  text-shadow:0 2px 8px rgba(0,0,0,.35);
+  text-shadow:0 2px 8px rgba(0,0,0,.38);
 }
 
 .identity p{
-  font-size:22px;
+  font-size:19px;
   color:white;
-  margin-bottom:18px;
+  margin-bottom:14px;
 }
 
 /* INSIGNIAS */
@@ -137,28 +135,26 @@ button{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:10px;
-  padding:0 22px;
-  margin-bottom:28px;
+  gap:8px;
+  padding:0 14px;
+  margin-bottom:18px;
 }
 
 .badges span{
-  padding:9px 15px;
+  padding:8px 12px;
   border-radius:999px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.22);
+  font-size:13px;
   color:white;
-  font-size:15px;
-  box-shadow:inset 0 0 12px rgba(255,255,255,.05);
 }
 
 /* ESTADÍSTICAS */
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:0;
-  padding:20px 8px 18px;
-  margin:12px 14px 22px;
+  margin:6px 14px 18px;
+  padding:16px 0 14px;
   border-top:1px solid rgba(255,255,255,.18);
   border-bottom:1px solid rgba(255,255,255,.15);
 }
@@ -174,14 +170,13 @@ button{
 
 .stat b{
   display:block;
-  font-size:34px;
+  font-size:28px;
   color:white;
-  margin-bottom:5px;
-  font-weight:700;
+  margin-bottom:3px;
 }
 
 .stat span{
-  font-size:14px;
+  font-size:12px;
   color:var(--soft);
 }
 
@@ -189,17 +184,15 @@ button{
 .actions{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:12px;
+  gap:10px;
   padding:0 14px;
-  margin-bottom:26px;
+  margin-bottom:18px;
 }
 
-.action-blue,
-.action-gold,
-.action-dark{
-  min-height:62px;
-  border-radius:18px;
-  font-size:16px;
+.actions button{
+  min-height:54px;
+  border-radius:16px;
+  font-size:14px;
   font-weight:bold;
 }
 
@@ -219,31 +212,26 @@ button{
   border:1px solid rgba(247,215,116,.25);
 }
 
-/* TARJETA INFO */
-.cards{
-  padding:0 14px;
-  margin-bottom:24px;
-}
-
+/* INFORMACIÓN */
 .card{
-  background:rgba(0,20,55,.45);
-  border:1px solid rgba(247,215,116,.25);
-  border-radius:22px;
-  padding:18px;
-  backdrop-filter:blur(8px);
+  margin:0 14px 18px;
+  padding:16px;
+  border-radius:20px;
+  background:rgba(0,20,55,.46);
+  border:1px solid rgba(247,215,116,.22);
 }
 
 .card h3{
   color:var(--gold);
-  font-size:22px;
-  margin-bottom:14px;
+  font-size:20px;
+  margin-bottom:10px;
 }
 
 .row{
   display:flex;
   justify-content:space-between;
-  padding:12px 0;
-  border-bottom:1px solid rgba(255,255,255,.10);
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.09);
 }
 
 .row:last-child{
@@ -264,28 +252,27 @@ button{
   left:0;
   right:0;
   bottom:0;
-  height:92px;
+  height:88px;
   background:rgba(0,18,45,.96);
-  border-top:1px solid rgba(247,215,116,.25);
+  border-top:1px solid rgba(247,215,116,.22);
   display:grid;
   grid-template-columns:repeat(5,1fr);
   z-index:999;
-  box-shadow:0 -8px 28px rgba(0,0,0,.35);
 }
 
 .nav-item{
-  color:white;
   background:transparent;
-  font-size:13px;
+  color:white;
+  font-size:12px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:4px;
+  gap:3px;
 }
 
 .nav-item .icon{
-  font-size:30px;
+  font-size:27px;
 }
 
 .nav-item.active{
@@ -293,45 +280,40 @@ button{
 }
 
 @media(max-width:390px){
-  .header{
-    height:495px;
-  }
-
-  .cover{
-    height:405px;
+  .hero{
+    height:345px;
   }
 
   .avatar{
-    top:320px;
-    width:145px;
-    height:145px;
+    width:124px;
+    height:124px;
+    bottom:-60px;
   }
 
-  .identity h2{
-    font-size:35px;
+  .identity{
+    padding-top:70px;
+  }
+
+  .identity h1{
+    font-size:30px;
   }
 
   .identity p{
-    font-size:19px;
+    font-size:17px;
   }
 
   .badges span{
-    font-size:13px;
-    padding:8px 12px;
+    font-size:12px;
+    padding:7px 10px;
   }
 
   .stat b{
-    font-size:29px;
+    font-size:25px;
   }
 
-  .actions{
-    gap:10px;
-  }
-
-  .action-blue,
-  .action-gold,
-  .action-dark{
-    font-size:14px;
+  .actions button{
+    font-size:13px;
+    min-height:50px;
   }
 }
 </style>
@@ -341,14 +323,13 @@ button{
 
 <main class="profile">
 
-  <!-- CABECERA CON FOTO GRANDE -->
-  <section class="header">
+  <section class="hero">
 
     <div class="cover">
       <img src="file_00000000b87071f4b2cf26f846b51b6e.png" alt="Portada">
     </div>
 
-    <button class="menu-profile">...</button>
+    <button class="menu-profile">•••</button>
 
     <div class="avatar">
       <img src="file_00000000f71471f499e5839986bab33b.png" alt="Foto de perfil">
@@ -356,11 +337,9 @@ button{
 
   </section>
 
-  <!-- NOMBRE Y DATOS -->
   <section class="identity">
 
-    <h2>Jesús Melián</h2>
-
+    <h1>Jesús Melián</h1>
     <p>👑 Fundador · Agencia JM Tenerife</p>
 
     <div class="badges">
@@ -375,7 +354,6 @@ button{
 
   </section>
 
-  <!-- ESTADÍSTICAS -->
   <section class="stats">
 
     <div class="stat">
@@ -400,42 +378,37 @@ button{
 
   </section>
 
-  <!-- BOTONES -->
   <section class="actions">
 
     <button class="action-blue">💬 Mensaje</button>
-    <button class="action-gold">✏️ Editar perfil</button>
+    <button class="action-gold">✏️ Editar</button>
     <button class="action-dark">🔗 Compartir</button>
 
   </section>
 
-  <!-- INFORMACIÓN -->
-  <section class="cards">
+  <section class="card">
 
-    <div class="card">
-      <h3>Información</h3>
+    <h3>Información</h3>
 
-      <div class="row">
-        <span>ID Poppo</span>
-        <b>19758906</b>
-      </div>
+    <div class="row">
+      <span>ID Poppo</span>
+      <b>19758906</b>
+    </div>
 
-      <div class="row">
-        <span>País</span>
-        <b>España</b>
-      </div>
+    <div class="row">
+      <span>País</span>
+      <b>España</b>
+    </div>
 
-      <div class="row">
-        <span>Rol</span>
-        <b>Fundador</b>
-      </div>
+    <div class="row">
+      <span>Rol</span>
+      <b>Fundador</b>
     </div>
 
   </section>
 
 </main>
 
-<!-- MENÚ INFERIOR -->
 <nav class="bottom-nav">
 
   <button class="nav-item">
