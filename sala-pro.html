@@ -2,238 +2,490 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sala JM Elite Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sala Pro JM Elite</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#020713;color:white}
-:root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff;--card:#07111f}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-.topbar{height:74px;background:#020713;border-bottom:2px solid var(--blue);display:flex;align-items:center;justify-content:space-between;padding:10px 14px;position:sticky;top:0;z-index:50}
-.back,.top-btn{border:1px solid rgba(22,140,255,.55);background:#07111f;color:var(--gold);border-radius:14px;padding:12px 14px;font-size:22px}
-.brand{text-align:center}
-.brand h1{color:var(--gold);font-size:22px;letter-spacing:1px}
-.brand p{color:#9ecbff;font-size:12px;margin-top:3px}
+:root{
+  --gold:#f7d774;
+  --gold2:#ffcc3d;
+  --blue:#008cff;
+  --blue2:#005dff;
+  --deep:#020713;
+  --navy:#061326;
+  --soft:#dce8ff;
+}
 
-.wrap{padding:12px;padding-bottom:105px;max-width:720px;margin:auto}
+body{
+  background:#020713;
+  color:white;
+  min-height:100vh;
+  padding-bottom:76px;
+}
 
-.stage{position:relative;min-height:260px;border:1px solid var(--gold);border-radius:24px;padding:16px;background:radial-gradient(circle at center,#12385c,#030713 72%);margin-bottom:12px;text-align:center;overflow:hidden}
-.live{position:absolute;top:14px;left:14px;background:#ff2f63;color:white;border-radius:999px;padding:8px 14px;font-weight:bold;font-size:14px}
-.dots{position:absolute;top:14px;right:14px;width:48px;height:48px;border:0;border-radius:15px;background:rgba(255,255,255,.1);color:var(--gold);font-size:28px}
-.avatar{width:92px;height:92px;border-radius:50%;border:3px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:42px;margin:48px auto 8px}
-.stage h2{font-size:28px;color:var(--gold)}
-.stage small{background:#0b65c8;padding:3px 10px;border-radius:999px;color:white}
-.stage p{color:var(--soft);font-size:14px;margin-top:8px;line-height:1.35}
+a{
+  color:inherit;
+  text-decoration:none;
+}
 
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 12px}
-.stat{background:#081b35;border:1px solid rgba(22,140,255,.45);border-radius:14px;text-align:center;padding:10px;font-size:12px}
-.stat strong{display:block;color:var(--gold);font-size:20px}
+button{
+  border:0;
+  cursor:pointer;
+}
 
-.mics{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px}
-.mic{min-height:92px;background:linear-gradient(#09213e,#030814);border:1px solid rgba(22,140,255,.45);border-radius:14px;padding:8px;text-align:center;position:relative}
-.num{position:absolute;top:7px;left:8px;color:white;font-weight:bold}
-.mic .ico{font-size:27px;margin-top:10px}
-.mic strong{display:block;color:white;margin-top:4px;font-size:14px}
-.mic span{color:var(--gold);font-size:11px}
-.host{border-color:var(--gold)}
+.room{
+  min-height:100vh;
+  padding:10px;
+  background:
+    radial-gradient(circle at top,#008cff 0%,#004dff 34%,#020713 78%);
+}
 
-.panel{background:#050c18;border:1px solid rgba(22,140,255,.45);border-radius:18px;padding:12px;margin-bottom:12px}
-.panel h2{color:#39a8ff;font-size:18px;margin-bottom:8px}
+/* PANTALLA PRINCIPAL */
+.stage{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/8.5;
+  border-radius:20px;
+  overflow:hidden;
+  border:2px solid rgba(247,215,116,.6);
+  background:#061326;
+  box-shadow:
+    0 0 22px rgba(0,140,255,.8),
+    inset 0 0 22px rgba(0,140,255,.35);
+}
 
-.chat{height:230px;overflow-y:auto;background:#07111f;border-radius:14px;padding:10px}
-.msg{margin-bottom:10px;color:white;font-size:14px}
-.msg strong{color:var(--gold)}
-.form{display:flex;gap:8px;margin-top:10px}
-.form input{flex:1;background:#07111f;border:1px solid rgba(22,140,255,.45);border-radius:12px;color:white;padding:12px}
-.form button,.action,.gift{border:0;border-radius:12px;background:linear-gradient(90deg,#e8bd2b,#ffd86b);color:#07111f;font-weight:bold;padding:12px}
+.stage img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  filter:saturate(1.28) contrast(1.08);
+}
 
-.actions,.gifts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
-.action{font-size:13px;background:#081b35;color:white;border:1px solid rgba(22,140,255,.45)}
-.gifts{grid-template-columns:repeat(4,1fr)}
-.gift{font-size:20px}
+.stage::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    180deg,
+    rgba(0,0,0,.02) 0%,
+    rgba(0,35,120,.12) 52%,
+    rgba(0,140,255,.48) 100%
+  );
+}
 
-.menu{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99;align-items:flex-end}
-.menu.active{display:flex}
-.menu-box{background:#07111f;border-top:2px solid var(--blue);border-radius:22px 22px 0 0;padding:16px;width:100%}
-.menu-box h2{color:var(--gold);margin-bottom:10px}
-.menu-box button{width:100%;padding:14px;margin:5px 0;border-radius:12px;border:1px solid rgba(247,215,116,.35);background:#0b1c34;color:white;text-align:left}
+.stage-top{
+  position:absolute;
+  top:9px;
+  left:9px;
+  right:9px;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#020713;border-top:2px solid var(--blue);display:flex;justify-content:space-around;padding:8px 0;z-index:60}
-.bottom button{background:#101827;border:0;border-radius:14px;color:#d9e5ff;padding:8px 10px;font-size:11px}
-.bottom span{display:block;font-size:22px}
+.live-pill{
+  padding:7px 10px;
+  border-radius:999px;
+  background:rgba(0,18,45,.75);
+  border:1px solid rgba(247,215,116,.45);
+  font-size:12px;
+  font-weight:bold;
+}
+
+.stage-actions{
+  display:flex;
+  gap:7px;
+}
+
+.stage-btn{
+  width:38px;
+  height:38px;
+  border-radius:14px;
+  background:rgba(0,15,40,.62);
+  border:1px solid rgba(247,215,116,.42);
+  color:white;
+  font-size:19px;
+}
+
+/* INFO SALA */
+.room-info{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:7px;
+  margin:11px 0;
+}
+
+.info-pill{
+  min-height:32px;
+  border-radius:999px;
+  background:rgba(0,28,92,.7);
+  border:1px solid rgba(0,170,255,.45);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 9px;
+  font-size:11.5px;
+}
+
+.info-pill.gold{
+  border-color:rgba(247,215,116,.55);
+  color:var(--gold);
+}
+
+/* 15 PUESTOS */
+.seats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+  margin-bottom:11px;
+}
+
+.seat{
+  position:relative;
+  min-height:78px;
+  border-radius:14px;
+  background:linear-gradient(180deg,rgba(0,70,210,.55),rgba(0,16,60,.86));
+  border:1px solid rgba(0,170,255,.45);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:6px 3px;
+  box-shadow:inset 0 0 16px rgba(0,140,255,.14);
+}
+
+.seat.host{
+  border-color:var(--gold);
+  box-shadow:
+    0 0 17px rgba(247,215,116,.38),
+    inset 0 0 18px rgba(0,140,255,.14);
+}
+
+.num{
+  position:absolute;
+  top:-6px;
+  left:-5px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:#061326;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.face{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  overflow:hidden;
+  border:2px solid rgba(247,215,116,.65);
+  margin-bottom:4px;
+  background:#020713;
+}
+
+.face img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.seat strong{
+  font-size:10px;
+  color:white;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.seat span{
+  font-size:9px;
+  color:#85d9ff;
+}
+
+.mic-off{
+  position:absolute;
+  right:4px;
+  bottom:4px;
+  font-size:12px;
+  opacity:.75;
+}
+
+/* CHAT */
+.chat-panel{
+  border-radius:17px;
+  background:rgba(0,14,45,.78);
+  border:1px solid rgba(0,170,255,.4);
+  padding:10px;
+  margin-bottom:10px;
+  box-shadow:inset 0 0 18px rgba(0,140,255,.1);
+}
+
+.chat-title{
+  color:var(--gold);
+  font-size:15px;
+  margin-bottom:7px;
+}
+
+.chat-box{
+  height:104px;
+  overflow-y:auto;
+}
+
+.msg{
+  display:flex;
+  gap:7px;
+  margin-bottom:7px;
+  font-size:12px;
+}
+
+.msg b{
+  color:#75d8ff;
+}
+
+.msg span{
+  color:white;
+}
+
+.chat-form{
+  display:flex;
+  gap:7px;
+  margin-top:8px;
+}
+
+.chat-form input{
+  flex:1;
+  height:36px;
+  border-radius:999px;
+  border:1px solid rgba(0,170,255,.45);
+  background:rgba(0,8,30,.78);
+  color:white;
+  padding:0 12px;
+  outline:none;
+}
+
+.chat-form button{
+  width:40px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#d8a92d,#ffcf55);
+  color:#061326;
+  font-size:18px;
+}
+
+/* CONTROLES */
+.controls{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.control{
+  min-height:43px;
+  border-radius:14px;
+  font-weight:bold;
+  color:white;
+  background:linear-gradient(135deg,#005dff,#00aaff);
+  box-shadow:0 0 16px rgba(0,140,255,.35);
+  font-size:12px;
+}
+
+.control.gold{
+  background:linear-gradient(135deg,#d8a92d,#ffcf55);
+  color:#061326;
+}
+
+.control.dark{
+  background:rgba(0,20,70,.8);
+  border:1px solid rgba(247,215,116,.28);
+}
+
+/* MENÚ INFERIOR */
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:72px;
+  background:rgba(0,12,38,.98);
+  border-top:1px solid rgba(247,215,116,.25);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:999;
+}
+
+.nav-item{
+  color:white;
+  font-size:10.5px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+}
+
+.nav-item .icon{
+  font-size:23px;
+}
+
+.nav-item.active{
+  color:var(--gold);
+}
+
+@media(min-width:760px){
+  .room{
+    max-width:760px;
+    margin:auto;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<header class="topbar">
-  <button class="back" onclick="location.href='index.html'">←</button>
-  <div class="brand">
-    <h1>SALA JM ELITE</h1>
-    <p>Directo oficial de la agencia</p>
-  </div>
-  <button class="top-btn" onclick="openMenu()">⋮</button>
-</header>
+<main class="room">
 
-<div class="wrap">
+  <!-- PANTALLA CINE -->
+  <section class="stage">
+    <img src="agencia-jm-equipo-banner.png" alt="Pantalla principal JM Elite">
 
-<section class="stage">
-  <div class="live">● EN VIVO</div>
-  <button class="dots" onclick="openMenu()">⋮</button>
-  <div class="avatar">👑</div>
-  <h2>Jesús</h2>
-  <small>PANTALLA PRINCIPAL</small>
-  <p>Sala oficial para formación, reuniones, apoyo a emisoras y control de la comunidad JM Elite.</p>
-</section>
+    <div class="stage-top">
+      <div class="live-pill">🟢 Sala Pro Élite</div>
 
-<div class="stats">
-  <div class="stat"><strong>328</strong>Conectados</div>
-  <div class="stat"><strong>16</strong>Micrófonos</div>
-  <div class="stat"><strong>37</strong>Nivel sala</div>
-</div>
-<section class="mics">
+      <div class="stage-actions">
+        <button class="stage-btn" onclick="openStageMenu()">⋮</button>
+        <button class="stage-btn" onclick="shareRoom()">🔗</button>
+        <button class="stage-btn" onclick="toggleFull()">⛶</button>
+      </div>
+    </div>
+  </section>
 
-<div class="mic host"><div class="num">1</div><div class="ico">👑</div><strong>Jesús</strong><span>Host</span></div>
-<div class="mic"><div class="num">2</div><div class="ico">🛡️</div><strong>Ruth</strong><span>Admin</span></div>
-<div class="mic"><div class="num">3</div><div class="ico">🛡️</div><strong>Yandira</strong><span>Admin</span></div>
-<div class="mic"><div class="num">4</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 4</span></div>
+  <!-- INFO -->
+  <section class="room-info">
+    <div class="info-pill">👥 15 en sala</div>
+    <div class="info-pill gold">👑 Jesús</div>
+    <div class="info-pill">💎 125K</div>
+  </section>
 
-<div class="mic"><div class="num">5</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 5</span></div>
-<div class="mic"><div class="num">6</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 6</span></div>
-<div class="mic"><div class="num">7</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 7</span></div>
-<div class="mic"><div class="num">8</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 8</span></div>
+  <!-- 15 PUESTOS -->
+  <section class="seats">
 
-<div class="mic"><div class="num">9</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 9</span></div>
-<div class="mic"><div class="num">10</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 10</span></div>
-<div class="mic"><div class="num">11</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 11</span></div>
-<div class="mic"><div class="num">12</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 12</span></div>
+    <div class="seat host"><div class="num">1</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Jesús</strong><span>💎125K</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">2</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Ruth</strong><span>Admin</span><em class="mic-off">🔇</em></div>
+    <div class="seat"><div class="num">3</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Yandira</strong><span>Admin</span><em class="mic-off">🔇</em></div>
+    <div class="seat"><div class="num">4</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 4</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">5</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 5</span><em class="mic-off">🎙️</em></div>
 
-<div class="mic"><div class="num">13</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 13</span></div>
-<div class="mic"><div class="num">14</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 14</span></div>
-<div class="mic"><div class="num">15</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 15</span></div>
-<div class="mic"><div class="num">16</div><div class="ico">🎤</div><strong>Libre</strong><span>Plaza 16</span></div>
+    <div class="seat"><div class="num">6</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 6</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">7</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 7</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">8</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 8</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">9</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 9</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">10</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 10</span><em class="mic-off">🎙️</em></div>
 
-</section>
-<section class="panel">
+    <div class="seat"><div class="num">11</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 11</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">12</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 12</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">13</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 13</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">14</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 14</span><em class="mic-off">🎙️</em></div>
+    <div class="seat"><div class="num">15</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 15</span><em class="mic-off">🎙️</em></div>
 
-<h2>💬 Chat de la sala</h2>
+  </section>
 
-<div class="chat" id="chatBox">
+  <!-- CHAT -->
+  <section class="chat-panel">
+    <h2 class="chat-title">💬 Chat de la sala</h2>
 
-<div class="msg">
-<strong>Sistema:</strong>
-Bienvenido a la Sala JM Elite.
-</div>
+    <div id="chatBox" class="chat-box">
+      <div class="msg"><b>Sistema</b><span>Bienvenidos a Sala Pro JM Elite 🔥</span></div>
+      <div class="msg"><b>Ruth</b><span>Lista para apoyar a las emisoras 👑</span></div>
+      <div class="msg"><b>Yandira</b><span>Equipo activo y organizado 💎</span></div>
+    </div>
 
-</div>
+    <div class="chat-form">
+      <input id="chatInput" type="text" placeholder="Escribe un mensaje...">
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </section>
 
-<div class="form">
+  <!-- CONTROLES -->
+  <section class="controls">
+    <button class="control" onclick="uploadCamera()">📹 Subir cámara</button>
+    <button class="control dark" onclick="shareScreen()">🖥 Compartir pantalla</button>
+    <button class="control gold" onclick="raiseHand()">🎙️ Pedir micro</button>
+    <button class="control dark" onclick="inviteUser()">👥 Invitar</button>
+  </section>
 
-<input
-id="mensaje"
-placeholder="Escribe un mensaje...">
+</main>
 
-<button onclick="enviarMensaje()">
-Enviar
-</button>
-
-</div>
-
-</section>
-
-<section class="panel">
-
-<h2>⚡ Acciones rápidas</h2>
-
-<div class="actions">
-
-<button class="action">📷 Cámara</button>
-
-<button class="action">🖥 Compartir</button>
-
-<button class="action">👤 Subir</button>
-
-<button class="action">📌 Aviso</button>
-
-<button class="action">🎙 Micrófono</button>
-
-<button class="action">⚙ Ajustes</button>
-
-</div>
-
-</section>
-
-<section class="panel">
-
-<h2>🎁 Regalos</h2>
-
-<div class="gifts">
-
-<button class="gift">🌹</button>
-<button class="gift">💎</button>
-<button class="gift">👑</button>
-<button class="gift">🔥</button>
-
-</div>
-
-</section>
-<div class="menu" id="menuPanel">
-  <div class="menu-box">
-    <h2>Panel del Host</h2>
-
-    <button onclick="accionHost('📷 Cámara activada')">📷 Abrir cámara</button>
-    <button onclick="accionHost('🖥 Compartir pantalla preparado')">🖥 Compartir pantalla</button>
-    <button onclick="accionHost('🖼 Contenido publicado en pantalla')">🖼 Subir imagen / vídeo</button>
-    <button onclick="accionHost('👤 Usuario invitado a pantalla')">👤 Subir usuario a pantalla</button>
-    <button onclick="accionHost('📌 Aviso fijado en la sala')">📌 Fijar aviso</button>
-    <button onclick="limpiarPantalla()">🧹 Limpiar pantalla</button>
-    <button onclick="closeMenu()">Cerrar</button>
-  </div>
-</div>
-
-<nav class="bottom">
-  <button onclick="location.href='index.html'"><span>🏠</span>Inicio</button>
-  <button onclick="window.scrollTo({top:0,behavior:'smooth'})"><span>📺</span>Pantalla</button>
-  <button onclick="document.getElementById('mensaje').focus()"><span>💬</span>Chat</button>
-  <button onclick="openMenu()"><span>⋮</span>Host</button>
+<nav class="bottom-nav">
+  <a class="nav-item" href="index.html"><span class="icon">🏠</span><span>Inicio</span></a>
+  <a class="nav-item active" href="sala-pro.html"><span class="icon">🎙️</span><span>Sala</span></a>
+  <a class="nav-item" href="perfil.html"><span class="icon">👤</span><span>Perfil</span></a>
+  <a class="nav-item" href="chat.html"><span class="icon">💬</span><span>Chat</span></a>
+  <a class="nav-item" href="menu.html"><span class="icon">☰</span><span>Más</span></a>
 </nav>
 
-</div>
-
 <script>
-function openMenu(){
-  document.getElementById("menuPanel").classList.add("active");
+function addChat(name,text){
+  const box=document.getElementById("chatBox");
+  const div=document.createElement("div");
+  div.className="msg";
+  div.innerHTML="<b>"+name+"</b><span>"+text+"</span>";
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
 }
 
-function closeMenu(){
-  document.getElementById("menuPanel").classList.remove("active");
+function sendMessage(){
+  const input=document.getElementById("chatInput");
+  const text=input.value.trim();
+  if(!text)return;
+  addChat("Jesús",text);
+  input.value="";
 }
 
-function enviarMensaje(){
-  const input = document.getElementById("mensaje");
-  const texto = input.value.trim();
-  if(!texto) return;
-
-  const chat = document.getElementById("chatBox");
-  chat.innerHTML += "<div class='msg'><strong>Jesús:</strong> " + texto + "</div>";
-  input.value = "";
-  chat.scrollTop = chat.scrollHeight;
+function openStageMenu(){
+  alert("Menú: cámara, compartir pantalla, avisos y controles de host.");
 }
 
-function accionHost(texto){
-  closeMenu();
-  const chat = document.getElementById("chatBox");
-  chat.innerHTML += "<div class='msg'><strong>Host:</strong> " + texto + "</div>";
-  chat.scrollTop = chat.scrollHeight;
+function shareRoom(){
+  alert("Enlace de Sala Pro preparado.");
 }
 
-function limpiarPantalla(){
-  closeMenu();
-  const chat = document.getElementById("chatBox");
-  chat.innerHTML += "<div class='msg'><strong>Sistema:</strong> Pantalla principal limpiada.</div>";
-  chat.scrollTop = chat.scrollHeight;
+function toggleFull(){
+  alert("Pantalla completa preparada.");
+}
+
+function uploadCamera(){
+  alert("Cámara preparada.");
+}
+
+function shareScreen(){
+  alert("Compartir pantalla preparado.");
+}
+
+function raiseHand(){
+  addChat("Sistema","Jesús pidió subir al micrófono 🎙️");
+}
+
+function inviteUser(){
+  alert("Invitación preparada.");
 }
 </script>
 
 </body>
-    </html>
+                                                                                                                                                                       </html>
