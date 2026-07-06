@@ -6,15 +6,13 @@
 <title>Perfil Elite</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 
 :root{
   --gold:#f7d774;
+  --blue:#007bff;
+  --blue2:#004dff;
+  --deep:#020713;
   --soft:#dce8ff;
 }
 
@@ -25,15 +23,13 @@ body{
   padding-bottom:92px;
 }
 
-button{
-  border:0;
-  cursor:pointer;
-}
+button{border:0;cursor:pointer}
 
 .profile{
   width:100%;
   min-height:100vh;
-  background:linear-gradient(180deg,#001b42 0%,#0064e9 43%,#02122f 100%);
+  background:
+    radial-gradient(circle at top,#007bff 0%,#003bd1 38%,#020713 100%);
   overflow:hidden;
 }
 
@@ -56,7 +52,8 @@ button{
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center -70px;
+  object-position:center -38px;
+  transform:scale(.92);
   display:block;
 }
 
@@ -67,8 +64,8 @@ button{
   background:linear-gradient(
     180deg,
     rgba(0,0,0,.02) 0%,
-    rgba(0,30,75,.18) 56%,
-    rgba(0,100,233,.96) 100%
+    rgba(0,40,110,.18) 55%,
+    rgba(0,123,255,.96) 100%
   );
 }
 
@@ -80,25 +77,25 @@ button{
   height:40px;
   border-radius:14px;
   background:rgba(0,15,40,.50);
-  border:1px solid rgba(247,215,116,.34);
+  border:1px solid rgba(247,215,116,.38);
   color:white;
   font-size:22px;
   z-index:20;
 }
 
-/* FOTO PERFIL MEDIA LUNA */
+/* FOTO REDONDA */
 .avatar{
   position:absolute;
   left:50%;
   bottom:-51px;
   transform:translateX(-50%);
-  width:102px;
-  height:102px;
+  width:98px;
+  height:98px;
   border-radius:50%;
   overflow:hidden;
   border:4px solid var(--gold);
   background:#061326;
-  box-shadow:0 0 24px rgba(0,170,255,.82);
+  box-shadow:0 0 24px rgba(0,140,255,.95);
   z-index:30;
 }
 
@@ -139,8 +136,8 @@ button{
 .badges span{
   min-height:30px;
   border-radius:999px;
-  background:rgba(255,255,255,.065);
-  border:1px solid rgba(247,215,116,.25);
+  background:rgba(0,55,180,.42);
+  border:1px solid rgba(247,215,116,.30);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -159,8 +156,8 @@ button{
 }
 
 .stat{
-  background:rgba(255,255,255,.045);
-  border:1px solid rgba(247,215,116,.20);
+  background:rgba(0,38,120,.42);
+  border:1px solid rgba(247,215,116,.24);
   border-radius:14px;
   text-align:center;
   padding:9px 3px;
@@ -178,7 +175,7 @@ button{
   color:var(--soft);
 }
 
-/* SEIS BOTONES */
+/* BOTONES */
 .actions{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -195,8 +192,9 @@ button{
 }
 
 .action-blue{
-  background:linear-gradient(135deg,#007bff,#00b7ff);
+  background:linear-gradient(135deg,#006cff,#00b7ff);
   color:white;
+  box-shadow:0 0 16px rgba(0,140,255,.35);
 }
 
 .action-gold{
@@ -205,7 +203,7 @@ button{
 }
 
 .action-dark{
-  background:rgba(255,255,255,.06);
+  background:rgba(0,26,85,.62);
   color:white;
   border:1px solid rgba(247,215,116,.24);
 }
@@ -213,8 +211,8 @@ button{
 /* INFORMACIÓN */
 .card{
   margin:0 12px 16px;
-  background:rgba(0,18,45,.62);
-  border:1px solid rgba(247,215,116,.22);
+  background:rgba(0,18,55,.70);
+  border:1px solid rgba(247,215,116,.24);
   border-radius:17px;
   padding:12px;
 }
@@ -233,17 +231,9 @@ button{
   font-size:13px;
 }
 
-.row:last-child{
-  border-bottom:none;
-}
-
-.row span{
-  color:var(--soft);
-}
-
-.row b{
-  color:white;
-}
+.row:last-child{border-bottom:none}
+.row span{color:var(--soft)}
+.row b{color:white}
 
 /* MENÚ INFERIOR */
 .bottom-nav{
@@ -253,7 +243,7 @@ button{
   bottom:0;
   height:72px;
   background:rgba(0,18,45,.97);
-  border-top:1px solid rgba(247,215,116,.22);
+  border-top:1px solid rgba(247,215,116,.24);
   display:grid;
   grid-template-columns:repeat(5,1fr);
   z-index:999;
@@ -270,54 +260,29 @@ button{
   gap:2px;
 }
 
-.nav-item .icon{
-  font-size:21px;
-}
-
-.nav-item.active{
-  color:var(--gold);
-}
+.nav-item .icon{font-size:21px}
+.nav-item.active{color:var(--gold)}
 
 @media(max-width:390px){
-  .header{
-    height:248px;
-  }
+  .header{height:248px}
 
   .cover img{
-    object-position:center -64px;
+    object-position:center -34px;
+    transform:scale(.90);
   }
 
   .avatar{
-    width:98px;
-    height:98px;
+    width:94px;
+    height:94px;
     bottom:-49px;
   }
 
-  .identity{
-    padding-top:55px;
-  }
-
-  .identity h1{
-    font-size:24px;
-  }
-
-  .identity p{
-    font-size:13px;
-  }
-
-  .badges span{
-    font-size:9.5px;
-    min-height:29px;
-  }
-
-  .stat b{
-    font-size:18px;
-  }
-
-  .actions button{
-    height:40px;
-    font-size:9.5px;
-  }
+  .identity{padding-top:55px}
+  .identity h1{font-size:24px}
+  .identity p{font-size:13px}
+  .badges span{font-size:9.5px;min-height:29px}
+  .stat b{font-size:18px}
+  .actions button{height:40px;font-size:9.5px}
 }
 </style>
 </head>
@@ -326,121 +291,65 @@ button{
 
 <main class="profile">
 
-  <section class="header">
+<section class="header">
 
-    <div class="cover">
-      <img src="file_00000000b87071f4b2cf26f846b51b6e.png" alt="Portada">
-    </div>
+  <div class="cover">
+    <img src="file_00000000b87071f4b2cf26f846b51b6e.png" alt="Portada">
+  </div>
 
-    <button class="menu-profile">⋮</button>
+  <button class="menu-profile">⋮</button>
 
-    <div class="avatar">
-      <img src="file_00000000f71471f499e5839986bab33b.png" alt="Foto de perfil">
-    </div>
+  <div class="avatar">
+    <img src="file_00000000f71471f499e5839986bab33b.png" alt="Foto de perfil">
+  </div>
 
-  </section>
+</section>
 
-  <section class="identity">
+<section class="identity">
+  <h1>Jesús Melián</h1>
+  <p>👑 Fundador · Agencia JM Elite</p>
 
-    <h1>Jesús Melián</h1>
-    <p>👑 Fundador · Agencia JM Elite</p>
+  <div class="badges">
+    <span>🟣 Nivel 45</span>
+    <span>💎 VIP 3</span>
+    <span>🆔 19758906</span>
+    <span>🏅 Star 7</span>
+    <span>♂ Hombre</span>
+    <span>🎂 49 años</span>
+  </div>
+</section>
 
-    <div class="badges">
-      <span>🟣 Nivel 45</span>
-      <span>💎 VIP 3</span>
-      <span>🆔 19758906</span>
-      <span>🏅 Star 7</span>
-      <span>♂ Hombre</span>
-      <span>🎂 49 años</span>
-    </div>
+<section class="stats">
+  <div class="stat"><b>1981</b><span>Seguidores</span></div>
+  <div class="stat"><b>34</b><span>Emisoras</span></div>
+  <div class="stat"><b>125K</b><span>Diamantes</span></div>
+  <div class="stat"><b>845</b><span>Días</span></div>
+</section>
 
-  </section>
+<section class="actions">
+  <button class="action-blue">💬 Mensaje</button>
+  <button class="action-gold">✏️ Editar</button>
+  <button class="action-dark">➕ Añadir</button>
+  <button class="action-dark">🔗 Compartir</button>
+  <button class="action-dark">🔑 Copiar ID</button>
+  <button class="action-dark">🗑️ Papelera</button>
+</section>
 
-  <section class="stats">
-
-    <div class="stat">
-      <b>1981</b>
-      <span>Seguidores</span>
-    </div>
-
-    <div class="stat">
-      <b>34</b>
-      <span>Emisoras</span>
-    </div>
-
-    <div class="stat">
-      <b>125K</b>
-      <span>Diamantes</span>
-    </div>
-
-    <div class="stat">
-      <b>845</b>
-      <span>Días</span>
-    </div>
-
-  </section>
-
-  <section class="actions">
-
-    <button class="action-blue">💬 Mensaje</button>
-    <button class="action-gold">✏️ Editar</button>
-    <button class="action-dark">➕ Añadir</button>
-    <button class="action-dark">🔗 Compartir</button>
-    <button class="action-dark">🔑 Copiar ID</button>
-    <button class="action-dark">🗑️ Papelera</button>
-
-  </section>
-
-  <section class="card">
-
-    <h3>Información</h3>
-
-    <div class="row">
-      <span>ID Poppo</span>
-      <b>19758906</b>
-    </div>
-
-    <div class="row">
-      <span>País</span>
-      <b>España</b>
-    </div>
-
-    <div class="row">
-      <span>Rol</span>
-      <b>Fundador</b>
-    </div>
-
-  </section>
+<section class="card">
+  <h3>Información</h3>
+  <div class="row"><span>ID Poppo</span><b>19758906</b></div>
+  <div class="row"><span>País</span><b>España</b></div>
+  <div class="row"><span>Rol</span><b>Fundador</b></div>
+</section>
 
 </main>
 
 <nav class="bottom-nav">
-
-  <button class="nav-item">
-    <span class="icon">🏠</span>
-    <span>Inicio</span>
-  </button>
-
-  <button class="nav-item">
-    <span class="icon">🎙️</span>
-    <span>Sala</span>
-  </button>
-
-  <button class="nav-item active">
-    <span class="icon">👤</span>
-    <span>Perfil</span>
-  </button>
-
-  <button class="nav-item">
-    <span class="icon">💬</span>
-    <span>Chat</span>
-  </button>
-
-  <button class="nav-item">
-    <span class="icon">☰</span>
-    <span>Más</span>
-  </button>
-
+  <button class="nav-item"><span class="icon">🏠</span><span>Inicio</span></button>
+  <button class="nav-item"><span class="icon">🎙️</span><span>Sala</span></button>
+  <button class="nav-item active"><span class="icon">👤</span><span>Perfil</span></button>
+  <button class="nav-item"><span class="icon">💬</span><span>Chat</span></button>
+  <button class="nav-item"><span class="icon">☰</span><span>Más</span></button>
 </nav>
 
 </body>
