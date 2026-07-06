@@ -7,357 +7,75 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-:root{
-  --gold:#f7d774;
-  --blue:#007bff;
-  --blue2:#00b7ff;
-  --dark:#020713;
-  --soft:#dce8ff;
-}
-body{
-  background:#020713;
-  color:white;
-  min-height:100vh;
-  padding-bottom:78px;
-}
+:root{--gold:#f7d774;--blue:#007bff;--blue2:#00b7ff;--dark:#020713;--soft:#dce8ff}
+body{background:#020713;color:white;min-height:100vh;padding-bottom:78px}
 a{text-decoration:none;color:inherit}
 button{border:0;cursor:pointer;color:inherit}
 
-/* LOGIN */
-.login{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:22px;
-  background:#020713;
-}
+.login{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;background:#020713}
 .login.show{display:flex}
-.login-bg{
-  position:absolute;
-  inset:0;
-  background:url("agencia-jm-equipo-banner.png") center/cover no-repeat;
-  filter:brightness(.35) saturate(1.3);
-}
-.login-bg:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,rgba(0,80,255,.35),#020713 85%);
-}
-.login-card{
-  position:relative;
-  width:100%;
-  max-width:370px;
-  padding:24px;
-  border-radius:28px;
-  background:rgba(0,12,38,.76);
-  border:1px solid rgba(247,215,116,.45);
-  backdrop-filter:blur(18px);
-  box-shadow:0 0 38px rgba(0,140,255,.55);
-  text-align:center;
-}
-.login-card h1{
-  color:var(--gold);
-  font-size:32px;
-  margin-bottom:6px;
-}
-.login-card p{
-  color:var(--soft);
-  font-size:14px;
-  margin-bottom:18px;
-}
-.input{
-  height:50px;
-  border-radius:16px;
-  margin-bottom:12px;
-  background:rgba(0,12,38,.85);
-  border:1px solid rgba(0,183,255,.48);
-  display:flex;
-  align-items:center;
-  padding:0 14px;
-  gap:10px;
-}
-.input input{
-  flex:1;
-  background:transparent;
-  border:0;
-  outline:0;
-  color:white;
-  font-size:15px;
-}
-.login-btn{
-  width:100%;
-  height:52px;
-  border-radius:17px;
-  background:linear-gradient(135deg,#d4a72d,#ffcf55);
-  color:#061326;
-  font-weight:900;
-  font-size:17px;
-  margin-top:6px;
-}
-.login-links{
-  display:flex;
-  gap:10px;
-  margin-top:14px;
-}
-.login-links button{
-  flex:1;
-  height:38px;
-  border-radius:999px;
-  background:rgba(0,12,38,.65);
-  border:1px solid rgba(0,183,255,.35);
-  color:white;
-  font-size:12px;
-}
-.login-foot{
-  margin-top:16px;
-  font-size:12px;
-  color:var(--soft);
-}
+.login-bg{position:absolute;inset:0;background:url("agencia-jm-equipo-banner.png") center/cover no-repeat;filter:brightness(.34) saturate(1.3)}
+.login-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,90,255,.35),#020713 86%)}
+.login-card{position:relative;width:100%;max-width:380px;padding:22px;border-radius:28px;background:rgba(0,12,38,.80);border:1px solid rgba(247,215,116,.45);backdrop-filter:blur(18px);box-shadow:0 0 38px rgba(0,140,255,.55);text-align:center}
+.login-card h1{color:var(--gold);font-size:31px;margin-bottom:6px}
+.login-card p{color:var(--soft);font-size:14px;margin-bottom:16px}
+.input{height:48px;border-radius:16px;margin-bottom:10px;background:rgba(0,12,38,.86);border:1px solid rgba(0,183,255,.48);display:flex;align-items:center;padding:0 13px;gap:10px}
+.input input{flex:1;background:transparent;border:0;outline:0;color:white;font-size:15px}
+.login-btn{width:100%;height:50px;border-radius:17px;background:linear-gradient(135deg,#d4a72d,#ffcf55);color:#061326;font-weight:900;font-size:17px;margin-top:4px}
+.login-links{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.login-links button{height:38px;border-radius:999px;background:rgba(0,12,38,.65);border:1px solid rgba(0,183,255,.35);color:white;font-size:12px}
+.login-foot{margin-top:14px;font-size:12px;color:var(--soft)}
+.register-extra{display:none;margin-top:8px}
+.register-extra.show{display:block}
 
-/* APP */
-.app{
-  min-height:100vh;
-  padding:10px;
-  background:radial-gradient(circle at top,#006cff88 0%,#061326 35%,#020713 78%);
-}
+.app{min-height:100vh;padding:10px;background:radial-gradient(circle at top,#006cff88 0%,#061326 35%,#020713 78%)}
 
-/* BANNER MÁS FINO */
-.hero{
-  position:relative;
-  height:225px;
-  border-radius:26px;
-  overflow:hidden;
-  border:1px solid rgba(0,183,255,.58);
-  background:#061326;
-  box-shadow:0 0 28px rgba(0,140,255,.42);
-}
-.hero img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center top;
-  display:block;
-  filter:saturate(1.22) contrast(1.08) brightness(.90);
-}
-.hero:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,rgba(0,0,0,.72),transparent 55%,rgba(0,0,0,.35)),
-             linear-gradient(180deg,rgba(0,0,0,.05),rgba(2,7,19,.72));
-}
-.hero-actions{
-  position:absolute;
-  top:14px;
-  left:14px;
-  right:14px;
-  z-index:5;
-  display:flex;
-  justify-content:space-between;
-}
-.hero-btn{
-  width:48px;
-  height:48px;
-  border-radius:17px;
-  background:rgba(0,12,38,.58);
-  border:1px solid rgba(255,255,255,.22);
-  backdrop-filter:blur(10px);
-  font-size:27px;
-}
+.hero{position:relative;height:225px;border-radius:26px;overflow:hidden;border:1px solid rgba(0,183,255,.58);background:#061326;box-shadow:0 0 28px rgba(0,140,255,.42)}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:saturate(1.22) contrast(1.08) brightness(.90)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.72),transparent 55%,rgba(0,0,0,.35)),linear-gradient(180deg,rgba(0,0,0,.05),rgba(2,7,19,.72))}
+.hero-actions{position:absolute;top:14px;left:14px;right:14px;z-index:5;display:flex;justify-content:space-between}
+.hero-btn{width:48px;height:48px;border-radius:17px;background:rgba(0,12,38,.58);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(10px);font-size:27px}
 .bell{position:relative}
-.bell:after{
-  content:"";
-  position:absolute;
-  top:10px;
-  right:10px;
-  width:10px;
-  height:10px;
-  background:#ffbf2f;
-  border-radius:50%;
-}
-.hero-title{
-  position:absolute;
-  z-index:5;
-  left:18px;
-  bottom:20px;
-}
-.hero-title h1{
-  font-size:29px;
-  line-height:1.02;
-  color:white;
-}
-.hero-title h1 span{
-  color:var(--gold);
-  display:block;
-}
-.hero-title p{
-  margin-top:8px;
-  font-size:14px;
-}
-.hero-line{
-  width:66px;
-  height:3px;
-  background:var(--gold);
-  border-radius:99px;
-  margin-top:11px;
-}
+.bell:after{content:"";position:absolute;top:10px;right:10px;width:10px;height:10px;background:#ffbf2f;border-radius:50%}
+.hero-title{position:absolute;z-index:5;left:18px;bottom:20px}
+.hero-title h1{font-size:29px;line-height:1.02;color:white}
+.hero-title h1 span{color:var(--gold);display:block}
+.hero-title p{margin-top:8px;font-size:14px}
+.hero-line{width:66px;height:3px;background:var(--gold);border-radius:99px;margin-top:11px}
 
-/* TIRITA SALA PRO */
-.status{
-  margin:10px 0 16px;
-  min-height:50px;
-  border-radius:999px;
-  background:rgba(0,12,38,.76);
-  border:1px solid rgba(0,183,255,.30);
-  display:grid;
-  grid-template-columns:1.2fr .8fr .9fr auto;
-  align-items:center;
-  gap:4px;
-  padding:6px 8px;
-}
-.status div{
-  text-align:center;
-  border-right:1px solid rgba(255,255,255,.10);
-}
-.status strong{
-  display:block;
-  font-size:14px;
-}
-.status span{
-  font-size:9px;
-  color:var(--soft);
-}
+.status{margin:10px 0 16px;min-height:46px;border-radius:999px;background:rgba(0,12,38,.76);border:1px solid rgba(0,183,255,.30);display:grid;grid-template-columns:1.1fr .8fr .9fr auto;align-items:center;gap:4px;padding:5px 7px}
+.status div{text-align:center;border-right:1px solid rgba(255,255,255,.10)}
+.status strong{display:block;font-size:13px}
+.status span{font-size:9px;color:var(--soft)}
 .live{color:#69ff55;font-weight:900}
-.status a{
-  min-height:34px;
-  padding:0 12px;
-  border-radius:999px;
-  background:linear-gradient(135deg,#006cff,#00b7ff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-  font-weight:800;
-}
+.status a{min-height:32px;padding:0 11px;border-radius:999px;background:linear-gradient(135deg,#006cff,#00b7ff);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
 
-/* ICONOS PEQUEÑOS */
-.section-title{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:var(--gold);
-  font-size:16px;
-  margin:18px 0 10px;
-  text-transform:uppercase;
-}
-.section-title:after{
-  content:"";
-  flex:1;
-  height:1px;
-  background:linear-gradient(90deg,var(--gold),transparent);
-}
-.icon-panel{
-  border-radius:24px;
-  background:rgba(0,12,38,.48);
-  border:1px solid rgba(0,183,255,.22);
-  padding:14px 10px;
-  margin-bottom:16px;
-}
-.icon-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-.icon-link{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  gap:7px;
-}
-.icon-circle{
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  background:rgba(0,12,38,.65);
-  border:1px solid rgba(0,183,255,.45);
-  box-shadow:0 0 18px rgba(0,140,255,.35);
-}
+.section-title{display:flex;align-items:center;gap:8px;color:var(--gold);font-size:16px;margin:18px 0 10px;text-transform:uppercase}
+.section-title:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.icon-panel{border-radius:24px;background:rgba(0,12,38,.48);border:1px solid rgba(0,183,255,.22);padding:14px 10px;margin-bottom:16px}
+.icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.icon-link{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px}
+.icon-circle{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;background:rgba(0,12,38,.65);border:1px solid rgba(0,183,255,.45);box-shadow:0 0 18px rgba(0,140,255,.35)}
 .icon-link b{font-size:12px;color:white}
 .icon-link small{font-size:10px;color:var(--soft)}
 .purple{border-color:#b856ff;box-shadow:0 0 18px #9b32ff66}
 .green{border-color:#39ffcb;box-shadow:0 0 18px #39ffcb55}
 .gold{border-color:var(--gold);box-shadow:0 0 18px rgba(247,215,116,.50)}
 .red{border-color:#ff5b60;box-shadow:0 0 18px #ff5b6066}
+.dots-icon{font-size:24px;letter-spacing:1px;line-height:1;display:flex;align-items:center;justify-content:center;padding-bottom:4px}
 
-/* DRAWER */
-.drawer{
-  position:fixed;
-  inset:0;
-  display:none;
-  background:rgba(0,0,0,.65);
-  z-index:9000;
-}
+.drawer{position:fixed;inset:0;display:none;background:rgba(0,0,0,.65);z-index:9000}
 .drawer.show{display:block}
-.drawer-panel{
-  width:82%;
-  max-width:320px;
-  height:100%;
-  background:rgba(6,19,38,.97);
-  border-right:1px solid rgba(247,215,116,.35);
-  padding:22px 16px;
-}
+.drawer-panel{width:82%;max-width:320px;height:100%;background:rgba(6,19,38,.97);border-right:1px solid rgba(247,215,116,.35);padding:22px 16px}
 .drawer h2{color:var(--gold);margin-bottom:16px}
-.drawer a,.drawer button{
-  width:100%;
-  height:46px;
-  border-radius:15px;
-  margin-bottom:9px;
-  background:rgba(0,60,180,.38);
-  border:1px solid rgba(0,183,255,.35);
-  color:white;
-  display:flex;
-  align-items:center;
-  padding:0 14px;
-  font-size:15px;
-}
-.logout{
-  background:rgba(130,0,25,.75)!important;
-  border-color:rgba(255,80,80,.45)!important;
-}
+.drawer a,.drawer button{width:100%;height:46px;border-radius:15px;margin-bottom:9px;background:rgba(0,60,180,.38);border:1px solid rgba(0,183,255,.35);color:white;display:flex;align-items:center;padding:0 14px;font-size:15px}
+.agent-only{display:none!important}
+.agent-only.show{display:flex!important}
+.logout{background:rgba(130,0,25,.75)!important;border-color:rgba(255,80,80,.45)!important}
 
-/* NAV */
-.bottom-nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:74px;
-  background:rgba(0,12,38,.98);
-  border-top:1px solid rgba(247,215,116,.26);
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  z-index:999;
-}
-.nav-item{
-  color:white;
-  font-size:11px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:3px;
-}
-.nav-item .icon{font-size:24px}
-.nav-item.active{color:var(--gold)}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;height:74px;background:rgba(0,12,38,.98);border-top:1px solid rgba(247,215,116,.26);display:grid;grid-template-columns:repeat(5,1fr);z-index:999}
+.nav-item{color:white;font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.nav-item .icon{font-size:24px}.nav-item.active{color:var(--gold)}
 </style>
 </head>
 
@@ -365,25 +83,27 @@ button{border:0;cursor:pointer;color:inherit}
 
 <section id="loginScreen" class="login">
   <div class="login-bg"></div>
+
   <div class="login-card">
     <h1>JM Elite</h1>
-    <p>Acceso privado para emisoras</p>
+    <p id="loginSubtitle">Acceso privado para emisoras</p>
 
-    <div class="input">
-      <span>✉️</span>
-      <input id="emailInput" type="email" placeholder="Correo electrónico">
+    <div class="input"><span>✉️</span><input id="emailInput" type="email" placeholder="Correo electrónico"></div>
+    <div class="input"><span>🔒</span><input id="passInput" type="password" placeholder="Contraseña"></div>
+
+    <div id="registerExtra" class="register-extra">
+      <div class="input"><span>👤</span><input id="nameInput" type="text" placeholder="Nombre artístico"></div>
+      <div class="input"><span>🌍</span><input id="countryInput" type="text" placeholder="País"></div>
+      <div class="input"><span>🎁</span><input id="inviteInput" type="text" placeholder="Código de invitación (opcional)"></div>
     </div>
 
-    <div class="input">
-      <span>🔒</span>
-      <input id="passInput" type="password" placeholder="Contraseña">
-    </div>
-
-    <button class="login-btn" onclick="login()">ENTRAR</button>
+    <button id="mainLoginBtn" class="login-btn" onclick="login()">ENTRAR</button>
 
     <div class="login-links">
-      <button onclick="registerUser()">Crear cuenta</button>
+      <button onclick="normalRegister()">Registro normal</button>
+      <button onclick="inviteRegister()">Registro invitación</button>
       <button onclick="recoverPassword()">Recuperar</button>
+      <button onclick="backToLogin()">Volver</button>
     </div>
 
     <div class="login-foot">🔐 Seguridad y confianza · Agencia JM Elite</div>
@@ -393,7 +113,8 @@ button{border:0;cursor:pointer;color:inherit}
 <section id="drawer" class="drawer" onclick="closeDrawer(event)">
   <div class="drawer-panel">
     <h2>JM Elite</h2>
-    <a href="perfil.html">👤 Mi perfil</a>
+    <a href="perfil.html">👤 Perfil</a>
+    <a id="agentLink" class="agent-only" href="agente.html">👑 Perfil de agente</a>
     <a href="sala-pro.html">🎙️ Sala Pro</a>
     <a href="chatbot.html">🤖 ChatBot IA</a>
     <a href="emisoras.html">👥 Emisoras</a>
@@ -407,12 +128,10 @@ button{border:0;cursor:pointer;color:inherit}
 
   <section class="hero">
     <img src="agencia-jm-equipo-banner.png" alt="Agencia JM Elite">
-
     <div class="hero-actions">
       <button class="hero-btn" onclick="openDrawer()">☰</button>
       <button class="hero-btn bell" onclick="location.href='avisos.html'">🔔</button>
     </div>
-
     <div class="hero-title">
       <h1>AGENCIA <span>JM ELITE</span></h1>
       <p>Un equipo, una visión.</p>
@@ -421,18 +140,9 @@ button{border:0;cursor:pointer;color:inherit}
   </section>
 
   <section class="status">
-    <div>
-      <strong class="live">🟢 SALA</strong>
-      <span>EN VIVO</span>
-    </div>
-    <div>
-      <strong>👥 15</strong>
-      <span>En sala</span>
-    </div>
-    <div>
-      <strong>💎 125K</strong>
-      <span>Coins</span>
-    </div>
+    <div><strong class="live">🟢 SALA</strong><span>EN VIVO</span></div>
+    <div><strong>👥 15</strong><span>En sala</span></div>
+    <div><strong>💎 125K</strong><span>Coins</span></div>
     <a href="sala-pro.html">Entrar ›</a>
   </section>
 
@@ -462,7 +172,7 @@ button{border:0;cursor:pointer;color:inherit}
       <a class="icon-link" href="perfil.html"><span class="icon-circle">👤</span><b>Perfil</b><small>Datos</small></a>
       <a class="icon-link" href="configuracion.html"><span class="icon-circle">⚙️</span><b>Ajustes</b><small>Cuenta</small></a>
       <a class="icon-link" href="normas.html"><span class="icon-circle purple">📖</span><b>Normas</b><small>Reglas</small></a>
-      <a class="icon-link" href="menu.html"><span class="icon-circle">•••</span><b>Más</b><small>Opciones</small></a>
+      <a class="icon-link" href="menu.html"><span class="icon-circle dots-icon">•••</span><b>Más</b><small>Opciones</small></a>
     </div>
   </section>
 
@@ -477,18 +187,34 @@ button{border:0;cursor:pointer;color:inherit}
 </nav>
 
 <script>
-const loginScreen=document.getElementById("loginScreen");
+const AGENT_EMAILS=["jesus@jmelite.com","admin@jmelite.com"];
+let registerMode="";
+
+function isAgent(email){
+  return AGENT_EMAILS.includes((email||"").toLowerCase());
+}
 
 function checkLogin(){
-  if(localStorage.getItem("jm_logged")==="yes"){
-    loginScreen.classList.remove("show");
+  const logged=localStorage.getItem("jm_logged");
+  const email=localStorage.getItem("jm_email");
+
+  if(logged==="yes"){
+    document.getElementById("loginScreen").classList.remove("show");
+    if(isAgent(email)){
+      document.getElementById("agentLink").classList.add("show");
+    }
   }else{
-    loginScreen.classList.add("show");
+    document.getElementById("loginScreen").classList.add("show");
   }
 }
 
 function login(){
-  const email=document.getElementById("emailInput").value.trim();
+  if(registerMode){
+    sendRegisterRequest(registerMode);
+    return;
+  }
+
+  const email=document.getElementById("emailInput").value.trim().toLowerCase();
   const pass=document.getElementById("passInput").value.trim();
 
   if(!email || !pass){
@@ -496,24 +222,80 @@ function login(){
     return;
   }
 
-  localStorage.setItem("jm_logged","yes");
-  localStorage.setItem("jm_email",email);
-  loginScreen.classList.remove("show");
-}
+  const pending=JSON.parse(localStorage.getItem("jm_pending_requests")||"[]");
+  const isPending=pending.some(r=>r.email===email && r.status==="pendiente");
 
-function registerUser(){
-  const email=document.getElementById("emailInput").value.trim();
-  const pass=document.getElementById("passInput").value.trim();
-
-  if(!email || !pass){
-    alert("Para crear cuenta, pon correo y contraseña.");
+  if(isPending && !isAgent(email)){
+    alert("Tu solicitud está pendiente de aprobación.");
     return;
   }
 
   localStorage.setItem("jm_logged","yes");
   localStorage.setItem("jm_email",email);
-  alert("Cuenta creada en modo demo.");
-  loginScreen.classList.remove("show");
+  checkLogin();
+}
+
+function normalRegister(){
+  registerMode="normal";
+  document.getElementById("registerExtra").classList.add("show");
+  document.getElementById("inviteInput").placeholder="Código de invitación (opcional)";
+  document.getElementById("loginSubtitle").innerText="Registro normal de emisora";
+  document.getElementById("mainLoginBtn").innerText="ENVIAR SOLICITUD";
+}
+
+function inviteRegister(){
+  registerMode="invitacion";
+  document.getElementById("registerExtra").classList.add("show");
+  document.getElementById("inviteInput").placeholder="Código de invitación obligatorio";
+  document.getElementById("loginSubtitle").innerText="Registro por invitación";
+  document.getElementById("mainLoginBtn").innerText="ENVIAR SOLICITUD";
+}
+
+function sendRegisterRequest(type){
+  const email=document.getElementById("emailInput").value.trim().toLowerCase();
+  const pass=document.getElementById("passInput").value.trim();
+  const name=document.getElementById("nameInput").value.trim();
+  const country=document.getElementById("countryInput").value.trim();
+  const invite=document.getElementById("inviteInput").value.trim();
+
+  if(!email || !pass || !name || !country){
+    alert("Completa correo, contraseña, nombre artístico y país.");
+    return;
+  }
+
+  if(type==="invitacion" && !invite){
+    alert("Para registro por invitación necesitas un código.");
+    return;
+  }
+
+  const pending=JSON.parse(localStorage.getItem("jm_pending_requests")||"[]");
+
+  if(pending.some(r=>r.email===email)){
+    alert("Ya existe una solicitud con ese correo.");
+    return;
+  }
+
+  pending.push({
+    email:email,
+    password:pass,
+    artisticName:name,
+    country:country,
+    invitationCode:invite,
+    registerType:type,
+    status:"pendiente",
+    date:new Date().toLocaleString()
+  });
+
+  localStorage.setItem("jm_pending_requests",JSON.stringify(pending));
+  alert("Solicitud enviada. Un administrador la revisará.");
+  backToLogin();
+}
+
+function backToLogin(){
+  registerMode="";
+  document.getElementById("registerExtra").classList.remove("show");
+  document.getElementById("loginSubtitle").innerText="Acceso privado para emisoras";
+  document.getElementById("mainLoginBtn").innerText="ENTRAR";
 }
 
 function recoverPassword(){
@@ -522,7 +304,7 @@ function recoverPassword(){
     alert("Pon tu correo para recuperar la contraseña.");
     return;
   }
-  alert("Recuperación preparada para: " + email);
+  alert("Recuperación preparada para: "+email);
 }
 
 function logout(){
@@ -545,4 +327,4 @@ checkLogin();
 </script>
 
 </body>
-      </html>
+                                         </html>
