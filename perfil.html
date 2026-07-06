@@ -6,13 +6,20 @@
 <title>Perfil Elite</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
 :root{
   --gold:#f7d774;
-  --blue:#007bff;
-  --blue2:#004dff;
-  --deep:#020713;
+  --gold2:#ffcc45;
+  --electric:#008cff;
+  --electric2:#005dff;
+  --dark:#020713;
+  --navy:#061326;
   --soft:#dce8ff;
 }
 
@@ -23,13 +30,21 @@ body{
   padding-bottom:92px;
 }
 
-button{border:0;cursor:pointer}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
 
 .profile{
   width:100%;
   min-height:100vh;
   background:
-    radial-gradient(circle at top,#007bff 0%,#003bd1 38%,#020713 100%);
+    radial-gradient(circle at top,#008cff 0%,#004dff 38%,#020713 100%);
   overflow:hidden;
 }
 
@@ -38,6 +53,8 @@ button{border:0;cursor:pointer}
   position:relative;
   width:100%;
   height:258px;
+  background:#061326;
+  overflow:visible;
 }
 
 .cover{
@@ -51,9 +68,8 @@ button{border:0;cursor:pointer}
 .cover img{
   width:100%;
   height:100%;
-  object-fit:cover;
-  object-position:center -38px;
-  transform:scale(.92);
+  object-fit:contain;
+  object-position:center top;
   display:block;
 }
 
@@ -64,8 +80,8 @@ button{border:0;cursor:pointer}
   background:linear-gradient(
     180deg,
     rgba(0,0,0,.02) 0%,
-    rgba(0,40,110,.18) 55%,
-    rgba(0,123,255,.96) 100%
+    rgba(0,45,130,.10) 45%,
+    rgba(0,140,255,.95) 100%
   );
 }
 
@@ -76,21 +92,21 @@ button{border:0;cursor:pointer}
   width:40px;
   height:40px;
   border-radius:14px;
-  background:rgba(0,15,40,.50);
-  border:1px solid rgba(247,215,116,.38);
+  background:rgba(0,15,40,.52);
+  border:1px solid rgba(247,215,116,.45);
   color:white;
   font-size:22px;
   z-index:20;
 }
 
-/* FOTO REDONDA */
+/* FOTO PERFIL */
 .avatar{
   position:absolute;
   left:50%;
-  bottom:-51px;
+  bottom:-50px;
   transform:translateX(-50%);
-  width:98px;
-  height:98px;
+  width:96px;
+  height:96px;
   border-radius:50%;
   overflow:hidden;
   border:4px solid var(--gold);
@@ -108,7 +124,7 @@ button{border:0;cursor:pointer}
 /* IDENTIDAD */
 .identity{
   text-align:center;
-  padding:58px 12px 0;
+  padding:56px 12px 0;
 }
 
 .identity h1{
@@ -136,8 +152,8 @@ button{border:0;cursor:pointer}
 .badges span{
   min-height:30px;
   border-radius:999px;
-  background:rgba(0,55,180,.42);
-  border:1px solid rgba(247,215,116,.30);
+  background:rgba(0,93,255,.32);
+  border:1px solid rgba(247,215,116,.35);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -156,8 +172,8 @@ button{border:0;cursor:pointer}
 }
 
 .stat{
-  background:rgba(0,38,120,.42);
-  border:1px solid rgba(247,215,116,.24);
+  background:rgba(0,60,180,.34);
+  border:1px solid rgba(247,215,116,.28);
   border-radius:14px;
   text-align:center;
   padding:9px 3px;
@@ -175,7 +191,7 @@ button{border:0;cursor:pointer}
   color:var(--soft);
 }
 
-/* BOTONES */
+/* SEIS BOTONES */
 .actions{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -192,9 +208,9 @@ button{border:0;cursor:pointer}
 }
 
 .action-blue{
-  background:linear-gradient(135deg,#006cff,#00b7ff);
+  background:linear-gradient(135deg,#005dff,#00b7ff);
   color:white;
-  box-shadow:0 0 16px rgba(0,140,255,.35);
+  box-shadow:0 0 16px rgba(0,140,255,.40);
 }
 
 .action-gold{
@@ -203,16 +219,16 @@ button{border:0;cursor:pointer}
 }
 
 .action-dark{
-  background:rgba(0,26,85,.62);
+  background:rgba(0,26,85,.65);
   color:white;
-  border:1px solid rgba(247,215,116,.24);
+  border:1px solid rgba(247,215,116,.25);
 }
 
 /* INFORMACIÓN */
 .card{
   margin:0 12px 16px;
-  background:rgba(0,18,55,.70);
-  border:1px solid rgba(247,215,116,.24);
+  background:rgba(0,18,55,.72);
+  border:1px solid rgba(247,215,116,.25);
   border-radius:17px;
   padding:12px;
 }
@@ -231,9 +247,17 @@ button{border:0;cursor:pointer}
   font-size:13px;
 }
 
-.row:last-child{border-bottom:none}
-.row span{color:var(--soft)}
-.row b{color:white}
+.row:last-child{
+  border-bottom:none;
+}
+
+.row span{
+  color:var(--soft);
+}
+
+.row b{
+  color:white;
+}
 
 /* MENÚ INFERIOR */
 .bottom-nav{
@@ -242,8 +266,8 @@ button{border:0;cursor:pointer}
   right:0;
   bottom:0;
   height:72px;
-  background:rgba(0,18,45,.97);
-  border-top:1px solid rgba(247,215,116,.24);
+  background:rgba(0,18,45,.98);
+  border-top:1px solid rgba(247,215,116,.25);
   display:grid;
   grid-template-columns:repeat(5,1fr);
   z-index:999;
@@ -260,29 +284,50 @@ button{border:0;cursor:pointer}
   gap:2px;
 }
 
-.nav-item .icon{font-size:21px}
-.nav-item.active{color:var(--gold)}
+.nav-item .icon{
+  font-size:21px;
+}
+
+.nav-item.active{
+  color:var(--gold);
+}
 
 @media(max-width:390px){
-  .header{height:248px}
-
-  .cover img{
-    object-position:center -34px;
-    transform:scale(.90);
+  .header{
+    height:248px;
   }
 
   .avatar{
     width:94px;
     height:94px;
-    bottom:-49px;
+    bottom:-48px;
   }
 
-  .identity{padding-top:55px}
-  .identity h1{font-size:24px}
-  .identity p{font-size:13px}
-  .badges span{font-size:9.5px;min-height:29px}
-  .stat b{font-size:18px}
-  .actions button{height:40px;font-size:9.5px}
+  .identity{
+    padding-top:54px;
+  }
+
+  .identity h1{
+    font-size:24px;
+  }
+
+  .identity p{
+    font-size:13px;
+  }
+
+  .badges span{
+    font-size:9.5px;
+    min-height:29px;
+  }
+
+  .stat b{
+    font-size:18px;
+  }
+
+  .actions button{
+    height:40px;
+    font-size:9.5px;
+  }
 }
 </style>
 </head>
@@ -306,6 +351,7 @@ button{border:0;cursor:pointer}
 </section>
 
 <section class="identity">
+
   <h1>Jesús Melián</h1>
   <p>👑 Fundador · Agencia JM Elite</p>
 
@@ -317,39 +363,94 @@ button{border:0;cursor:pointer}
     <span>♂ Hombre</span>
     <span>🎂 49 años</span>
   </div>
+
 </section>
 
 <section class="stats">
-  <div class="stat"><b>1981</b><span>Seguidores</span></div>
-  <div class="stat"><b>34</b><span>Emisoras</span></div>
-  <div class="stat"><b>125K</b><span>Diamantes</span></div>
-  <div class="stat"><b>845</b><span>Días</span></div>
+
+  <div class="stat">
+    <b>1981</b>
+    <span>Seguidores</span>
+  </div>
+
+  <div class="stat">
+    <b>34</b>
+    <span>Emisoras</span>
+  </div>
+
+  <div class="stat">
+    <b>125K</b>
+    <span>Diamantes</span>
+  </div>
+
+  <div class="stat">
+    <b>845</b>
+    <span>Días</span>
+  </div>
+
 </section>
 
 <section class="actions">
+
   <button class="action-blue">💬 Mensaje</button>
   <button class="action-gold">✏️ Editar</button>
   <button class="action-dark">➕ Añadir</button>
   <button class="action-dark">🔗 Compartir</button>
   <button class="action-dark">🔑 Copiar ID</button>
   <button class="action-dark">🗑️ Papelera</button>
+
 </section>
 
 <section class="card">
+
   <h3>Información</h3>
-  <div class="row"><span>ID Poppo</span><b>19758906</b></div>
-  <div class="row"><span>País</span><b>España</b></div>
-  <div class="row"><span>Rol</span><b>Fundador</b></div>
+
+  <div class="row">
+    <span>ID Poppo</span>
+    <b>19758906</b>
+  </div>
+
+  <div class="row">
+    <span>País</span>
+    <b>España</b>
+  </div>
+
+  <div class="row">
+    <span>Rol</span>
+    <b>Fundador</b>
+  </div>
+
 </section>
 
 </main>
 
 <nav class="bottom-nav">
-  <button class="nav-item"><span class="icon">🏠</span><span>Inicio</span></button>
-  <button class="nav-item"><span class="icon">🎙️</span><span>Sala</span></button>
-  <button class="nav-item active"><span class="icon">👤</span><span>Perfil</span></button>
-  <button class="nav-item"><span class="icon">💬</span><span>Chat</span></button>
-  <button class="nav-item"><span class="icon">☰</span><span>Más</span></button>
+
+  <a class="nav-item" href="index.html">
+    <span class="icon">🏠</span>
+    <span>Inicio</span>
+  </a>
+
+  <a class="nav-item" href="sala.html">
+    <span class="icon">🎙️</span>
+    <span>Sala</span>
+  </a>
+
+  <a class="nav-item active" href="perfil.html">
+    <span class="icon">👤</span>
+    <span>Perfil</span>
+  </a>
+
+  <a class="nav-item" href="chat.html">
+    <span class="icon">💬</span>
+    <span>Chat</span>
+  </a>
+
+  <a class="nav-item" href="menu.html">
+    <span class="icon">☰</span>
+    <span>Más</span>
+  </a>
+
 </nav>
 
 </body>
