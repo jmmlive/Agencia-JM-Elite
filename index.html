@@ -7,27 +7,25 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-
 :root{
   --gold:#f7d774;
+  --gold2:#ffcc3d;
   --blue:#007bff;
   --blue2:#00b7ff;
   --dark:#020713;
-  --glass:rgba(2,12,38,.66);
+  --panel:rgba(2,12,38,.72);
   --soft:#dce8ff;
 }
-
 body{
   background:#020713;
   color:white;
   min-height:100vh;
   padding-bottom:78px;
 }
-
 a{text-decoration:none;color:inherit}
 button{border:0;cursor:pointer;color:inherit}
 
-/* LOGIN */
+/* LOGIN PREMIUM */
 .login{
   position:fixed;
   inset:0;
@@ -38,68 +36,78 @@ button{border:0;cursor:pointer;color:inherit}
   padding:22px;
   background:#020713;
 }
-
 .login.show{display:flex}
-
 .login-bg{
   position:absolute;
   inset:0;
   background:url("agencia-jm-equipo-banner.png") center/cover no-repeat;
-  filter:brightness(.45) saturate(1.25);
+  filter:brightness(.38) saturate(1.25);
 }
-
-.login-bg::after{
+.login-bg:after{
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at top,#007bff55,#020713 70%);
+  background:
+    radial-gradient(circle at top,#007bff66,transparent 45%),
+    linear-gradient(180deg,rgba(2,7,19,.15),#020713 88%);
 }
-
-.login-box{
+.login-card{
   position:relative;
   width:100%;
-  max-width:360px;
-  padding:24px;
-  border-radius:28px;
+  max-width:370px;
+  padding:26px;
+  border-radius:30px;
   background:rgba(0,12,38,.72);
   border:1px solid rgba(247,215,116,.45);
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 35px rgba(0,140,255,.55);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 38px rgba(0,140,255,.55);
   text-align:center;
 }
-
-.login-box h1{
+.login-card h1{
   color:var(--gold);
-  font-size:31px;
-  margin-bottom:8px;
+  font-size:34px;
+  margin-bottom:6px;
 }
-
-.login-box p{
+.login-card p{
   color:var(--soft);
-  margin-bottom:20px;
   font-size:14px;
+  margin-bottom:20px;
 }
-
-.login-box input{
-  width:100%;
-  height:50px;
-  margin-bottom:12px;
-  border-radius:16px;
-  background:rgba(0,12,38,.82);
-  border:1px solid rgba(0,183,255,.50);
-  color:white;
-  padding:0 14px;
-  outline:none;
-}
-
-.login-box button{
-  width:100%;
+.input{
   height:52px;
   border-radius:17px;
+  margin-bottom:12px;
+  background:rgba(0,12,38,.85);
+  border:1px solid rgba(0,183,255,.48);
+  display:flex;
+  align-items:center;
+  padding:0 14px;
+  gap:10px;
+}
+.input span{font-size:20px}
+.input input{
+  flex:1;
+  background:transparent;
+  border:0;
+  outline:0;
+  color:white;
+  font-size:15px;
+}
+.login-btn{
+  width:100%;
+  height:54px;
+  border-radius:18px;
   background:linear-gradient(135deg,#d4a72d,#ffcf55);
   color:#061326;
   font-weight:900;
-  font-size:16px;
+  font-size:17px;
+  margin-top:8px;
+  box-shadow:0 0 22px rgba(247,215,116,.38);
+}
+.login-foot{
+  margin-top:18px;
+  font-size:12px;
+  color:var(--soft);
 }
 
 /* APP */
@@ -107,20 +115,19 @@ button{border:0;cursor:pointer;color:inherit}
   min-height:100vh;
   padding:10px;
   background:
-    radial-gradient(circle at top,#006cff88 0%,#061326 34%,#020713 78%);
+    radial-gradient(circle at top,#006cff88 0%,#061326 36%,#020713 80%);
 }
 
-/* HERO */
+/* BANNER */
 .hero{
   position:relative;
-  height:340px;
+  height:320px;
   border-radius:28px;
   overflow:hidden;
   border:1px solid rgba(0,183,255,.58);
-  box-shadow:0 0 32px rgba(0,140,255,.45);
   background:#061326;
+  box-shadow:0 0 32px rgba(0,140,255,.45);
 }
-
 .hero img{
   width:100%;
   height:100%;
@@ -129,26 +136,23 @@ button{border:0;cursor:pointer;color:inherit}
   display:block;
   filter:saturate(1.25) contrast(1.08) brightness(.92);
 }
-
-.hero::after{
+.hero:after{
   content:"";
   position:absolute;
   inset:0;
   background:
-    linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.18),rgba(2,7,19,.75)),
-    linear-gradient(90deg,rgba(0,0,0,.70),transparent 55%,rgba(0,0,0,.38));
+    linear-gradient(90deg,rgba(0,0,0,.70),transparent 55%,rgba(0,0,0,.38)),
+    linear-gradient(180deg,rgba(0,0,0,.05),rgba(2,7,19,.72));
 }
-
 .hero-actions{
   position:absolute;
-  top:16px;
-  left:16px;
-  right:16px;
+  top:15px;
+  left:15px;
+  right:15px;
   z-index:5;
   display:flex;
   justify-content:space-between;
 }
-
 .hero-btn{
   width:50px;
   height:50px;
@@ -159,10 +163,8 @@ button{border:0;cursor:pointer;color:inherit}
   font-size:28px;
   box-shadow:0 0 18px rgba(0,140,255,.22);
 }
-
 .bell{position:relative}
-
-.bell::after{
+.bell:after{
   content:"";
   position:absolute;
   top:10px;
@@ -172,32 +174,27 @@ button{border:0;cursor:pointer;color:inherit}
   background:#ffbf2f;
   border-radius:50%;
 }
-
 .hero-title{
   position:absolute;
   z-index:5;
   left:20px;
-  bottom:28px;
+  bottom:26px;
 }
-
 .hero-title h1{
   font-size:34px;
   line-height:1.02;
   color:white;
   text-shadow:0 3px 15px rgba(0,0,0,.8);
 }
-
 .hero-title h1 span{
   color:var(--gold);
   display:block;
 }
-
 .hero-title p{
   margin-top:10px;
   font-size:15px;
   color:white;
 }
-
 .hero-line{
   width:70px;
   height:3px;
@@ -206,10 +203,10 @@ button{border:0;cursor:pointer;color:inherit}
   margin-top:13px;
 }
 
-/* STATUS */
+/* ESTADO */
 .status{
   margin:14px 0 18px;
-  min-height:86px;
+  min-height:78px;
   border-radius:24px;
   background:rgba(0,12,38,.74);
   border:1px solid rgba(255,255,255,.18);
@@ -221,35 +218,25 @@ button{border:0;cursor:pointer;color:inherit}
   padding:12px;
   box-shadow:inset 0 0 22px rgba(0,140,255,.14);
 }
-
 .status div{
   text-align:center;
   border-right:1px solid rgba(255,255,255,.10);
 }
-
-.status div:last-child{border-right:none}
-
 .status strong{
   display:block;
-  font-size:21px;
-  color:white;
+  font-size:20px;
 }
-
 .status span{
-  display:block;
   font-size:11px;
   color:var(--soft);
-  margin-top:2px;
 }
-
-.status .live{
+.live{
   color:#69ff55;
-  font-size:13px;
   font-weight:900;
+  font-size:13px;
 }
-
 .status a{
-  min-height:48px;
+  min-height:46px;
   padding:0 15px;
   border-radius:17px;
   background:linear-gradient(135deg,#006cff,#00b7ff);
@@ -260,135 +247,88 @@ button{border:0;cursor:pointer;color:inherit}
   box-shadow:0 0 20px rgba(0,140,255,.35);
 }
 
-/* SECTIONS */
+/* ICONOS TIPO POPPO */
 .section-title{
   display:flex;
   align-items:center;
-  gap:9px;
-  margin:18px 0 11px;
+  gap:8px;
   color:var(--gold);
   font-size:17px;
+  margin:18px 0 12px;
   text-transform:uppercase;
 }
-
-.section-title::after{
+.section-title:after{
   content:"";
   flex:1;
   height:1px;
   background:linear-gradient(90deg,var(--gold),transparent);
 }
-
-/* CARDS */
-.grid-main{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:11px;
-}
-
-.grid-two{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:11px;
-}
-
-.card{
-  position:relative;
-  min-height:122px;
+.icon-panel{
   border-radius:24px;
-  padding:14px 8px;
-  background:
-    radial-gradient(circle at top,rgba(0,183,255,.28),transparent 52%),
-    rgba(0,18,55,.72);
-  border:1px solid rgba(0,183,255,.52);
-  backdrop-filter:blur(12px);
-  box-shadow:
-    0 0 20px rgba(0,140,255,.24),
-    inset 0 0 22px rgba(0,140,255,.12);
+  background:rgba(0,12,38,.48);
+  border:1px solid rgba(0,183,255,.22);
+  padding:14px 10px;
+  margin-bottom:16px;
+}
+.icon-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.icon-link{
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
   text-align:center;
+  gap:7px;
 }
-
-.card:active{transform:scale(.97)}
-
-.card.purple{
-  background:radial-gradient(circle at top,rgba(180,80,255,.34),transparent 52%),rgba(35,0,70,.76);
-  border-color:rgba(180,80,255,.62);
-}
-
-.card.green{
-  background:radial-gradient(circle at top,rgba(70,255,235,.30),transparent 52%),rgba(0,45,55,.76);
-  border-color:rgba(70,255,235,.55);
-}
-
-.card.gold{
-  background:radial-gradient(circle at top,rgba(247,215,116,.30),transparent 52%),rgba(50,32,0,.78);
-  border-color:rgba(247,215,116,.62);
-}
-
-.card.red{
-  background:radial-gradient(circle at top,rgba(255,90,80,.32),transparent 52%),rgba(60,0,18,.78);
-  border-color:rgba(255,90,80,.60);
-}
-
-.card .ico{
-  font-size:36px;
-  margin-bottom:9px;
-}
-
-.card b{
-  font-size:15px;
-  color:white;
-}
-
-.card small{
-  margin-top:5px;
-  color:var(--soft);
-  font-size:11px;
-  line-height:1.25;
-}
-
-.card .go{
-  position:absolute;
-  right:12px;
-  bottom:12px;
-  width:27px;
-  height:27px;
+.icon-circle{
+  width:62px;
+  height:62px;
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.32);
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:30px;
+  background:rgba(0,12,38,.65);
+  border:1px solid rgba(0,183,255,.45);
+  box-shadow:0 0 20px rgba(0,140,255,.35);
 }
+.icon-link b{
+  font-size:12px;
+  color:white;
+}
+.icon-link small{
+  font-size:10px;
+  color:var(--soft);
+}
+.purple{border-color:#b856ff;box-shadow:0 0 20px #9b32ff66}
+.green{border-color:#39ffcb;box-shadow:0 0 20px #39ffcb55}
+.gold{border-color:var(--gold);box-shadow:0 0 20px rgba(247,215,116,.50)}
+.red{border-color:#ff5b60;box-shadow:0 0 20px #ff5b6066}
 
 /* DRAWER */
 .drawer{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.62);
-  z-index:9000;
   display:none;
+  background:rgba(0,0,0,.65);
+  z-index:9000;
 }
-
 .drawer.show{display:block}
-
 .drawer-panel{
   width:82%;
   max-width:320px;
   height:100%;
-  background:rgba(6,19,38,.96);
+  background:rgba(6,19,38,.97);
   border-right:1px solid rgba(247,215,116,.35);
   padding:22px 16px;
   box-shadow:0 0 35px rgba(0,140,255,.38);
 }
-
 .drawer h2{
   color:var(--gold);
   margin-bottom:16px;
 }
-
 .drawer a,.drawer button{
   width:100%;
   height:46px;
@@ -402,7 +342,6 @@ button{border:0;cursor:pointer;color:inherit}
   padding:0 14px;
   font-size:15px;
 }
-
 .logout{
   background:rgba(130,0,25,.75)!important;
   border-color:rgba(255,80,80,.45)!important;
@@ -421,7 +360,6 @@ button{border:0;cursor:pointer;color:inherit}
   grid-template-columns:repeat(5,1fr);
   z-index:999;
 }
-
 .nav-item{
   color:white;
   font-size:11px;
@@ -431,25 +369,15 @@ button{border:0;cursor:pointer;color:inherit}
   justify-content:center;
   gap:3px;
 }
-
 .nav-item .icon{font-size:24px}
 .nav-item.active{color:var(--gold)}
 
 @media(max-width:390px){
-  .hero{height:310px}
+  .hero{height:300px}
   .hero-title h1{font-size:30px}
-
-  .status{
-    grid-template-columns:1.2fr 1fr 1fr;
-  }
-
-  .status a{
-    grid-column:1/4;
-  }
-
-  .card{min-height:112px}
-  .card .ico{font-size:32px}
-  .card b{font-size:13.5px}
+  .status{grid-template-columns:1.2fr 1fr 1fr}
+  .status a{grid-column:1/4}
+  .icon-circle{width:56px;height:56px;font-size:27px}
 }
 </style>
 </head>
@@ -458,12 +386,23 @@ button{border:0;cursor:pointer;color:inherit}
 
 <section id="loginScreen" class="login">
   <div class="login-bg"></div>
-  <div class="login-box">
+  <div class="login-card">
     <h1>JM Elite</h1>
-    <p>Acceso privado de la agencia</p>
-    <input id="emailInput" type="email" placeholder="Correo">
-    <input id="passInput" type="password" placeholder="Contraseña">
-    <button onclick="login()">Entrar</button>
+    <p>Acceso privado para emisoras</p>
+
+    <div class="input">
+      <span>✉️</span>
+      <input id="emailInput" type="email" placeholder="Correo electrónico">
+    </div>
+
+    <div class="input">
+      <span>🔒</span>
+      <input id="passInput" type="password" placeholder="Contraseña">
+    </div>
+
+    <button class="login-btn" onclick="login()">ENTRAR</button>
+
+    <div class="login-foot">🔐 Seguridad y confianza · Agencia JM Elite</div>
   </div>
 </section>
 
@@ -473,7 +412,7 @@ button{border:0;cursor:pointer;color:inherit}
     <a href="perfil.html">👤 Mi perfil</a>
     <a href="sala-pro.html">🎙️ Sala Pro</a>
     <a href="chatbot.html">🤖 ChatBot IA</a>
-    <a href="emisoras.html">👥 Mis Emisoras</a>
+    <a href="emisoras.html">👥 Emisoras</a>
     <a href="academia.html">🎓 Academia</a>
     <a href="configuracion.html">⚙️ Configuración</a>
     <button class="logout" onclick="logout()">🚪 Cerrar sesión</button>
@@ -513,93 +452,34 @@ button{border:0;cursor:pointer;color:inherit}
     <a href="sala-pro.html">Ver sala ›</a>
   </section>
 
-  <h2 class="section-title">⭐ Accesos principales</h2>
-
-  <section class="grid-main">
-    <a class="card" href="sala-pro.html">
-      <span class="ico">🎙️</span>
-      <b>Sala Pro</b>
-      <small>Entrar a la sala</small>
-      <span class="go">›</span>
-    </a>
-
-    <a class="card purple" href="chatbot.html">
-      <span class="ico">🤖</span>
-      <b>ChatBot IA</b>
-      <small>Asistente inteligente</small>
-      <span class="go">›</span>
-    </a>
-
-    <a class="card green" href="emisoras.html">
-      <span class="ico">👥</span>
-      <b>Mis Emisoras</b>
-      <small>Gestionar equipo</small>
-      <span class="go">›</span>
-    </a>
+  <h2 class="section-title">⚡ Accesos rápidos</h2>
+  <section class="icon-panel">
+    <div class="icon-grid">
+      <a class="icon-link" href="chatbot.html"><span class="icon-circle purple">🤖</span><b>ChatBot IA</b><small>Asistente</small></a>
+      <a class="icon-link" href="emisoras.html"><span class="icon-circle">👥</span><b>Emisoras</b><small>Equipo</small></a>
+      <a class="icon-link" href="pagos.html"><span class="icon-circle green">💰</span><b>Pagos</b><small>Historial</small></a>
+      <a class="icon-link" href="ranking.html"><span class="icon-circle gold">🏆</span><b>Ranking</b><small>Top</small></a>
+    </div>
   </section>
 
-  <h2 class="section-title">⭐ Gestión y comunidad</h2>
-
-  <section class="grid-two">
-    <a class="card green" href="pagos.html">
-      <span class="ico">💰</span>
-      <b>Pagos</b>
-      <small>Historial y retiros</small>
-      <span class="go">›</span>
-    </a>
-
-    <a class="card purple" href="ranking.html">
-      <span class="ico">🏆</span>
-      <b>Ranking</b>
-      <small>Top emisoras</small>
-      <span class="go">›</span>
-    </a>
-
-    <a class="card gold" href="avisos.html">
-      <span class="ico">📢</span>
-      <b>Avisos</b>
-      <small>Noticias importantes</small>
-      <span class="go">›</span>
-    </a>
-
-    <a class="card red" href="eventos.html">
-      <span class="ico">🎉</span>
-      <b>Eventos</b>
-      <small>Próximos eventos</small>
-      <span class="go">›</span>
-    </a>
+  <h2 class="section-title">👥 Gestión y comunidad</h2>
+  <section class="icon-panel">
+    <div class="icon-grid">
+      <a class="icon-link" href="avisos.html"><span class="icon-circle gold">📢</span><b>Avisos</b><small>Noticias</small></a>
+      <a class="icon-link" href="eventos.html"><span class="icon-circle red">🎉</span><b>Eventos</b><small>Próximos</small></a>
+      <a class="icon-link" href="academia.html"><span class="icon-circle">🎓</span><b>Academia</b><small>Cursos</small></a>
+      <a class="icon-link" href="soporte.html"><span class="icon-circle green">🛟</span><b>Soporte</b><small>Ayuda</small></a>
+    </div>
   </section>
 
-  <h2 class="section-title">⭐ Formación y soporte</h2>
-
-  <section class="grid-two">
-    <a class="card" href="academia.html">
-      <span class="ico">🎓</span>
-      <b>Academia</b>
-      <small>Cursos y formación</small>
-      <span class="go">›</span>
-    </a>
-
-    <a class="card green" href="soporte.html">
-      <span class="ico">🛟</span>
-      <b>Soporte</b>
-      <small>Ayuda y contacto</small>
-      <span class="go">›</span>
-    </a>
-
-    <a class="card purple" href="normas.html">
-      <span class="ico">📖</span>
-      <b>Normas</b>
-      <small>Reglas de agencia</small>
-      <span class="go">›</span>
-    </a>
-
-    <a class="card" href="menu.html">
-      <span class="ico">☰</span>
-      <b>Más opciones</b>
-      <small>Configuración y más</small>
-      <span class="go">›</span>
-    </a>
+  <h2 class="section-title">⭐ Más opciones</h2>
+  <section class="icon-panel">
+    <div class="icon-grid">
+      <a class="icon-link" href="perfil.html"><span class="icon-circle">👤</span><b>Mi perfil</b><small>Datos</small></a>
+      <a class="icon-link" href="configuracion.html"><span class="icon-circle">⚙️</span><b>Ajustes</b><small>Cuenta</small></a>
+      <a class="icon-link" href="normas.html"><span class="icon-circle purple">📖</span><b>Normas</b><small>Reglas</small></a>
+      <a class="icon-link" href="menu.html"><span class="icon-circle">•••</span><b>Más</b><small>Opciones</small></a>
+    </div>
   </section>
 
 </main>
@@ -657,4 +537,4 @@ checkLogin();
 </script>
 
 </body>
-  </html>
+      </html>
