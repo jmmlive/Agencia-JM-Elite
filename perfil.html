@@ -15,16 +15,16 @@
 
 :root{
   --gold:#f7d774;
-  --soft:#d9e5ff;
   --blue:#007bff;
   --dark:#020713;
+  --soft:#dce8ff;
 }
 
 body{
-  background:linear-gradient(180deg,#00142f 0%,#005fe8 45%,#003ba8 100%);
+  background:#020713;
   color:white;
   min-height:100vh;
-  padding-bottom:96px;
+  padding-bottom:92px;
 }
 
 button{
@@ -32,25 +32,27 @@ button{
   cursor:pointer;
 }
 
+/* PANTALLA */
 .profile{
   width:100%;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top,#064fae 0%,#031b45 42%,#020713 100%);
   overflow:hidden;
 }
 
 /* CABECERA */
-.hero{
+.header{
   position:relative;
   width:100%;
-  height:365px;
+  height:330px;
 }
 
 .cover{
-  position:absolute;
-  inset:0;
   width:100%;
   height:100%;
   overflow:hidden;
-  background:#061326;
+  position:relative;
 }
 
 .cover img{
@@ -68,8 +70,8 @@ button{
   background:linear-gradient(
     180deg,
     rgba(0,0,0,.05) 0%,
-    rgba(0,35,95,.30) 55%,
-    rgba(0,102,235,.96) 100%
+    rgba(1,24,58,.20) 45%,
+    rgba(0,88,210,.92) 100%
   );
 }
 
@@ -77,31 +79,30 @@ button{
   position:absolute;
   top:18px;
   right:18px;
-  z-index:10;
-  width:54px;
-  height:54px;
-  border-radius:20px;
-  background:rgba(0,15,40,.48);
-  border:1px solid rgba(247,215,116,.32);
+  width:56px;
+  height:56px;
+  border-radius:19px;
+  background:rgba(0,15,40,.45);
+  border:1px solid rgba(247,215,116,.35);
   color:white;
   font-size:28px;
-  line-height:1;
-  box-shadow:0 0 18px rgba(0,140,255,.28);
+  z-index:20;
 }
 
+/* FOTO MEDIA LUNA */
 .avatar{
   position:absolute;
   left:50%;
-  bottom:-64px;
+  bottom:-68px;
   transform:translateX(-50%);
-  width:132px;
-  height:132px;
+  width:136px;
+  height:136px;
   border-radius:50%;
   overflow:hidden;
   border:5px solid var(--gold);
   background:#061326;
-  box-shadow:0 0 24px rgba(0,170,255,.85);
-  z-index:12;
+  box-shadow:0 0 30px rgba(0,170,255,.9);
+  z-index:30;
 }
 
 .avatar img{
@@ -113,66 +114,66 @@ button{
 /* IDENTIDAD */
 .identity{
   text-align:center;
-  padding:74px 14px 0;
+  padding:82px 14px 0;
 }
 
 .identity h1{
-  font-size:33px;
+  font-size:34px;
   color:var(--gold);
   margin-bottom:6px;
   font-weight:800;
-  text-shadow:0 2px 8px rgba(0,0,0,.38);
 }
 
 .identity p{
-  font-size:19px;
+  font-size:18px;
   color:white;
-  margin-bottom:14px;
+  margin-bottom:16px;
 }
 
 /* INSIGNIAS */
 .badges{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  padding:0 14px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:0 18px;
   margin-bottom:18px;
 }
 
 .badges span{
-  padding:8px 12px;
+  min-height:42px;
   border-radius:999px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(247,215,116,.28);
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-size:13px;
   color:white;
+  white-space:nowrap;
 }
 
 /* ESTADÍSTICAS */
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  margin:6px 14px 18px;
-  padding:16px 0 14px;
-  border-top:1px solid rgba(255,255,255,.18);
-  border-bottom:1px solid rgba(255,255,255,.15);
+  gap:10px;
+  padding:0 14px;
+  margin-bottom:18px;
 }
 
 .stat{
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(247,215,116,.22);
+  border-radius:18px;
   text-align:center;
-  border-right:1px solid rgba(255,255,255,.12);
-}
-
-.stat:last-child{
-  border-right:none;
+  padding:14px 4px;
 }
 
 .stat b{
   display:block;
-  font-size:28px;
-  color:white;
-  margin-bottom:3px;
+  font-size:26px;
+  color:var(--gold);
+  margin-bottom:5px;
 }
 
 .stat span{
@@ -180,50 +181,50 @@ button{
   color:var(--soft);
 }
 
-/* BOTONES */
+/* SEIS BOTONES */
 .actions{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
   padding:0 14px;
-  margin-bottom:18px;
+  margin-bottom:20px;
 }
 
 .actions button{
-  min-height:54px;
-  border-radius:16px;
-  font-size:14px;
+  height:58px;
+  border-radius:17px;
+  font-size:13px;
   font-weight:bold;
 }
 
 .action-blue{
-  background:linear-gradient(90deg,#006cff,#00aaff);
+  background:linear-gradient(135deg,#007bff,#00b7ff);
   color:white;
 }
 
 .action-gold{
-  background:linear-gradient(90deg,#d4af37,#ffcc55);
+  background:linear-gradient(135deg,#d5a927,#ffcf55);
   color:#061326;
 }
 
 .action-dark{
-  background:rgba(255,255,255,.08);
+  background:rgba(255,255,255,.06);
   color:white;
   border:1px solid rgba(247,215,116,.25);
 }
 
-/* INFORMACIÓN */
+/* INFO */
 .card{
   margin:0 14px 18px;
-  padding:16px;
-  border-radius:20px;
-  background:rgba(0,20,55,.46);
+  background:rgba(0,18,45,.65);
   border:1px solid rgba(247,215,116,.22);
+  border-radius:20px;
+  padding:16px;
 }
 
 .card h3{
   color:var(--gold);
-  font-size:20px;
+  font-size:19px;
   margin-bottom:10px;
 }
 
@@ -231,7 +232,7 @@ button{
   display:flex;
   justify-content:space-between;
   padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,.09);
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .row:last-child{
@@ -252,8 +253,8 @@ button{
   left:0;
   right:0;
   bottom:0;
-  height:88px;
-  background:rgba(0,18,45,.96);
+  height:86px;
+  background:rgba(0,18,45,.97);
   border-top:1px solid rgba(247,215,116,.22);
   display:grid;
   grid-template-columns:repeat(5,1fr);
@@ -280,18 +281,18 @@ button{
 }
 
 @media(max-width:390px){
-  .hero{
-    height:345px;
+  .header{
+    height:310px;
   }
 
   .avatar{
-    width:124px;
-    height:124px;
-    bottom:-60px;
+    width:126px;
+    height:126px;
+    bottom:-63px;
   }
 
   .identity{
-    padding-top:70px;
+    padding-top:76px;
   }
 
   .identity h1{
@@ -299,21 +300,26 @@ button{
   }
 
   .identity p{
-    font-size:17px;
+    font-size:16px;
+  }
+
+  .badges{
+    gap:8px;
+    padding:0 14px;
   }
 
   .badges span{
     font-size:12px;
-    padding:7px 10px;
+    min-height:38px;
   }
 
   .stat b{
-    font-size:25px;
+    font-size:23px;
   }
 
   .actions button{
-    font-size:13px;
-    min-height:50px;
+    height:54px;
+    font-size:12px;
   }
 }
 </style>
@@ -323,13 +329,13 @@ button{
 
 <main class="profile">
 
-  <section class="hero">
+  <section class="header">
 
     <div class="cover">
       <img src="file_00000000b87071f4b2cf26f846b51b6e.png" alt="Portada">
     </div>
 
-    <button class="menu-profile">•••</button>
+    <button class="menu-profile">⋮</button>
 
     <div class="avatar">
       <img src="file_00000000f71471f499e5839986bab33b.png" alt="Foto de perfil">
@@ -340,16 +346,15 @@ button{
   <section class="identity">
 
     <h1>Jesús Melián</h1>
-    <p>👑 Fundador · Agencia JM Tenerife</p>
+    <p>👑 Fundador · Agencia JM Elite</p>
 
     <div class="badges">
-      <span>💙 Fan azul</span>
-      <span>⭐ Insignia Star</span>
-      <span>★ Agencia Tenerife JMM</span>
-      <span>💎 VIP 3</span>
       <span>🟣 Nivel 45</span>
+      <span>💎 VIP 3</span>
       <span>🆔 19758906</span>
-      <span>🏅 Star Activo Nivel 7</span>
+      <span>🏅 Star 7</span>
+      <span>♂ Hombre</span>
+      <span>🎂 49 años</span>
     </div>
 
   </section>
@@ -382,7 +387,10 @@ button{
 
     <button class="action-blue">💬 Mensaje</button>
     <button class="action-gold">✏️ Editar</button>
+    <button class="action-dark">➕ Añadir</button>
     <button class="action-dark">🔗 Compartir</button>
+    <button class="action-dark">🔑 Copiar ID</button>
+    <button class="action-dark">🗑️ Papelera</button>
 
   </section>
 
@@ -439,4 +447,4 @@ button{
 </nav>
 
 </body>
-</html>
+      </html>
