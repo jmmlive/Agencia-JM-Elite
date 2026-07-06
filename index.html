@@ -62,7 +62,20 @@ button{border:0;cursor:pointer;color:inherit}
 .green{border-color:#39ffcb;box-shadow:0 0 18px #39ffcb55}
 .gold{border-color:var(--gold);box-shadow:0 0 18px rgba(247,215,116,.50)}
 .red{border-color:#ff5b60;box-shadow:0 0 18px #ff5b6066}
-.dots-icon{font-size:24px;letter-spacing:1px;line-height:1;display:flex;align-items:center;justify-content:center;padding-bottom:4px}
+.dots-icon{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+}
+
+.dots-icon span{
+width:8px;
+height:8px;
+background:#fff;
+border-radius:50%;
+display:block;
+}
 
 .drawer{position:fixed;inset:0;display:none;background:rgba(0,0,0,.65);z-index:9000}
 .drawer.show{display:block}
@@ -172,7 +185,15 @@ button{border:0;cursor:pointer;color:inherit}
       <a class="icon-link" href="perfil.html"><span class="icon-circle">👤</span><b>Perfil</b><small>Datos</small></a>
       <a class="icon-link" href="configuracion.html"><span class="icon-circle">⚙️</span><b>Ajustes</b><small>Cuenta</small></a>
       <a class="icon-link" href="normas.html"><span class="icon-circle purple">📖</span><b>Normas</b><small>Reglas</small></a>
-      <a class="icon-link" href="menu.html"><span class="icon-circle dots-icon">•••</span><b>Más</b><small>Opciones</small></a>
+      <a class="icon-link" href="menu.html">
+    <span class="icon-circle dots-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+    </span>
+    <b>Más</b>
+    <small>Opciones</small>
+      </a>
     </div>
   </section>
 
