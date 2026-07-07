@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitudes pendientes</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#06101f;
+color:#fff;
+margin:0;
+padding:20px;
+}
+h2{
+text-align:center;
+color:gold;
+}
+.card{
+background:#11213b;
+padding:15px;
+margin:15px 0;
+border-radius:12px;
+}
+button{
+padding:10px 16px;
+margin:5px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+.ok{background:#1fa34a;color:#fff;}
+.no{background:#d63b3b;color:#fff;}
+</style>
+</head>
+<body>
+
+<h2>Solicitudes pendientes</h2>
+
+<div id="lista"></div>
+
+<script>
+
+const firebaseConfig={
+apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+authDomain:"agencia-jm-elite.firebaseapp.com",
+projectId:"agencia-jm-elite",
+storageBucket:"agencia-jm-elite.firebasestorage.app",
+messagingSenderId:"171676205335",
+appId:"1:171676205335:web:95443528659ab804fe7752"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+
+db.collection("pending_requests").onSnapshot(snapshot=>{
+
+let html="";
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+html+=`
+<div class="card">
+<b>${d.artisticName}</b><br>
+📧 ${d.email}<br>
+🌍 ${d.country}<br>
+🎁 Invitó: ${d.invitedBy || "Nadie"}<br><br>
+
+<button class="ok" onclick="aprobar('${doc.id}')">Aceptar</button>
+<button class="no" onclick="rechazar('${doc.id}')">Rechazar</button>
+</div>
+`;
+
+});
+
+document.getElementById("lista").innerHTML=html || "No hay solicitudes pendientes.";
+
+});
+
+function aprobar(id){
+alert("La función de aprobar será el siguiente paso.");
+}
+
+function rechazar(id){
+db.collection("pending_requests").doc(id).delete();
+}
+
+</script>
+
+</body>
+</html>
