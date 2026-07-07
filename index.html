@@ -355,8 +355,17 @@ function closeDrawer(e){
     document.getElementById("drawer").classList.remove("show");
   }
 }
+function autoFillInviteCode(){
+  const params = new URLSearchParams(window.location.search);
+  const inviteCode = params.get("invite");
 
+  if(inviteCode){
+    inviteRegister();
+    document.getElementById("inviteInput").value = inviteCode;
+  }
+  }
 checkLogin();
+autoFillInviteCode();
 </script>
 
 </body>
