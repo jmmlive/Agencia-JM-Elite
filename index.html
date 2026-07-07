@@ -321,7 +321,22 @@ function sendRegisterRequest(type){
   date: new Date().toLocaleString()
 });
 
-  localStorage.setItem("jm_pending_requests",JSON.stringify(pending));
+ db.collection("pending_requests").add({
+  id: "JM-" + Date.now(),
+  email: email,
+  password: pass,
+  artisticName: name,
+  country: country,
+  invitationCode: invite,
+  invitedBy: invite || "",
+  registerType: type,
+  appStartDate: new Date().toISOString(),
+  appDay: 1,
+  level: 1,
+  badge: "Nueva",
+  status: "pendiente",
+  date: new Date().toLocaleString()
+}); localStorage.setItem("jm_pending_requests",JSON.stringify(pending));
   alert("Solicitud enviada. Un administrador la revisará.");
   backToLogin();
 }
