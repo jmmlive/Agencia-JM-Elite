@@ -390,12 +390,11 @@ function recoverPassword(){
     return;
   }
   alert("Recuperación preparada para: "+email);
-}
-
 function logout(){
-  localStorage.removeItem("jm_logged");
-  localStorage.removeItem("jm_email");
-  location.reload();
+    localStorage.removeItem("jm_logged");
+    localStorage.removeItem("jm_email");
+    localStorage.removeItem("jm_role");
+    location.reload();
 }
 
 function openDrawer(){
