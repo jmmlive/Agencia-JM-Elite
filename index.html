@@ -90,6 +90,8 @@ display:block;
 .nav-item{color:white;font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
 .nav-item .icon{font-size:24px}.nav-item.active{color:var(--gold)}
 </style>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
@@ -364,6 +366,17 @@ function autoFillInviteCode(){
     document.getElementById("inviteInput").value = inviteCode;
   }
   }
+  const firebaseConfig = {
+  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain: "agencia-jm-elite.firebaseapp.com",
+  projectId: "agencia-jm-elite",
+  storageBucket: "agencia-jm-elite.firebasestorage.app",
+  messagingSenderId: "171676205335",
+  appId: "1:171676205335:web:95443528659ab804fe7752"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 checkLogin();
 autoFillInviteCode();
 </script>
