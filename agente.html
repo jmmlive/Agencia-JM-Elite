@@ -30,7 +30,14 @@ a{text-decoration:none;color:inherit}
   <h1>👑 Panel de Agente</h1>
   <a class="btn back" href="index.html">Volver</a>
 </div>
+<div class="card" style="margin-top:20px;">
+<h2>🧪 Laboratorio</h2>
 
+<button class="btn reject" onclick="borrarPruebas()">
+🗑️ Borrar registros de prueba
+</button>
+
+</div>
 <div class="card">
   <h2>📋 Solicitudes pendientes</h2>
   <div id="requestsBox"></div>
@@ -105,6 +112,33 @@ function rejectRequest(i){
   loadRequests();
 }
 
+loadRequests();function borrarPruebas(){
+
+let solicitudes = JSON.parse(localStorage.getItem("jm_solicitudes")) || [];
+let aprobados = JSON.parse(localStorage.getItem("jm_approved_users")) || [];
+
+const esPrueba = (u)=>{
+const texto = (
+(u.nombreArtistico || "") + " " +
+(u.nombreCompleto || "") + " " +
+(u.correo || "")
+).toLowerCase();
+
+return texto.includes("prueba") ||
+texto.includes("test") ||
+texto.includes("demo");
+};
+
+solicitudes = solicitudes.filter(u => !esPrueba(u));
+aprobados = aprobados.filter(u => !esPrueba(u));
+
+localStorage.setItem("jm_solicitudes", JSON.stringify(solicitudes));
+localStorage.setItem("jm_approved_users", JSON.stringify(aprobados));
+
+alert("🗑️ Registros de prueba eliminados.");
+
+loadRequests();
+}
 loadRequests();
 </script>
 
