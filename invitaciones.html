@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitaciones - JM Elite</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+:root{--gold:#f7d774;--blue:#007bff;--dark:#020713;--soft:#dce8ff}
+body{background:radial-gradient(circle at top,#006cff88 0%,#061326 40%,#020713 80%);color:white;min-height:100vh;padding:16px}
+.card{background:rgba(0,12,38,.78);border:1px solid rgba(247,215,116,.38);border-radius:24px;padding:18px;box-shadow:0 0 28px rgba(0,140,255,.35)}
+h1{color:var(--gold);font-size:28px;margin-bottom:8px}
+p{color:var(--soft);font-size:14px;margin-bottom:16px}
+.code-box{background:#020713;border:1px solid var(--gold);border-radius:18px;padding:16px;text-align:center;margin:16px 0}
+.code-box small{color:var(--soft)}
+.code{font-size:25px;color:var(--gold);font-weight:900;margin-top:8px;letter-spacing:1px}
+.btn{width:100%;height:48px;border:0;border-radius:16px;margin-top:10px;font-weight:900;color:#061326;background:linear-gradient(135deg,#d4a72d,#ffcf55)}
+.btn.blue{background:linear-gradient(135deg,#007bff,#00b7ff);color:white}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.stat{background:rgba(255,255,255,.06);border-radius:16px;padding:12px;text-align:center}
+.stat strong{display:block;color:var(--gold);font-size:22px}
+.stat span{font-size:12px;color:var(--soft)}
+.section{margin-top:18px}
+.item{background:rgba(255,255,255,.06);border-radius:15px;padding:12px;margin-top:9px;color:var(--soft)}
+.back{display:block;text-align:center;margin-top:18px;color:var(--gold);text-decoration:none;font-weight:bold}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>📩 Invitaciones</h1>
+  <p>Comparte tu código con la persona que quieras invitar a Agencia JM Elite.</p>
+
+  <div class="code-box">
+    <small>Tu código de recomendación</small>
+    <div id="inviteCode" class="code">CARGANDO...</div>
+  </div>
+
+  <button class="btn" onclick="copyCode()">📋 Copiar código</button>
+  <button class="btn blue" onclick="shareCode()">📤 Compartir por WhatsApp</button>
+
+  <div class="stats">
+    <div class="stat"><strong id="totalInvited">0</strong><span>Invitados</span></div>
+    <div class="stat"><strong id="pendingInvited">0</strong><span>Pendientes</span></div>
+    <div class="stat"><strong id="acceptedInvited">0</strong><span>Aceptados</span></div>
+  </div>
+
+  <div class="section">
+    <h2>👥 Personas invitadas</h2>
+    <div id="invitedList" class="item">Todavía no hay personas invitadas.</div>
+  </div>
+
+  <div class="section">
+    <h2>🌳 Árbol genealógico</h2>
+    <div class="item">Próximamente: árbol de invitaciones de Agencia JM Elite.</div>
+  </div>
+
+  <a class="back" href="index.html">⬅ Volver al inicio</a>
+</div>
+
+<script>
+function getUserEmail(){
+  return localStorage.getItem("jm_email") || "usuario@jmelite.com";
+}
+
+function createInviteCode(){
+  const email=getUserEmail();
+  const saved=localStorage.getItem("jm_invite_code_" + email);
+
+  if(saved){
+    return saved;
+  }
+
+  const base=email.split("@")[0].toUpperCase().replace(/[^A-Z0-9]/g,"").substring(0,5);
+  const random=Math.floor(1000 + Math.random() * 9000);
+  const code="JM-" + base + "-" + random;
+
+  localStorage.setItem("jm_invite_code_" + email, code);
+  return code;
+}
+
+function loadPage(){
+  const code=createInviteCode();
+  document.getElementById("inviteCode").innerText=code;
+
+  const pending=JSON.parse(localStorage.getItem("jm_pending_requests") || "[]");
+  const myInvites=pending.filter(r=>r.invitationCode===code);
+
+  document.getElementById("totalInvited").innerText=myInvites.length;
+  document.getElementById("pendingInvited").innerText=myInvites.filter(r=>r.status==="pendiente").length;
+  document.getElementById("acceptedInvited").innerText=myInvites.filter(r=>r.status==="aceptada").length;
+
+  const list=document.getElementById("invitedList");
+
+  if(myInvites.length===0){
+    list.innerText="Todavía no hay personas invitadas.";
+    return;
+  }
+
+  list.innerHTML=myInvites.map(r=>
+    "👤 " + r.artisticName + "<br>🌍 " + r.country + "<br>⏳ " + r.status
+  ).join("<hr style='border-color:rgba(255,255,255,.15);margin:10px 0'>");
+}
+
+function copyCode(){
+  const code=document.getElementById("inviteCode").innerText;
+  navigator.clipboard.writeText(code);
+  alert("Código copiado: " + code);
+}
+
+function shareCode(){
+  const code=document.getElementById("inviteCode").innerText;
+  const text="Has sido invitado/a a Agencia JM Elite.%0A%0ACódigo de recomendación: " + code + "%0A%0AEntra en la app y regístrate usando este código.";
+  window.open("https://wa.me/?text=" + text, "_blank");
+}
+
+loadPage();
+</script>
+
+</body>
+  </html>
