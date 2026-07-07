@@ -251,17 +251,44 @@ function login(){
     return;
   }
 
-  const pending=JSON.parse(localStorage.getItem("jm_pending_requests")||"[]");
-  const isPending=pending.some(r=>r.email===email && r.status==="pendiente");
+  if(isAgent(email)){
+  localStorage.setItem("jm_logged","yes");
+  localStorage.setItem("jm_email",email);
+  localStorage.setItem("jm_role","agente");
+  checkLogin();
+  return;
+}
 
-  if(isPending && !isAgent(email)){
-    alert("Tu solicitud está pendiente de aprobación.");
+db.collection("usuarios")
+.where("email","==",email)
+.limit(1)
+.get()
+.then(snapshot=>{
+  if(snapshot.empty){
+    alert("No estás aprobado todavía o el correo no existe.");
+    return;
+  }
+
+  const user=snapshot.docs[0].data();
+
+  if(user.password !== pass){
+    alert("Contraseña incorrecta.");
+    return;
+  }
+
+  if(user.status !== "activa"){
+    alert("Tu cuenta todavía no está activa.");
     return;
   }
 
   localStorage.setItem("jm_logged","yes");
   localStorage.setItem("jm_email",email);
+  localStorage.setItem("jm_role",user.role || "emisora");
   checkLogin();
+})
+.catch(error=>{
+  alert("Error al iniciar sesión: " + error.message);
+});
 }
 
 function normalRegister(){
