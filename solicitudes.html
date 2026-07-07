@@ -107,6 +107,7 @@ function aprobar(id){
       level: d.level || 1,
       badge: d.badge || "Nueva",
       status: "activa",
+role: "emisora",
       approvedAt: new Date().toLocaleString()
     }).then(()=>{
       return db.collection("pending_requests").doc(id).delete();
