@@ -426,6 +426,12 @@ function autoFillInviteCode(){
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+  if(new URLSearchParams(window.location.search).get("reset")==="1"){
+  localStorage.removeItem("jm_logged");
+  localStorage.removeItem("jm_email");
+  localStorage.removeItem("jm_role");
+  window.location.href="index.html";
+      }
 checkLogin();
 autoFillInviteCode();
 </script>
