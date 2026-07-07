@@ -222,22 +222,38 @@ const AGENT_EMAILS=[
   "elpepolan35@gmail.com"
 ];
 
+let registerMode="";
+
+const firebaseConfig={
+  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain:"agencia-jm-elite.firebaseapp.com",
+  projectId:"agencia-jm-elite",
+  storageBucket:"agencia-jm-elite.firebasestorage.app",
+  messagingSenderId:"171676205335",
+  appId:"1:171676205335:web:95443528659ab804fe7752"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+
 function isAgent(email){
   return AGENT_EMAILS.includes((email||"").toLowerCase());
 }
 
 function checkLogin(){
   const logged=localStorage.getItem("jm_logged");
-  const email=localStorage.getItem("jm_email");
+  const role=localStorage.getItem("jm_role") || "";
+  const login=document.getElementById("loginScreen");
 
   if(logged==="yes"){
-    document.getElementById("loginScreen").classList.remove("show");
-    if(isAgent(email)){
-      document.getElementById("agentLink").classList.add("show");
-    }
+    if(login) login.classList.remove("show");
   }else{
-    document.getElementById("loginScreen").classList.add("show");
+    if(login) login.classList.add("show");
   }
+
+  document.querySelectorAll(".agent-only").forEach(el=>{
+    el.style.display = role==="agente" ? "block" : "none";
+  });
 }
 
 function login(){
@@ -255,48 +271,40 @@ function login(){
   }
 
   if(isAgent(email)){
-  localStorage.setItem("jm_logged","yes");
-  localStorage.setItem("jm_email",email);
-  localStorage.setItem("jm_role","agente");
-  checkLogin();
-  return;
-}
-
-db.collection("usuarios")
-.where("email","==",email)
-.limit(1)
-.get()
-.then(snapshot=>{
-  if(snapshot.empty){
-    alert("No estás aprobado todavía o el correo no existe.");
+    localStorage.setItem("jm_logged","yes");
+    localStorage.setItem("jm_email",email);
+    localStorage.setItem("jm_role","agente");
+    checkLogin();
     return;
   }
 
-  const user=snapshot.docs[0].data();
+  db.collection("usuarios").where("email","==",email).limit(1).get()
+  .then(snapshot=>{
+    if(snapshot.empty){
+      alert("No estás aprobado todavía o el correo no existe.");
+      return;
+    }
 
-  if(user.password !== pass){
-    alert("Contraseña incorrecta.");
-    return;
-  }
+    const user=snapshot.docs[0].data();
 
-  if(user.status !== "activa"){
-    alert("Tu cuenta todavía no está activa.");
-    return;
-  }
+    if(user.password!==pass){
+      alert("Contraseña incorrecta.");
+      return;
+    }
 
-  localStorage.setItem("jm_logged","yes");
-  localStorage.setItem("jm_email",email);
-  localStorage.setItem("jm_role",user.role || "emisora");
-  const role = user.role || "emisora";
+    if(user.status!=="activa"){
+      alert("Tu cuenta todavía no está activa.");
+      return;
+    }
 
-document.querySelectorAll(".agent-only").forEach(el => {
-    el.style.display = role === "agente" ? "block" : "none";
-});
-  checkLogin();
-})
-.catch(error=>{
-  alert("Error al iniciar sesión: " + error.message);
-});
+    localStorage.setItem("jm_logged","yes");
+    localStorage.setItem("jm_email",email);
+    localStorage.setItem("jm_role",user.role || "emisora");
+    checkLogin();
+  })
+  .catch(error=>{
+    alert("Error al iniciar sesión: "+error.message);
+  });
 }
 
 function normalRegister(){
@@ -310,7 +318,7 @@ function normalRegister(){
 function inviteRegister(){
   registerMode="invitacion";
   document.getElementById("registerExtra").classList.add("show");
-  document.getElementById("inviteInput").placeholder="Código de invitación obligatorio";
+  document.getElementById("inviteInput").placeholder="Código de invitación";
   document.getElementById("loginSubtitle").innerText="Registro por invitación";
   document.getElementById("mainLoginBtn").innerText="ENVIAR SOLICITUD";
 }
@@ -323,57 +331,31 @@ function sendRegisterRequest(type){
   const invite=document.getElementById("inviteInput").value.trim();
 
   if(!email || !pass || !name || !country){
-    alert("Completa correo, contraseña, nombre artístico y país.");
+    alert("Completa todos los datos.");
     return;
   }
 
-  if(type==="invitacion" && !invite){
-    alert("Para registro por invitación necesitas un código.");
-    return;
-  }
-
-  const pending=JSON.parse(localStorage.getItem("jm_pending_requests")||"[]");
-
-  if(pending.some(r=>r.email===email)){
-    alert("Ya existe una solicitud con ese correo.");
-    return;
-  }
-
-  pending.push({
-  id: "JM-" + Date.now(),
-  email: email,
-  password: pass,
-  artisticName: name,
-  country: country,
-  invitationCode: invite,
-  invitedBy: invite || "",
-  registerType: type,
-  appStartDate: new Date().toISOString(),
-  appDay: 1,
-  level: 1,
-  badge: "Nueva",
-  status: "pendiente",
-  date: new Date().toLocaleString()
-});
-
- db.collection("pending_requests").add({
-  id: "JM-" + Date.now(),
-  email: email,
-  password: pass,
-  artisticName: name,
-  country: country,
-  invitationCode: invite,
-  invitedBy: invite || "",
-  registerType: type,
-  appStartDate: new Date().toISOString(),
-  appDay: 1,
-  level: 1,
-  badge: "Nueva",
-  status: "pendiente",
-  date: new Date().toLocaleString()
-}); localStorage.setItem("jm_pending_requests",JSON.stringify(pending));
-  alert("Solicitud enviada. Un administrador la revisará.");
-  backToLogin();
+  db.collection("pending_requests").add({
+    id:"JM-"+Date.now(),
+    email:email,
+    password:pass,
+    artisticName:name,
+    country:country,
+    invitationCode:invite,
+    invitedBy:invite || "",
+    registerType:type,
+    appStartDate:new Date().toISOString(),
+    appDay:1,
+    level:1,
+    badge:"Nueva",
+    status:"pendiente",
+    date:new Date().toLocaleString()
+  }).then(()=>{
+    alert("Solicitud enviada. Un administrador la revisará.");
+    backToLogin();
+  }).catch(error=>{
+    alert("Error al enviar solicitud: "+error.message);
+  });
 }
 
 function backToLogin(){
@@ -383,18 +365,20 @@ function backToLogin(){
   document.getElementById("mainLoginBtn").innerText="ENTRAR";
 }
 
-function recoverPassword(){
+function recoverPass(){
   const email=document.getElementById("emailInput").value.trim();
   if(!email){
     alert("Pon tu correo para recuperar la contraseña.");
     return;
   }
   alert("Recuperación preparada para: "+email);
+}
+
 function logout(){
-    localStorage.removeItem("jm_logged");
-    localStorage.removeItem("jm_email");
-    localStorage.removeItem("jm_role");
-    location.reload();
+  localStorage.removeItem("jm_logged");
+  localStorage.removeItem("jm_email");
+  localStorage.removeItem("jm_role");
+  location.reload();
 }
 
 function openDrawer(){
@@ -406,37 +390,31 @@ function closeDrawer(e){
     document.getElementById("drawer").classList.remove("show");
   }
 }
+
 function autoFillInviteCode(){
-  const params = new URLSearchParams(window.location.search);
-  const inviteCode = params.get("invite");
+  const params=new URLSearchParams(window.location.search);
+  const inviteCode=params.get("invite");
 
   if(inviteCode){
     inviteRegister();
-    document.getElementById("inviteInput").value = inviteCode;
+    document.getElementById("inviteInput").value=inviteCode;
   }
-  }
-  const firebaseConfig = {
-  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain: "agencia-jm-elite.firebaseapp.com",
-  projectId: "agencia-jm-elite",
-  storageBucket: "agencia-jm-elite.firebasestorage.app",
-  messagingSenderId: "171676205335",
-  appId: "1:171676205335:web:95443528659ab804fe7752"
-};
+}
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+window.onload=function(){
   if(new URLSearchParams(window.location.search).get("reset")==="1"){
-  localStorage.removeItem("jm_logged");
-  localStorage.removeItem("jm_email");
-  localStorage.removeItem("jm_role");
-  window.location.href="index.html";
-      }
-window.onload = function () {
-    checkLogin();
-    autoFillInviteCode();
+    localStorage.removeItem("jm_logged");
+    localStorage.removeItem("jm_email");
+    localStorage.removeItem("jm_role");
+    window.location.href="index.html";
+    return;
+  }
+
+  checkLogin();
+  autoFillInviteCode();
 };
-</script>
+      </script>
+
 
 </body>
                                          </html>
