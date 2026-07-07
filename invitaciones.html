@@ -112,7 +112,11 @@ function copyCode(){
 
 function shareCode(){
   const code=document.getElementById("inviteCode").innerText;
-  const text="Has sido invitado/a a Agencia JM Elite.%0A%0ACódigo de recomendación: " + code + "%0A%0AEntra en la app y regístrate usando este código.";
+  const text =
+"🚀 Has sido invitado/a a Agencia JM Elite.%0A%0A" +
+"Pulsa este enlace para registrarte:%0A%0A" +
+"https://jmmlive.github.io/Agencia-JM-Elite/index.html?invite=" + code +
+"%0A%0AO si prefieres, usa este código:%0A" + code;
   window.open("https://wa.me/?text=" + text, "_blank");
 }
 
