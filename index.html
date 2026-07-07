@@ -432,8 +432,10 @@ const db = firebase.firestore();
   localStorage.removeItem("jm_role");
   window.location.href="index.html";
       }
-checkLogin();
-autoFillInviteCode();
+window.onload = function () {
+    checkLogin();
+    autoFillInviteCode();
+};
 </script>
 
 </body>
