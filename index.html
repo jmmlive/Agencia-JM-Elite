@@ -129,13 +129,13 @@ display:block;
   <div class="drawer-panel">
     <h2>JM Elite</h2>
     <a href="perfil.html">👤 Perfil</a>
-    <a href="agente.html">👑 Perfil de agente</a>
+    <a class="agent-only" href="agente.html">👑 Perfil de agente</a>
     <a href="sala-pro.html">🎙️ Sala Pro</a>
     <a href="chatbot.html">🤖 ChatBot IA</a>
     <a href="emisoras.html">👥 Emisoras</a>
     <a href="academia.html">🎓 Academia</a>
     <a href="configuracion.html">⚙️ Configuración</a>
-    <a href="invitaciones.html">📩 Invitar usuario nuevo</a>
+    <a class="agent-only" href="invitaciones.html">📩 Invitar usuario nuevo</a>
     <button class="logout" onclick="logout()">🚪 Cerrar sesión</button>
   </div>
 </section>
@@ -284,6 +284,11 @@ db.collection("usuarios")
   localStorage.setItem("jm_logged","yes");
   localStorage.setItem("jm_email",email);
   localStorage.setItem("jm_role",user.role || "emisora");
+  const role = user.role || "emisora";
+
+document.querySelectorAll(".agent-only").forEach(el => {
+    el.style.display = role === "agente" ? "block" : "none";
+});
   checkLogin();
 })
 .catch(error=>{
