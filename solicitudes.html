@@ -85,11 +85,48 @@ document.getElementById("lista").innerHTML=html || "No hay solicitudes pendiente
 });
 
 function aprobar(id){
-alert("La función de aprobar será el siguiente paso.");
+  db.collection("pending_requests").doc(id).get().then(doc=>{
+    if(!doc.exists){
+      alert("No se encontró la solicitud.");
+      return;
+    }
+
+    const d = doc.data();
+
+    db.collection("usuarios").add({
+      id: d.id || "JM-" + Date.now(),
+      email: d.email || "",
+      password: d.password || "",
+      artisticName: d.artisticName || "",
+      country: d.country || "",
+      invitationCode: d.invitationCode || "",
+      invitedBy: d.invitedBy || "",
+      registerType: d.registerType || "",
+      appStartDate: d.appStartDate || new Date().toISOString(),
+      appDay: d.appDay || 1,
+      level: d.level || 1,
+      badge: d.badge || "Nueva",
+      status: "activa",
+      approvedAt: new Date().toLocaleString()
+    }).then(()=>{
+      return db.collection("pending_requests").doc(id).delete();
+    }).then(()=>{
+      alert("Solicitud aceptada. La emisora ya está activa.");
+    }).catch(error=>{
+      alert("Error al aprobar: " + error.message);
+    });
+
+  }).catch(error=>{
+    alert("Error al leer solicitud: " + error.message);
+  });
 }
 
 function rechazar(id){
-db.collection("pending_requests").doc(id).delete();
+  if(confirm("¿Rechazar esta solicitud?")){
+    db.collection("pending_requests").doc(id).delete().then(()=>{
+      alert("Solicitud rechazada.");
+    });
+  }
 }
 
 </script>
