@@ -243,6 +243,11 @@ function isAgent(email){
 function checkLogin(){
   const logged=localStorage.getItem("jm_logged");
   const role=localStorage.getItem("jm_role") || "";
+  const email = localStorage.getItem("jm_email") || "";
+
+if(isAgent(email)){
+  localStorage.setItem("jm_role","agente");
+  }
   const login=document.getElementById("loginScreen");
 
   if(logged==="yes"){
