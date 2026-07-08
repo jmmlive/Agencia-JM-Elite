@@ -241,23 +241,28 @@ function isAgent(email){
 }
 
 function checkLogin(){
-  const logged=localStorage.getItem("jm_logged");
-  const role=localStorage.getItem("jm_role") || "";
-  const email = localStorage.getItem("jm_email") || "";
+  const logged = localStorage.getItem("jm_logged");
+  const email = (localStorage.getItem("jm_email") || "").toLowerCase();
 
-if(isAgent(email)){
-  localStorage.setItem("jm_role","agente");
+  if(isAgent(email)){
+    localStorage.setItem("jm_role","agente");
   }
-  const login=document.getElementById("loginScreen");
 
-  if(logged==="yes"){
+  const role = localStorage.getItem("jm_role") || "";
+  const login = document.getElementById("loginScreen");
+
+  if(logged === "yes"){
     if(login) login.classList.remove("show");
   }else{
     if(login) login.classList.add("show");
   }
 
   document.querySelectorAll(".agent-only").forEach(el=>{
-    el.style.display = role==="agente" ? "block" : "none";
+    if(role === "agente"){
+      el.classList.add("show");
+    }else{
+      el.classList.remove("show");
+    }
   });
 }
 
