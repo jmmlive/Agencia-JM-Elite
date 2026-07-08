@@ -86,13 +86,15 @@ function isAgent(email){
 }
 
 function protectPage(){
-  const email=(localStorage.getItem("jm_email") || "").toLowerCase();
-  const role=localStorage.getItem("jm_role") || "";
+  const email = (localStorage.getItem("jm_email") || "").toLowerCase();
 
-  if(!isAgent(email) && role!=="agente"){
-    alert("Acceso solo para agente.");
-    window.location.href="index.html";
+  if(isAgent(email)){
+    localStorage.setItem("jm_role","agente");
+    return;
   }
+
+  alert("Acceso solo para agente.");
+  window.location.href="index.html";
 }
 
 const PERMISSIONS=[
