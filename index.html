@@ -135,7 +135,7 @@ display:block;
     <a href="emisoras.html">👥 Emisoras</a>
     <a href="academia.html">🎓 Academia</a>
     <a href="configuracion.html">⚙️ Configuración</a>
-    <a class="agent-only" href="invitaciones.html">📩 Invitar usuario nuevo</a>
+    <a class="manager-only" href="invitaciones.html">📩 Invitar usuario nuevo</a>
     <button class="logout" onclick="logout()">🚪 Cerrar sesión</button>
   </div>
 </section>
@@ -256,15 +256,20 @@ function checkLogin(){
   }else{
     if(login) login.classList.add("show");
   }
-
-  document.querySelectorAll(".agent-only").forEach(el=>{
-    if(role === "agente"){
-      el.classList.add("show");
+document.querySelectorAll(".agent-only").forEach(el=>{
+  if(role === "agente"){
+    el.classList.add("show");
+  }else{
+    el.classList.remove("show");
+  }
+});
+  document.querySelectorAll(".manager-only").forEach(el=>{
+    if(role === "agente" || role === "admin"){
+        el.classList.add("show");
     }else{
-      el.classList.remove("show");
+        el.classList.remove("show");
     }
-  });
-}
+});
 
 function login(){
   if(registerMode){
