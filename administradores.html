@@ -87,8 +87,9 @@ function isAgent(email){
 
 function protectPage(){
   const email = (localStorage.getItem("jm_email") || "").toLowerCase();
+  const role = localStorage.getItem("jm_role") || "";
 
-  if(isAgent(email)){
+  if(isAgent(email) || role === "agente"){
     localStorage.setItem("jm_role","agente");
     return;
   }
