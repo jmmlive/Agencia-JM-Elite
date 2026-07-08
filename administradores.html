@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administradoras | JM Elite</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#020713;color:white;min-height:100vh;padding:16px}
+a{text-decoration:none;color:inherit}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.header h1{color:#f7d774;font-size:25px}
+.btn{border:0;border-radius:14px;padding:12px 14px;font-weight:bold;cursor:pointer}
+.back{background:#082554;color:white;border:1px solid #00b7ff}
+.card{background:rgba(0,20,60,.78);border:1px solid rgba(0,183,255,.35);border-radius:22px;padding:16px;margin-bottom:14px;box-shadow:0 0 18px rgba(0,140,255,.18)}
+.card h2{color:#f7d774;margin-bottom:10px}
+.info{color:#dce8ff;font-size:14px;line-height:1.6}
+.empty{text-align:center;color:#dce8ff;padding:30px 10px}
+.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#3b2d00;color:#f7d774;font-size:12px;margin-top:6px}
+.user-card{margin-top:12px;padding:14px;border-radius:18px;background:rgba(0,12,38,.65);border:1px solid rgba(0,183,255,.25)}
+.user-title{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
+.user-title h3{font-size:17px;color:white}
+.role{font-size:12px;border-radius:999px;padding:5px 9px;background:#102d66;color:#dce8ff}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.promote{background:linear-gradient(135deg,#00c853,#64ff8f);color:#03130a}
+.demote{background:linear-gradient(135deg,#c62828,#ff6b6b);color:white}
+.permissions{margin-top:12px;display:grid;gap:9px}
+.perm{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.06);padding:10px;border-radius:14px}
+.perm span{font-size:14px;color:#dce8ff}
+.switch{width:52px;height:28px;border-radius:999px;background:#444;position:relative}
+.switch:before{content:"";position:absolute;width:22px;height:22px;top:3px;left:3px;border-radius:50%;background:white;transition:.2s}
+.switch.on{background:#00c853}
+.switch.on:before{left:27px}
+.notice{font-size:13px;color:#dce8ff;line-height:1.5;margin-top:8px}
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>🛡️ Administradoras</h1>
+  <a class="btn back" href="agente.html">Volver</a>
+</div>
+
+<div class="card">
+  <h2>👑 Control de permisos</h2>
+  <div class="info">
+    Aquí podrás convertir emisoras en administradoras y activar permisos concretos.
+    <br>
+    Primero entran como emisoras. Luego tú les das el rango y los permisos.
+  </div>
+</div>
+
+<div class="card">
+  <h2>👥 Usuarios registrados</h2>
+  <div id="usersBox">
+    <div class="empty">Cargando usuarios...</div>
+  </div>
+</div>
+
+<script>
+const AGENT_EMAILS=[
+  "jesus@jmelite.com",
+  "admin@jmelite.com",
+  "elpepolan35@gmail.com"
+];
+
+const firebaseConfig={
+  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain:"agencia-jm-elite.firebaseapp.com",
+  projectId:"agencia-jm-elite",
+  storageBucket:"agencia-jm-elite.firebasestorage.app",
+  messagingSenderId:"171676205335",
+  appId:"1:171676205335:web:95443528659ab804fe7752"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+
+function isAgent(email){
+  return AGENT_EMAILS.includes((email||"").toLowerCase());
+}
+
+function protectPage(){
+  const email=(localStorage.getItem("jm_email") || "").toLowerCase();
+  const role=localStorage.getItem("jm_role") || "";
+
+  if(!isAgent(email) && role!=="agente"){
+    alert("Acceso solo para agente.");
+    window.location.href="index.html";
+  }
+}
+
+const PERMISSIONS=[
+  ["canInvite","📩 Puede invitar usuarios"],
+  ["canApproveUsers","✅ Puede aprobar solicitudes"],
+  ["canViewEmitters","👥 Puede gestionar emisoras"],
+  ["canViewPayments","💰 Puede ver pagos"],
+  ["canPostNotices","📢 Puede publicar avisos"],
+  ["canManageEvents","🎉 Puede gestionar eventos"],
+  ["canManageRoom","🎙️ Puede gestionar Sala Pro"],
+  ["canUseChatBot","🤖 Puede usar ChatBot IA"]
+];
+
+function getUserName(user){
+  return user.artisticName || user.nombreArtistico || user.name || user.nombre || user.email || "Usuario sin nombre";
+}
+
+function loadUsers(){
+  const box=document.getElementById("usersBox");
+  box.innerHTML='<div class="empty">Cargando usuarios...</div>';
+
+  db.collection("usuarios").get()
+  .then(snapshot=>{
+    if(snapshot.empty){
+      box.innerHTML='<div class="empty">No hay usuarios registrados todavía.</div>';
+      return;
+    }
+
+    box.innerHTML="";
+
+    snapshot.forEach(doc=>{
+      const user=doc.data();
+      const id=doc.id;
+      const role=user.role || "emisora";
+      const permissions=user.permissions || {};
+      const name=getUserName(user);
+      const email=user.email || "-";
+
+      const div=document.createElement("div");
+      div.className="user-card";
+
+      div.innerHTML=`
+        <div class="user-title">
+          <h3>👤 ${name}</h3>
+          <span class="role">${role}</span>
+        </div>
+
+        <div class="info">
+          <b>Correo:</b> ${email}<br>
+          <b>País:</b> ${user.country || user.pais || "-"}<br>
+          <span class="badge">${role==="admin" ? "🛡️ Administradora" : "👤 Emisora"}</span>
+        </div>
+
+        <div class="actions">
+          <button class="btn promote" onclick="makeAdmin('${id}')">🛡️ Hacer admin</button>
+          <button class="btn demote" onclick="makeEmitter('${id}')">👤 Quitar admin</button>
+        </div>
+
+        <div class="permissions" id="perm-${id}"></div>
+      `;
+
+      box.appendChild(div);
+
+      const permBox=document.getElementById("perm-"+id);
+
+      PERMISSIONS.forEach(([key,label])=>{
+        const active=permissions[key]===true;
+
+        const p=document.createElement("div");
+        p.className="perm";
+        p.innerHTML=`
+          <span>${label}</span>
+          <div class="switch ${active ? "on" : ""}" onclick="togglePermission('${id}','${key}',${active})"></div>
+        `;
+        permBox.appendChild(p);
+      });
+    });
+  })
+  .catch(error=>{
+    box.innerHTML='<div class="empty">Error cargando usuarios: '+error.message+'</div>';
+  });
+}
+
+function makeAdmin(id){
+  db.collection("usuarios").doc(id).update({
+    role:"admin"
+  }).then(()=>{
+    alert("🛡️ Usuario convertido en administradora.");
+    loadUsers();
+  }).catch(error=>{
+    alert("Error: "+error.message);
+  });
+}
+
+function makeEmitter(id){
+  db.collection("usuarios").doc(id).update({
+    role:"emisora",
+    permissions:{}
+  }).then(()=>{
+    alert("👤 Usuario vuelto a emisora.");
+    loadUsers();
+  }).catch(error=>{
+    alert("Error: "+error.message);
+  });
+}
+
+function togglePermission(id,key,currentValue){
+  const newValue=!currentValue;
+  const update={};
+  update["permissions."+key]=newValue;
+
+  db.collection("usuarios").doc(id).update(update)
+  .then(()=>{
+    loadUsers();
+  })
+  .catch(error=>{
+    alert("Error actualizando permiso: "+error.message);
+  });
+}
+
+protectPage();
+loadUsers();
+</script>
+
+</body>
+</html>
