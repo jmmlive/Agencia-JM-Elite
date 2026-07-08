@@ -117,7 +117,7 @@ display:block;
     <div class="login-links">
       <button onclick="normalRegister()">Registro normal</button>
       <button onclick="inviteRegister()">Registro invitación</button>
-      <button onclick="recoverPassword()">Recuperar</button>
+      <button onclick="recoverPass()">Recuperar</button>
       <button onclick="backToLogin()">Volver</button>
     </div>
 
@@ -272,7 +272,7 @@ document.querySelectorAll(".manager-only").forEach(el=>{
     el.classList.remove("show");
   }
 });
-
+}
 function login(){
   if(registerMode){
     sendRegisterRequest(registerMode);
@@ -383,7 +383,7 @@ function backToLogin(){
   document.getElementById("mainLoginBtn").innerText="ENTRAR";
 }
 
-function recoverPass(){
+function recoverPassword(){
   const email=document.getElementById("emailInput").value.trim();
   if(!email){
     alert("Pon tu correo para recuperar la contraseña.");
