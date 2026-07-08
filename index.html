@@ -263,12 +263,14 @@ document.querySelectorAll(".agent-only").forEach(el=>{
     el.classList.remove("show");
   }
 });
-  document.querySelectorAll(".manager-only").forEach(el=>{
-    if(role === "agente" || role === "admin"){
-        el.classList.add("show");
-    }else{
-        el.classList.remove("show");
-    }
+  const permissions = JSON.parse(localStorage.getItem("jm_permissions") || "{}");
+
+document.querySelectorAll(".manager-only").forEach(el=>{
+  if(role === "agente" || permissions.canInvite === true){
+    el.classList.add("show");
+  }else{
+    el.classList.remove("show");
+  }
 });
 
 function login(){
@@ -315,6 +317,7 @@ function login(){
     localStorage.setItem("jm_logged","yes");
     localStorage.setItem("jm_email",email);
     localStorage.setItem("jm_role",user.role || "emisora");
+    localStorage.setItem("jm_permissions",JSON.stringify(user.permissions || {}));
     checkLogin();
   })
   .catch(error=>{
