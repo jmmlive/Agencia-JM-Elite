@@ -30,17 +30,31 @@ a{text-decoration:none;color:inherit}
   <h1>👑 Panel de Agente</h1>
   <a class="btn back" href="index.html">Volver</a>
 </div>
-<div class="card" style="margin-top:20px;">
-<h2>🧪 Laboratorio</h2>
-
-<button class="btn reject" onclick="borrarPruebas()">
-🗑️ Borrar registros de prueba
-</button>
-
-</div>
 <div class="card">
-  <h2>📋 Solicitudes pendientes</h2>
-  <div id="requestsBox"></div>
+<h2>👑 Centro de Control</h2>
+
+<div class="actions">
+<button class="btn back" onclick="location.href='emisoras.html'">👥 Emisoras</button>
+
+<button class="btn back" onclick="location.href='invitaciones.html'">📩 Invitaciones</button>
+
+<button class="btn back" onclick="location.href='pagos.html'">💰 Pagos</button>
+
+<button class="btn back" onclick="location.href='ranking.html'">🏆 Ranking</button>
+
+<button class="btn back" onclick="location.href='avisos.html'">📢 Avisos</button>
+
+<button class="btn back" onclick="location.href='academia.html'">🎓 Academia</button>
+
+<button class="btn back" onclick="location.href='configuracion.html'">⚙️ Configuración</button>
+
+<button class="btn reject" onclick="borrarPruebas()">🧪 Laboratorio</button>
+</div>
+</div>
+
+<div class="card">
+<h2>📋 Solicitudes pendientes</h2>
+<div id="requestsBox"></div>
 </div>
 
 <script>
