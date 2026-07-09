@@ -141,18 +141,20 @@ async function cargarDatos(){
   const snap = await getDoc(ref);
 
   if(snap.exists()){
-    const u = snap.data();
-    document.getElementById("nombre").value = u.nombre || "";
-    document.getElementById("poppoId").value = u.poppoId || "";
-  document.getElementById("fechaInicioPoppo").value = u.fechaInicioPoppo || "12/03/2024";  document.getElementById("poppoId").value = u.poppoId || "";
-    document.getElementById("descripcion").value = u.descripcion || "";
-    document.getElementById("fotoPerfil").value = u.fotoPerfil || "";
-    document.getElementById("fotoPortada").value = u.fotoPortada || "";
-    document.getElementById("whatsapp").value = u.whatsapp || "";
-    document.getElementById("instagram").value = u.instagram || "";
-    document.getElementById("tiktok").value = u.tiktok || "";
-    document.getElementById("facebook").value = u.facebook || "";
-    document.getElementById("aceptaNormas").checked = u.aceptaNormas === true;
+  const u = snap.data();
+
+  document.getElementById("nombre").value = u.nombre || "";
+  document.getElementById("pais").value = u.pais || "";
+  document.getElementById("poppoId").value = u.poppoId || "";
+  document.getElementById("fechaInicioPoppo").value = u.fechaInicioPoppo || "12/03/2024";
+  document.getElementById("descripcion").value = u.descripcion || "";
+  document.getElementById("fotoPerfil").value = u.fotoPerfil || "";
+  document.getElementById("fotoPortada").value = u.fotoPortada || "";
+  document.getElementById("whatsapp").value = u.whatsapp || "";
+  document.getElementById("instagram").value = u.instagram || "";
+  document.getElementById("tiktok").value = u.tiktok || "";
+  document.getElementById("facebook").value = u.facebook || "";
+  document.getElementById("aceptaNormas").checked = u.aceptaNormas === true;
   }
 }
 
