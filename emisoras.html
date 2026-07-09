@@ -123,14 +123,13 @@ card.onclick = () => {
   }
 };
 
-onAuthStateChanged(auth, function(user){
-  if(!user){
-    location.replace("index.html");
-    return;
-  }
+const logged = localStorage.getItem("jm_logged");
 
+if(logged !== "yes"){
+  location.replace("index.html");
+}else{
   cargarEmisoras();
-});
+}
 </script>
 
 </body>
