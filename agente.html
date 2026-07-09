@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel de Agente | JM Elite</title>
+<title>Panel de Administración | JM Elite</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -27,7 +27,7 @@ a{text-decoration:none;color:inherit}
 <body>
 
 <div class="header">
-  <h1>👑 Panel de Agente</h1>
+  <h1>👑 Panel de Administración</h1>
   <a class="btn back" href="index.html">Volver</a>
 </div>
 <div class="card">
@@ -154,7 +154,15 @@ alert("🗑️ Registros de prueba eliminados.");
 loadRequests();
 }
 loadRequests();
-</script>
+  
 
+const usuario = JSON.parse(localStorage.getItem("jm_user") || "{}");
+
+if (usuario.rol !== "administrador") {
+  alert("Acceso denegado.");
+  location.href = "index.html";
+}
+
+</script>
 </body>
 </html>
