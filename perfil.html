@@ -154,7 +154,7 @@ function pintarPerfil(u, esMiPerfil=false){
 
     <section class="actions">
       <button class="blue">💬 Mensaje</button>
-      <button class="gold" onclick="location.href='editar-perfil.html'">✏️ Editar</button>
+      <button class="gold" onclick="editarPerfilActual()">✏️ Editar</button>
       <button class="dark">➕ Añadir</button>
     </section>
 
@@ -167,7 +167,13 @@ function pintarPerfil(u, esMiPerfil=false){
     </section>
   `;
 }
-
+function editarPerfilActual(){
+  if(perfilId){
+    location.href = "editar-perfil.html?id=" + perfilId;
+  }else{
+    location.href = "editar-perfil.html";
+  }
+}
 async function cargarPerfil(){
   if(localStorage.getItem("jm_logged") !== "yes"){
     location.replace("index.html");
