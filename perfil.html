@@ -168,10 +168,12 @@ function pintarPerfil(u, esMiPerfil=false){
   `;
 }
 function editarPerfilActual(){
-  if(perfilId){
-    location.href = "editar-perfil.html?id=" + perfilId;
+  const idActual = new URLSearchParams(window.location.search).get("id");
+
+  if(idActual){
+    location.href = "editar-perfil.html?id=" + idActual;
   }else{
-    location.href = "editar-perfil.html";
+    alert("Abre este perfil desde Mis Emisoras para poder editarlo.");
   }
 }
 async function cargarPerfil(){
