@@ -46,8 +46,8 @@ textarea{min-height:110px;resize:none}
   <label>País</label>
   <input id="pais" placeholder="Ej: Cuba">
 
-  <label>ID de Poppo</label>
-  <input id="poppoId" placeholder="Ej: 123456">
+  <label>Fecha de inicio en Poppo</label>
+<input id="fechaInicioPoppo" placeholder="Ej: 12/03/2024">
 
   <label>Descripción</label>
   <textarea id="descripcion" placeholder="Escribe una presentación bonita para tu perfil..."></textarea>
@@ -143,8 +143,8 @@ async function cargarDatos(){
   if(snap.exists()){
     const u = snap.data();
     document.getElementById("nombre").value = u.nombre || "";
-    document.getElementById("pais").value = u.pais || "";
     document.getElementById("poppoId").value = u.poppoId || "";
+  document.getElementById("fechaInicioPoppo").value = u.fechaInicioPoppo || "12/03/2024";  document.getElementById("poppoId").value = u.poppoId || "";
     document.getElementById("descripcion").value = u.descripcion || "";
     document.getElementById("fotoPerfil").value = u.fotoPerfil || "";
     document.getElementById("fotoPortada").value = u.fotoPortada || "";
