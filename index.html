@@ -290,7 +290,11 @@ function login(){
   if(isAgent(email)){
     localStorage.setItem("jm_logged","yes");
     localStorage.setItem("jm_email",email);
-    localStorage.setItem("jm_role","agente");
+    localStorage.setItem("jm_role","administrador");
+localStorage.setItem("jm_user", JSON.stringify({
+  email: email,
+  rol: "administrador"
+}));
     checkLogin();
     return;
   }
