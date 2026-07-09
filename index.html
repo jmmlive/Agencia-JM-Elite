@@ -129,7 +129,7 @@ display:block;
   <div class="drawer-panel">
     <h2>JM Elite</h2>
     <a href="perfil.html">👤 Perfil</a>
-    <a class="agent-only" href="agente.html">👑 Perfil de agente</a>
+    <a class="agent-only" href="panel-agente.html">👑 Panel de Administración</a>
     <a href="sala-pro.html">🎙️ Sala Pro</a>
     <a href="chatbot.html">🤖 ChatBot IA</a>
     <a href="emisoras.html">👥 Emisoras</a>
@@ -245,7 +245,7 @@ function checkLogin(){
   const email = (localStorage.getItem("jm_email") || "").toLowerCase();
 
   if(isAgent(email)){
-    localStorage.setItem("jm_role","agente");
+  localStorage.setItem("jm_role","administrador");
   }
 
   const role = localStorage.getItem("jm_role") || "";
@@ -257,7 +257,7 @@ function checkLogin(){
     if(login) login.classList.add("show");
   }
 document.querySelectorAll(".agent-only").forEach(el=>{
-  if(role === "agente"){
+  if(role === "agente" || role === "administrador"){
     el.classList.add("show");
   }else{
     el.classList.remove("show");
@@ -266,7 +266,7 @@ document.querySelectorAll(".agent-only").forEach(el=>{
   const permissions = JSON.parse(localStorage.getItem("jm_permissions") || "{}");
 
 document.querySelectorAll(".manager-only").forEach(el=>{
-  if(role === "agente" || permissions.canInvite === true){
+  if(role === "agente" || role === "administrador" || permissions.canInvite === true){
     el.classList.add("show");
   }else{
     el.classList.remove("show");
