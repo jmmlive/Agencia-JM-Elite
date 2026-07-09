@@ -110,7 +110,16 @@ const content = document.getElementById("profileContent");
 function valor(v, defecto="—"){
   return v && String(v).trim() !== "" ? v : defecto;
 }
+function calcularDias(fechaInicio){
+  if(!fechaInicio) return "—";
 
+  const partes = fechaInicio.split("/");
+  const inicio = new Date(partes[2], partes[1]-1, partes[0]);
+  const hoy = new Date();
+
+  const diferencia = hoy - inicio;
+  return Math.floor(diferencia / (1000 * 60 * 60 * 24));
+  }
 function pintarPerfil(u, esMiPerfil=false){
   document.getElementById("avatarImg").src = u.fotoPerfil || u.photoURL || "file_00000000f71471f499e5839986bab33b.png";
   document.getElementById("coverImg").src = u.fotoPortada || u.coverURL || "file_00000000b87071f4b2cf26f846b51b6e.png";
@@ -128,7 +137,7 @@ function pintarPerfil(u, esMiPerfil=false){
   const genero = valor(u.genero || u.gender);
   const seguidores = valor(u.seguidores || u.followers, "0");
   const diamantes = valor(u.diamantes || u.coins || u.diamonds, "0");
-  const dias = valor(u.dias || u.days, "0");
+  const dias = calcularDias(u.fechaInicioPoppo || "12/03/2024");
 
   content.innerHTML = `
     <section class="identity">
