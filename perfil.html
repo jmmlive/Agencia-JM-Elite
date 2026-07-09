@@ -6,380 +6,55 @@
 <title>Perfil Elite</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+:root{--gold:#f7d774;--blue:#00a2ff;--deep:#020713;--soft:#dce8ff}
+body{background:#020713;color:white;min-height:100vh;padding-bottom:78px}
+a{text-decoration:none;color:inherit}
+button{border:0;cursor:pointer}
 
-:root{
-  --gold:#f7d774;
-  --gold2:#ffcc3d;
-  --electric:#006bff;
-  --electric2:#00a2ff;
-  --deep:#020713;
-  --card:#061b52;
-  --soft:#dce8ff;
-}
+.profile{min-height:100vh;background:radial-gradient(circle at top,#006bff99,#020713 65%)}
+.header{position:relative;height:340px}
+.cover{height:290px;background:#061326;overflow:hidden}
+.cover img{width:100%;height:100%;object-fit:cover;filter:brightness(.85) saturate(1.2)}
+.back{position:absolute;top:16px;left:16px;width:52px;height:52px;border-radius:18px;background:#07162c;border:1px solid var(--blue);color:white;font-size:26px;z-index:5}
+.editBtn{position:absolute;top:16px;right:16px;padding:14px 16px;border-radius:18px;background:#f7d774;color:#061326;font-weight:900;z-index:5;display:none}
+.avatar{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:118px;height:118px;border-radius:50%;border:4px solid var(--gold);background:#07162c;overflow:hidden;box-shadow:0 0 28px #00a2ff}
+.avatar img{width:100%;height:100%;object-fit:cover}
 
-body{
-  background:#020713;
-  color:white;
-  min-height:100vh;
-  padding-bottom:78px;
-}
+.identity{text-align:center;padding:10px 16px 0}
+.identity h1{font-size:32px;color:var(--gold);margin-bottom:6px}
+.identity p{color:white;font-size:16px;margin-bottom:16px}
 
-a{
-  color:inherit;
-  text-decoration:none;
-}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:0 18px;margin-bottom:18px}
+.badges span{min-height:40px;border-radius:999px;background:rgba(0,70,180,.55);border:1px solid rgba(0,183,255,.45);display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;padding:5px}
 
-button{
-  border:0;
-  cursor:pointer;
-}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 16px;margin-bottom:18px}
+.stat{min-height:72px;border-radius:18px;background:rgba(0,35,100,.72);border:1px solid rgba(0,183,255,.35);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.stat b{color:var(--gold);font-size:23px}
+.stat span{font-size:11px;color:var(--soft)}
 
-.profile{
-  width:100%;
-  min-height:100vh;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 50% 34%, rgba(0,162,255,.95) 0%, rgba(0,80,255,.72) 28%, rgba(0,20,85,.92) 62%, #020713 100%);
-}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px;margin-bottom:18px}
+.actions button{height:54px;border-radius:18px;font-weight:900;font-size:14px}
+.blue{background:linear-gradient(135deg,#008cff,#004dff);color:white}
+.gold{background:linear-gradient(135deg,#d8a92d,#ffcf55);color:#061326}
+.dark{background:#07162c;color:white;border:1px solid rgba(0,183,255,.45)}
 
-/* CABECERA */
-.header{
-  position:relative;
-  width:100%;
-  height:355px;
-  overflow:visible;
-}
+.card{margin:0 16px 18px;background:rgba(0,18,55,.75);border:1px solid rgba(247,215,116,.28);border-radius:20px;padding:15px}
+.card h3{color:var(--gold);font-size:20px;margin-bottom:10px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
+.row:last-child{border-bottom:0}
+.row span{color:var(--soft)}
+.row b{text-align:right}
 
-.cover{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:310px;
-  overflow:hidden;
-  background:#020713;
-}
-
-.cover img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center top;
-  display:block;
-  filter:saturate(1.35) contrast(1.12) brightness(.96);
-}
-
-.cover::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 85% 10%, rgba(0,160,255,.38), transparent 30%),
-    linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,35,130,.12) 46%, rgba(0,97,255,.98) 100%);
-  z-index:2;
-}
-
-.cover::after{
-  content:"";
-  position:absolute;
-  left:-10%;
-  right:-10%;
-  bottom:-1px;
-  height:70px;
-  background:linear-gradient(180deg, rgba(0,100,255,0), #006bff 70%, #0058ef 100%);
-  z-index:3;
-}
-
-/* BOTÓN 3 PUNTOS */
-.menu-profile{
-  position:absolute;
-  top:16px;
-  right:16px;
-  width:52px;
-  height:52px;
-  border-radius:18px;
-  background:rgba(0,14,45,.48);
-  border:1px solid rgba(247,215,116,.55);
-  color:white;
-  font-size:30px;
-  z-index:20;
-  box-shadow:0 0 18px rgba(0,115,255,.45);
-}
-
-/* FOTO PERFIL */
-.avatar{
-  position:absolute;
-  left:50%;
-  bottom:-3px;
-  transform:translateX(-50%);
-  width:112px;
-  height:112px;
-  border-radius:50%;
-  overflow:hidden;
-  border:4px solid var(--gold);
-  background:#061326;
-  box-shadow:
-    0 0 0 2px rgba(0,162,255,.55),
-    0 0 32px rgba(0,162,255,1);
-  z-index:25;
-}
-
-.avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* IDENTIDAD */
-.identity{
-  text-align:center;
-  padding:4px 14px 0;
-}
-
-.identity h1{
-  font-size:32px;
-  line-height:1.05;
-  color:var(--gold);
-  font-weight:900;
-  margin-bottom:8px;
-  text-shadow:0 3px 12px rgba(0,0,0,.45);
-}
-
-.identity p{
-  font-size:17px;
-  color:white;
-  margin-bottom:16px;
-}
-
-/* INSIGNIAS */
-.badges{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  padding:0 22px;
-  margin-bottom:18px;
-}
-
-.badges span{
-  height:42px;
-  border-radius:999px;
-  background:linear-gradient(180deg, rgba(0,83,255,.62), rgba(0,31,130,.72));
-  border:1px solid rgba(0,170,255,.45);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:13px;
-  color:white;
-  box-shadow:
-    inset 0 0 18px rgba(0,170,255,.18),
-    0 0 12px rgba(0,88,255,.18);
-  white-space:nowrap;
-}
-
-/* ESTADÍSTICAS */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  padding:0 18px;
-  margin-bottom:18px;
-}
-
-.stat{
-  min-height:78px;
-  border-radius:18px;
-  background:linear-gradient(180deg, rgba(0,65,210,.52), rgba(0,24,92,.72));
-  border:1px solid rgba(0,170,255,.42);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  box-shadow:inset 0 0 18px rgba(0,162,255,.12);
-}
-
-.stat b{
-  font-size:27px;
-  color:var(--gold);
-  margin-bottom:5px;
-}
-
-.stat span{
-  font-size:12px;
-  color:white;
-}
-
-/* BOTONES */
-.actions{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  padding:0 18px;
-  margin-bottom:18px;
-}
-
-.actions button{
-  height:58px;
-  border-radius:18px;
-  font-size:15px;
-  font-weight:800;
-}
-
-.action-blue{
-  background:linear-gradient(135deg,#008cff,#004dff);
-  color:white;
-  box-shadow:0 0 22px rgba(0,140,255,.5);
-}
-
-.action-gold{
-  background:linear-gradient(135deg,#d8a92d,#ffcf55);
-  color:#061326;
-  box-shadow:0 0 18px rgba(247,215,116,.35);
-}
-
-.action-dark{
-  background:linear-gradient(180deg, rgba(0,55,180,.50), rgba(0,18,70,.78));
-  color:white;
-  border:1px solid rgba(0,170,255,.35);
-}
-
-/* INFO, QUEDA ABAJO */
-.card{
-  margin:0 18px 18px;
-  background:rgba(0,18,55,.72);
-  border:1px solid rgba(247,215,116,.24);
-  border-radius:18px;
-  padding:14px;
-}
-
-.card h3{
-  color:var(--gold);
-  font-size:18px;
-  margin-bottom:8px;
-}
-
-.row{
-  display:flex;
-  justify-content:space-between;
-  padding:8px 0;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  font-size:13px;
-}
-
-.row:last-child{
-  border-bottom:none;
-}
-
-.row span{
-  color:var(--soft);
-}
-
-.row b{
-  color:white;
-}
-
-/* MENÚ INFERIOR */
-.bottom-nav{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  height:74px;
-  background:rgba(0,12,38,.98);
-  border-top:1px solid rgba(247,215,116,.25);
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  z-index:999;
-}
-
-.nav-item{
-  background:transparent;
-  color:white;
-  font-size:11px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:3px;
-}
-
-.nav-item .icon{
-  font-size:24px;
-}
-
-.nav-item.active{
-  color:var(--gold);
-}
-
-@media(max-width:390px){
-  .header{
-    height:335px;
-  }
-
-  .cover{
-    height:292px;
-  }
-
-  .avatar{
-    width:104px;
-    height:104px;
-    bottom:-2px;
-  }
-
-  .identity h1{
-    font-size:29px;
-  }
-
-  .identity p{
-    font-size:15px;
-    margin-bottom:13px;
-  }
-
-  .badges{
-    gap:8px;
-    padding:0 16px;
-    margin-bottom:15px;
-  }
-
-  .badges span{
-    height:37px;
-    font-size:11.5px;
-  }
-
-  .stats{
-    gap:9px;
-    padding:0 14px;
-    margin-bottom:14px;
-  }
-
-  .stat{
-    min-height:68px;
-  }
-
-  .stat b{
-    font-size:23px;
-  }
-
-  .stat span{
-    font-size:10.5px;
-  }
-
-  .actions{
-    gap:9px;
-    padding:0 14px;
-  }
-
-  .actions button{
-    height:50px;
-    font-size:13px;
-  }
-}
+.loading{text-align:center;padding:40px;color:var(--soft)}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;height:74px;background:#020713;border-top:1px solid rgba(247,215,116,.25);display:grid;grid-template-columns:repeat(5,1fr);z-index:999}
+.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;gap:3px}
+.nav-item .icon{font-size:24px}
+.nav-item.active{color:var(--gold)}
 </style>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
@@ -387,118 +62,160 @@ button{
 <main class="profile">
 
 <section class="header">
+  <button class="back" onclick="history.back()">←</button>
+  <button id="editBtn" class="editBtn" onclick="location.href='editar-perfil.html'">✏️ Editar</button>
 
   <div class="cover">
-    <img src="file_00000000b87071f4b2cf26f846b51b6e.png" alt="Portada">
+    <img id="coverImg" src="file_00000000b87071f4b2cf26f846b51b6e.png" alt="Portada">
   </div>
-
-  <button class="menu-profile">⋮</button>
 
   <div class="avatar">
-    <img src="file_00000000f71471f499e5839986bab33b.png" alt="Foto de perfil">
+    <img id="avatarImg" src="file_00000000f71471f499e5839986bab33b.png" alt="Foto de perfil">
   </div>
-
 </section>
 
-<section class="identity">
-
-  <h1>Jesús Melián</h1>
-  <p>👑 Fundador · Agencia JM Elite</p>
-
-  <div class="badges">
-    <span>🟣 Nivel 45</span>
-    <span>💎 VIP 3</span>
-    <span>🆔 19758906</span>
-    <span>🏅 Star 7</span>
-    <span>♂ Hombre</span>
-    <span>🎂 49 años</span>
-  </div>
-
-</section>
-
-<section class="stats">
-
-  <div class="stat">
-    <b>1981</b>
-    <span>Seguidores</span>
-  </div>
-
-  <div class="stat">
-    <b>34</b>
-    <span>Emisoras</span>
-  </div>
-
-  <div class="stat">
-    <b>125K</b>
-    <span>Diamantes</span>
-  </div>
-
-  <div class="stat">
-    <b>845</b>
-    <span>Días</span>
-  </div>
-
-</section>
-
-<section class="actions">
-
-  <button class="action-blue">💬 Mensaje</button>
-  <button class="action-gold">✏️ Editar</button>
-  <button class="action-dark">➕ Añadir</button>
-
-</section>
-
-<section class="card">
-
-  <h3>Información</h3>
-
-  <div class="row">
-    <span>ID Poppo</span>
-    <b>19758906</b>
-  </div>
-
-  <div class="row">
-    <span>País</span>
-    <b>España</b>
-  </div>
-
-  <div class="row">
-    <span>Rol</span>
-    <b>Fundador</b>
-  </div>
-
+<section id="profileContent">
+  <div class="loading">Cargando perfil...</div>
 </section>
 
 </main>
 
 <nav class="bottom-nav">
-
-  <a class="nav-item" href="index.html">
-    <span class="icon">🏠</span>
-    <span>Inicio</span>
-  </a>
-
-  <a class="nav-item" href="sala.html">
-    <span class="icon">🎙️</span>
-    <span>Sala</span>
-  </a>
-
-  <a class="nav-item active" href="perfil.html">
-    <span class="icon">👤</span>
-    <span>Perfil</span>
-  </a>
-
-  <a class="nav-item" href="chat.html">
-    <span class="icon">💬</span>
-    <span>Chat</span>
-  </a>
-
-  <a class="nav-item" href="menu.html">
-    <span class="icon">☰</span>
-    <span>Más</span>
-  </a>
-
+  <a class="nav-item" href="index.html"><span class="icon">🏠</span><span>Inicio</span></a>
+  <a class="nav-item" href="sala-pro.html"><span class="icon">🎙️</span><span>Sala</span></a>
+  <a class="nav-item active" href="perfil.html"><span class="icon">👤</span><span>Perfil</span></a>
+  <a class="nav-item" href="chat.html"><span class="icon">💬</span><span>Chat</span></a>
+  <a class="nav-item" href="menu.html"><span class="icon">☰</span><span>Más</span></a>
 </nav>
 
+<script>
+const firebaseConfig={
+  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain:"agencia-jm-elite.firebaseapp.com",
+  projectId:"agencia-jm-elite",
+  storageBucket:"agencia-jm-elite.firebasestorage.app",
+  messagingSenderId:"171676205335",
+  appId:"1:171676205335:web:95443528659ab804fe7752"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+
+const params = new URLSearchParams(window.location.search);
+const perfilId = params.get("id");
+const myEmail = (localStorage.getItem("jm_email") || "").toLowerCase();
+const role = localStorage.getItem("jm_role") || "";
+const content = document.getElementById("profileContent");
+
+function valor(v, defecto="—"){
+  return v && String(v).trim() !== "" ? v : defecto;
+}
+
+function pintarPerfil(u, esMiPerfil=false){
+  document.getElementById("avatarImg").src = u.fotoPerfil || u.photoURL || "file_00000000f71471f499e5839986bab33b.png";
+  document.getElementById("coverImg").src = u.fotoPortada || u.coverURL || "file_00000000b87071f4b2cf26f846b51b6e.png";
+
+  if(esMiPerfil || role === "administrador"){
+    document.getElementById("editBtn").style.display = "block";
+  }
+
+  const nombre = valor(u.nombre || u.nombreArtistico || u.artisticName, "Sin nombre");
+  const pais = valor(u.pais || u.country, "País no indicado");
+  const poppoId = valor(u.poppoId || u.idPoppo || u.poppoID);
+  const nivel = valor(u.nivel || u.level);
+  const rol = valor(u.rol || u.role || "Emisora");
+  const edad = valor(u.edad || u.age);
+  const genero = valor(u.genero || u.gender);
+  const seguidores = valor(u.seguidores || u.followers, "0");
+  const diamantes = valor(u.diamantes || u.coins || u.diamonds, "0");
+  const dias = valor(u.dias || u.days, "0");
+
+  content.innerHTML = `
+    <section class="identity">
+      <h1>${nombre}</h1>
+      <p>👑 ${rol} · Agencia JM Elite</p>
+
+      <div class="badges">
+        <span>🟣 Nivel ${nivel}</span>
+        <span>🆔 ${poppoId}</span>
+        <span>🌍 ${pais}</span>
+        <span>♂ ${genero}</span>
+        <span>🎂 ${edad}</span>
+        <span>✅ Activa</span>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat"><b>${seguidores}</b><span>Seguidores</span></div>
+      <div class="stat"><b>${nivel}</b><span>Nivel</span></div>
+      <div class="stat"><b>${diamantes}</b><span>Diamantes</span></div>
+      <div class="stat"><b>${dias}</b><span>Días</span></div>
+    </section>
+
+    <section class="actions">
+      <button class="blue">💬 Mensaje</button>
+      <button class="gold" onclick="location.href='editar-perfil.html'">✏️ Editar</button>
+      <button class="dark">➕ Añadir</button>
+    </section>
+
+    <section class="card">
+      <h3>Información</h3>
+      <div class="row"><span>ID Poppo</span><b>${poppoId}</b></div>
+      <div class="row"><span>País</span><b>${pais}</b></div>
+      <div class="row"><span>Rol</span><b>${rol}</b></div>
+      <div class="row"><span>Correo</span><b>${valor(u.email || u.correo)}</b></div>
+    </section>
+  `;
+}
+
+async function cargarPerfil(){
+  if(localStorage.getItem("jm_logged") !== "yes"){
+    location.replace("index.html");
+    return;
+  }
+
+  try{
+    if(perfilId){
+      const doc = await db.collection("usuarios").doc(perfilId).get();
+
+      if(!doc.exists){
+        content.innerHTML = '<div class="loading">No se encontró este perfil.</div>';
+        return;
+      }
+
+      pintarPerfil(doc.data(), false);
+      return;
+    }
+
+    if(myEmail){
+      const snap = await db.collection("usuarios").where("email","==",myEmail).limit(1).get();
+
+      if(!snap.empty){
+        pintarPerfil(snap.docs[0].data(), true);
+        return;
+      }
+    }
+
+    pintarPerfil({
+      nombre:"Jesús Melián",
+      pais:"España",
+      poppoId:"19758906",
+      nivel:"45",
+      rol:"Fundador",
+      edad:"49",
+      genero:"Hombre",
+      seguidores:"1981",
+      diamantes:"125K",
+      dias:"845"
+    }, true);
+
+  }catch(error){
+    content.innerHTML = '<div class="loading">Error cargando perfil: '+error.message+'</div>';
+  }
+}
+
+cargarPerfil();
+</script>
+
 </body>
-  </html>
+</html>
