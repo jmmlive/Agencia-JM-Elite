@@ -103,7 +103,7 @@ window.cargarEmisoras = async function(){
   </div>
 
   <div class="info">
-    <h3>${u.nombre || "Sin nombre"} ✅</h3>
+    <h3>${u.nombre || u.nombreArtistico || u.artisticName || (u.email ? u.email.split("@")[0] : "Nueva emisora")} ✅</h3>
     <p>🌍 ${u.pais || "País no indicado"}</p>
     <p>🆔 ID Poppo: ${u.poppoId || "—"}</p>
     <p>⭐ Nivel: ${u.nivel || "—"}</p>
