@@ -116,21 +116,28 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-let usuarioActual = null;
+const params = new URLSearchParams(window.location.search);
+const perfilId = params.get("id");
+
+let usuarioActualId = perfilId || null;
 
 function valor(id){
   return document.getElementById(id).value.trim();
 }
 
-onAuthStateChanged(auth, async function(user){
-  if(!user){
+async function cargarDatos(){
+  if(localStorage.getItem("jm_logged") !== "yes"){
     location.replace("index.html");
     return;
   }
 
-  usuarioActual = user;
+  if(!usuarioActualId){
+    alert("Falta el ID del perfil.");
+    history.back();
+    return;
+  }
 
-  const ref = doc(db, "usuarios", user.uid);
+  const ref = doc(db, "usuarios", usuarioActualId);
   const snap = await getDoc(ref);
 
   if(snap.exists()){
@@ -147,11 +154,11 @@ onAuthStateChanged(auth, async function(user){
     document.getElementById("facebook").value = u.facebook || "";
     document.getElementById("aceptaNormas").checked = u.aceptaNormas === true;
   }
-});
+}
 
 window.guardarPerfil = async function(){
-  if(!usuarioActual){
-    alert("No hay sesión iniciada.");
+  if(!usuarioActualId){
+    alert("No se encontró el perfil.");
     return;
   }
 
@@ -160,11 +167,9 @@ window.guardarPerfil = async function(){
     return;
   }
 
-  const ref = doc(db, "usuarios", usuarioActual.uid);
+  const ref = doc(db, "usuarios", usuarioActualId);
 
   await setDoc(ref, {
-    uid: usuarioActual.uid,
-    email: usuarioActual.email,
     nombre: valor("nombre"),
     pais: valor("pais"),
     poppoId: valor("poppoId"),
@@ -181,8 +186,10 @@ window.guardarPerfil = async function(){
   }, { merge:true });
 
   alert("Perfil guardado correctamente.");
-  location.replace("perfil.html?id=" + usuarioActual.uid);
+  location.replace("perfil.html?id=" + usuarioActualId);
 };
+
+cargarDatos();
 </script>
 
 </body>
