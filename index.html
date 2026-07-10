@@ -414,26 +414,51 @@ function closeDrawer(e){
 }
 
 function autoFillInviteCode(){
-  const params=new URLSearchParams(window.location.search);
-  const inviteCode=params.get("invite");
+  const params = new URLSearchParams(window.location.search);
+  const inviteCode = params.get("invite");
 
-  if(inviteCode){
-    inviteRegister();
-    document.getElementById("inviteInput").value=inviteCode;
+  if(!inviteCode){
+    return false;
   }
+
+  localStorage.removeItem("jm_logged");
+  localStorage.removeItem("jm_email");
+  localStorage.removeItem("jm_role");
+  localStorage.removeItem("jm_permissions");
+  localStorage.removeItem("jm_user");
+
+  const loginScreen = document.getElementById("loginScreen");
+
+  if(loginScreen){
+    loginScreen.classList.add("show");
+  }
+
+  inviteRegister();
+  document.getElementById("inviteInput").value = inviteCode;
+
+  return true;
 }
 
-window.onload=function(){
-  if(new URLSearchParams(window.location.search).get("reset")==="1"){
+window.onload = function(){
+
+  const params = new URLSearchParams(window.location.search);
+
+  if(params.get("reset") === "1"){
     localStorage.removeItem("jm_logged");
     localStorage.removeItem("jm_email");
     localStorage.removeItem("jm_role");
-    window.location.href="index.html";
+    localStorage.removeItem("jm_permissions");
+    localStorage.removeItem("jm_user");
+
+    window.location.href = "index.html";
+    return;
+  }
+
+  if(autoFillInviteCode()){
     return;
   }
 
   checkLogin();
-  autoFillInviteCode();
 };
       </script>
 
