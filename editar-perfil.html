@@ -433,7 +433,356 @@ function configurarSubidaImagenes(){
 }
 
 
+function pintarFormulario(u){
 
+  contenido.innerHTML=`
+
+    <section class="card">
+      <h2>👤 Datos principales</h2>
+
+      <label>Nombre visible</label>
+      <input id="nombre" placeholder="Ej: Ruth María">
+
+      <label>País</label>
+      <input id="pais" placeholder="Ej: Cuba">
+
+      <label>ID de Poppo</label>
+      <input id="poppoId" placeholder="Ej: 123456">
+
+      <label>Fecha de inicio en Poppo</label>
+      <input
+        id="fechaInicioPoppo"
+        placeholder="Ej: 12/03/2024"
+      >
+
+      <div class="locked">
+        🔒 <b>Rol protegido</b><br>
+        Tu rol no se modifica desde el perfil.
+        Los permisos de administración se gestionan
+        desde el Panel de Administración.
+      </div>
+
+      <label>Nivel</label>
+      <input id="nivel" placeholder="Ej: 45">
+
+      <label>Edad</label>
+      <input id="edad" placeholder="Ej: 49">
+
+      <label>Género</label>
+      <input id="genero" placeholder="Ej: Hombre / Mujer">
+
+      <label>Descripción</label>
+      <textarea
+        id="descripcion"
+        placeholder="Escribe una presentación bonita para tu perfil..."
+      ></textarea>
+    </section>
+
+
+    <section class="card">
+      <h2>📊 Estadísticas Poppo</h2>
+
+      <label>Seguidores</label>
+      <input id="seguidores" placeholder="Ej: 1981">
+
+      <label>Coins enviados</label>
+      <input id="diamantes" placeholder="Ej: 272M">
+
+      <label>VIP</label>
+      <input id="vip" placeholder="Ej: VIP 3">
+
+      <label>Star</label>
+      <input id="star" placeholder="Ej: Star 7">
+
+      <label>Fan</label>
+      <input id="fan" placeholder="Ej: Fan 1">
+    </section>
+
+
+    <section class="card">
+      <h2>🖼️ Imágenes</h2>
+
+      <div class="image-editor">
+
+        <label>Foto de perfil</label>
+
+        <div class="image-edit-box">
+
+          <img
+            id="previewPerfil"
+            class="preview avatar-preview"
+            alt="Foto de perfil"
+          >
+
+          <label
+            for="archivoPerfil"
+            class="edit-image-btn">
+            ✏️ Editar foto
+          </label>
+
+          <input
+            type="file"
+            id="archivoPerfil"
+            accept="image/*"
+            hidden
+          >
+
+          <input
+            type="hidden"
+            id="fotoPerfil"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="image-editor">
+
+        <label>Foto de portada</label>
+
+        <div class="image-edit-box">
+
+          <img
+            id="previewPortada"
+            class="preview"
+            alt="Foto de portada"
+          >
+
+          <label
+            for="archivoPortada"
+            class="edit-image-btn">
+            ✏️ Editar portada
+          </label>
+
+          <input
+            type="file"
+            id="archivoPortada"
+            accept="image/*"
+            hidden
+          >
+
+          <input
+            type="hidden"
+            id="fotoPortada"
+          >
+
+        </div>
+
+      </div>
+
+      <p class="small">
+        Selecciona una imagen desde tu teléfono.
+        La foto se subirá directamente a JM Elite.
+      </p>
+
+    </section>
+
+
+    <section class="card">
+      <h2>📲 Redes sociales</h2>
+
+      <label>WhatsApp</label>
+      <input id="whatsapp" placeholder="Número o enlace">
+
+      <label>Instagram</label>
+      <input id="instagram" placeholder="@usuario o enlace">
+
+      <label>TikTok</label>
+      <input id="tiktok" placeholder="@usuario o enlace">
+
+      <label>Facebook</label>
+      <input id="facebook" placeholder="Perfil o enlace">
+    </section>
+
+
+    <section class="card">
+      <h2>🛡️ Normas de Agencia JM Elite</h2>
+
+      <p class="small">
+        No se permiten fotos provocativas, desnudos,
+        drogas, violencia, insultos, contenido ilegal
+        o cualquier contenido que dañe la imagen de la agencia.
+      </p>
+
+      <label class="check">
+        <input id="aceptaNormas" type="checkbox">
+        <span>
+          Acepto las normas de Agencia JM Elite.
+        </span>
+      </label>
+
+      <button class="btn" onclick="guardarPerfil()">
+        Guardar perfil
+      </button>
+    </section>
+
+  `;
+
+
+  poner(
+    "nombre",
+    u.nombre ||
+    u.nombreArtistico ||
+    u.artisticName
+  );
+
+  poner(
+    "pais",
+    u.pais ||
+    u.country
+  );
+
+  poner(
+    "poppoId",
+    u.poppoId ||
+    u.idPoppo
+  );
+
+  poner(
+    "fechaInicioPoppo",
+    u.fechaInicioPoppo
+  );
+
+  poner(
+    "nivel",
+    u.nivel ||
+    u.level
+  );
+
+  poner(
+    "edad",
+    u.edad ||
+    u.age
+  );
+
+  poner(
+    "genero",
+    u.genero ||
+    u.gender
+  );
+
+  poner(
+    "descripcion",
+    u.descripcion
+  );
+
+  poner(
+    "seguidores",
+    u.seguidores ||
+    u.followers
+  );
+
+  poner(
+    "diamantes",
+    u.diamantes ||
+    u.coins ||
+    u.diamonds
+  );
+
+  poner(
+    "vip",
+    u.vip
+  );
+
+  poner(
+    "star",
+    u.star
+  );
+
+  poner(
+    "fan",
+    u.fan
+  );
+
+  poner(
+    "fotoPerfil",
+    u.fotoPerfil ||
+    u.photoURL
+  );
+
+  poner(
+    "fotoPortada",
+    u.fotoPortada ||
+    u.coverURL
+  );
+
+  poner(
+    "whatsapp",
+    u.whatsapp
+  );
+
+  poner(
+    "instagram",
+    u.instagram
+  );
+
+  poner(
+    "tiktok",
+    u.tiktok
+  );
+
+  poner(
+    "facebook",
+    u.facebook
+  );
+
+
+  const aceptaNormas=
+    document.getElementById("aceptaNormas");
+
+  if(aceptaNormas){
+
+    aceptaNormas.checked=
+      u.aceptaNormas === true;
+  }
+
+
+  const previewPerfil=
+    document.getElementById("previewPerfil");
+
+  const fotoPerfil=
+    document.getElementById("fotoPerfil");
+
+
+  if(
+    previewPerfil &&
+    fotoPerfil &&
+    fotoPerfil.value
+  ){
+
+    previewPerfil.src=
+      fotoPerfil.value;
+
+    previewPerfil.style.display=
+      "block";
+  }
+
+
+  const previewPortada=
+    document.getElementById("previewPortada");
+
+  const fotoPortada=
+    document.getElementById("fotoPortada");
+
+
+  if(
+    previewPortada &&
+    fotoPortada &&
+    fotoPortada.value
+  ){
+
+    previewPortada.src=
+      fotoPortada.value;
+
+    previewPortada.style.display=
+      "block";
+  }
+
+
+  configurarSubidaImagenes();
+
+  }
 window.mostrarPreviewGlobal=function(inputId,imgId){
   mostrarPreview(inputId,imgId);
 };
