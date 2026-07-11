@@ -6,24 +6,172 @@
 <title>Editar Perfil - Agencia JM Elite</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#020713;color:white}
-:root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff}
-.topbar{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#020713;border-bottom:2px solid var(--blue)}
-.icon{width:52px;height:52px;border-radius:16px;border:1px solid var(--blue);background:#07162c;color:white;font-size:24px}
-.title{text-align:center}
-.title h1{font-size:22px;color:var(--gold)}
-.title p{font-size:12px;color:var(--soft)}
-.content{padding:16px 16px 90px}
-.card{background:linear-gradient(180deg,#102644,#030813);border:1px solid rgba(247,215,116,.35);border-radius:24px;padding:18px;margin-bottom:14px}
-.card h2{color:var(--gold);margin-bottom:12px}
-label{display:block;color:var(--soft);margin-top:12px;font-size:14px}
-input,textarea,select{width:100%;margin-top:7px;padding:14px;border-radius:15px;border:1px solid var(--blue);background:#07162c;color:white;font-size:15px}
-textarea{min-height:110px;resize:none}
-.check{display:flex;gap:10px;align-items:flex-start;margin-top:16px;color:var(--soft);line-height:1.4}
-.check input{width:auto;margin-top:3px}
-.btn{width:100%;border:0;border-radius:18px;padding:16px;margin-top:14px;font-size:17px;font-weight:bold;background:linear-gradient(90deg,#d4af37,#ffcc55);color:#07111f}
-.small{color:#ffcf7a;font-size:13px;margin-top:10px;line-height:1.4}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif
+}
+
+:root{
+  --blue:#168cff;
+  --gold:#f7d774;
+  --soft:#d9e5ff;
+  --dark:#020713;
+}
+
+body{
+  background:var(--dark);
+  color:white;
+  min-height:100vh;
+}
+
+.topbar{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  background:#020713;
+  border-bottom:2px solid var(--blue);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.icon{
+  width:52px;
+  height:52px;
+  border-radius:16px;
+  border:1px solid var(--blue);
+  background:#07162c;
+  color:white;
+  font-size:24px;
+}
+
+.title{
+  text-align:center;
+}
+
+.title h1{
+  font-size:22px;
+  color:var(--gold);
+}
+
+.title p{
+  font-size:12px;
+  color:var(--soft);
+}
+
+.content{
+  padding:16px 16px 90px;
+}
+
+.card{
+  background:linear-gradient(180deg,#102644,#030813);
+  border:1px solid rgba(247,215,116,.35);
+  border-radius:24px;
+  padding:18px;
+  margin-bottom:14px;
+}
+
+.card h2{
+  color:var(--gold);
+  margin-bottom:12px;
+}
+
+label{
+  display:block;
+  color:var(--soft);
+  margin-top:12px;
+  font-size:14px;
+}
+
+input,
+textarea{
+  width:100%;
+  margin-top:7px;
+  padding:14px;
+  border-radius:15px;
+  border:1px solid var(--blue);
+  background:#07162c;
+  color:white;
+  font-size:15px;
+}
+
+textarea{
+  min-height:110px;
+  resize:none;
+}
+
+.preview{
+  display:none;
+  width:100%;
+  max-height:230px;
+  object-fit:cover;
+  border-radius:18px;
+  margin-top:12px;
+  border:2px solid var(--gold);
+}
+
+.preview.avatar-preview{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.check{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin-top:16px;
+  color:var(--soft);
+  line-height:1.4;
+}
+
+.check input{
+  width:auto;
+  margin-top:3px;
+}
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:16px;
+  margin-top:14px;
+  font-size:17px;
+  font-weight:bold;
+  background:linear-gradient(90deg,#d4af37,#ffcc55);
+  color:#07111f;
+}
+
+.small{
+  color:#ffcf7a;
+  font-size:13px;
+  margin-top:10px;
+  line-height:1.4;
+}
+
+.locked{
+  margin-top:14px;
+  padding:13px;
+  border-radius:15px;
+  background:rgba(0,90,255,.15);
+  border:1px solid rgba(0,183,255,.35);
+  color:var(--soft);
+  font-size:13px;
+  line-height:1.5;
+}
+
+.loading{
+  text-align:center;
+  padding:50px 20px;
+  color:var(--soft);
+}
 </style>
 </head>
 
@@ -31,239 +179,523 @@ textarea{min-height:110px;resize:none}
 
 <header class="topbar">
   <button class="icon" onclick="volverPerfil()">←</button>
+
   <div class="title">
     <h1>EDITAR PERFIL</h1>
     <p>Personaliza tu ficha Elite</p>
   </div>
+
   <button class="icon" onclick="guardarPerfil()">✓</button>
 </header>
 
-<main class="content">
+<main id="contenido" class="content">
 
-<section class="card">
-  <h2>👤 Datos principales</h2>
-
-  <label>Nombre visible</label>
-  <input id="nombre" placeholder="Ej: Ruth María">
-
-  <label>País</label>
-  <input id="pais" placeholder="Ej: Cuba">
-
-  <label>ID de Poppo</label>
-  <input id="poppoId" placeholder="Ej: 123456">
-
-  <label>Fecha de inicio en Poppo</label>
-  <input id="fechaInicioPoppo" placeholder="Ej: 12/03/2024">
-
-  <label>Rol</label>
-  <input id="rol" placeholder="Ej: Emisora, Host, Fundador">
-
-  <label>Nivel</label>
-  <input id="nivel" placeholder="Ej: 45">
-
-  <label>Edad</label>
-  <input id="edad" placeholder="Ej: 49">
-
-  <label>Género</label>
-  <input id="genero" placeholder="Ej: Hombre / Mujer">
-
-  <label>Descripción</label>
-  <textarea id="descripcion" placeholder="Escribe una presentación bonita para tu perfil..."></textarea>
-</section>
-
-<section class="card">
-  <h2>📊 Estadísticas Poppo</h2>
-
-  <label>Seguidores</label>
-  <input id="seguidores" placeholder="Ej: 1981">
-
-  <label>Diamantes / Coins</label>
-  <input id="diamantes" placeholder="Ej: 125K">
-
-  <label>VIP</label>
-  <input id="vip" placeholder="Ej: VIP 3">
-
-  <label>Star</label>
-  <input id="star" placeholder="Ej: Star 7">
-
-  <label>Fan</label>
-  <input id="fan" placeholder="Ej: Fan 1">
-</section>
-
-<section class="card">
-  <h2>🖼️ Imágenes</h2>
-
-  <label>Foto de perfil URL</label>
-  <input id="fotoPerfil" placeholder="Pega aquí el enlace de tu foto">
-
-  <label>Portada URL</label>
-  <input id="fotoPortada" placeholder="Pega aquí el enlace de tu portada">
-
-  <p class="small">Luego haremos subida directa de fotos. De momento usamos enlaces para probar rápido.</p>
-</section>
-
-<section class="card">
-  <h2>📲 Redes sociales</h2>
-
-  <label>WhatsApp</label>
-  <input id="whatsapp" placeholder="Número o enlace">
-
-  <label>Instagram</label>
-  <input id="instagram" placeholder="@usuario o enlace">
-
-  <label>TikTok</label>
-  <input id="tiktok" placeholder="@usuario o enlace">
-
-  <label>Facebook</label>
-  <input id="facebook" placeholder="Perfil o enlace">
-</section>
-
-<section class="card">
-  <h2>🛡️ Normas de Agencia JM Elite</h2>
-  <p class="small">
-    No se permiten fotos provocativas, desnudos, drogas, violencia, insultos, contenido ilegal
-    o cualquier cosa que dañe la imagen de la agencia.
-  </p>
-
-  <label class="check">
-    <input id="aceptaNormas" type="checkbox">
-    <span>Acepto las normas de Agencia JM Elite.</span>
-  </label>
-
-  <button class="btn" onclick="guardarPerfil()">Guardar perfil</button>
-</section>
+<div class="loading">
+  Cargando perfil...
+</div>
 
 </main>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain: "agencia-jm-elite.firebaseapp.com",
-  projectId: "agencia-jm-elite",
-  storageBucket: "agencia-jm-elite.firebasestorage.app",
-  messagingSenderId: "171676205335",
-  appId: "1:171676205335:web:95443528659ab804fe7752"
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig={
+  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain:"agencia-jm-elite.firebaseapp.com",
+  projectId:"agencia-jm-elite",
+  storageBucket:"agencia-jm-elite.firebasestorage.app",
+  messagingSenderId:"171676205335",
+  appId:"1:171676205335:web:95443528659ab804fe7752"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
 
-const params = new URLSearchParams(window.location.search);
-const perfilId = params.get("id");
-let usuarioActualId = perfilId;
+const params=new URLSearchParams(window.location.search);
+const perfilSolicitado=params.get("id");
+
+const emailActual=(
+  localStorage.getItem("jm_email") || ""
+).toLowerCase();
+
+let usuarioActualId="";
+let usuarioActual={};
+let miDocumento=null;
+
+const contenido=document.getElementById("contenido");
 
 function valor(id){
-  return document.getElementById(id).value.trim();
+  const campo=document.getElementById(id);
+  return campo ? campo.value.trim() : "";
 }
 
-function poner(id, valor){
-  document.getElementById(id).value = valor || "";
-}
+function poner(id,dato){
+  const campo=document.getElementById(id);
 
-function volverPerfil(){
-  if(usuarioActualId){
-    location.href = "perfil.html?id=" + usuarioActualId;
-  }else{
-    location.href = "index.html";
+  if(campo){
+    campo.value=dato || "";
   }
 }
 
+function volverPerfil(){
+
+  if(usuarioActualId){
+    location.href="perfil.html?id="+usuarioActualId;
+  }else{
+    location.href="perfil.html";
+  }
+}
+
+function mostrarPreview(inputId,imgId){
+
+  const input=document.getElementById(inputId);
+  const img=document.getElementById(imgId);
+
+  if(!input || !img) return;
+
+  const url=input.value.trim();
+
+  if(!url){
+    img.style.display="none";
+    img.removeAttribute("src");
+    return;
+  }
+
+  img.src=url;
+  img.style.display="block";
+
+  img.onerror=function(){
+    img.style.display="none";
+  };
+}
+
+function pintarFormulario(u){
+
+  contenido.innerHTML=`
+
+    <section class="card">
+      <h2>👤 Datos principales</h2>
+
+      <label>Nombre visible</label>
+      <input id="nombre" placeholder="Ej: Ruth María">
+
+      <label>País</label>
+      <input id="pais" placeholder="Ej: Cuba">
+
+      <label>ID de Poppo</label>
+      <input id="poppoId" placeholder="Ej: 123456">
+
+      <label>Fecha de inicio en Poppo</label>
+      <input
+        id="fechaInicioPoppo"
+        placeholder="Ej: 12/03/2024"
+      >
+
+      <div class="locked">
+        🔒 <b>Rol protegido</b><br>
+        Tu rol no se modifica desde el perfil.
+        Los permisos de administración se gestionan
+        desde el Panel de Administración.
+      </div>
+
+      <label>Nivel</label>
+      <input id="nivel" placeholder="Ej: 45">
+
+      <label>Edad</label>
+      <input id="edad" placeholder="Ej: 49">
+
+      <label>Género</label>
+      <input id="genero" placeholder="Ej: Hombre / Mujer">
+
+      <label>Descripción</label>
+      <textarea
+        id="descripcion"
+        placeholder="Escribe una presentación bonita para tu perfil..."
+      ></textarea>
+    </section>
+
+
+    <section class="card">
+      <h2>📊 Estadísticas Poppo</h2>
+
+      <label>Seguidores</label>
+      <input id="seguidores" placeholder="Ej: 1981">
+
+      <label>Diamantes / Coins</label>
+      <input id="diamantes" placeholder="Ej: 125K">
+
+      <label>VIP</label>
+      <input id="vip" placeholder="Ej: VIP 3">
+
+      <label>Star</label>
+      <input id="star" placeholder="Ej: Star 7">
+
+      <label>Fan</label>
+      <input id="fan" placeholder="Ej: Fan 1">
+    </section>
+
+
+    <section class="card">
+      <h2>🖼️ Imágenes</h2>
+
+      <label>Foto de perfil URL</label>
+      <input
+        id="fotoPerfil"
+        placeholder="Pega aquí el enlace de tu foto"
+        oninput="mostrarPreviewGlobal('fotoPerfil','previewPerfil')"
+      >
+
+      <img
+        id="previewPerfil"
+        class="preview avatar-preview"
+        alt="Vista previa de perfil"
+      >
+
+      <label>Portada URL</label>
+      <input
+        id="fotoPortada"
+        placeholder="Pega aquí el enlace de tu portada"
+        oninput="mostrarPreviewGlobal('fotoPortada','previewPortada')"
+      >
+
+      <img
+        id="previewPortada"
+        class="preview"
+        alt="Vista previa de portada"
+      >
+
+      <p class="small">
+        Puedes comprobar la imagen antes de guardar.
+        Más adelante añadiremos subida directa desde el teléfono.
+      </p>
+    </section>
+
+
+    <section class="card">
+      <h2>📲 Redes sociales</h2>
+
+      <label>WhatsApp</label>
+      <input id="whatsapp" placeholder="Número o enlace">
+
+      <label>Instagram</label>
+      <input id="instagram" placeholder="@usuario o enlace">
+
+      <label>TikTok</label>
+      <input id="tiktok" placeholder="@usuario o enlace">
+
+      <label>Facebook</label>
+      <input id="facebook" placeholder="Perfil o enlace">
+    </section>
+
+
+    <section class="card">
+      <h2>🛡️ Normas de Agencia JM Elite</h2>
+
+      <p class="small">
+        No se permiten fotos provocativas, desnudos,
+        drogas, violencia, insultos, contenido ilegal
+        o cualquier contenido que dañe la imagen de la agencia.
+      </p>
+
+      <label class="check">
+        <input id="aceptaNormas" type="checkbox">
+        <span>
+          Acepto las normas de Agencia JM Elite.
+        </span>
+      </label>
+
+      <button class="btn" onclick="guardarPerfil()">
+        Guardar perfil
+      </button>
+    </section>
+
+  `;
+
+  poner(
+    "nombre",
+    u.nombre ||
+    u.nombreArtistico ||
+    u.artisticName
+  );
+
+  poner(
+    "pais",
+    u.pais ||
+    u.country
+  );
+
+  poner("poppoId",u.poppoId || u.idPoppo);
+  poner("fechaInicioPoppo",u.fechaInicioPoppo);
+  poner("nivel",u.nivel || u.level);
+  poner("edad",u.edad || u.age);
+  poner("genero",u.genero || u.gender);
+  poner("descripcion",u.descripcion);
+
+  poner(
+    "seguidores",
+    u.seguidores ||
+    u.followers
+  );
+
+  poner(
+    "diamantes",
+    u.diamantes ||
+    u.coins ||
+    u.diamonds
+  );
+
+  poner("vip",u.vip);
+  poner("star",u.star);
+  poner("fan",u.fan);
+
+  poner(
+    "fotoPerfil",
+    u.fotoPerfil ||
+    u.photoURL
+  );
+
+  poner(
+    "fotoPortada",
+    u.fotoPortada ||
+    u.coverURL
+  );
+
+  poner("whatsapp",u.whatsapp);
+  poner("instagram",u.instagram);
+  poner("tiktok",u.tiktok);
+  poner("facebook",u.facebook);
+
+  document.getElementById("aceptaNormas").checked=
+    u.aceptaNormas === true;
+
+  mostrarPreview("fotoPerfil","previewPerfil");
+  mostrarPreview("fotoPortada","previewPortada");
+}
+
+window.mostrarPreviewGlobal=function(inputId,imgId){
+  mostrarPreview(inputId,imgId);
+};
+
+async function buscarMiDocumento(){
+
+  if(!emailActual){
+    return null;
+  }
+
+  const consulta=query(
+    collection(db,"usuarios"),
+    where("email","==",emailActual)
+  );
+
+  const snap=await getDocs(consulta);
+
+  if(snap.empty){
+    return null;
+  }
+
+  return snap.docs[0];
+}
+
 async function cargarDatos(){
+
   if(localStorage.getItem("jm_logged") !== "yes"){
     location.replace("index.html");
     return;
   }
 
-  if(!usuarioActualId){
-    alert("Falta el ID del perfil.");
-    location.replace("index.html");
-    return;
-  }
+  try{
 
-  const ref = doc(db, "usuarios", usuarioActualId);
-  const snap = await getDoc(ref);
+    miDocumento=await buscarMiDocumento();
 
-  if(snap.exists()){
-    const u = snap.data();
+    if(!miDocumento){
+      contenido.innerHTML=
+        '<div class="loading">No se encontró tu cuenta.</div>';
 
-    poner("nombre", u.nombre);
-    poner("pais", u.pais);
-    poner("poppoId", u.poppoId);
-    poner("fechaInicioPoppo", u.fechaInicioPoppo || "12/03/2024");
-    poner("rol", u.rol || u.role);
-    poner("nivel", u.nivel || u.level);
-    poner("edad", u.edad || u.age);
-    poner("genero", u.genero || u.gender);
-    poner("descripcion", u.descripcion);
-    poner("seguidores", u.seguidores || u.followers);
-    poner("diamantes", u.diamantes || u.coins || u.diamonds);
-    poner("vip", u.vip);
-    poner("star", u.star);
-    poner("fan", u.fan);
-    poner("fotoPerfil", u.fotoPerfil || u.photoURL);
-    poner("fotoPortada", u.fotoPortada || u.coverURL);
-    poner("whatsapp", u.whatsapp);
-    poner("instagram", u.instagram);
-    poner("tiktok", u.tiktok);
-    poner("facebook", u.facebook);
+      return;
+    }
 
-    document.getElementById("aceptaNormas").checked = u.aceptaNormas === true;
+    const misDatos=miDocumento.data();
+
+    const miRol=(
+      misDatos.role ||
+      misDatos.rol ||
+      ""
+    ).toLowerCase();
+
+    if(perfilSolicitado){
+
+      const refSolicitada=doc(
+        db,
+        "usuarios",
+        perfilSolicitado
+      );
+
+      const snapSolicitada=await getDoc(refSolicitada);
+
+      if(!snapSolicitada.exists()){
+        contenido.innerHTML=
+          '<div class="loading">No se encontró este perfil.</div>';
+
+        return;
+      }
+
+      const perfilAjeno=
+        perfilSolicitado !== miDocumento.id;
+
+      if(
+        perfilAjeno &&
+        miRol !== "administrador" &&
+        miRol !== "agente"
+      ){
+
+        alert(
+          "No tienes permiso para editar este perfil."
+        );
+
+        location.href="perfil.html";
+
+        return;
+      }
+
+      usuarioActualId=perfilSolicitado;
+      usuarioActual=snapSolicitada.data();
+
+    }else{
+
+      usuarioActualId=miDocumento.id;
+      usuarioActual=misDatos;
+    }
+
+    pintarFormulario(usuarioActual);
+
+  }catch(error){
+
+    contenido.innerHTML=
+      '<div class="loading">Error cargando perfil: '+
+      error.message+
+      '</div>';
   }
 }
 
-window.guardarPerfil = async function(){
+window.guardarPerfil=async function(){
+
   if(!usuarioActualId){
+
     alert("No se encontró el perfil.");
+
     return;
   }
 
-  if(!document.getElementById("aceptaNormas").checked){
-    alert("Debes aceptar las normas de la agencia.");
+  if(
+    !document
+    .getElementById("aceptaNormas")
+    .checked
+  ){
+
+    alert(
+      "Debes aceptar las normas de la agencia."
+    );
+
+    return;
+  }
+
+  const nombre=valor("nombre");
+  const pais=valor("pais");
+  const nivel=valor("nivel");
+
+  if(!nombre){
+
+    alert("Pon tu nombre visible.");
+
     return;
   }
 
   try{
-    const ref = doc(db, "usuarios", usuarioActualId);
 
-    await setDoc(ref, {
-      nombre: valor("nombre"),
-      pais: valor("pais"),
-      poppoId: valor("poppoId"),
-      fechaInicioPoppo: valor("fechaInicioPoppo"),
-      rol: valor("rol"),
-      nivel: valor("nivel"),
-      edad: valor("edad"),
-      genero: valor("genero"),
-      descripcion: valor("descripcion"),
-      seguidores: valor("seguidores"),
-      diamantes: valor("diamantes"),
-      vip: valor("vip"),
-      star: valor("star"),
-      fan: valor("fan"),
-      fotoPerfil: valor("fotoPerfil"),
-      fotoPortada: valor("fotoPortada"),
-      whatsapp: valor("whatsapp"),
-      instagram: valor("instagram"),
-      tiktok: valor("tiktok"),
-      facebook: valor("facebook"),
-      aceptaNormas: true,
-      estadoRevision: "pendiente",
-      actualizado: serverTimestamp()
-    }, { merge:true });
+    const ref=doc(
+      db,
+      "usuarios",
+      usuarioActualId
+    );
 
-    alert("Perfil guardado correctamente.");
-    location.href = "perfil.html?id=" + usuarioActualId;
+    await setDoc(ref,{
+
+      nombre:nombre,
+      nombreArtistico:nombre,
+      artisticName:nombre,
+
+      pais:pais,
+      country:pais,
+
+      poppoId:valor("poppoId"),
+
+      fechaInicioPoppo:
+        valor("fechaInicioPoppo"),
+
+      nivel:nivel,
+      level:nivel,
+
+      edad:valor("edad"),
+      genero:valor("genero"),
+      descripcion:valor("descripcion"),
+
+      seguidores:valor("seguidores"),
+      diamantes:valor("diamantes"),
+
+      vip:valor("vip"),
+      star:valor("star"),
+      fan:valor("fan"),
+
+      fotoPerfil:valor("fotoPerfil"),
+      fotoPortada:valor("fotoPortada"),
+
+      whatsapp:valor("whatsapp"),
+      instagram:valor("instagram"),
+      tiktok:valor("tiktok"),
+      facebook:valor("facebook"),
+
+      aceptaNormas:true,
+      estadoRevision:"pendiente",
+      actualizado:serverTimestamp()
+
+    },{
+      merge:true
+    });
+
+    alert("✅ Perfil guardado correctamente.");
+
+    location.href=
+      "perfil.html?id="+usuarioActualId;
 
   }catch(error){
-    alert("Error al guardar: " + error.message);
+
+    alert(
+      "Error al guardar: "+
+      error.message
+    );
   }
 };
 
+window.volverPerfil=volverPerfil;
+
 cargarDatos();
+
 </script>
 
 </body>
-</html>
+  </html>
