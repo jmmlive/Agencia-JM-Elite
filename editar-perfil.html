@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Editar Perfil - Agencia JM Elite</title>
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+Editar Perfil - Agencia JM Elite
+</title>
+
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -14,77 +25,264 @@
 }
 
 :root{
-  --blue:#168cff;
+  --blue:#00a2ff;
+  --blue2:#005cff;
   --gold:#f7d774;
-  --soft:#d9e5ff;
+  --gold2:#e3b238;
+  --soft:#dce8ff;
   --dark:#020713;
 }
 
 body{
-  background:var(--dark);
+  background:#020713;
   color:white;
   min-height:100vh;
+  padding-bottom:82px
 }
 
-.topbar{
-  height:70px;
+a{
+  text-decoration:none;
+  color:inherit
+}
+
+button{
+  border:0;
+  cursor:pointer
+}
+
+.editor-profile{
+  min-height:100vh;
+  background:
+    radial-gradient(
+      circle at 15% 8%,
+      rgba(0,126,255,.25),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 90% 35%,
+      rgba(0,70,220,.16),
+      transparent 32%
+    ),
+    linear-gradient(
+      180deg,
+      #04132c,
+      #020713 55%,
+      #01040c
+    )
+}
+
+
+/* CABECERA DE FOTOS */
+
+.photo-header{
+  position:relative;
+  height:315px;
+  margin-bottom:18px
+}
+
+.cover-editor{
+  position:relative;
+  width:100%;
+  height:245px;
+  overflow:hidden;
+  background:
+    linear-gradient(
+      135deg,
+      #061326,
+      #003a8f,
+      #020713
+    );
+  border-radius:0 0 34px 34px;
+  box-shadow:
+    0 22px 48px rgba(0,0,0,.48)
+}
+
+.cover-editor::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.02),
+      rgba(2,7,19,.14) 50%,
+      rgba(2,7,19,.82)
+    );
+  pointer-events:none
+}
+
+.cover-editor img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.cover-fallback{
+  position:absolute;
+  inset:0;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  padding:0 16px;
-  background:#020713;
-  border-bottom:2px solid var(--blue);
-  position:sticky;
-  top:0;
-  z-index:20;
+  justify-content:center;
+  font-size:42px;
+  color:rgba(255,255,255,.35)
 }
 
-.icon{
-  width:52px;
-  height:52px;
-  border-radius:16px;
-  border:1px solid var(--blue);
+
+/* LAPICES */
+
+.photo-pencil{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:43px;
+  height:43px;
+  border-radius:15px;
+  background:
+    linear-gradient(
+      135deg,
+      #dba92d,
+      #ffd767
+    );
+  color:#061326;
+  font-size:19px;
+  font-weight:900;
+  z-index:10;
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.4);
+  cursor:pointer
+}
+
+.cover-pencil{
+  right:16px;
+  bottom:18px
+}
+
+
+/* AVATAR */
+
+.avatar-editor{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:112px;
+  height:112px;
+  border-radius:50%;
   background:#07162c;
-  color:white;
-  font-size:24px;
+  border:3px solid var(--gold);
+  box-shadow:
+    0 0 0 7px rgba(2,7,19,.9),
+    0 0 35px rgba(0,162,255,.62),
+    0 16px 35px rgba(0,0,0,.45);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:5
 }
 
-.title{
+.avatar-editor img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  overflow:hidden
+}
+
+.avatar-fallback{
+  font-size:52px
+}
+
+.avatar-pencil{
+  width:37px;
+  height:37px;
+  border-radius:50%;
+  right:-5px;
+  bottom:4px;
+  font-size:16px
+}
+
+.photo-input{
+  display:none
+}
+
+
+/* ESTADO DE SUBIDA */
+
+.upload-status{
+  min-height:20px;
   text-align:center;
-}
-
-.title h1{
-  font-size:22px;
-  color:var(--gold);
-}
-
-.title p{
-  font-size:12px;
   color:var(--soft);
+  font-size:12px;
+  padding:0 16px;
+  margin-bottom:8px
 }
+
+.upload-status.active{
+  color:var(--gold)
+}
+
+
+/* CONTENIDO */
 
 .content{
-  padding:16px 16px 90px;
+  padding:
+    4px
+    16px
+    92px
 }
 
+.editor-title{
+  text-align:center;
+  margin-bottom:18px
+}
+
+.editor-title h1{
+  color:var(--gold);
+  font-size:27px;
+  margin-bottom:5px
+}
+
+.editor-title p{
+  color:rgba(220,232,255,.75);
+  font-size:13px
+}
+
+
+/* TARJETAS */
+
 .card{
-  background:linear-gradient(180deg,#102644,#030813);
-  border:1px solid rgba(247,215,116,.35);
-  border-radius:24px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,42,100,.38),
+      rgba(0,13,40,.78)
+    );
+  backdrop-filter:blur(17px);
+  border:
+    1px solid rgba(247,215,116,.2);
+  border-radius:25px;
   padding:18px;
-  margin-bottom:14px;
+  margin-bottom:16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 18px 40px rgba(0,0,0,.32)
 }
 
 .card h2{
   color:var(--gold);
-  margin-bottom:12px;
+  font-size:19px;
+  margin-bottom:12px
 }
+
+
+/* CAMPOS */
 
 label{
   display:block;
   color:var(--soft);
-  margin-top:12px;
-  font-size:14px;
+  margin-top:13px;
+  font-size:13px
 }
 
 input,
@@ -93,35 +291,43 @@ textarea{
   margin-top:7px;
   padding:14px;
   border-radius:15px;
-  border:1px solid var(--blue);
-  background:#07162c;
+  border:
+    1px solid rgba(0,162,255,.6);
+  background:rgba(7,22,44,.78);
   color:white;
   font-size:15px;
+  outline:none
+}
+
+input:focus,
+textarea:focus{
+  border-color:var(--gold);
+  box-shadow:
+    0 0 0 3px rgba(247,215,116,.08)
 }
 
 textarea{
   min-height:110px;
-  resize:none;
+  resize:none
 }
 
-.preview{
-  display:none;
-  width:100%;
-  max-height:230px;
-  object-fit:cover;
-  border-radius:18px;
-  margin-top:12px;
-  border:2px solid var(--gold);
+
+/* BLOQUE PROTEGIDO */
+
+.locked{
+  margin-top:15px;
+  padding:13px;
+  border-radius:16px;
+  background:rgba(0,90,255,.14);
+  border:
+    1px solid rgba(0,183,255,.32);
+  color:var(--soft);
+  font-size:13px;
+  line-height:1.5
 }
 
-.preview.avatar-preview{
-  width:120px;
-  height:120px;
-  border-radius:50%;
-  object-fit:cover;
-  margin-left:auto;
-  margin-right:auto;
-}
+
+/* NORMAS */
 
 .check{
   display:flex;
@@ -129,84 +335,285 @@ textarea{
   align-items:flex-start;
   margin-top:16px;
   color:var(--soft);
-  line-height:1.4;
+  line-height:1.4
 }
 
 .check input{
   width:auto;
-  margin-top:3px;
-}
-
-.btn{
-  width:100%;
-  border:0;
-  border-radius:18px;
-  padding:16px;
-  margin-top:14px;
-  font-size:17px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#d4af37,#ffcc55);
-  color:#07111f;
+  margin-top:3px
 }
 
 .small{
   color:#ffcf7a;
   font-size:13px;
   margin-top:10px;
-  line-height:1.4;
+  line-height:1.5
 }
 
-.locked{
-  margin-top:14px;
-  padding:13px;
-  border-radius:15px;
-  background:rgba(0,90,255,.15);
-  border:1px solid rgba(0,183,255,.35);
-  color:var(--soft);
-  font-size:13px;
-  line-height:1.5;
+
+/* GUARDAR */
+
+.btn{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:16px;
+  margin-top:16px;
+  font-size:17px;
+  font-weight:900;
+  background:
+    linear-gradient(
+      90deg,
+      #d4af37,
+      #ffcc55
+    );
+  color:#07111f;
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.28)
 }
+
+.btn:disabled{
+  opacity:.55;
+  cursor:not-allowed
+}
+
+
+/* CARGA */
 
 .loading{
   text-align:center;
   padding:50px 20px;
-  color:var(--soft);
+  color:var(--soft)
 }
+
+
+/* NAVEGACION */
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:74px;
+  background:rgba(2,7,19,.94);
+  backdrop-filter:blur(18px);
+  border-top:
+    1px solid rgba(247,215,116,.16);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:999;
+  box-shadow:
+    0 -12px 30px rgba(0,0,0,.28)
+}
+
+.nav-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:10px;
+  gap:3px;
+  color:rgba(255,255,255,.74)
+}
+
+.nav-item .icon{
+  font-size:23px
+}
+
+.nav-item.active{
+  color:var(--gold)
+}
+
+
+@media(max-width:390px){
+
+  .photo-header{
+    height:295px
+  }
+
+  .cover-editor{
+    height:228px
+  }
+
+  .avatar-editor{
+    width:104px;
+    height:104px
+  }
+
+  .editor-title h1{
+    font-size:25px
+  }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
-<header class="topbar">
-  <button class="icon" onclick="volverPerfil()">←</button>
+<main class="editor-profile">
 
-  <div class="title">
-    <h1>EDITAR PERFIL</h1>
-    <p>Personaliza tu ficha Elite</p>
+
+<section class="photo-header">
+
+  <div class="cover-editor">
+
+    <div
+      id="coverFallback"
+      class="cover-fallback">
+      🖼️
+    </div>
+
+    <img
+      id="previewPortada"
+      alt="Portada"
+    >
+
+    <label
+      for="archivoPortada"
+      class="photo-pencil cover-pencil"
+      aria-label="Cambiar portada">
+      ✏️
+    </label>
+
+    <input
+      id="archivoPortada"
+      class="photo-input"
+      type="file"
+      accept="image/*"
+    >
+
   </div>
 
-  <button class="icon" onclick="guardarPerfil()">✓</button>
-</header>
 
-<main id="contenido" class="content">
+  <div class="avatar-editor">
 
-<div class="loading">
-  Cargando perfil...
+    <span
+      id="avatarFallback"
+      class="avatar-fallback">
+      👤
+    </span>
+
+    <img
+      id="previewPerfil"
+      alt="Foto de perfil"
+    >
+
+    <label
+      for="archivoPerfil"
+      class="photo-pencil avatar-pencil"
+      aria-label="Cambiar foto de perfil">
+      ✏️
+    </label>
+
+    <input
+      id="archivoPerfil"
+      class="photo-input"
+      type="file"
+      accept="image/*"
+    >
+
+  </div>
+
+</section>
+
+
+<div
+  id="uploadStatus"
+  class="upload-status">
 </div>
+
+
+<section class="editor-title">
+
+  <h1>EDITAR PERFIL</h1>
+
+  <p>
+    Personaliza tu ficha Elite
+  </p>
+
+</section>
+
+
+<main
+  id="contenido"
+  class="content">
+
+  <div class="loading">
+    Cargando perfil...
+  </div>
 
 </main>
 
-<script type="module">
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <a
+    class="nav-item"
+    href="index.html">
+
+    <span class="icon">🏠</span>
+
+    <span>Inicio</span>
+
+  </a>
+
+
+  <a
+    class="nav-item"
+    href="sala-pro.html">
+
+    <span class="icon">🎙️</span>
+
+    <span>Sala</span>
+
+  </a>
+
+
+  <a
+    class="nav-item active"
+    href="perfil.html">
+
+    <span class="icon">👤</span>
+
+    <span>Perfil</span>
+
+  </a>
+
+
+  <a
+    class="nav-item"
+    href="chat.html">
+
+    <span class="icon">💬</span>
+
+    <span>Chat</span>
+
+  </a>
+
+
+  <a
+    class="nav-item"
+    href="menu.html">
+
+    <span class="icon">☰</span>
+
+    <span>Más</span>
+
+  </a>
+
+  </nav>
+  <script type="module">
 
 import {
   initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+
 import {
   getFirestore,
   doc,
@@ -219,6 +626,14 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+
+
 const firebaseConfig={
   apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
   authDomain:"agencia-jm-elite.firebaseapp.com",
@@ -228,73 +643,172 @@ const firebaseConfig={
   appId:"1:171676205335:web:95443528659ab804fe7752"
 };
 
+
 const app=initializeApp(firebaseConfig);
+
 const db=getFirestore(app);
+
 const storage=getStorage(app);
-const params=new URLSearchParams(window.location.search);
-const perfilSolicitado=params.get("id");
+
+
+const params=
+  new URLSearchParams(
+    window.location.search
+  );
+
+const perfilSolicitado=
+  params.get("id");
+
 
 const emailActual=(
   localStorage.getItem("jm_email") || ""
 ).toLowerCase();
 
+
 let usuarioActualId="";
+
 let usuarioActual={};
+
 let miDocumento=null;
 
-const contenido=document.getElementById("contenido");
+let fotoPerfilActual="";
+
+let fotoPortadaActual="";
+
+
+const contenido=
+  document.getElementById("contenido");
+
+const uploadStatus=
+  document.getElementById("uploadStatus");
+
 
 function valor(id){
-  const campo=document.getElementById(id);
-  return campo ? campo.value.trim() : "";
+
+  const campo=
+    document.getElementById(id);
+
+  return campo
+    ? campo.value.trim()
+    : "";
 }
+
 
 function poner(id,dato){
-  const campo=document.getElementById(id);
+
+  const campo=
+    document.getElementById(id);
 
   if(campo){
-    campo.value=dato || "";
+
+    campo.value=
+      dato || "";
   }
 }
 
-function volverPerfil(){
 
-  if(usuarioActualId){
-    location.href="perfil.html?id="+usuarioActualId;
+function estadoSubida(
+  mensaje,
+  activo=false
+){
+
+  uploadStatus.textContent=
+    mensaje || "";
+
+  uploadStatus.classList.toggle(
+    "active",
+    activo
+  );
+}
+
+
+function mostrarFotos(){
+
+  const previewPerfil=
+    document.getElementById(
+      "previewPerfil"
+    );
+
+  const previewPortada=
+    document.getElementById(
+      "previewPortada"
+    );
+
+  const avatarFallback=
+    document.getElementById(
+      "avatarFallback"
+    );
+
+  const coverFallback=
+    document.getElementById(
+      "coverFallback"
+    );
+
+
+  if(fotoPerfilActual){
+
+    previewPerfil.src=
+      fotoPerfilActual;
+
+    previewPerfil.style.display=
+      "block";
+
+    avatarFallback.style.display=
+      "none";
+
   }else{
-    location.href="perfil.html";
-  }
-}
 
-function mostrarPreview(inputId,imgId){
+    previewPerfil.style.display=
+      "none";
 
-  const input=document.getElementById(inputId);
-  const img=document.getElementById(imgId);
-
-  if(!input || !img){
-    return;
+    avatarFallback.style.display=
+      "block";
   }
 
-  const url=input.value.trim();
 
-  if(!url){
+  previewPerfil.onerror=function(){
 
-    img.style.display="none";
-    img.removeAttribute("src");
+    previewPerfil.style.display=
+      "none";
 
-    return;
+    avatarFallback.style.display=
+      "block";
+  };
+
+
+  if(fotoPortadaActual){
+
+    previewPortada.src=
+      fotoPortadaActual;
+
+    previewPortada.style.display=
+      "block";
+
+    coverFallback.style.display=
+      "none";
+
+  }else{
+
+    previewPortada.style.display=
+      "none";
+
+    coverFallback.style.display=
+      "flex";
   }
 
-  img.src=url;
-  img.style.display="block";
 
-  img.onerror=function(){
-    img.style.display="none";
+  previewPortada.onerror=function(){
+
+    previewPortada.style.display=
+      "none";
+
+    coverFallback.style.display=
+      "flex";
   };
 }
 
 
-async function subirImagenPerfil(
+async function subirImagen(
   archivo,
   tipo
 ){
@@ -303,17 +817,24 @@ async function subirImagenPerfil(
     return;
   }
 
+
   if(
     !archivo.type ||
     !archivo.type.startsWith("image/")
   ){
 
-    alert("Selecciona una imagen válida.");
+    alert(
+      "Selecciona una imagen válida."
+    );
 
     return;
   }
 
-  if(archivo.size > 5 * 1024 * 1024){
+
+  if(
+    archivo.size >
+    5 * 1024 * 1024
+  ){
 
     alert(
       "La imagen es demasiado grande. Máximo 5 MB."
@@ -322,19 +843,32 @@ async function subirImagenPerfil(
     return;
   }
 
+
   if(!usuarioActualId){
 
-    alert("No se encontró el perfil.");
+    alert(
+      "No se encontró el perfil."
+    );
 
     return;
   }
 
+
   try{
 
+    estadoSubida(
+      "📤 Subiendo imagen...",
+      true
+    );
+
+
     const extension=(
-      archivo.name.split(".").pop() ||
+      archivo.name
+      .split(".")
+      .pop() ||
       "jpg"
     ).toLowerCase();
+
 
     const ruta=
       "perfiles/"+
@@ -344,8 +878,13 @@ async function subirImagenPerfil(
       "."+
       extension;
 
+
     const archivoRef=
-      ref(storage,ruta);
+      ref(
+        storage,
+        ruta
+      );
+
 
     await uploadBytes(
       archivoRef,
@@ -355,39 +894,45 @@ async function subirImagenPerfil(
       }
     );
 
+
     const url=
-      await getDownloadURL(archivoRef);
+      await getDownloadURL(
+        archivoRef
+      );
+
 
     if(tipo === "perfil"){
 
-      const campo=
-        document.getElementById("fotoPerfil");
-
-      const preview=
-        document.getElementById("previewPerfil");
-
-      campo.value=url;
-      preview.src=url;
-      preview.style.display="block";
+      fotoPerfilActual=url;
 
     }else{
 
-      const campo=
-        document.getElementById("fotoPortada");
-
-      const preview=
-        document.getElementById("previewPortada");
-
-      campo.value=url;
-      preview.src=url;
-      preview.style.display="block";
+      fotoPortadaActual=url;
     }
 
-    alert("✅ Imagen subida correctamente.");
+
+    mostrarFotos();
+
+
+    estadoSubida(
+      "✅ Imagen subida correctamente"
+    );
+
+
+    setTimeout(function(){
+
+      estadoSubida("");
+
+    },2500);
+
 
   }catch(error){
 
     console.error(error);
+
+
+    estadoSubida("");
+
 
     alert(
       "Error al subir la imagen: "+
@@ -400,36 +945,44 @@ async function subirImagenPerfil(
 function configurarSubidaImagenes(){
 
   const archivoPerfil=
-    document.getElementById("archivoPerfil");
+    document.getElementById(
+      "archivoPerfil"
+    );
 
   const archivoPortada=
-    document.getElementById("archivoPortada");
+    document.getElementById(
+      "archivoPortada"
+    );
 
-  if(archivoPerfil){
 
-    archivoPerfil.onchange=async function(){
+  archivoPerfil.onchange=
+    async function(){
 
-      const archivo=this.files[0];
+      const archivo=
+        this.files[0];
 
-      await subirImagenPerfil(
+      await subirImagen(
         archivo,
         "perfil"
       );
+
+      this.value="";
     };
-  }
 
-  if(archivoPortada){
 
-    archivoPortada.onchange=async function(){
+  archivoPortada.onchange=
+    async function(){
 
-      const archivo=this.files[0];
+      const archivo=
+        this.files[0];
 
-      await subirImagenPerfil(
+      await subirImagen(
         archivo,
         "portada"
       );
+
+      this.value="";
     };
-  }
 }
 
 
@@ -438,183 +991,258 @@ function pintarFormulario(u){
   contenido.innerHTML=`
 
     <section class="card">
-      <h2>👤 Datos principales</h2>
 
-      <label>Nombre visible</label>
-      <input id="nombre" placeholder="Ej: Ruth María">
+      <h2>
+        👤 Datos principales
+      </h2>
 
-      <label>País</label>
-      <input id="pais" placeholder="Ej: Cuba">
 
-      <label>ID de Poppo</label>
-      <input id="poppoId" placeholder="Ej: 123456">
+      <label>
+        Nombre visible
+      </label>
 
-      <label>Fecha de inicio en Poppo</label>
+      <input
+        id="nombre"
+        placeholder="Ej: Ruth María"
+      >
+
+
+      <label>
+        País
+      </label>
+
+      <input
+        id="pais"
+        placeholder="Ej: Cuba"
+      >
+
+
+      <label>
+        ID de Poppo
+      </label>
+
+      <input
+        id="poppoId"
+        placeholder="Ej: 123456"
+      >
+
+
+      <label>
+        Fecha de inicio en Poppo
+      </label>
+
       <input
         id="fechaInicioPoppo"
         placeholder="Ej: 12/03/2024"
       >
 
+
       <div class="locked">
-        🔒 <b>Rol protegido</b><br>
+
+        🔒 <b>Rol protegido</b>
+
+        <br>
+
         Tu rol no se modifica desde el perfil.
+
         Los permisos de administración se gestionan
         desde el Panel de Administración.
+
       </div>
 
-      <label>Nivel</label>
-      <input id="nivel" placeholder="Ej: 45">
 
-      <label>Edad</label>
-      <input id="edad" placeholder="Ej: 49">
+      <label>
+        Nivel
+      </label>
 
-      <label>Género</label>
-      <input id="genero" placeholder="Ej: Hombre / Mujer">
+      <input
+        id="nivel"
+        placeholder="Ej: 45"
+      >
 
-      <label>Descripción</label>
+
+      <label>
+        Edad
+      </label>
+
+      <input
+        id="edad"
+        placeholder="Ej: 49"
+      >
+
+
+      <label>
+        Género
+      </label>
+
+      <input
+        id="genero"
+        placeholder="Ej: Hombre / Mujer"
+      >
+
+
+      <label>
+        Descripción
+      </label>
+
       <textarea
         id="descripcion"
         placeholder="Escribe una presentación bonita para tu perfil..."
       ></textarea>
-    </section>
-
-
-    <section class="card">
-      <h2>📊 Estadísticas Poppo</h2>
-
-      <label>Seguidores</label>
-      <input id="seguidores" placeholder="Ej: 1981">
-
-      <label>Coins enviados</label>
-      <input id="diamantes" placeholder="Ej: 272M">
-
-      <label>VIP</label>
-      <input id="vip" placeholder="Ej: VIP 3">
-
-      <label>Star</label>
-      <input id="star" placeholder="Ej: Star 7">
-
-      <label>Fan</label>
-      <input id="fan" placeholder="Ej: Fan 1">
-    </section>
-
-
-    <section class="card">
-      <h2>🖼️ Imágenes</h2>
-
-      <div class="image-editor">
-
-        <label>Foto de perfil</label>
-
-        <div class="image-edit-box">
-
-          <img
-            id="previewPerfil"
-            class="preview avatar-preview"
-            alt="Foto de perfil"
-          >
-
-          <label
-            for="archivoPerfil"
-            class="edit-image-btn">
-            ✏️ Editar foto
-          </label>
-
-          <input
-            type="file"
-            id="archivoPerfil"
-            accept="image/*"
-            hidden
-          >
-
-          <input
-            type="hidden"
-            id="fotoPerfil"
-          >
-
-        </div>
-
-      </div>
-
-
-      <div class="image-editor">
-
-        <label>Foto de portada</label>
-
-        <div class="image-edit-box">
-
-          <img
-            id="previewPortada"
-            class="preview"
-            alt="Foto de portada"
-          >
-
-          <label
-            for="archivoPortada"
-            class="edit-image-btn">
-            ✏️ Editar portada
-          </label>
-
-          <input
-            type="file"
-            id="archivoPortada"
-            accept="image/*"
-            hidden
-          >
-
-          <input
-            type="hidden"
-            id="fotoPortada"
-          >
-
-        </div>
-
-      </div>
-
-      <p class="small">
-        Selecciona una imagen desde tu teléfono.
-        La foto se subirá directamente a JM Elite.
-      </p>
 
     </section>
 
 
     <section class="card">
-      <h2>📲 Redes sociales</h2>
 
-      <label>WhatsApp</label>
-      <input id="whatsapp" placeholder="Número o enlace">
-
-      <label>Instagram</label>
-      <input id="instagram" placeholder="@usuario o enlace">
-
-      <label>TikTok</label>
-      <input id="tiktok" placeholder="@usuario o enlace">
-
-      <label>Facebook</label>
-      <input id="facebook" placeholder="Perfil o enlace">
-    </section>
+      <h2>
+        📊 Estadísticas Poppo
+      </h2>
 
 
-    <section class="card">
-      <h2>🛡️ Normas de Agencia JM Elite</h2>
-
-      <p class="small">
-        No se permiten fotos provocativas, desnudos,
-        drogas, violencia, insultos, contenido ilegal
-        o cualquier contenido que dañe la imagen de la agencia.
-      </p>
-
-      <label class="check">
-        <input id="aceptaNormas" type="checkbox">
-        <span>
-          Acepto las normas de Agencia JM Elite.
-        </span>
+      <label>
+        Seguidores
       </label>
 
-      <button class="btn" onclick="guardarPerfil()">
+      <input
+        id="seguidores"
+        placeholder="Ej: 1981"
+      >
+
+
+      <label>
+        Coins enviados
+      </label>
+
+      <input
+        id="diamantes"
+        placeholder="Ej: 272M"
+      >
+
+
+      <label>
+        VIP
+      </label>
+
+      <input
+        id="vip"
+        placeholder="Ej: VIP 3"
+      >
+
+
+      <label>
+        Star
+      </label>
+
+      <input
+        id="star"
+        placeholder="Ej: Star 7"
+      >
+
+
+      <label>
+        Fan
+      </label>
+
+      <input
+        id="fan"
+        placeholder="Ej: Fan 1"
+      >
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>
+        📲 Redes sociales
+      </h2>
+
+
+      <label>
+        WhatsApp
+      </label>
+
+      <input
+        id="whatsapp"
+        placeholder="Número o enlace"
+      >
+
+
+      <label>
+        Instagram
+      </label>
+
+      <input
+        id="instagram"
+        placeholder="@usuario o enlace"
+      >
+
+
+      <label>
+        TikTok
+      </label>
+
+      <input
+        id="tiktok"
+        placeholder="@usuario o enlace"
+      >
+
+
+      <label>
+        Facebook
+      </label>
+
+      <input
+        id="facebook"
+        placeholder="Perfil o enlace"
+      >
+
+    </section>
+
+
+    <section class="card">
+
+      <h2>
+        🛡️ Normas de Agencia JM Elite
+      </h2>
+
+
+      <p class="small">
+
+        No se permiten fotos provocativas,
+        desnudos, drogas, violencia, insultos,
+        contenido ilegal o cualquier contenido
+        que dañe la imagen de la agencia.
+
+      </p>
+
+
+      <label class="check">
+
+        <input
+          id="aceptaNormas"
+          type="checkbox"
+        >
+
+        <span>
+
+          Acepto las normas de Agencia JM Elite.
+
+        </span>
+
+      </label>
+
+
+      <button
+        id="guardarBtn"
+        class="btn"
+        onclick="guardarPerfil()">
+
         Guardar perfil
+
       </button>
+
     </section>
 
   `;
@@ -627,11 +1255,13 @@ function pintarFormulario(u){
     u.artisticName
   );
 
+
   poner(
     "pais",
     u.pais ||
     u.country
   );
+
 
   poner(
     "poppoId",
@@ -639,10 +1269,12 @@ function pintarFormulario(u){
     u.idPoppo
   );
 
+
   poner(
     "fechaInicioPoppo",
     u.fechaInicioPoppo
   );
+
 
   poner(
     "nivel",
@@ -650,11 +1282,13 @@ function pintarFormulario(u){
     u.level
   );
 
+
   poner(
     "edad",
     u.edad ||
     u.age
   );
+
 
   poner(
     "genero",
@@ -662,16 +1296,19 @@ function pintarFormulario(u){
     u.gender
   );
 
+
   poner(
     "descripcion",
     u.descripcion
   );
+
 
   poner(
     "seguidores",
     u.seguidores ||
     u.followers
   );
+
 
   poner(
     "diamantes",
@@ -680,47 +1317,42 @@ function pintarFormulario(u){
     u.diamonds
   );
 
+
   poner(
     "vip",
     u.vip
   );
+
 
   poner(
     "star",
     u.star
   );
 
+
   poner(
     "fan",
     u.fan
   );
 
-  poner(
-    "fotoPerfil",
-    u.fotoPerfil ||
-    u.photoURL
-  );
-
-  poner(
-    "fotoPortada",
-    u.fotoPortada ||
-    u.coverURL
-  );
 
   poner(
     "whatsapp",
     u.whatsapp
   );
 
+
   poner(
     "instagram",
     u.instagram
   );
 
+
   poner(
     "tiktok",
     u.tiktok
   );
+
 
   poner(
     "facebook",
@@ -729,65 +1361,18 @@ function pintarFormulario(u){
 
 
   const aceptaNormas=
-    document.getElementById("aceptaNormas");
-
-  if(aceptaNormas){
-
-    aceptaNormas.checked=
-      u.aceptaNormas === true;
-  }
+    document.getElementById(
+      "aceptaNormas"
+    );
 
 
-  const previewPerfil=
-    document.getElementById("previewPerfil");
-
-  const fotoPerfil=
-    document.getElementById("fotoPerfil");
+  aceptaNormas.checked=
+    u.aceptaNormas === true;
+}
 
 
-  if(
-    previewPerfil &&
-    fotoPerfil &&
-    fotoPerfil.value
-  ){
-
-    previewPerfil.src=
-      fotoPerfil.value;
-
-    previewPerfil.style.display=
-      "block";
-  }
-
-
-  const previewPortada=
-    document.getElementById("previewPortada");
-
-  const fotoPortada=
-    document.getElementById("fotoPortada");
-
-
-  if(
-    previewPortada &&
-    fotoPortada &&
-    fotoPortada.value
-  ){
-
-    previewPortada.src=
-      fotoPortada.value;
-
-    previewPortada.style.display=
-      "block";
-  }
-
-
-  configurarSubidaImagenes();
-
-  }
-window.mostrarPreviewGlobal=function(inputId,imgId){
-  mostrarPreview(inputId,imgId);
-};
-
-async function buscarMiDocumento(){
+configurarSubidaImagenes();
+    async function buscarMiDocumento(){
 
   if(!emailActual){
     return null;
@@ -807,25 +1392,37 @@ async function buscarMiDocumento(){
   return snap.docs[0];
 }
 
+
 async function cargarDatos(){
 
-  if(localStorage.getItem("jm_logged") !== "yes"){
+  if(
+    localStorage.getItem("jm_logged")
+    !==
+    "yes"
+  ){
+
     location.replace("index.html");
+
     return;
   }
 
   try{
 
-    miDocumento=await buscarMiDocumento();
+    miDocumento=
+      await buscarMiDocumento();
 
     if(!miDocumento){
+
       contenido.innerHTML=
         '<div class="loading">No se encontró tu cuenta.</div>';
 
       return;
     }
 
-    const misDatos=miDocumento.data();
+
+    const misDatos=
+      miDocumento.data();
+
 
     const miRol=(
       misDatos.role ||
@@ -833,25 +1430,36 @@ async function cargarDatos(){
       ""
     ).toLowerCase();
 
+
     if(perfilSolicitado){
 
-      const refSolicitada=doc(
-        db,
-        "usuarios",
-        perfilSolicitado
-      );
+      const refSolicitada=
+        doc(
+          db,
+          "usuarios",
+          perfilSolicitado
+        );
 
-      const snapSolicitada=await getDoc(refSolicitada);
+
+      const snapSolicitada=
+        await getDoc(
+          refSolicitada
+        );
+
 
       if(!snapSolicitada.exists()){
+
         contenido.innerHTML=
           '<div class="loading">No se encontró este perfil.</div>';
 
         return;
       }
 
+
       const perfilAjeno=
-        perfilSolicitado !== miDocumento.id;
+        perfilSolicitado !==
+        miDocumento.id;
+
 
       if(
         perfilAjeno &&
@@ -863,23 +1471,57 @@ async function cargarDatos(){
           "No tienes permiso para editar este perfil."
         );
 
-        location.href="perfil.html";
+
+        location.href=
+          "perfil.html";
+
 
         return;
       }
 
-      usuarioActualId=perfilSolicitado;
-      usuarioActual=snapSolicitada.data();
+
+      usuarioActualId=
+        perfilSolicitado;
+
+
+      usuarioActual=
+        snapSolicitada.data();
 
     }else{
 
-      usuarioActualId=miDocumento.id;
-      usuarioActual=misDatos;
+      usuarioActualId=
+        miDocumento.id;
+
+
+      usuarioActual=
+        misDatos;
     }
 
-    pintarFormulario(usuarioActual);
+
+    fotoPerfilActual=
+      usuarioActual.fotoPerfil ||
+      usuarioActual.photoURL ||
+      "";
+
+
+    fotoPortadaActual=
+      usuarioActual.fotoPortada ||
+      usuarioActual.coverURL ||
+      "";
+
+
+    mostrarFotos();
+
+
+    pintarFormulario(
+      usuarioActual
+    );
+
 
   }catch(error){
+
+    console.error(error);
+
 
     contenido.innerHTML=
       '<div class="loading">Error cargando perfil: '+
@@ -888,19 +1530,29 @@ async function cargarDatos(){
   }
 }
 
-window.guardarPerfil=async function(){
+
+window.guardarPerfil=
+async function(){
 
   if(!usuarioActualId){
 
-    alert("No se encontró el perfil.");
+    alert(
+      "No se encontró el perfil."
+    );
 
     return;
   }
 
+
+  const aceptaNormas=
+    document.getElementById(
+      "aceptaNormas"
+    );
+
+
   if(
-    !document
-    .getElementById("aceptaNormas")
-    .checked
+    !aceptaNormas ||
+    !aceptaNormas.checked
   ){
 
     alert(
@@ -910,88 +1562,191 @@ window.guardarPerfil=async function(){
     return;
   }
 
-  const nombre=valor("nombre");
-  const pais=valor("pais");
-  const nivel=valor("nivel");
+
+  const nombre=
+    valor("nombre");
+
+
+  const pais=
+    valor("pais");
+
+
+  const nivel=
+    valor("nivel");
+
 
   if(!nombre){
 
-    alert("Pon tu nombre visible.");
+    alert(
+      "Pon tu nombre visible."
+    );
 
     return;
   }
 
-  try{
 
-    const ref=doc(
-      db,
-      "usuarios",
-      usuarioActualId
+  const guardarBtn=
+    document.getElementById(
+      "guardarBtn"
     );
 
-    await setDoc(ref,{
 
-      nombre:nombre,
-      nombreArtistico:nombre,
-      artisticName:nombre,
+  try{
 
-      pais:pais,
-      country:pais,
+    if(guardarBtn){
 
-      poppoId:valor("poppoId"),
+      guardarBtn.disabled=true;
 
-      fechaInicioPoppo:
-        valor("fechaInicioPoppo"),
+      guardarBtn.textContent=
+        "Guardando...";
+    }
 
-      nivel:nivel,
-      level:nivel,
 
-      edad:valor("edad"),
-      genero:valor("genero"),
-      descripcion:valor("descripcion"),
+    const refUsuario=
+      doc(
+        db,
+        "usuarios",
+        usuarioActualId
+      );
 
-      seguidores:valor("seguidores"),
-      diamantes:valor("diamantes"),
 
-      vip:valor("vip"),
-      star:valor("star"),
-      fan:valor("fan"),
+    await setDoc(
+      refUsuario,
+      {
 
-      fotoPerfil:valor("fotoPerfil"),
-      fotoPortada:valor("fotoPortada"),
+        nombre:nombre,
 
-      whatsapp:valor("whatsapp"),
-      instagram:valor("instagram"),
-      tiktok:valor("tiktok"),
-      facebook:valor("facebook"),
+        nombreArtistico:nombre,
 
-      aceptaNormas:true,
-      estadoRevision:"pendiente",
-      actualizado:serverTimestamp()
+        artisticName:nombre,
 
-    },{
-      merge:true
-    });
 
-    alert("✅ Perfil guardado correctamente.");
+        pais:pais,
+
+        country:pais,
+
+
+        poppoId:
+          valor("poppoId"),
+
+
+        fechaInicioPoppo:
+          valor("fechaInicioPoppo"),
+
+
+        nivel:nivel,
+
+        level:nivel,
+
+
+        edad:
+          valor("edad"),
+
+
+        genero:
+          valor("genero"),
+
+
+        descripcion:
+          valor("descripcion"),
+
+
+        seguidores:
+          valor("seguidores"),
+
+
+        diamantes:
+          valor("diamantes"),
+
+
+        vip:
+          valor("vip"),
+
+
+        star:
+          valor("star"),
+
+
+        fan:
+          valor("fan"),
+
+
+        fotoPerfil:
+          fotoPerfilActual,
+
+
+        fotoPortada:
+          fotoPortadaActual,
+
+
+        whatsapp:
+          valor("whatsapp"),
+
+
+        instagram:
+          valor("instagram"),
+
+
+        tiktok:
+          valor("tiktok"),
+
+
+        facebook:
+          valor("facebook"),
+
+
+        aceptaNormas:true,
+
+        estadoRevision:
+          "pendiente",
+
+
+        actualizado:
+          serverTimestamp()
+
+      },
+      {
+        merge:true
+      }
+    );
+
+
+    alert(
+      "✅ Perfil guardado correctamente."
+    );
+
 
     location.href=
-      "perfil.html?id="+usuarioActualId;
+      "perfil.html?id="+
+      usuarioActualId;
+
 
   }catch(error){
+
+    console.error(error);
+
 
     alert(
       "Error al guardar: "+
       error.message
     );
+
+
+    if(guardarBtn){
+
+      guardarBtn.disabled=false;
+
+      guardarBtn.textContent=
+        "Guardar perfil";
+    }
   }
 };
 
-window.volverPerfil=volverPerfil;
 
 cargarDatos();
 
 </script>
 
 </body>
-  </html>
+
+</html>
