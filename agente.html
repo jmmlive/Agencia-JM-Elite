@@ -1,270 +1,1358 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
+
 <title>Panel de Administración | JM Elite</title>
 
+<meta name="theme-color" content="#020713">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#020713;color:white;min-height:100vh;padding:16px}
-a{text-decoration:none;color:inherit}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.header h1{color:#f7d774;font-size:26px}
-.btn{border:0;border-radius:14px;padding:12px 14px;font-weight:bold;cursor:pointer}
-.back{background:#082554;color:white;border:1px solid #00b7ff}
-.card{background:rgba(0,20,60,.78);border:1px solid rgba(0,183,255,.35);border-radius:22px;padding:16px;margin-bottom:14px;box-shadow:0 0 18px rgba(0,140,255,.18)}
-.card h2{color:#f7d774;margin-bottom:10px}
-.info{color:#dce8ff;font-size:14px;line-height:1.6}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.approve{background:linear-gradient(135deg,#00c853,#64ff8f);color:#03130a}
-.reject{background:linear-gradient(135deg,#c62828,#ff6b6b);color:white}
-.empty{text-align:center;color:#dce8ff;padding:30px 10px}
-.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#3b2d00;color:#f7d774;font-size:12px;margin-top:6px}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+:root{
+--gold:#f7d774;
+--blue:#00b7ff;
+--dark:#020713;
+--panel:#061a42;
+--soft:#dce8ff;
+--green:#42f58d;
+--red:#ff5b60;
+}
+
+body{
+background:
+radial-gradient(circle at top,#073170 0%,#020713 48%);
+color:white;
+min-height:100vh;
+padding:16px;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+button{
+border:0;
+cursor:pointer;
+font:inherit;
+}
+
+button:disabled{
+opacity:.60;
+cursor:not-allowed;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+margin-bottom:15px;
+}
+
+.header h1{
+color:var(--gold);
+font-size:25px;
+line-height:1.1;
+}
+
+.btn{
+border:0;
+border-radius:14px;
+padding:12px 14px;
+font-weight:bold;
+color:white;
+}
+
+.back{
+background:#082554;
+border:1px solid var(--blue);
+}
+
+.card{
+background:rgba(0,20,60,.82);
+border:1px solid rgba(0,183,255,.38);
+border-radius:22px;
+padding:16px;
+margin-bottom:14px;
+box-shadow:0 0 20px rgba(0,140,255,.17);
+}
+
+.card h2{
+color:var(--gold);
+margin-bottom:10px;
+}
+
+.status-bar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+margin-bottom:14px;
+padding:11px 13px;
+border-radius:15px;
+background:rgba(0,12,38,.78);
+border:1px solid rgba(0,183,255,.28);
+}
+
+.connection{
+font-size:13px;
+color:var(--soft);
+}
+
+.connection.online{
+color:#7cff9e;
+}
+
+.connection.offline{
+color:#ff9a9d;
+}
+
+.notification-btn{
+background:#09295e;
+border:1px solid rgba(247,215,116,.45);
+color:var(--gold);
+padding:9px 12px;
+border-radius:12px;
+font-size:12px;
+font-weight:bold;
+}
+
+.actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:12px;
+}
+
+.control-btn{
+min-height:64px;
+background:rgba(0,46,115,.58);
+border:1px solid rgba(0,183,255,.38);
+color:white;
+border-radius:17px;
+font-weight:bold;
+font-size:15px;
+padding:10px;
+position:relative;
+}
+
+.control-btn:active{
+transform:scale(.98);
+}
+
+.counter{
+position:absolute;
+top:7px;
+right:8px;
+min-width:22px;
+height:22px;
+padding:0 6px;
+border-radius:999px;
+background:#e52335;
+color:white;
+display:none;
+align-items:center;
+justify-content:center;
+font-size:11px;
+font-weight:900;
+box-shadow:0 0 10px rgba(255,30,60,.7);
+}
+
+.counter.show{
+display:flex;
+}
+
+.lab{
+background:linear-gradient(135deg,#811827,#c53242);
+}
+
+.info{
+color:var(--soft);
+font-size:14px;
+line-height:1.6;
+}
+
+.request-card{
+background:rgba(0,29,78,.88);
+border:1px solid rgba(0,183,255,.40);
+border-radius:21px;
+padding:16px;
+margin-top:13px;
+box-shadow:0 0 16px rgba(0,140,255,.15);
+}
+
+.request-card h3{
+font-size:22px;
+color:var(--gold);
+margin-bottom:11px;
+}
+
+.badge{
+display:inline-block;
+padding:6px 10px;
+border-radius:999px;
+background:#493800;
+color:var(--gold);
+font-size:12px;
+margin-top:8px;
+}
+
+.request-actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:14px;
+}
+
+.approve{
+background:linear-gradient(135deg,#00c853,#64ff8f);
+color:#03130a;
+}
+
+.reject{
+background:linear-gradient(135deg,#c62828,#ff6b6b);
+color:white;
+}
+
+.empty{
+text-align:center;
+color:var(--soft);
+padding:30px 10px;
+}
+
+.toast{
+position:fixed;
+left:16px;
+right:16px;
+top:18px;
+z-index:9999;
+display:none;
+padding:14px 16px;
+border-radius:17px;
+background:rgba(6,19,38,.97);
+border:1px solid rgba(247,215,116,.55);
+box-shadow:0 0 28px rgba(0,140,255,.45);
+}
+
+.toast.show{
+display:block;
+}
+
+.toast strong{
+display:block;
+color:var(--gold);
+margin-bottom:4px;
+}
+
+.toast p{
+color:var(--soft);
+font-size:13px;
+}
+
+@media(max-width:390px){
+
+body{
+padding:12px;
+}
+
+.header h1{
+font-size:22px;
+}
+
+.control-btn{
+font-size:14px;
+}
+
+}
+
 </style>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 </head>
+
 
 <body>
 
-<div class="header">
-  <h1>👑 Panel de Administración</h1>
-  <a class="btn back" href="index.html">Volver</a>
+
+<div id="toast" class="toast">
+
+<strong id="toastTitle">
+Nueva notificación
+</strong>
+
+<p id="toastText"></p>
+
 </div>
+
+
+<div class="header">
+
+<h1>
+👑 Panel de Administración
+</h1>
+
+<a
+class="btn back"
+href="index.html"
+>
+← Volver
+</a>
+
+</div>
+
+
+<div class="status-bar">
+
+<div
+id="connectionStatus"
+class="connection"
+>
+Comprobando conexión...
+</div>
+
+<button
+id="notificationButton"
+class="notification-btn"
+onclick="requestNotifications()"
+>
+🔔 Activar avisos
+</button>
+
+</div>
+
+
 <div class="card">
-<h2>👑 Centro de Control</h2>
+
+<h2>
+👑 Centro de Control
+</h2>
 
 <div class="actions">
-<button class="btn back" onclick="location.href='emisoras.html'">👥 Emisoras</button>
 
-<button class="btn back" onclick="location.href='invitaciones.html'">📩 Invitaciones</button>
+<button
+class="control-btn"
+onclick="location.href='emisoras.html'"
+>
+👥 Emisoras
+</button>
 
-<button class="btn back" onclick="location.href='pagos.html'">💰 Pagos</button>
+<button
+id="invitationsButton"
+class="control-btn"
+onclick="location.href='invitaciones.html'"
+>
+📩 Invitaciones
 
-<button class="btn back" onclick="location.href='ranking.html'">🏆 Ranking</button>
+<span
+id="requestsCounter"
+class="counter"
+>
+0
+</span>
 
-<button class="btn back" onclick="location.href='avisos.html'">📢 Avisos</button>
+</button>
 
-<button class="btn back" onclick="location.href='academia.html'">🎓 Academia</button>
+<button
+class="control-btn"
+onclick="location.href='pagos.html'"
+>
+💰 Pagos
+</button>
 
-<button class="btn back" onclick="location.href='configuracion.html'">⚙️ Configuración</button>
+<button
+class="control-btn"
+onclick="location.href='ranking.html'"
+>
+🏆 Ranking
+</button>
 
-<button class="btn reject" onclick="borrarPruebas()">🧪 Laboratorio</button>
+<button
+class="control-btn"
+onclick="location.href='avisos.html'"
+>
+📢 Avisos
+</button>
+
+<button
+class="control-btn"
+onclick="location.href='academia.html'"
+>
+🎓 Academia
+</button>
+
+<button
+class="control-btn"
+onclick="location.href='configuracion.html'"
+>
+⚙️ Configuración
+</button>
+
+<button
+class="control-btn lab"
+onclick="borrarPruebas()"
+>
+🧪 Laboratorio
+</button>
+
 </div>
+
 </div>
+
 
 <div class="card">
-<h2>📋 Solicitudes pendientes</h2>
-<div id="requestsBox"></div>
+
+<h2>
+📋 Solicitudes pendientes
+</h2>
+
+<div id="requestsBox">
+
+<div class="empty">
+Cargando solicitudes...
 </div>
 
+</div>
+
+</div>
+
+
 <script>
+
 const firebaseConfig={
-  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain:"agencia-jm-elite.firebaseapp.com",
-  projectId:"agencia-jm-elite",
-  storageBucket:"agencia-jm-elite.firebasestorage.app",
-  messagingSenderId:"171676205335",
-  appId:"1:171676205335:web:95443528659ab804fe7752"
+
+apiKey:
+"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+
+authDomain:
+"agencia-jm-elite.firebaseapp.com",
+
+projectId:
+"agencia-jm-elite",
+
+storageBucket:
+"agencia-jm-elite.firebasestorage.app",
+
+messagingSenderId:
+"171676205335",
+
+appId:
+"1:171676205335:web:95443528659ab804fe7752"
+
 };
 
+
 if(!firebase.apps.length){
-  firebase.initializeApp(firebaseConfig);
+
+firebase.initializeApp(firebaseConfig);
+
 }
+
 
 const db=firebase.firestore();
 
-const usuario=JSON.parse(localStorage.getItem("jm_user") || "{}");
+
+const usuario=
+
+JSON.parse(
+
+localStorage.getItem("jm_user") || "{}"
+
+);
+
+
+let firstSnapshot=true;
+
+let approvingRequests=new Set();
+
 
 if(usuario.rol!=="administrador"){
-  alert("Acceso denegado.");
-  location.href="index.html";
+
+alert("Acceso denegado.");
+
+location.href="index.html";
+
 }
+
+
+function escapeHtml(value){
+
+return String(value || "")
+
+.replace(/&/g,"&amp;")
+
+.replace(/</g,"&lt;")
+
+.replace(/>/g,"&gt;")
+
+.replace(/"/g,"&quot;")
+
+.replace(/'/g,"&#039;");
+
+}
+
+
+function updateConnection(){
+
+const status=
+
+document.getElementById("connectionStatus");
+
+
+if(navigator.onLine){
+
+status.textContent=
+"🟢 Sistema conectado";
+
+status.className=
+"connection online";
+
+}else{
+
+status.textContent=
+"🔴 Sin conexión";
+
+status.className=
+"connection offline";
+
+}
+
+}
+
+
+function showToast(title,text){
+
+const toast=
+
+document.getElementById("toast");
+
+
+document
+.getElementById("toastTitle")
+.textContent=title;
+
+
+document
+.getElementById("toastText")
+.textContent=text;
+
+
+toast.classList.add("show");
+
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},5000);
+
+}
+
+
+function requestNotifications(){
+
+if(!("Notification" in window)){
+
+alert(
+"Este navegador no permite notificaciones."
+);
+
+return;
+
+}
+
+
+Notification
+.requestPermission()
+
+.then(permission=>{
+
+if(permission==="granted"){
+
+document
+.getElementById("notificationButton")
+.textContent=
+"🔔 Avisos activos";
+
+
+showToast(
+
+"Avisos activados",
+
+"JM Elite podrá avisarte mientras el panel esté funcionando."
+
+);
+
+}else{
+
+alert(
+"No se concedió permiso para las notificaciones."
+);
+
+}
+
+});
+
+}
+
+
+function notifyNewRequest(data){
+
+const name=
+
+data.artisticName || "Nueva emisora";
+
+
+showToast(
+
+"📩 Nueva solicitud",
+
+name + " ha enviado una solicitud."
+
+);
+
+
+if(
+
+"Notification" in window &&
+
+Notification.permission==="granted"
+
+){
+
+new Notification(
+
+"JM Elite · Nueva solicitud",
+
+{
+
+body:
+name + " espera aprobación.",
+
+icon:
+"agencia-jm-equipo-banner.png"
+
+}
+
+);
+
+}
+
+}
+
+
+function updateCounter(total){
+
+const counter=
+
+document.getElementById("requestsCounter");
+
+
+counter.textContent=total;
+
+
+counter.classList.toggle(
+
+"show",
+
+total>0
+
+);
+
+}
+
 
 function loadRequests(){
 
-  const box=document.getElementById("requestsBox");
+const box=
 
-  db.collection("pending_requests")
-  .where("status","==","pendiente")
-  .onSnapshot(snapshot=>{
+document.getElementById("requestsBox");
 
-    box.innerHTML="";
 
-    const botonInvitaciones=document.querySelector(
-      'button[onclick*="invitaciones.html"]'
-    );
+db
+.collection("pending_requests")
+.where("status","==","pendiente")
+.onSnapshot(
 
-    if(botonInvitaciones){
-      botonInvitaciones.innerHTML=
-      "📩 Invitaciones" +
-      (snapshot.size>0 ? " 🔴 " + snapshot.size : "");
-    }
+snapshot=>{
 
-    if(snapshot.empty){
-      box.innerHTML=
-      '<div class="empty">No hay solicitudes pendientes.</div>';
-      return;
-    }
+box.innerHTML="";
 
-    snapshot.forEach(doc=>{
 
-      const s=doc.data();
+updateCounter(snapshot.size);
 
-      const div=document.createElement("div");
-      div.className="card";
 
-      div.innerHTML=`
-        <h2>👤 ${s.artisticName || "Sin nombre"}</h2>
+if(!firstSnapshot){
 
-        <div class="info">
-          <b>País:</b> ${s.country || "-"}<br>
-          <b>Correo:</b> ${s.email || "-"}<br>
-          <b>Código invitación:</b> ${s.invitationCode || "Sin código"}<br>
-          <b>Invitada por:</b> ${s.invitedBy || "Nadie"}<br>
-          <b>Fecha:</b> ${s.date || "-"}<br>
+snapshot
+.docChanges()
+.forEach(change=>{
 
-          <span class="badge">⏳ Pendiente</span>
-        </div>
+if(change.type==="added"){
 
-        <div class="actions">
-          <button class="btn approve"
-          onclick="approveRequest('${doc.id}')">
-          ✅ Aprobar
-          </button>
+notifyNewRequest(
 
-          <button class="btn reject"
-          onclick="rejectRequest('${doc.id}')">
-          ❌ Rechazar
-          </button>
-        </div>
-      `;
+change.doc.data()
 
-      box.appendChild(div);
+);
 
-    });
-
-  },error=>{
-    box.innerHTML=
-    '<div class="empty">Error al cargar solicitudes.</div>';
-
-    alert("Error: "+error.message);
-  });
 }
 
-function approveRequest(id){
+});
 
-  db.collection("pending_requests").doc(id).get()
-  .then(doc=>{
-
-    if(!doc.exists){
-      alert("No se encontró la solicitud.");
-      return;
-    }
-
-    const s=doc.data();
-
-    return db.collection("usuarios").add({
-      id:s.id || "JM-"+Date.now(),
-      email:s.email || "",
-      password:s.password || "",
-      artisticName:s.artisticName || "",
-      country:s.country || "",
-      invitationCode:s.invitationCode || "",
-      invitedBy:s.invitedBy || "",
-      registerType:s.registerType || "",
-      appStartDate:s.appStartDate || new Date().toISOString(),
-      appDay:s.appDay || 1,
-      level:s.level || 1,
-      badge:s.badge || "Nueva",
-      status:"activa",
-      role:"emisora",
-      approvedAt:new Date().toLocaleString()
-    }).then(()=>{
-      return db.collection("pending_requests").doc(id).delete();
-    });
-
-  })
-  .then(()=>{
-    alert("✅ Solicitud aprobada. La emisora ya está activa.");
-  })
-  .catch(error=>{
-    alert("Error al aprobar: "+error.message);
-  });
 }
 
-function rejectRequest(id){
 
-  if(!confirm("¿Rechazar esta solicitud?")){
-    return;
-  }
+firstSnapshot=false;
 
-  db.collection("pending_requests").doc(id).delete()
-  .then(()=>{
-    alert("❌ Solicitud rechazada.");
-  })
-  .catch(error=>{
-    alert("Error al rechazar: "+error.message);
-  });
+
+if(snapshot.empty){
+
+box.innerHTML=
+
+'<div class="empty">No hay solicitudes pendientes.</div>';
+
+return;
+
 }
+
+
+snapshot.forEach(doc=>{
+
+const s=doc.data();
+
+const requestId=doc.id;
+
+
+const div=
+
+document.createElement("div");
+
+
+div.className=
+"request-card";
+
+
+div.innerHTML=`
+
+<h3>
+👤 ${escapeHtml(s.artisticName || "Sin nombre")}
+</h3>
+
+<div class="info">
+
+<b>País:</b>
+${escapeHtml(s.country || "-")}
+<br>
+
+<b>Correo:</b>
+${escapeHtml(s.email || "-")}
+<br>
+
+<b>Código invitación:</b>
+${escapeHtml(s.invitationCode || "Sin código")}
+<br>
+
+<b>Invitada por:</b>
+${escapeHtml(s.invitedBy || "Nadie")}
+<br>
+
+<b>Fecha:</b>
+${escapeHtml(s.date || "-")}
+<br>
+
+<span class="badge">
+⏳ Pendiente
+</span>
+
+</div>
+
+<div class="request-actions">
+
+<button
+id="approve-${requestId}"
+class="btn approve"
+onclick="approveRequest('${requestId}')"
+>
+✅ Aprobar
+</button>
+
+<button
+id="reject-${requestId}"
+class="btn reject"
+onclick="rejectRequest('${requestId}')"
+>
+❌ Rechazar
+</button>
+
+</div>
+
+`;
+
+
+box.appendChild(div);
+
+});
+
+},
+
+error=>{
+
+console.error(
+
+"ERROR SOLICITUDES:",
+
+error
+
+);
+
+
+box.innerHTML=
+
+'<div class="empty">Error al cargar solicitudes.</div>';
+
+
+showToast(
+
+"Error de Firebase",
+
+error.message
+
+);
+
+}
+
+);
+
+}
+
+
+async function approveRequest(id){
+
+if(approvingRequests.has(id)){
+
+return;
+
+}
+
+
+const approveButton=
+
+document.getElementById(
+
+"approve-" + id
+
+);
+
+
+const rejectButton=
+
+document.getElementById(
+
+"reject-" + id
+
+);
+
+
+try{
+
+approvingRequests.add(id);
+
+
+if(approveButton){
+
+approveButton.disabled=true;
+
+approveButton.textContent=
+"⏳ APROBANDO...";
+
+}
+
+
+if(rejectButton){
+
+rejectButton.disabled=true;
+
+}
+
+
+const requestRef=
+
+db
+.collection("pending_requests")
+.doc(id);
+
+
+const requestDoc=
+
+await requestRef.get();
+
+
+if(!requestDoc.exists){
+
+throw new Error(
+
+"No se encontró la solicitud."
+
+);
+
+}
+
+
+const s=requestDoc.data();
+
+
+const email=
+
+(s.email || "")
+.trim()
+.toLowerCase();
+
+
+if(!email){
+
+throw new Error(
+
+"La solicitud no tiene correo."
+
+);
+
+}
+
+
+const existing=
+
+await db
+.collection("usuarios")
+.where("email","==",email)
+.limit(1)
+.get();
+
+
+if(!existing.empty){
+
+throw new Error(
+
+"Ya existe una emisora con ese correo."
+
+);
+
+}
+
+
+await db
+.collection("usuarios")
+.add({
+
+id:
+s.id || "JM-" + Date.now(),
+
+email:
+email,
+
+password:
+s.password || "",
+
+artisticName:
+s.artisticName || "",
+
+country:
+s.country || "",
+
+invitationCode:
+s.invitationCode || "",
+
+invitedBy:
+s.invitedBy || "",
+
+registerType:
+s.registerType || "",
+
+appStartDate:
+s.appStartDate || new Date().toISOString(),
+
+appDay:
+s.appDay || 1,
+
+level:
+s.level || 1,
+
+badge:
+s.badge || "Nueva",
+
+status:
+"activa",
+
+role:
+"emisora",
+
+permissions:
+{},
+
+approvedAt:
+new Date().toLocaleString(),
+
+approvedBy:
+usuario.email || "administrador"
+
+});
+
+
+await requestRef.delete();
+
+
+showToast(
+
+"✅ Solicitud aprobada",
+
+(s.artisticName || "La emisora") +
+" ya está activa."
+
+);
+
+
+alert(
+
+"✅ Solicitud aprobada. La emisora ya está activa."
+
+);
+
+
+}catch(error){
+
+console.error(
+
+"ERROR AL APROBAR:",
+
+error
+
+);
+
+
+alert(
+
+"Error al aprobar: " +
+error.message
+
+);
+
+
+if(approveButton){
+
+approveButton.disabled=false;
+
+approveButton.textContent=
+"✅ Aprobar";
+
+}
+
+
+if(rejectButton){
+
+rejectButton.disabled=false;
+
+}
+
+
+}finally{
+
+approvingRequests.delete(id);
+
+}
+
+}
+
+
+async function rejectRequest(id){
+
+if(
+
+!confirm(
+
+"¿Seguro que quieres rechazar esta solicitud?"
+
+)
+
+){
+
+return;
+
+}
+
+
+const button=
+
+document.getElementById(
+
+"reject-" + id
+
+);
+
+
+try{
+
+if(button){
+
+button.disabled=true;
+
+button.textContent=
+"⏳ RECHAZANDO...";
+
+}
+
+
+await db
+.collection("pending_requests")
+.doc(id)
+.delete();
+
+
+showToast(
+
+"Solicitud rechazada",
+
+"La solicitud fue eliminada."
+
+);
+
+
+}catch(error){
+
+console.error(
+
+"ERROR AL RECHAZAR:",
+
+error
+
+);
+
+
+alert(
+
+"Error al rechazar: " +
+error.message
+
+);
+
+
+if(button){
+
+button.disabled=false;
+
+button.textContent=
+"❌ Rechazar";
+
+}
+
+}
+
+}
+
 
 async function borrarPruebas(){
 
-  if(!confirm("¿Eliminar los registros de prueba?")){
-    return;
-  }
+if(
 
-  try{
+!confirm(
 
-    const pendientes=await db.collection("pending_requests").get();
+"¿Eliminar solicitudes y usuarios de prueba?"
 
-    for(const doc of pendientes.docs){
+)
 
-      const u=doc.data();
+){
 
-      const texto=(
-        (u.artisticName || "")+" "+
-        (u.email || "")
-      ).toLowerCase();
+return;
 
-      if(
-        texto.includes("prueba") ||
-        texto.includes("test") ||
-        texto.includes("demo")
-      ){
-        await doc.ref.delete();
-      }
-    }
-
-    const usuarios=await db.collection("usuarios").get();
-
-    for(const doc of usuarios.docs){
-
-      const u=doc.data();
-
-      const texto=(
-        (u.artisticName || "")+" "+
-        (u.email || "")
-      ).toLowerCase();
-
-      if(
-        texto.includes("prueba") ||
-        texto.includes("test") ||
-        texto.includes("demo")
-      ){
-        await doc.ref.delete();
-      }
-    }
-
-    alert("🗑️ Registros de prueba eliminados.");
-
-  }catch(error){
-    alert("Error en laboratorio: "+error.message);
-  }
 }
 
+
+if(
+
+!confirm(
+
+"Esta acción eliminará datos de prueba. ¿Continuar?"
+
+)
+
+){
+
+return;
+
+}
+
+
+try{
+
+let eliminados=0;
+
+
+const pendientes=
+
+await db
+.collection("pending_requests")
+.get();
+
+
+for(
+
+const doc of pendientes.docs
+
+){
+
+const u=doc.data();
+
+
+const texto=(
+
+(u.artisticName || "") +
+" " +
+(u.email || "")
+
+).toLowerCase();
+
+
+if(
+
+texto.includes("prueba") ||
+
+texto.includes("plueba") ||
+
+texto.includes("test") ||
+
+texto.includes("demo")
+
+){
+
+await doc.ref.delete();
+
+eliminados++;
+
+}
+
+}
+
+
+const usuarios=
+
+await db
+.collection("usuarios")
+.get();
+
+
+for(
+
+const doc of usuarios.docs
+
+){
+
+const u=doc.data();
+
+
+const texto=(
+
+(u.artisticName || "") +
+" " +
+(u.email || "")
+
+).toLowerCase();
+
+
+if(
+
+texto.includes("prueba") ||
+
+texto.includes("plueba") ||
+
+texto.includes("test") ||
+
+texto.includes("demo")
+
+){
+
+await doc.ref.delete();
+
+eliminados++;
+
+}
+
+}
+
+
+alert(
+
+"🗑️ Laboratorio limpio. Registros eliminados: " +
+eliminados
+
+);
+
+
+}catch(error){
+
+console.error(
+
+"ERROR LABORATORIO:",
+
+error
+
+);
+
+
+alert(
+
+"Error en laboratorio: " +
+error.message
+
+);
+
+}
+
+}
+
+
+window.addEventListener(
+
+"online",
+
+updateConnection
+
+);
+
+
+window.addEventListener(
+
+"offline",
+
+updateConnection
+
+);
+
+
+updateConnection();
+
 loadRequests();
+
 </script>
+
+
 </body>
-</html>
+
+  </html>
