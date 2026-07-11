@@ -13,7 +13,9 @@ content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 <title>Agencia JM Elite</title>
 
 <meta name="theme-color" content="#020713">
+
 <link rel="manifest" href="manifest.json">
+
 <style>
 
 *{
@@ -54,6 +56,11 @@ text-decoration:none;
 color:inherit;
 }
 
+button,
+input{
+font:inherit;
+}
+
 button{
 border:0;
 cursor:pointer;
@@ -63,11 +70,6 @@ color:inherit;
 button:disabled{
 opacity:.65;
 cursor:not-allowed;
-}
-
-input,
-button{
-font:inherit;
 }
 
 .login{
@@ -88,15 +90,21 @@ display:flex;
 .login-bg{
 position:absolute;
 inset:0;
-background:url("agencia-jm-equipo-banner.png") center/cover no-repeat;
-filter:brightness(.34) saturate(1.3);
+background:
+url("agencia-jm-equipo-banner.png")
+center/cover
+no-repeat;
+filter:
+brightness(.34)
+saturate(1.3);
 }
 
 .login-bg:after{
 content:"";
 position:absolute;
 inset:0;
-background:linear-gradient(
+background:
+linear-gradient(
 180deg,
 rgba(0,90,255,.35),
 #020713 86%
@@ -112,7 +120,8 @@ border-radius:28px;
 background:rgba(0,12,38,.80);
 border:1px solid rgba(247,215,116,.45);
 backdrop-filter:blur(18px);
-box-shadow:0 0 38px rgba(0,140,255,.55);
+box-shadow:
+0 0 38px rgba(0,140,255,.55);
 text-align:center;
 }
 
@@ -142,7 +151,8 @@ gap:10px;
 
 .input:focus-within{
 border-color:var(--gold);
-box-shadow:0 0 0 2px rgba(247,215,116,.12);
+box-shadow:
+0 0 0 2px rgba(247,215,116,.12);
 }
 
 .input input{
@@ -163,7 +173,12 @@ color:#aebbd2;
 width:100%;
 height:50px;
 border-radius:17px;
-background:linear-gradient(135deg,#d4a72d,#ffcf55);
+background:
+linear-gradient(
+135deg,
+#d4a72d,
+#ffcf55
+);
 color:#061326;
 font-weight:900;
 font-size:17px;
@@ -235,7 +250,8 @@ display:block;
 .app{
 min-height:100vh;
 padding:10px;
-background:radial-gradient(
+background:
+radial-gradient(
 circle at top,
 #006cff88 0%,
 #061326 35%,
@@ -250,7 +266,8 @@ border-radius:26px;
 overflow:hidden;
 border:1px solid rgba(0,183,255,.58);
 background:#061326;
-box-shadow:0 0 28px rgba(0,140,255,.42);
+box-shadow:
+0 0 28px rgba(0,140,255,.42);
 }
 
 .hero img{
@@ -259,7 +276,10 @@ height:100%;
 object-fit:cover;
 object-position:center top;
 display:block;
-filter:saturate(1.22) contrast(1.08) brightness(.90);
+filter:
+saturate(1.22)
+contrast(1.08)
+brightness(.90);
 }
 
 .hero:after{
@@ -360,7 +380,8 @@ padding:5px 7px;
 
 .status div{
 text-align:center;
-border-right:1px solid rgba(255,255,255,.10);
+border-right:
+1px solid rgba(255,255,255,.10);
 }
 
 .status strong{
@@ -382,7 +403,12 @@ font-weight:900;
 min-height:32px;
 padding:0 11px;
 border-radius:999px;
-background:linear-gradient(135deg,#006cff,#00b7ff);
+background:
+linear-gradient(
+135deg,
+#006cff,
+#00b7ff
+);
 display:flex;
 align-items:center;
 justify-content:center;
@@ -404,7 +430,12 @@ text-transform:uppercase;
 content:"";
 flex:1;
 height:1px;
-background:linear-gradient(90deg,var(--gold),transparent);
+background:
+linear-gradient(
+90deg,
+var(--gold),
+transparent
+);
 }
 
 .icon-panel{
@@ -440,7 +471,8 @@ justify-content:center;
 font-size:28px;
 background:rgba(0,12,38,.65);
 border:1px solid rgba(0,183,255,.45);
-box-shadow:0 0 18px rgba(0,140,255,.35);
+box-shadow:
+0 0 18px rgba(0,140,255,.35);
 }
 
 .icon-link b{
@@ -465,7 +497,8 @@ box-shadow:0 0 18px #39ffcb55;
 
 .gold{
 border-color:var(--gold);
-box-shadow:0 0 18px rgba(247,215,116,.50);
+box-shadow:
+0 0 18px rgba(247,215,116,.50);
 }
 
 .red{
@@ -504,7 +537,8 @@ width:82%;
 max-width:320px;
 height:100%;
 background:rgba(6,19,38,.97);
-border-right:1px solid rgba(247,215,116,.35);
+border-right:
+1px solid rgba(247,215,116,.35);
 padding:22px 16px;
 overflow-y:auto;
 }
@@ -540,8 +574,10 @@ display:flex!important;
 }
 
 .logout{
-background:rgba(130,0,25,.75)!important;
-border-color:rgba(255,80,80,.45)!important;
+background:
+rgba(130,0,25,.75)!important;
+border-color:
+rgba(255,80,80,.45)!important;
 }
 
 .bottom-nav{
@@ -550,8 +586,11 @@ left:0;
 right:0;
 bottom:0;
 height:74px;
+padding-bottom:
+env(safe-area-inset-bottom);
 background:rgba(0,12,38,.98);
-border-top:1px solid rgba(247,215,116,.26);
+border-top:
+1px solid rgba(247,215,116,.26);
 display:grid;
 grid-template-columns:repeat(5,1fr);
 z-index:999;
@@ -588,7 +627,8 @@ font-size:25px;
 }
 
 .status{
-grid-template-columns:1fr .75fr .8fr auto;
+grid-template-columns:
+1fr .75fr .8fr auto;
 }
 
 .status a{
@@ -602,20 +642,16 @@ padding:0 8px;
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-</head>
-<body>
 
-<section id="loginScreen" class="login">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+</head>
+<section id="loginScreen" class="login" aria-label="Acceso a JM Elite">
   <div class="login-bg"></div>
 
   <div class="login-card">
-
     <h1>JM Elite</h1>
-
-    <p id="loginSubtitle">
-      Acceso privado para emisoras
-    </p>
+    <p id="loginSubtitle">Acceso privado para emisoras</p>
 
     <div class="input">
       <span>✉️</span>
@@ -676,10 +712,7 @@ padding:0 8px;
       ENTRAR
     </button>
 
-    <div id="loginStatus" class="login-status"></div>
-
     <div class="login-links">
-
       <button onclick="normalRegister()">
         Registro normal
       </button>
@@ -695,13 +728,11 @@ padding:0 8px;
       <button onclick="backToLogin()">
         Volver
       </button>
-
     </div>
 
     <div class="login-foot">
       🔐 Seguridad y confianza · Agencia JM Elite
     </div>
-
   </div>
 </section>
 
@@ -711,7 +742,6 @@ padding:0 8px;
   class="drawer"
   onclick="closeDrawer(event)"
 >
-
   <div class="drawer-panel">
 
     <h2>JM Elite</h2>
@@ -762,7 +792,6 @@ padding:0 8px;
     </button>
 
   </div>
-
 </section>
 
 
@@ -802,9 +831,7 @@ padding:0 8px;
         <span>JM ELITE</span>
       </h1>
 
-      <p>
-        Un equipo, una visión.
-      </p>
+      <p>Un equipo, una visión.</p>
 
       <div class="hero-line"></div>
 
@@ -837,178 +864,106 @@ padding:0 8px;
     </a>
 
   </section>
-
-
-  <h2 class="section-title">
-    ⚡ Accesos rápidos
-  </h2>
+    <h2 class="section-title">⚡ Accesos rápidos</h2>
 
   <section class="icon-panel">
-
     <div class="icon-grid">
 
-      <a
-        class="icon-link"
-        href="chatbot.html"
-      >
-        <span class="icon-circle purple">
-          🤖
-        </span>
+      <a class="icon-link" href="chatbot.html">
+        <span class="icon-circle purple">🤖</span>
         <b>ChatBot IA</b>
         <small>Asistente</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="emisoras.html"
-      >
-        <span class="icon-circle">
-          👥
-        </span>
+      <a class="icon-link" href="emisoras.html">
+        <span class="icon-circle">👥</span>
         <b>Emisoras</b>
         <small>Equipo</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="pagos.html"
-      >
-        <span class="icon-circle green">
-          💰
-        </span>
+      <a class="icon-link" href="pagos.html">
+        <span class="icon-circle green">💰</span>
         <b>Pagos</b>
         <small>Historial</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="ranking.html"
-      >
-        <span class="icon-circle gold">
-          🏆
-        </span>
+      <a class="icon-link" href="ranking.html">
+        <span class="icon-circle gold">🏆</span>
         <b>Ranking</b>
         <small>Top</small>
       </a>
 
     </div>
-
   </section>
 
 
-  <h2 class="section-title">
-    👥 Gestión
-  </h2>
+  <h2 class="section-title">👥 Gestión</h2>
 
   <section class="icon-panel">
-
     <div class="icon-grid">
 
-      <a
-        class="icon-link"
-        href="avisos.html"
-      >
-        <span class="icon-circle gold">
-          📢
-        </span>
+      <a class="icon-link" href="avisos.html">
+        <span class="icon-circle gold">📢</span>
         <b>Avisos</b>
         <small>Noticias</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="eventos.html"
-      >
-        <span class="icon-circle red">
-          🎉
-        </span>
+      <a class="icon-link" href="eventos.html">
+        <span class="icon-circle red">🎉</span>
         <b>Eventos</b>
         <small>Próximos</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="academia.html"
-      >
-        <span class="icon-circle">
-          🎓
-        </span>
+      <a class="icon-link" href="academia.html">
+        <span class="icon-circle">🎓</span>
         <b>Academia</b>
         <small>Cursos</small>
       </a>
 
       <a
+        id="inviteQuickAccess"
         class="icon-link manager-only"
         href="invitaciones.html"
       >
-        <span class="icon-circle gold">
-          📩
-        </span>
+        <span class="icon-circle gold">📩</span>
         <b>Invitar</b>
         <small>Usuario nuevo</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="soporte.html"
-      >
-        <span class="icon-circle green">
-          🛟
-        </span>
+      <a class="icon-link" href="soporte.html">
+        <span class="icon-circle green">🛟</span>
         <b>Soporte</b>
         <small>Ayuda</small>
       </a>
 
     </div>
-
   </section>
 
 
-  <h2 class="section-title">
-    ⭐ Más opciones
-  </h2>
+  <h2 class="section-title">⭐ Más opciones</h2>
 
   <section class="icon-panel">
-
     <div class="icon-grid">
 
-      <a
-        class="icon-link"
-        href="perfil.html"
-      >
-        <span class="icon-circle">
-          👤
-        </span>
+      <a class="icon-link" href="perfil.html">
+        <span class="icon-circle">👤</span>
         <b>Perfil</b>
         <small>Datos</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="configuracion.html"
-      >
-        <span class="icon-circle">
-          ⚙️
-        </span>
+      <a class="icon-link" href="configuracion.html">
+        <span class="icon-circle">⚙️</span>
         <b>Ajustes</b>
         <small>Cuenta</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="normas.html"
-      >
-        <span class="icon-circle purple">
-          📖
-        </span>
+      <a class="icon-link" href="normas.html">
+        <span class="icon-circle purple">📖</span>
         <b>Normas</b>
         <small>Reglas</small>
       </a>
 
-      <a
-        class="icon-link"
-        href="menu.html"
-      >
+      <a class="icon-link" href="menu.html">
         <span class="icon-circle dots-icon">
           <span></span>
           <span></span>
@@ -1019,7 +974,6 @@ padding:0 8px;
       </a>
 
     </div>
-
   </section>
 
 </main>
@@ -1027,315 +981,290 @@ padding:0 8px;
 
 <nav class="bottom-nav">
 
-  <a
-    class="nav-item active"
-    href="index.html"
-  >
+  <a class="nav-item active" href="index.html">
     <span class="icon">🏠</span>
     <span>Inicio</span>
   </a>
 
-  <a
-    class="nav-item"
-    href="sala-pro.html"
-  >
+  <a class="nav-item" href="sala-pro.html">
     <span class="icon">🎙️</span>
     <span>Sala Pro</span>
   </a>
 
-  <a
-    class="nav-item"
-    href="perfil.html"
-  >
+  <a class="nav-item" href="perfil.html">
     <span class="icon">👤</span>
     <span>Perfil</span>
   </a>
 
-  <a
-    class="nav-item"
-    href="chat.html"
-  >
+  <a class="nav-item" href="chat.html">
     <span class="icon">💬</span>
     <span>Chat</span>
   </a>
 
-  <a
-    class="nav-item"
-    href="menu.html"
-  >
+  <a class="nav-item" href="menu.html">
     <span class="icon">☰</span>
     <span>Más</span>
   </a>
 
-        </nav>
-        <script>
-
-const AGENT_EMAILS = [
+</nav>
+<script>
+const AGENT_EMAILS=[
   "jesus@jmelite.com",
   "admin@jmelite.com",
   "elpepolan35@gmail.com"
 ];
 
-let registerMode = "";
-let registerSending = false;
+let registerMode="";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain: "agencia-jm-elite.firebaseapp.com",
-  projectId: "agencia-jm-elite",
-  storageBucket: "agencia-jm-elite.firebasestorage.app",
-  messagingSenderId: "171676205335",
-  appId: "1:171676205335:web:95443528659ab804fe7752"
+const firebaseConfig={
+  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain:"agencia-jm-elite.firebaseapp.com",
+  projectId:"agencia-jm-elite",
+  storageBucket:"agencia-jm-elite.firebasestorage.app",
+  messagingSenderId:"171676205335",
+  appId:"1:171676205335:web:95443528659ab804fe7752"
 };
 
 firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
 
-const db = firebase.firestore();
-const auth = firebase.auth();
-function isAgent(email) {
+
+function isAgent(email){
+
   return AGENT_EMAILS.includes(
     (email || "").toLowerCase()
   );
+
 }
 
-function validEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
 
-function getRole() {
+function getRole(){
+
   return localStorage.getItem("jm_role") || "";
+
 }
 
-function getPermissions() {
-  try {
+
+function getPermissions(){
+
+  try{
+
     return JSON.parse(
       localStorage.getItem("jm_permissions") || "{}"
     );
-  } catch {
+
+  }catch{
+
     return {};
+
   }
+
 }
 
-function setLoginStatus(message, type = "info") {
-  const box = document.getElementById("loginStatus");
 
-  box.className = "login-status show " + type;
-  box.textContent = message;
-}
+function applyPermissions(){
 
-function clearLoginStatus() {
-  const box = document.getElementById("loginStatus");
+  const role=getRole();
 
-  box.className = "login-status";
-  box.textContent = "";
-}
+  const permissions=getPermissions();
 
-function clearSession() {
-  [
-    "jm_logged",
-    "jm_email",
-    "jm_role",
-    "jm_permissions",
-    "jm_user"
-  ].forEach(key => {
-    localStorage.removeItem(key);
-  });
-}
-
-function applyPermissions() {
-  const role = getRole();
-  const permissions = getPermissions();
 
   document
     .querySelectorAll(".agent-only")
-    .forEach(el => {
+    .forEach(el=>{
 
-      const allowed =
-        role === "agente" ||
-        role === "administrador";
-
-      el.classList.toggle("show", allowed);
+      el.classList.toggle(
+        "show",
+        role==="agente" ||
+        role==="administrador"
+      );
 
     });
+
 
   document
     .querySelectorAll(".manager-only")
-    .forEach(el => {
+    .forEach(el=>{
 
-      const allowed =
-        role === "agente" ||
-        role === "administrador" ||
-        permissions.canInvite === true;
+      const canInvite=
 
-      el.classList.toggle("show", allowed);
+        role==="agente" ||
+
+        role==="administrador" ||
+
+        permissions.canInvite===true;
+
+
+      el.classList.toggle(
+        "show",
+        canInvite
+      );
 
     });
+
 }
 
-function checkLogin() {
-  const logged = localStorage.getItem("jm_logged");
 
-  const email = (
-    localStorage.getItem("jm_email") || ""
-  ).toLowerCase();
+function checkLogin(){
 
-  const login = document.getElementById("loginScreen");
+  const logged=
+    localStorage.getItem("jm_logged");
 
-  if (isAgent(email)) {
+  const email=
+    (
+      localStorage.getItem("jm_email") || ""
+    ).toLowerCase();
+
+  const login=
+    document.getElementById("loginScreen");
+
+
+  if(isAgent(email)){
+
     localStorage.setItem(
       "jm_role",
       "administrador"
     );
+
   }
 
-  if (logged === "yes") {
-    login.classList.remove("show");
-  } else {
-    login.classList.add("show");
+
+  if(logged==="yes"){
+
+    login?.classList.remove("show");
+
+  }else{
+
+    login?.classList.add("show");
+
   }
+
 
   applyPermissions();
+
 }
 
-function login() {
 
-  if (registerMode) {
+function login(){
+
+  if(registerMode){
+
     sendRegisterRequest(registerMode);
+
     return;
+
   }
 
-  clearLoginStatus();
 
-  const email = document
-    .getElementById("emailInput")
-    .value
-    .trim()
-    .toLowerCase();
+  const email=
+    document
+      .getElementById("emailInput")
+      .value
+      .trim()
+      .toLowerCase();
 
-  const pass = document
-    .getElementById("passInput")
-    .value
-    .trim();
 
-  if (!email || !pass) {
-    setLoginStatus(
-      "Pon el correo y la contraseña.",
-      "error"
+  const pass=
+    document
+      .getElementById("passInput")
+      .value
+      .trim();
+
+
+  if(!email || !pass){
+
+    alert("Pon correo y contraseña.");
+
+    return;
+
+  }
+
+
+  if(isAgent(email)){
+
+    localStorage.setItem(
+      "jm_logged",
+      "yes"
     );
-    return;
-  }
 
-  if (!validEmail(email)) {
-    setLoginStatus(
-      "El correo electrónico no parece válido.",
-      "error"
+    localStorage.setItem(
+      "jm_email",
+      email
     );
-    return;
-  }
 
-  setLoginStatus(
-    "Comprobando acceso...",
-    "info"
-  );
+    localStorage.setItem(
+      "jm_role",
+      "administrador"
+    );
 
-  if (isAgent(email)) {
+    localStorage.setItem(
+      "jm_permissions",
+      JSON.stringify({
+        canInvite:true
+      })
+    );
 
-    auth.signInWithEmailAndPassword(email, pass)
+    localStorage.setItem(
+      "jm_user",
+      JSON.stringify({
 
-    .then(() => {
+        email:email,
 
-      localStorage.setItem(
-        "jm_logged",
-        "yes"
-      );
+        rol:"administrador"
 
-      localStorage.setItem(
-        "jm_email",
-        email
-      );
+      })
+    );
 
-      localStorage.setItem(
-        "jm_role",
-        "administrador"
-      );
 
-      localStorage.setItem(
-        "jm_permissions",
-        JSON.stringify({
-          canInvite: true
-        })
-      );
-
-      localStorage.setItem(
-        "jm_user",
-        JSON.stringify({
-          email: email,
-          rol: "administrador"
-        })
-      );
-
-      clearLoginStatus();
-
-      checkLogin();
-
-    })
-
-    .catch(error => {
-
-      console.error(
-        "ERROR AUTH ADMIN:",
-        error
-      );
-
-      setLoginStatus(
-        "Correo o contraseña de administrador incorrectos.",
-        "error"
-      );
-
-    });
+    checkLogin();
 
     return;
+
   }
 
-  db.collection("usuarios")
-    .where("email", "==", email)
+
+  db
+    .collection("usuarios")
+    .where("email","==",email)
     .limit(1)
     .get()
 
-    .then(snapshot => {
+    .then(snapshot=>{
 
-      if (snapshot.empty) {
+      if(snapshot.empty){
 
-        setLoginStatus(
-          "No estás aprobado todavía o el correo no existe.",
-          "error"
+        alert(
+          "No estás aprobado todavía o el correo no existe."
         );
 
         return;
+
       }
 
-      const user =
+
+      const user=
         snapshot.docs[0].data();
 
-      if (user.password !== pass) {
 
-        setLoginStatus(
-          "Contraseña incorrecta.",
-          "error"
+      if(user.password!==pass){
+
+        alert("Contraseña incorrecta.");
+
+        return;
+
+      }
+
+
+      if(user.status!=="activa"){
+
+        alert(
+          "Tu cuenta todavía no está activa."
         );
 
         return;
+
       }
 
-      if (user.status !== "activa") {
-
-        setLoginStatus(
-          "Tu cuenta todavía no está activa.",
-          "error"
-        );
-
-        return;
-      }
 
       localStorage.setItem(
         "jm_logged",
@@ -1362,314 +1291,187 @@ function login() {
       localStorage.setItem(
         "jm_user",
         JSON.stringify({
-          email: email,
-          rol: user.role || "emisora",
+
+          email:email,
+
+          rol:user.role || "emisora",
+
           artisticName:
             user.artisticName || ""
+
         })
       );
 
-      clearLoginStatus();
 
       checkLogin();
 
     })
 
-    .catch(error => {
+    .catch(error=>{
 
-      console.error(
-        "ERROR LOGIN:",
-        error
-      );
-
-      setLoginStatus(
-        "Error al conectar con el sistema: " +
-        error.message,
-        "error"
+      alert(
+        "Error al iniciar sesión: " +
+        error.message
       );
 
     });
 
 }
+  function normalRegister(){
 
-
-function normalRegister() {
-
-  if (registerSending) {
-    return;
-  }
-
-  registerMode = "normal";
-
-  clearLoginStatus();
+  registerMode="normal";
 
   document
     .getElementById("registerExtra")
-    .classList
-    .add("show");
+    .classList.add("show");
 
   document
     .getElementById("inviteInput")
-    .placeholder =
-    "Código de invitación (opcional)";
+    .placeholder="Código de invitación (opcional)";
 
   document
     .getElementById("loginSubtitle")
-    .innerText =
-    "Registro normal de emisora";
+    .innerText="Registro normal de emisora";
 
   document
     .getElementById("mainLoginBtn")
-    .innerText =
-    "ENVIAR SOLICITUD";
+    .innerText="ENVIAR SOLICITUD";
 
-          }
+}
 
-function inviteRegister() {
-  if (registerSending) {
-    return;
-  }
 
-  registerMode = "invitacion";
+function inviteRegister(){
 
-  clearLoginStatus();
+  registerMode="invitacion";
 
   document
     .getElementById("registerExtra")
-    .classList
-    .add("show");
+    .classList.add("show");
 
   document
     .getElementById("inviteInput")
-    .placeholder =
-    "Código de invitación";
+    .placeholder="Código de invitación";
 
   document
     .getElementById("loginSubtitle")
-    .innerText =
-    "Registro por invitación";
+    .innerText="Registro por invitación";
 
   document
     .getElementById("mainLoginBtn")
-    .innerText =
-    "ENVIAR SOLICITUD";
-}
-          function sendRegisterRequest(type) {
+    .innerText="ENVIAR SOLICITUD";
 
-  if (registerSending) {
-    return;
-  }
-
-  clearLoginStatus();
-
-  const email = document
-    .getElementById("emailInput")
-    .value.trim().toLowerCase();
-
-  const pass = document
-    .getElementById("passInput")
-    .value.trim();
-
-  const name = document
-    .getElementById("nameInput")
-    .value.trim();
-
-  const country = document
-    .getElementById("countryInput")
-    .value.trim();
-
-  const invite = document
-    .getElementById("inviteInput")
-    .value.trim();
-
-  const button =
-    document.getElementById("mainLoginBtn");
-
-  if (!email || !pass || !name || !country) {
-    setLoginStatus(
-      "Completa todos los datos obligatorios.",
-      "error"
-    );
-    return;
-  }
-
-  if (!validEmail(email)) {
-    setLoginStatus(
-      "Introduce un correo electrónico válido.",
-      "error"
-    );
-    return;
-  }
-
-  if (pass.length < 6) {
-    setLoginStatus(
-      "La contraseña debe tener al menos 6 caracteres.",
-      "error"
-    );
-    return;
-  }
-
-  if (type === "invitacion" && !invite) {
-    setLoginStatus(
-      "Falta el código de invitación.",
-      "error"
-    );
-    return;
-  }
-
-  if (!navigator.onLine) {
-    setLoginStatus(
-      "No hay conexión a Internet.",
-      "error"
-    );
-    return;
-  }
-
-  registerSending = true;
-
-  button.disabled = true;
-  button.innerText = "ENVIANDO...";
-
-  setLoginStatus(
-    "Enviando solicitud al sistema...",
-    "info"
-  );
-
-  const requestData = {
-    id: "JM-" + Date.now(),
-    email: email,
-    password: pass,
-    artisticName: name,
-    country: country,
-    invitationCode: invite,
-    invitedBy: invite || "",
-    registerType: type,
-    appStartDate: new Date().toISOString(),
-    appDay: 1,
-    level: 1,
-    badge: "Nueva",
-    status: "pendiente",
-    date: new Date().toLocaleString()
-  };
-
-  let completed = false;
-
-  const timeout = setTimeout(() => {
-
-    if (completed) {
-      return;
-    }
-
-    completed = true;
-    registerSending = false;
-
-    button.disabled = false;
-    button.innerText = "ENVIAR SOLICITUD";
-
-    setLoginStatus(
-      "No se pudo conectar con el servidor. Comprueba la red e inténtalo otra vez.",
-      "error"
-    );
-
-  }, 20000);
-
-  try {
-
-    db.collection("pending_requests")
-      .add(requestData)
-
-      .then(() => {
-
-        if (completed) {
-          return;
-        }
-
-        completed = true;
-
-        clearTimeout(timeout);
-
-        registerSending = false;
-
-        button.disabled = false;
-        button.innerText = "ENVIAR SOLICITUD";
-
-        setLoginStatus(
-          "✅ Solicitud enviada correctamente. Un administrador la revisará.",
-          "success"
-        );
-
-        setTimeout(() => {
-          backToLogin();
-        }, 2500);
-
-      })
-
-      .catch(error => {
-
-        if (completed) {
-          return;
-        }
-
-        completed = true;
-
-        clearTimeout(timeout);
-
-        registerSending = false;
-
-        button.disabled = false;
-        button.innerText = "ENVIAR SOLICITUD";
-
-        console.error(
-          "ERROR FIREBASE REGISTRO:",
-          error
-        );
-
-        setLoginStatus(
-          "No se pudo enviar la solicitud. Error: " +
-          error.message,
-          "error"
-        );
-
-      });
-
-  } catch (error) {
-
-    if (completed) {
-      return;
-    }
-
-    completed = true;
-
-    clearTimeout(timeout);
-
-    registerSending = false;
-
-    button.disabled = false;
-    button.innerText = "ENVIAR SOLICITUD";
-
-    console.error(
-      "ERROR GENERAL REGISTRO:",
-      error
-    );
-
-    setLoginStatus(
-      "Error del sistema: " + error.message,
-      "error"
-    );
-
-  }
 }
 
 
-function backToLogin() {
+function sendRegisterRequest(type){
 
-  if (registerSending) {
+  const email=
+    document
+      .getElementById("emailInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+  const pass=
+    document
+      .getElementById("passInput")
+      .value
+      .trim();
+
+  const name=
+    document
+      .getElementById("nameInput")
+      .value
+      .trim();
+
+  const country=
+    document
+      .getElementById("countryInput")
+      .value
+      .trim();
+
+  const invite=
+    document
+      .getElementById("inviteInput")
+      .value
+      .trim();
+
+
+  if(!email || !pass || !name || !country){
+
+    alert("Completa todos los datos.");
+
     return;
+
   }
 
-  registerMode = "";
 
-  clearLoginStatus();
+  if(type==="invitacion" && !invite){
+
+    alert("Introduce el código de invitación.");
+
+    return;
+
+  }
+
+
+  db.collection("pending_requests").add({
+
+    id:"JM-"+Date.now(),
+
+    email:email,
+
+    password:pass,
+
+    artisticName:name,
+
+    country:country,
+
+    invitationCode:invite,
+
+    invitedBy:invite || "",
+
+    registerType:type,
+
+    appStartDate:new Date().toISOString(),
+
+    appDay:1,
+
+    level:1,
+
+    badge:"Nueva",
+
+    status:"pendiente",
+
+    date:new Date().toLocaleString()
+
+  })
+
+  .then(()=>{
+
+    alert(
+      "Solicitud enviada. Un administrador la revisará."
+    );
+
+    backToLogin();
+
+  })
+
+  .catch(error=>{
+
+    alert(
+      "Error al enviar solicitud: " +
+      error.message
+    );
+
+  });
+
+}
+
+
+function backToLogin(){
+
+  registerMode="";
 
   document
     .getElementById("registerExtra")
@@ -1677,182 +1479,211 @@ function backToLogin() {
 
   document
     .getElementById("loginSubtitle")
-    .innerText =
-    "Acceso privado para emisoras";
+    .innerText="Acceso privado para emisoras";
 
   document
     .getElementById("mainLoginBtn")
-    .innerText =
-    "ENTRAR";
+    .innerText="ENTRAR";
+
+  document
+    .getElementById("mainLoginBtn")
+    .onclick=login;
+
 }
 
 
-function recoverPassword() {
+function recoverPassword(){
 
-  clearLoginStatus();
+  const email=
+    document
+      .getElementById("emailInput")
+      .value
+      .trim();
 
-  const email = document
-    .getElementById("emailInput")
-    .value.trim();
 
-  if (!email) {
-    setLoginStatus(
-      "Pon tu correo electrónico para recuperar la contraseña.",
-      "error"
+  if(!email){
+
+    alert(
+      "Pon tu correo para recuperar la contraseña."
     );
+
     return;
+
   }
 
-  if (!validEmail(email)) {
-    setLoginStatus(
-      "Introduce un correo electrónico válido.",
-      "error"
-    );
-    return;
-  }
 
-  setLoginStatus(
-    "La recuperación automática estará disponible próximamente.",
-    "info"
+  alert(
+    "La recuperación de contraseña todavía necesita conectarse al sistema de autenticación."
   );
-}
-
-
-async function logout() {
-
-  try {
-    await auth.signOut();
-  } catch (error) {
-    console.error(
-      "ERROR AL CERRAR FIREBASE:",
-      error
-    );
-  }
-
-  clearSession();
-
-  sessionStorage.clear();
-
-  window.location.replace("index.html");
 
 }
 
 
-function openDrawer() {
+function logout(){
 
-  const drawer =
-    document.getElementById("drawer");
+  [
+    "jm_logged",
+    "jm_email",
+    "jm_role",
+    "jm_permissions",
+    "jm_user"
 
-  drawer.classList.add("show");
+  ].forEach(key=>
+    localStorage.removeItem(key)
+  );
 
-  document.body.classList.add("lock");
+
+  location.reload();
+
 }
 
 
-function closeDrawer(event) {
+function openDrawer(){
 
-  if (event.target.id === "drawer") {
+  document
+    .getElementById("drawer")
+    .classList.add("show");
+
+  document.body.style.overflow="hidden";
+
+}
+
+
+function closeDrawer(event){
+
+  if(event.target.id==="drawer"){
 
     document
       .getElementById("drawer")
       .classList.remove("show");
 
-    document.body.classList.remove("lock");
+    document.body.style.overflow="";
+
   }
+
 }
 
 
-function autoFillInviteCode() {
+function autoFillInviteCode(){
 
-  const params =
-    new URLSearchParams(window.location.search);
+  const params=
+    new URLSearchParams(
+      window.location.search
+    );
 
-  const inviteCode =
+
+  const inviteCode=
     params.get("invite");
 
-  if (!inviteCode) {
+
+  if(!inviteCode){
+
     return false;
+
   }
 
-  clearSession();
+
+  [
+    "jm_logged",
+    "jm_email",
+    "jm_role",
+    "jm_permissions",
+    "jm_user"
+
+  ].forEach(key=>
+    localStorage.removeItem(key)
+  );
+
 
   document
     .getElementById("loginScreen")
-    .classList.add("show");
+    ?.classList.add("show");
+
 
   inviteRegister();
 
+
   document
     .getElementById("inviteInput")
-    .value = inviteCode;
+    .value=inviteCode;
 
-  setLoginStatus(
-    "Código de invitación cargado correctamente.",
-    "success"
-  );
 
   return true;
+
 }
 
 
 document.addEventListener(
   "keydown",
-  event => {
+  event=>{
 
-    if (event.key === "Escape") {
+    if(event.key==="Escape"){
 
       document
         .getElementById("drawer")
         .classList.remove("show");
 
-      document.body.classList.remove("lock");
+      document.body.style.overflow="";
+
     }
 
-    if (
-      event.key === "Enter" &&
+
+    if(
+      event.key==="Enter" &&
       document
         .getElementById("loginScreen")
         .classList.contains("show")
-    ) {
+    ){
+
       login();
+
     }
 
   }
 );
 
 
-window.onload = function() {
+window.onload=function(){
 
-  const params =
-    new URLSearchParams(window.location.search);
+  const params=
+    new URLSearchParams(
+      window.location.search
+    );
 
-  if (params.get("reset") === "1") {
 
-    clearSession();
+  if(params.get("reset")==="1"){
 
-    window.location.href = "index.html";
+    [
+      "jm_logged",
+      "jm_email",
+      "jm_role",
+      "jm_permissions",
+      "jm_user"
+
+    ].forEach(key=>
+      localStorage.removeItem(key)
+    );
+
+
+    window.location.href="index.html";
 
     return;
+
   }
 
-  if (autoFillInviteCode()) {
+
+  if(autoFillInviteCode()){
+
     return;
+
   }
+
 
   checkLogin();
+
 };
 
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("./service-worker.js")
-      .catch(error => {
-        console.error("Error Service Worker:", error);
-      });
-  });
-          }
 </script>
 
 </body>
-
 </html>
