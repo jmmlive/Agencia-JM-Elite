@@ -16,16 +16,21 @@
 
 :root{
   --gold:#f7d774;
+  --gold2:#e7b93f;
   --blue:#00a2ff;
+  --blue2:#005cff;
   --deep:#020713;
+  --deep2:#041026;
   --soft:#dce8ff;
+  --glass:rgba(5,20,50,.58);
 }
 
 body{
   background:#020713;
   color:white;
   min-height:100vh;
-  padding-bottom:78px
+  padding-bottom:82px;
+  overflow-x:hidden
 }
 
 a{
@@ -41,53 +46,104 @@ button{
 .profile{
   min-height:100vh;
   background:
-  radial-gradient(circle at top,#006bff99,#020713 65%)
+    radial-gradient(circle at 15% 8%,rgba(0,126,255,.28),transparent 28%),
+    radial-gradient(circle at 90% 30%,rgba(0,80,220,.18),transparent 30%),
+    radial-gradient(circle at 50% 70%,rgba(0,50,140,.12),transparent 35%),
+    linear-gradient(180deg,#04132c 0%,#020713 52%,#01040c 100%);
+  position:relative
+}
+
+.profile::before{
+  content:"";
+  position:fixed;
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  background:rgba(0,162,255,.08);
+  filter:blur(55px);
+  top:180px;
+  left:-90px;
+  pointer-events:none
+}
+
+.profile::after{
+  content:"";
+  position:fixed;
+  width:240px;
+  height:240px;
+  border-radius:50%;
+  background:rgba(247,215,116,.05);
+  filter:blur(65px);
+  right:-110px;
+  bottom:180px;
+  pointer-events:none
 }
 
 .header{
   position:relative;
-  height:340px
+  height:292px;
+  margin-bottom:18px
 }
 
 .cover{
-  height:290px;
+  position:relative;
+  height:232px;
   background:
-  linear-gradient(135deg,#061326,#003a8f,#020713);
-  overflow:hidden
+    linear-gradient(135deg,#061326,#003a8f,#020713);
+  overflow:hidden;
+  border-radius:0 0 34px 34px;
+  box-shadow:0 22px 48px rgba(0,0,0,.48)
+}
+
+.cover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.02),
+      rgba(2,7,19,.18) 55%,
+      rgba(2,7,19,.82)
+    );
+  pointer-events:none
 }
 
 .cover img{
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:brightness(.85) saturate(1.2)
+  filter:brightness(.84) saturate(1.12)
 }
 
 .back{
   position:absolute;
   top:16px;
   left:16px;
-  width:52px;
-  height:52px;
-  border-radius:18px;
-  background:#07162c;
-  border:1px solid var(--blue);
+  width:44px;
+  height:44px;
+  border-radius:15px;
+  background:rgba(3,14,35,.72);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(0,162,255,.48);
   color:white;
-  font-size:26px;
-  z-index:5
+  font-size:22px;
+  z-index:5;
+  box-shadow:0 10px 28px rgba(0,0,0,.32)
 }
 
 .editBtn{
   position:absolute;
   top:16px;
   right:16px;
-  padding:14px 16px;
-  border-radius:18px;
-  background:#f7d774;
+  padding:11px 15px;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--gold2),#ffd96d);
   color:#061326;
   font-weight:900;
   z-index:5;
-  display:none
+  display:none;
+  box-shadow:0 10px 28px rgba(247,215,116,.18)
 }
 
 .avatar{
@@ -95,16 +151,20 @@ button{
   left:50%;
   bottom:0;
   transform:translateX(-50%);
-  width:118px;
-  height:118px;
+  width:108px;
+  height:108px;
   border-radius:50%;
-  border:4px solid var(--gold);
+  border:3px solid var(--gold);
   background:#07162c;
   overflow:hidden;
-  box-shadow:0 0 28px #00a2ff;
+  box-shadow:
+    0 0 0 7px rgba(2,7,19,.9),
+    0 0 35px rgba(0,162,255,.62),
+    0 16px 35px rgba(0,0,0,.45);
   display:flex;
   align-items:center;
-  justify-content:center
+  justify-content:center;
+  z-index:3
 }
 
 .avatar img{
@@ -114,129 +174,181 @@ button{
 }
 
 .avatarFallback{
-  font-size:58px;
+  font-size:50px;
   display:none
 }
 
 .identity{
   text-align:center;
-  padding:10px 16px 0
+  padding:0 18px
 }
 
 .identity h1{
-  font-size:32px;
+  font-size:28px;
   color:var(--gold);
-  margin-bottom:6px
+  margin-bottom:5px;
+  font-weight:800;
+  letter-spacing:.15px;
+  text-shadow:0 3px 18px rgba(247,215,116,.12)
 }
 
 .identity p{
-  color:white;
-  font-size:16px;
-  margin-bottom:16px
+  color:rgba(255,255,255,.88);
+  font-size:14px;
+  margin-bottom:17px
 }
 
 .badges{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:9px;
-  padding:0 18px;
-  margin-bottom:18px
+  gap:8px;
+  padding:0 15px;
+  margin-bottom:22px
 }
 
 .badges span{
-  min-height:40px;
+  min-height:39px;
   border-radius:999px;
-  background:rgba(0,70,180,.55);
-  border:1px solid rgba(0,183,255,.45);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,99,210,.34),
+      rgba(0,39,100,.36)
+    );
+  backdrop-filter:blur(15px);
+  border:1px solid rgba(0,183,255,.28);
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:12px;
+  font-size:11px;
   text-align:center;
-  padding:5px
+  padding:6px 5px;
+  color:rgba(255,255,255,.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.09),
+    0 10px 24px rgba(0,0,0,.2)
 }
 
 .stats{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  padding:0 16px;
-  margin-bottom:18px
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  padding:0 14px;
+  margin-bottom:22px
 }
 
 .stat{
-  min-height:72px;
-  border-radius:18px;
-  background:rgba(0,35,100,.72);
-  border:1px solid rgba(0,183,255,.35);
+  min-width:0;
+  min-height:80px;
+  border-radius:21px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,76,170,.36),
+      rgba(3,15,45,.8)
+    );
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(0,183,255,.24);
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center
+  justify-content:center;
+  padding:9px 5px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    0 14px 30px rgba(0,0,0,.28)
 }
 
 .stat b{
   color:var(--gold);
-  font-size:23px
+  font-size:17px;
+  line-height:1.05;
+  width:100%;
+  padding:0 2px;
+  text-align:center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
 }
 
 .stat span{
-  font-size:11px;
-  color:var(--soft)
+  font-size:10px;
+  color:rgba(220,232,255,.82);
+  margin-top:6px;
+  text-align:center;
+  line-height:1.15
 }
 
 .actions{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:10px;
+  gap:9px;
   padding:0 16px;
-  margin-bottom:18px
+  margin-bottom:22px
 }
 
 .actions button{
-  height:54px;
-  border-radius:18px;
+  height:50px;
+  border-radius:17px;
   font-weight:900;
-  font-size:14px
+  font-size:13px;
+  box-shadow:0 12px 28px rgba(0,0,0,.26);
+  transition:transform .2s ease
+}
+
+.actions button:active{
+  transform:scale(.96)
 }
 
 .blue{
-  background:linear-gradient(135deg,#008cff,#004dff);
+  background:linear-gradient(135deg,#00a2ff,#0048ff);
   color:white
 }
 
 .gold{
-  background:linear-gradient(135deg,#d8a92d,#ffcf55);
+  background:linear-gradient(135deg,#dba92d,#ffd767);
   color:#061326
 }
 
 .dark{
-  background:#07162c;
+  background:rgba(7,22,44,.7);
+  backdrop-filter:blur(14px);
   color:white;
-  border:1px solid rgba(0,183,255,.45)
+  border:1px solid rgba(0,183,255,.32)
 }
 
 .card{
-  margin:0 16px 18px;
-  background:rgba(0,18,55,.75);
-  border:1px solid rgba(247,215,116,.28);
-  border-radius:20px;
-  padding:15px
+  margin:0 16px 20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,42,100,.38),
+      rgba(0,13,40,.75)
+    );
+  backdrop-filter:blur(17px);
+  border:1px solid rgba(247,215,116,.2);
+  border-radius:25px;
+  padding:18px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.06),
+    0 18px 40px rgba(0,0,0,.34)
 }
 
 .card h3{
   color:var(--gold);
-  font-size:20px;
-  margin-bottom:10px
+  font-size:19px;
+  margin-bottom:11px;
+  font-weight:800
 }
 
 .row{
   display:flex;
   justify-content:space-between;
+  align-items:center;
   gap:12px;
-  padding:9px 0;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  font-size:14px
+  padding:12px 0;
+  border-bottom:1px solid rgba(255,255,255,.065);
+  font-size:13px
 }
 
 .row:last-child{
@@ -244,11 +356,15 @@ button{
 }
 
 .row span{
-  color:var(--soft)
+  color:rgba(220,232,255,.76)
 }
 
 .row b{
-  text-align:right
+  text-align:right;
+  font-size:13px;
+  max-width:64%;
+  word-break:break-word;
+  color:rgba(255,255,255,.96)
 }
 
 .loading{
@@ -263,11 +379,13 @@ button{
   right:0;
   bottom:0;
   height:74px;
-  background:#020713;
-  border-top:1px solid rgba(247,215,116,.25);
+  background:rgba(2,7,19,.92);
+  backdrop-filter:blur(18px);
+  border-top:1px solid rgba(247,215,116,.16);
   display:grid;
   grid-template-columns:repeat(5,1fr);
-  z-index:999
+  z-index:999;
+  box-shadow:0 -12px 30px rgba(0,0,0,.28)
 }
 
 .nav-item{
@@ -275,18 +393,83 @@ button{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  font-size:11px;
-  gap:3px
+  font-size:10px;
+  gap:3px;
+  color:rgba(255,255,255,.74)
 }
 
 .nav-item .icon{
-  font-size:24px
+  font-size:23px
 }
 
 .nav-item.active{
   color:var(--gold)
 }
-</style>
+
+@media(max-width:390px){
+
+  .header{
+    height:280px
+  }
+
+  .cover{
+    height:222px
+  }
+
+  .avatar{
+    width:102px;
+    height:102px
+  }
+
+  .identity h1{
+    font-size:26px
+  }
+
+  .stat{
+    min-height:76px;
+    border-radius:18px
+  }
+
+  .stat b{
+    font-size:15px
+  }
+
+  .stat span{
+    font-size:9px
+  }
+
+  .badges span{
+    font-size:10px
+  }
+
+  .actions button{
+    font-size:12px
+  }
+
+}
+
+@media(max-width:350px){
+
+  .stats{
+    gap:6px;
+    padding:0 10px
+  }
+
+  .stat b{
+    font-size:13px
+  }
+
+  .stat span{
+    font-size:8px
+  }
+
+  .badges{
+    gap:6px;
+    padding:0 10px
+  }
+
+}
+  </style>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
