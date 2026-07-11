@@ -1718,11 +1718,25 @@ function recoverPassword() {
 }
 
 
-function logout() {
+async function logout() {
+
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.error(
+      "ERROR AL CERRAR FIREBASE:",
+      error
+    );
+  }
 
   clearSession();
 
-  location.reload();
+  sessionStorage.clear();
+
+  window.location.replace(
+    "index.html?reset=1"
+  );
+
 }
 
 
