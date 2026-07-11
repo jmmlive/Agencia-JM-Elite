@@ -57,7 +57,8 @@ body{background:#020713;color:white}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, getDocs, doc, updateDoc } from
+"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
@@ -104,13 +105,48 @@ window.cargarEmisoras = async function(){
 
   <div class="info">
     <h3>${u.nombre || u.nombreArtistico || u.artisticName || (u.email ? u.email.split("@")[0] : "Nueva emisora")} ✅</h3>
-    <p>🌍 ${u.pais || "País no indicado"}</p>
+    <p>🌍 ${u.pais || u.country || "País no indicado"}</p>
     <p>🆔 ID Poppo: ${u.poppoId || "—"}</p>
-    <p>⭐ Nivel: ${u.nivel || "—"}</p>
+    <p>⭐ Nivel: ${u.nivel || u.level || "—"}</p>
+    <p>👑 Rol: ${u.role || "emisora"}</p>
+
+    <button
+      onclick="event.stopPropagation(); cambiarRol('${doc.id}', '${u.role || "emisora"}')"
+      style="margin-top:10px;padding:10px;border:0;border-radius:10px;font-weight:bold;background:#f7d774;color:#061326;">
+      ${u.role === "administrador" ? "⬇️ Quitar administración" : "👑 Dar administración"}
+    </button>
   </div>
 
   <div class="badge">🟢 Activa</div>
 `;
+      window.cambiarRol = async function(id, rolActual){
+  const nuevoRol = rolActual === "administrador" ? "emisora" : "administrador";
+
+  const confirmar = confirm(
+    nuevoRol === "administrador"
+      ? "¿Dar permisos de administradora a esta emisora?"
+      : "¿Quitar los permisos de administradora?"
+  );
+
+  if(!confirmar) return;
+
+  try{
+    await updateDoc(doc(db, "usuarios", id), {
+      role: nuevoRol
+    });
+
+    alert(
+      nuevoRol === "administrador"
+        ? "👑 Administración concedida."
+        : "✅ Administración retirada."
+    );
+
+    cargarEmisoras();
+
+  }catch(error){
+    alert("Error cambiando el rol: " + error.message);
+  }
+};
 card.onclick = () => {
     location.href = "perfil.html?id=" + docu.id;
 };
