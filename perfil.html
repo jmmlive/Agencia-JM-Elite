@@ -137,7 +137,7 @@ function pintarPerfil(u, esMiPerfil=false){
   const genero = valor(u.genero || u.gender);
   const seguidores = valor(u.seguidores || u.followers, "0");
   const diamantes = valor(u.diamantes || u.coins || u.diamonds, "0");
-  const dias = calcularDias(u.fechaInicioPoppo || "12/03/2024");
+  const dias = calcularDias(u.fechaInicioPoppo);
 
   content.innerHTML = `
     <section class="identity">
