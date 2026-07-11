@@ -12,1239 +12,461 @@
 
 <title>Agencia JM Elite</title>
 
-
 <style>
 
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
   font-family:Arial,sans-serif;
 }
 
-
-:root{
-
-  --gold:#f7d774;
-
-  --gold2:#ffbd32;
-
-  --blue:#007bff;
-
-  --blue2:#00b7ff;
-
-  --deep:#020713;
-
-  --panel:#061326;
-
-  --soft:#dce8ff;
-
-  --danger:#ff4b5f;
-
-  --green:#39ffcb;
-
-}
-
-
-html{
-
-  scroll-behavior:smooth;
-
-}
-
-
 body{
-
-  min-height:100vh;
-
-  padding-bottom:78px;
-
   background:#020713;
-
-  color:white;
-
+  color:#fff;
+  min-height:100vh;
+  padding-bottom:76px;
 }
-
-
-body.lock{
-
-  overflow:hidden;
-
-}
-
-
-a{
-
-  color:inherit;
-
-  text-decoration:none;
-
-}
-
 
 button{
-
   border:0;
-
   color:inherit;
-
   cursor:pointer;
-
 }
 
-
-button,
-a{
-
-  -webkit-tap-highlight-color:transparent;
-
+body.lock{
+  overflow:hidden;
 }
-
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible{
-
-  outline:2px solid var(--gold);
-
-  outline-offset:3px;
-
-}
-
-
-/* =========================
-   LOGIN
-========================= */
-
-
-.login{
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:9999;
-
-  display:none;
-
-  align-items:center;
-
-  justify-content:center;
-
-  padding:20px;
-
-  background:#020713;
-
-}
-
-
-.login.show{
-
-  display:flex;
-
-}
-
-
-.login-bg{
-
-  position:absolute;
-
-  inset:0;
-
-  background:
-    url("agencia-jm-equipo-banner.png")
-    center/cover no-repeat;
-
-  filter:
-    brightness(.34)
-    saturate(1.3);
-
-}
-
-
-.login-bg::after{
-
-  content:"";
-
-  position:absolute;
-
-  inset:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0,90,255,.35),
-      #020713 86%
-    );
-
-}
-
-
-.login-card{
-
-  position:relative;
-
-  width:100%;
-
-  max-width:390px;
-
-  padding:22px;
-
-  border-radius:28px;
-
-  background:
-    rgba(0,12,38,.86);
-
-  border:
-    1px solid
-    rgba(247,215,116,.45);
-
-  backdrop-filter:blur(18px);
-
-  box-shadow:
-    0 0 38px
-    rgba(0,140,255,.55);
-
-  text-align:center;
-
-}
-
-
-.login-card h1{
-
-  color:var(--gold);
-
-  font-size:31px;
-
-  margin-bottom:6px;
-
-}
-
-
-.login-card p{
-
-  color:var(--soft);
-
-  font-size:14px;
-
-  margin-bottom:16px;
-
-}
-
-
-.input{
-
-  min-height:48px;
-
-  margin-bottom:10px;
-
-  padding:0 13px;
-
-  border-radius:16px;
-
-  background:
-    rgba(0,12,38,.86);
-
-  border:
-    1px solid
-    rgba(0,183,255,.48);
-
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-}
-
-
-.input:focus-within{
-
-  border-color:var(--gold);
-
-  box-shadow:
-    0 0 0 2px
-    rgba(247,215,116,.12);
-
-}
-
-
-.input input{
-
-  flex:1;
-
-  min-width:0;
-
-  height:46px;
-
-  border:0;
-
-  outline:0;
-
-  background:transparent;
-
-  color:white;
-
-  font-size:15px;
-
-}
-
-
-.input input::placeholder{
-
-  color:#aebbd2;
-
-}
-
-
-.login-btn{
-
-  width:100%;
-
-  height:50px;
-
-  margin-top:4px;
-
-  border-radius:17px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #d4a72d,
-      #ffcf55
-    );
-
-  color:#061326;
-
-  font-size:17px;
-
-  font-weight:900;
-
-}
-
-
-.login-btn:active{
-
-  transform:scale(.985);
-
-}
-
-
-.login-links{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:9px;
-
-  margin-top:12px;
-
-}
-
-
-.login-links button{
-
-  min-height:40px;
-
-  padding:5px;
-
-  border-radius:999px;
-
-  background:
-    rgba(0,12,38,.65);
-
-  border:
-    1px solid
-    rgba(0,183,255,.35);
-
-  color:white;
-
-  font-size:12px;
-
-}
-
-
-.login-foot{
-
-  margin-top:14px;
-
-  color:var(--soft);
-
-  font-size:12px;
-
-}
-
-
-.register-extra{
-
-  display:none;
-
-  margin-top:8px;
-
-}
-
-
-.register-extra.show{
-
-  display:block;
-
-}
-
-
-/* =========================
-   APP
-========================= */
-
 
 .app{
-
   min-height:100vh;
-
   padding:10px;
-
   background:
     radial-gradient(
       circle at top,
-      #006cff88 0%,
+      #006cff88 0,
       #061326 35%,
       #020713 78%
     );
-
 }
-
-
-/* =========================
-   HERO
-========================= */
-
 
 .hero{
-
   position:relative;
-
   height:225px;
-
-  overflow:hidden;
-
   border-radius:26px;
-
-  border:
-    1px solid
-    rgba(0,183,255,.58);
-
-  background:#061326;
-
-  box-shadow:
-    0 0 28px
-    rgba(0,140,255,.42);
-
+  overflow:hidden;
+  border:1px solid #00b7ff94;
+  box-shadow:0 0 28px #008cff6b;
 }
-
 
 .hero img{
-
   width:100%;
-
   height:100%;
-
   object-fit:cover;
-
   object-position:center top;
-
-  display:block;
-
-  filter:
-    saturate(1.22)
-    contrast(1.08)
-    brightness(.90);
-
+  filter:saturate(1.2) brightness(.9);
 }
 
-
-.hero::after{
-
+.hero:after{
   content:"";
-
   position:absolute;
-
   inset:0;
-
   background:
     linear-gradient(
       90deg,
-      rgba(0,0,0,.72),
+      #000b,
       transparent 55%,
-      rgba(0,0,0,.35)
+      #0005
     ),
     linear-gradient(
       180deg,
-      rgba(0,0,0,.05),
-      rgba(2,7,19,.72)
+      transparent,
+      #020713c7
     );
-
 }
-
 
 .hero-actions{
-
   position:absolute;
-
   top:14px;
-
   left:14px;
-
   right:14px;
-
   z-index:5;
-
   display:flex;
-
   justify-content:space-between;
-
 }
-
 
 .hero-btn{
-
   width:48px;
-
   height:48px;
-
   border-radius:17px;
-
-  background:
-    rgba(0,12,38,.60);
-
-  border:
-    1px solid
-    rgba(255,255,255,.22);
-
-  backdrop-filter:blur(10px);
-
+  background:#000a;
+  border:1px solid #ffffff38;
   font-size:27px;
-
 }
-
-
-.hero-btn:active{
-
-  transform:scale(.94);
-
-}
-
-
-.bell{
-
-  position:relative;
-
-}
-
-
-.bell.has-pending::after{
-
-  content:"";
-
-  position:absolute;
-
-  top:9px;
-
-  right:9px;
-
-  width:11px;
-
-  height:11px;
-
-  border-radius:50%;
-
-  background:var(--gold2);
-
-  box-shadow:
-    0 0 10px
-    var(--gold2);
-
-}
-
 
 .hero-title{
-
   position:absolute;
-
   z-index:5;
-
   left:18px;
-
   bottom:20px;
-
 }
-
 
 .hero-title h1{
-
-  color:white;
-
   font-size:29px;
-
-  line-height:1.02;
-
 }
-
 
 .hero-title h1 span{
-
   display:block;
-
-  color:var(--gold);
-
+  color:#f7d774;
 }
-
 
 .hero-title p{
-
   margin-top:8px;
-
-  font-size:14px;
-
 }
-
 
 .hero-line{
-
   width:66px;
-
   height:3px;
-
+  background:#f7d774;
   margin-top:11px;
-
-  border-radius:99px;
-
-  background:var(--gold);
-
 }
-
-
-/* =========================
-   ESTADO SALA
-========================= */
-
 
 .status{
-
-  min-height:48px;
-
   margin:10px 0 16px;
-
-  padding:5px 7px;
-
+  min-height:48px;
   border-radius:999px;
-
-  background:
-    rgba(0,12,38,.76);
-
-  border:
-    1px solid
-    rgba(0,183,255,.30);
-
+  background:#0008;
+  border:1px solid #00b7ff4d;
   display:grid;
-
-  grid-template-columns:
-    1.1fr .8fr .9fr auto;
-
+  grid-template-columns:1.1fr .8fr .9fr auto;
   align-items:center;
-
-  gap:4px;
-
+  padding:5px 7px;
 }
-
 
 .status div{
-
   text-align:center;
-
-  border-right:
-    1px solid
-    rgba(255,255,255,.10);
-
 }
-
 
 .status strong{
-
   display:block;
-
   font-size:13px;
-
 }
-
 
 .status span{
-
-  color:var(--soft);
-
   font-size:9px;
-
+  color:#dce8ff;
 }
-
 
 .status .live{
-
   color:#69ff55;
-
-  font-weight:900;
-
 }
 
-
 .status button{
-
   min-height:34px;
-
-  padding:0 13px;
-
+  padding:0 12px;
   border-radius:999px;
-
   background:
     linear-gradient(
       135deg,
       #006cff,
       #00b7ff
     );
-
-  font-size:12px;
-
-  font-weight:800;
-
+  font-weight:bold;
 }
-
-
-/* =========================
-   SECCIONES
-========================= */
-
 
 .section-title{
-
   display:flex;
-
   align-items:center;
-
   gap:8px;
-
-  margin:18px 0 10px;
-
-  color:var(--gold);
-
+  color:#f7d774;
   font-size:16px;
-
-  text-transform:uppercase;
-
+  margin:18px 0 10px;
 }
 
-
-.section-title::after{
-
+.section-title:after{
   content:"";
-
   flex:1;
-
   height:1px;
-
   background:
     linear-gradient(
       90deg,
-      var(--gold),
+      #f7d774,
       transparent
     );
-
 }
-
 
 .icon-panel{
-
-  margin-bottom:16px;
-
-  padding:14px 10px;
-
   border-radius:24px;
-
-  background:
-    rgba(0,12,38,.48);
-
-  border:
-    1px solid
-    rgba(0,183,255,.22);
-
+  background:#0005;
+  border:1px solid #00b7ff38;
+  padding:14px 10px;
+  margin-bottom:16px;
 }
-
 
 .icon-grid{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
+  grid-template-columns:repeat(4,1fr);
   gap:12px;
-
 }
-
 
 .icon-link{
-
-  min-width:0;
-
   background:transparent;
-
   display:flex;
-
   flex-direction:column;
-
   align-items:center;
-
-  justify-content:flex-start;
-
   gap:7px;
-
   text-align:center;
-
 }
-
 
 .icon-circle{
-
   width:58px;
-
   height:58px;
-
   border-radius:50%;
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
-  background:
-    rgba(0,12,38,.65);
-
-  border:
-    1px solid
-    rgba(0,183,255,.45);
-
-  box-shadow:
-    0 0 18px
-    rgba(0,140,255,.35);
-
   font-size:28px;
-
+  background:#0008;
+  border:1px solid #00b7ff73;
+  box-shadow:0 0 18px #008cff59;
 }
-
-
-.icon-link:active .icon-circle{
-
-  transform:scale(.94);
-
-}
-
 
 .icon-link b{
-
-  color:white;
-
   font-size:12px;
-
 }
-
 
 .icon-link small{
-
-  color:var(--soft);
-
   font-size:10px;
-
+  color:#dce8ff;
 }
-
 
 .purple{
-
   border-color:#b856ff;
-
-  box-shadow:
-    0 0 18px
-    #9b32ff66;
-
 }
-
 
 .green{
-
   border-color:#39ffcb;
-
-  box-shadow:
-    0 0 18px
-    #39ffcb55;
-
 }
-
 
 .gold{
-
-  border-color:var(--gold);
-
-  box-shadow:
-    0 0 18px
-    rgba(247,215,116,.50);
-
+  border-color:#f7d774;
 }
-
 
 .red{
-
   border-color:#ff5b60;
-
-  box-shadow:
-    0 0 18px
-    #ff5b6066;
-
 }
-
-
-.dots-icon{
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  gap:8px;
-
-}
-
-
-.dots-icon span{
-
-  width:8px;
-
-  height:8px;
-
-  border-radius:50%;
-
-  background:white;
-
-}
-
-
-/* =========================
-   DRAWER
-========================= */
-
 
 .drawer{
-
   position:fixed;
-
   inset:0;
-
-  z-index:9000;
-
   display:none;
-
-  background:
-    rgba(0,0,0,.68);
-
+  background:#000a;
+  z-index:9000;
 }
-
 
 .drawer.show{
-
   display:block;
-
 }
-
 
 .drawer-panel{
-
   width:82%;
-
   max-width:320px;
-
   height:100%;
-
+  background:#061326fa;
   padding:22px 16px;
-
   overflow-y:auto;
-
-  background:
-    rgba(6,19,38,.98);
-
-  border-right:
-    1px solid
-    rgba(247,215,116,.35);
-
 }
-
 
 .drawer h2{
-
+  color:#f7d774;
   margin-bottom:16px;
-
-  color:var(--gold);
-
 }
 
-
-.drawer-menu{
-
-  display:flex;
-
-  flex-direction:column;
-
-}
-
-
-.drawer-menu button{
-
+.drawer button{
   width:100%;
-
   min-height:46px;
-
-  margin-bottom:9px;
-
-  padding:0 14px;
-
   border-radius:15px;
-
-  background:
-    rgba(0,60,180,.38);
-
-  border:
-    1px solid
-    rgba(0,183,255,.35);
-
-  color:white;
-
-  display:flex;
-
-  align-items:center;
-
+  margin-bottom:9px;
+  background:#003cb461;
+  border:1px solid #00b7ff59;
+  padding:0 14px;
   text-align:left;
-
   font-size:15px;
-
 }
 
+.logout{
+  background:#820019bf!important;
+}
 
 .agent-only,
 .manager-only{
-
   display:none!important;
-
 }
-
 
 .agent-only.show,
 .manager-only.show{
-
-  display:flex!important;
-
+  display:block!important;
 }
-
-
-.logout{
-
-  background:
-    rgba(130,0,25,.75)!important;
-
-  border-color:
-    rgba(255,80,80,.45)!important;
-
-}
-
-
-/* =========================
-   BARRA INFERIOR
-========================= */
-
 
 .bottom-nav{
-
   position:fixed;
-
   left:0;
-
   right:0;
-
   bottom:0;
-
-  z-index:999;
-
   height:74px;
-
-  background:
-    rgba(0,12,38,.98);
-
-  border-top:
-    1px solid
-    rgba(247,215,116,.26);
-
+  background:#000c;
+  border-top:1px solid #f7d77442;
   display:grid;
-
-  grid-template-columns:
-    repeat(5,1fr);
-
+  grid-template-columns:repeat(5,1fr);
+  z-index:999;
 }
-
 
 .nav-item{
-
   background:transparent;
-
-  color:white;
-
-  font-size:11px;
-
   display:flex;
-
   flex-direction:column;
-
   align-items:center;
-
   justify-content:center;
-
   gap:3px;
-
+  font-size:11px;
 }
-
 
 .nav-item .icon{
-
   font-size:24px;
-
 }
-
 
 .nav-item.active{
-
-  color:var(--gold);
-
+  color:#f7d774;
 }
 
-
-/* =========================
-   MENSAJE SISTEMA
-========================= */
-
-
-.system-message{
-
+.login{
   position:fixed;
-
-  left:16px;
-
-  right:16px;
-
-  bottom:90px;
-
-  z-index:9500;
-
+  inset:0;
+  z-index:9999;
   display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#020713;
+}
 
-  max-width:420px;
+.login.show{
+  display:flex;
+}
 
-  margin:auto;
+.login-card{
+  width:100%;
+  max-width:390px;
+  padding:22px;
+  border-radius:28px;
+  background:#000c;
+  border:1px solid #f7d77473;
+  text-align:center;
+  box-shadow:0 0 38px #008cff80;
+}
 
-  padding:14px 16px;
+.login-card h1{
+  color:#f7d774;
+  font-size:31px;
+  margin-bottom:6px;
+}
 
+.login-card p{
+  color:#dce8ff;
+  margin-bottom:16px;
+}
+
+.input{
+  min-height:48px;
+  margin-bottom:10px;
+  padding:0 13px;
   border-radius:16px;
-
-  background:#07172f;
-
-  border:
-    1px solid
-    rgba(0,183,255,.55);
-
-  box-shadow:
-    0 0 25px
-    rgba(0,120,255,.35);
-
-  color:white;
-
-  font-size:14px;
-
-  line-height:1.4;
-
+  background:#0008;
+  border:1px solid #00b7ff7a;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
+.input input{
+  flex:1;
+  height:46px;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  font-size:15px;
+  min-width:0;
+}
 
-.system-message.show{
+.login-btn{
+  width:100%;
+  height:50px;
+  border-radius:17px;
+  background:
+    linear-gradient(
+      135deg,
+      #d4a72d,
+      #ffcf55
+    );
+  color:#061326;
+  font-weight:900;
+  font-size:17px;
+}
 
+.login-links{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:12px;
+}
+
+.login-links button{
+  min-height:40px;
+  border-radius:999px;
+  background:#0007;
+  border:1px solid #00b7ff59;
+  font-size:12px;
+}
+
+.register-extra{
+  display:none;
+}
+
+.register-extra.show{
   display:block;
-
 }
 
+.msg{
+  position:fixed;
+  left:16px;
+  right:16px;
+  bottom:90px;
+  z-index:9500;
+  display:none;
+  max-width:420px;
+  margin:auto;
+  padding:14px 16px;
+  border-radius:16px;
+  background:#07172f;
+  border:1px solid #00b7ff8c;
+  box-shadow:0 0 25px #0078ff59;
+}
 
-@media(max-width:380px){
-
-  .icon-grid{
-
-    gap:9px;
-
-  }
-
-
-  .icon-circle{
-
-    width:54px;
-
-    height:54px;
-
-    font-size:25px;
-
-  }
-
-
-  .status{
-
-    grid-template-columns:
-      1fr .75fr .8fr auto;
-
-  }
-
-
-  .status button{
-
-    padding:0 8px;
-
-  }
-
+.msg.show{
+  display:block;
 }
 
 </style>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
-<script
-  src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"
-></script>
-
-
-<script
-  src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"
-></script>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 </head>
 
-
 <body>
-  <section
-  id="loginScreen"
-  class="login"
-  aria-label="Acceso JM Elite"
->
-
-  <div class="login-bg"></div>
+  <section id="loginScreen" class="login">
 
   <div class="login-card">
 
@@ -1254,34 +476,23 @@ input:focus-visible{
       Acceso privado para emisoras
     </p>
 
-
     <div class="input">
-
       <span>✉️</span>
-
       <input
         id="emailInput"
         type="email"
-        autocomplete="email"
         placeholder="Correo electrónico"
       >
-
     </div>
 
-
     <div class="input">
-
       <span>🔒</span>
-
       <input
         id="passInput"
         type="password"
-        autocomplete="current-password"
         placeholder="Contraseña"
       >
-
     </div>
-
 
     <div
       id="registerExtra"
@@ -1289,72 +500,51 @@ input:focus-visible{
     >
 
       <div class="input">
-
         <span>👤</span>
-
         <input
           id="nameInput"
           type="text"
           placeholder="Nombre artístico"
         >
-
       </div>
 
-
       <div class="input">
-
         <span>🆔</span>
-
         <input
           id="poppoIdInput"
           type="text"
-          inputmode="numeric"
           placeholder="ID Poppo"
         >
-
       </div>
 
-
       <div class="input">
-
         <span>🌍</span>
-
         <input
           id="countryInput"
           type="text"
           placeholder="País"
         >
-
       </div>
 
-
       <div class="input">
-
         <span>🔑</span>
-
         <input
           id="agencyCodeInput"
           type="text"
           placeholder="Código de acceso a la agencia"
         >
-
       </div>
 
-
       <div class="input">
-
         <span>🎁</span>
-
         <input
           id="recommendationCodeInput"
           type="text"
           placeholder="Código de recomendación"
         >
-
       </div>
 
     </div>
-
 
     <button
       id="mainLoginBtn"
@@ -1365,7 +555,6 @@ input:focus-visible{
       ENTRAR
     </button>
 
-
     <div class="login-links">
 
       <button
@@ -1375,7 +564,6 @@ input:focus-visible{
         Registro normal
       </button>
 
-
       <button
         type="button"
         onclick="openInviteRegister()"
@@ -1383,14 +571,12 @@ input:focus-visible{
         Registro invitación
       </button>
 
-
       <button
         type="button"
         onclick="recoverPassword()"
       >
         Recuperar
       </button>
-
 
       <button
         type="button"
@@ -1401,15 +587,9 @@ input:focus-visible{
 
     </div>
 
-
-    <div class="login-foot">
-      🔐 Seguridad y confianza · Agencia JM Elite
-    </div>
-
   </div>
 
 </section>
-
 
 
 <section
@@ -1422,93 +602,78 @@ input:focus-visible{
 
     <h2>🦅 JM Elite</h2>
 
+    <button
+      type="button"
+      onclick="goTo('perfil.html')"
+    >
+      👤 Perfil
+    </button>
 
-    <div class="drawer-menu">
+    <button
+      type="button"
+      class="agent-only"
+      onclick="goTo('agente.html','admin')"
+    >
+      👑 Panel de Administración
+    </button>
 
-      <button
-        type="button"
-        onclick="goTo('perfil.html')"
-      >
-        👤 Perfil
-      </button>
+    <button
+      type="button"
+      onclick="goTo('sala-pro.html')"
+    >
+      🎙️ Sala Pro
+    </button>
 
+    <button
+      type="button"
+      onclick="goTo('chatbot.html')"
+    >
+      🤖 ChatBot IA
+    </button>
 
-      <button
-        type="button"
-        class="agent-only"
-        onclick="goTo('agente.html', 'admin')"
-      >
-        👑 Panel de Administración
-      </button>
+    <button
+      type="button"
+      onclick="goTo('emisoras.html')"
+    >
+      👥 Mis Emisoras
+    </button>
 
+    <button
+      type="button"
+      onclick="goTo('academia.html')"
+    >
+      🎓 Academia
+    </button>
 
-      <button
-        type="button"
-        onclick="goTo('sala-pro.html')"
-      >
-        🎙️ Sala Pro
-      </button>
+    <button
+      type="button"
+      onclick="goTo('configuracion.html')"
+    >
+      ⚙️ Configuración
+    </button>
 
+    <button
+      type="button"
+      class="manager-only"
+      onclick="goTo('invitaciones.html','invite')"
+    >
+      📩 Invitar usuario nuevo
+    </button>
 
-      <button
-        type="button"
-        onclick="goTo('chatbot.html')"
-      >
-        🤖 ChatBot IA
-      </button>
-
-
-      <button
-        type="button"
-        onclick="goTo('emisoras.html')"
-      >
-        👥 Mis Emisoras
-      </button>
-
-
-      <button
-        type="button"
-        onclick="goTo('academia.html')"
-      >
-        🎓 Academia
-      </button>
-
-
-      <button
-        type="button"
-        onclick="goTo('configuracion.html')"
-      >
-        ⚙️ Configuración
-      </button>
-
-
-      <button
-        type="button"
-        class="manager-only"
-        onclick="goTo('invitaciones.html', 'invite')"
-      >
-        📩 Invitar usuario nuevo
-      </button>
-
-
-      <button
-        type="button"
-        class="logout"
-        onclick="logout()"
-      >
-        🚪 Cerrar sesión
-      </button>
-
-    </div>
+    <button
+      type="button"
+      class="logout"
+      onclick="logout()"
+    >
+      🚪 Cerrar sesión
+    </button>
 
   </div>
 
 </section>
 
 
-
 <main class="app">
-
 
   <section class="hero">
 
@@ -1517,31 +682,26 @@ input:focus-visible{
       alt="Agencia JM Elite"
     >
 
-
     <div class="hero-actions">
 
       <button
         class="hero-btn"
         type="button"
         onclick="openDrawer()"
-        aria-label="Abrir menú"
       >
         ☰
       </button>
 
-
       <button
         id="notificationBell"
-        class="hero-btn bell"
+        class="hero-btn"
         type="button"
         onclick="goTo('avisos.html')"
-        aria-label="Abrir avisos"
       >
         🔔
       </button>
 
     </div>
-
 
     <div class="hero-title">
 
@@ -1559,41 +719,24 @@ input:focus-visible{
   </section>
 
 
-
   <section class="status">
 
     <div>
-
       <strong class="live">
         🟢 SALA
       </strong>
-
       <span>EN VIVO</span>
-
     </div>
 
-
     <div>
-
-      <strong id="roomUsers">
-        👥 15
-      </strong>
-
+      <strong>👥 15</strong>
       <span>En sala</span>
-
     </div>
-
 
     <div>
-
-      <strong id="roomCoins">
-        💎 125K
-      </strong>
-
+      <strong>💎 125K</strong>
       <span>Coins</span>
-
     </div>
-
 
     <button
       type="button"
@@ -1605,383 +748,263 @@ input:focus-visible{
   </section>
 
 
-
   <h2 class="section-title">
     ⚡ Accesos rápidos
   </h2>
 
-
   <section class="icon-panel">
 
     <div class="icon-grid">
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('chatbot.html')"
       >
-
         <span class="icon-circle purple">
           🤖
         </span>
-
         <b>ChatBot IA</b>
-
         <small>Asistente</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('emisoras.html')"
       >
-
         <span class="icon-circle">
           👥
         </span>
-
         <b>Emisoras</b>
-
         <small>Equipo</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('pagos.html')"
       >
-
         <span class="icon-circle green">
           💰
         </span>
-
         <b>Pagos</b>
-
         <small>Historial</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('ranking.html')"
       >
-
         <span class="icon-circle gold">
           🏆
         </span>
-
         <b>Ranking</b>
-
         <small>Top</small>
-
       </button>
-
 
     </div>
 
-        </section>
-          <h2 class="section-title">
+  </section>
+
+
+  <h2 class="section-title">
     👥 Gestión
   </h2>
-
 
   <section class="icon-panel">
 
     <div class="icon-grid">
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('avisos.html')"
       >
-
         <span class="icon-circle gold">
           📢
         </span>
-
         <b>Avisos</b>
-
         <small>Noticias</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('eventos.html')"
       >
-
         <span class="icon-circle red">
           🎉
         </span>
-
         <b>Eventos</b>
-
         <small>Próximos</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('academia.html')"
       >
-
         <span class="icon-circle">
           🎓
         </span>
-
         <b>Academia</b>
-
         <small>Cursos</small>
-
       </button>
 
-
       <button
-        id="inviteQuickAccess"
         class="icon-link manager-only"
         type="button"
         onclick="goTo('invitaciones.html','invite')"
       >
-
         <span class="icon-circle gold">
           📩
         </span>
-
         <b>Invitar</b>
-
         <small>Usuario nuevo</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('soporte.html')"
       >
-
         <span class="icon-circle green">
           🛟
         </span>
-
         <b>Soporte</b>
-
         <small>Ayuda</small>
-
       </button>
-
 
     </div>
 
   </section>
-
 
 
   <h2 class="section-title">
     ⭐ Más opciones
   </h2>
 
-
   <section class="icon-panel">
 
     <div class="icon-grid">
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('perfil.html')"
       >
-
         <span class="icon-circle">
           👤
         </span>
-
         <b>Perfil</b>
-
         <small>Datos</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('configuracion.html')"
       >
-
         <span class="icon-circle">
           ⚙️
         </span>
-
         <b>Ajustes</b>
-
         <small>Cuenta</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('normas.html')"
       >
-
         <span class="icon-circle purple">
           📖
         </span>
-
         <b>Normas</b>
-
         <small>Reglas</small>
-
       </button>
-
 
       <button
         class="icon-link"
         type="button"
         onclick="goTo('menu.html')"
       >
-
-        <span class="icon-circle dots-icon">
-
-          <span></span>
-
-          <span></span>
-
-          <span></span>
-
+        <span class="icon-circle">
+          ☰
         </span>
-
         <b>Más</b>
-
         <small>Opciones</small>
-
       </button>
-
 
     </div>
 
   </section>
 
-
-</main>
-
-
-
-<nav class="bottom-nav">
-
+      </main>
+      <nav class="bottom-nav">
 
   <button
     class="nav-item active"
     type="button"
     onclick="goTo('index.html')"
   >
-
-    <span class="icon">
-      🏠
-    </span>
-
+    <span class="icon">🏠</span>
     <span>Inicio</span>
-
   </button>
-
 
   <button
     class="nav-item"
     type="button"
     onclick="goTo('sala-pro.html')"
   >
-
-    <span class="icon">
-      🎙️
-    </span>
-
+    <span class="icon">🎙️</span>
     <span>Sala Pro</span>
-
   </button>
-
 
   <button
     class="nav-item"
     type="button"
     onclick="goTo('perfil.html')"
   >
-
-    <span class="icon">
-      👤
-    </span>
-
+    <span class="icon">👤</span>
     <span>Perfil</span>
-
   </button>
-
 
   <button
     class="nav-item"
     type="button"
     onclick="goTo('chat.html')"
   >
-
-    <span class="icon">
-      💬
-    </span>
-
+    <span class="icon">💬</span>
     <span>Chat</span>
-
   </button>
-
 
   <button
     class="nav-item"
     type="button"
     onclick="goTo('menu.html')"
   >
-
-    <span class="icon">
-      ☰
-    </span>
-
+    <span class="icon">☰</span>
     <span>Más</span>
-
   </button>
-
 
 </nav>
 
 
-
 <div
   id="systemMessage"
-  class="system-message"
+  class="msg"
 ></div>
-
 
 
 <script>
 
-
 const AGENT_EMAILS=[
-
   "jesus@jmelite.com",
-
   "admin@jmelite.com",
-
   "elpepolan35@gmail.com"
-
 ];
 
 
@@ -2008,7 +1031,9 @@ const firebaseConfig={
 };
 
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(
+  firebaseConfig
+);
 
 
 const db=
@@ -2017,9 +1042,7 @@ const db=
 
 let registerMode="";
 
-
 let messageTimer=null;
-
 
 
 function cleanText(value){
@@ -2031,7 +1054,6 @@ function cleanText(value){
 }
 
 
-
 function cleanEmail(value){
 
   return cleanText(value)
@@ -2040,15 +1062,13 @@ function cleanEmail(value){
 }
 
 
+function getCurrentEmail(){
 
-function isAgent(email){
-
-  return AGENT_EMAILS.includes(
-    cleanEmail(email)
+  return cleanEmail(
+    localStorage.getItem("jm_email")
   );
 
 }
-
 
 
 function getRole(){
@@ -2058,7 +1078,6 @@ function getRole(){
   );
 
 }
-
 
 
 function getPermissions(){
@@ -2080,17 +1099,6 @@ function getPermissions(){
 }
 
 
-
-function getCurrentEmail(){
-
-  return cleanEmail(
-    localStorage.getItem("jm_email")
-  );
-
-}
-
-
-
 function isLogged(){
 
   return (
@@ -2102,26 +1110,26 @@ function isLogged(){
 }
 
 
+function isAgent(email){
+
+  return AGENT_EMAILS.includes(
+    cleanEmail(email)
+  );
+
+}
+
 
 function canManage(){
 
   const role=getRole();
 
-
   return (
-
     role==="agente" ||
-
     role==="administrador" ||
-
-    isAgent(
-      getCurrentEmail()
-    )
-
+    isAgent(getCurrentEmail())
   );
 
 }
-
 
 
 function canInvite(){
@@ -2129,22 +1137,17 @@ function canInvite(){
   const permissions=
     getPermissions();
 
-
   return (
-
     canManage() ||
-
     permissions.canInvite===true
-
   );
 
 }
 
 
-
-function showSystemMessage(
+function showMessage(
   text,
-  duration=2600
+  duration=2800
 ){
 
   const box=
@@ -2152,33 +1155,22 @@ function showSystemMessage(
       "systemMessage"
     );
 
-
   if(!box){
 
     return;
 
   }
 
-
-  clearTimeout(
-    messageTimer
-  );
-
+  clearTimeout(messageTimer);
 
   box.textContent=text;
 
-
-  box.classList.add(
-    "show"
-  );
-
+  box.classList.add("show");
 
   messageTimer=setTimeout(
-    ()=>{
+    function(){
 
-      box.classList.remove(
-        "show"
-      );
+      box.classList.remove("show");
 
     },
     duration
@@ -2187,14 +1179,11 @@ function showSystemMessage(
 }
 
 
-
 function applyPermissions(){
 
   document
-    .querySelectorAll(
-      ".agent-only"
-    )
-    .forEach(element=>{
+    .querySelectorAll(".agent-only")
+    .forEach(function(element){
 
       element.classList.toggle(
         "show",
@@ -2205,10 +1194,8 @@ function applyPermissions(){
 
 
   document
-    .querySelectorAll(
-      ".manager-only"
-    )
-    .forEach(element=>{
+    .querySelectorAll(".manager-only")
+    .forEach(function(element){
 
       element.classList.toggle(
         "show",
@@ -2220,21 +1207,24 @@ function applyPermissions(){
 }
 
 
-
 function saveSession(
   email,
   role,
-  permissions={},
-  extra={}
+  permissions,
+  extra
 ){
 
   const finalEmail=
     cleanEmail(email);
 
-
   const finalRole=
-    cleanText(role) ||
-    "emisora";
+    cleanText(role) || "emisora";
+
+  const finalPermissions=
+    permissions || {};
+
+  const finalExtra=
+    extra || {};
 
 
   localStorage.setItem(
@@ -2242,26 +1232,22 @@ function saveSession(
     "yes"
   );
 
-
   localStorage.setItem(
     "jm_email",
     finalEmail
   );
-
 
   localStorage.setItem(
     "jm_role",
     finalRole
   );
 
-
   localStorage.setItem(
     "jm_permissions",
     JSON.stringify(
-      permissions || {}
+      finalPermissions
     )
   );
-
 
   localStorage.setItem(
     "jm_user",
@@ -2271,7 +1257,7 @@ function saveSession(
 
       rol:finalRole,
 
-      ...extra
+      ...finalExtra
 
     })
   );
@@ -2280,7 +1266,9 @@ function saveSession(
   applyPermissions();
 
 }
-  function clearSession(){
+
+
+function clearSession(){
 
   [
     "jm_logged",
@@ -2289,7 +1277,7 @@ function saveSession(
     "jm_permissions",
     "jm_user"
 
-  ].forEach(key=>{
+  ].forEach(function(key){
 
     localStorage.removeItem(key);
 
@@ -2298,14 +1286,7 @@ function saveSession(
 }
 
 
-
-function checkLogin(){
-
-  const loginScreen=
-    document.getElementById(
-      "loginScreen"
-    );
-
+function protectAgentSession(){
 
   const email=
     getCurrentEmail();
@@ -2316,31 +1297,47 @@ function checkLogin(){
     isAgent(email)
   ){
 
-    localStorage.setItem(
-      "jm_role",
-      "administrador"
-    );
+    saveSession(
 
+      email,
 
-    localStorage.setItem(
-      "jm_permissions",
-      JSON.stringify({
+      "administrador",
+
+      {
         canInvite:true
-      })
+      },
+
+      {
+        artisticName:"Jesús"
+      }
+
     );
 
   }
 
+}
+
+
+function checkLogin(){
+
+  const loginScreen=
+    document.getElementById(
+      "loginScreen"
+    );
+
+
+  protectAgentSession();
+
 
   if(isLogged()){
 
-    loginScreen?.classList.remove(
+    loginScreen.classList.remove(
       "show"
     );
 
   }else{
 
-    loginScreen?.classList.add(
+    loginScreen.classList.add(
       "show"
     );
 
@@ -2352,20 +1349,23 @@ function checkLogin(){
 }
 
 
-
 function goTo(
   page,
-  permission=""
+  permission
 ){
+
+  const requiredPermission=
+    permission || "";
+
 
   if(!isLogged()){
 
     document
       .getElementById("loginScreen")
-      ?.classList.add("show");
+      .classList.add("show");
 
 
-    showSystemMessage(
+    showMessage(
       "🔐 Inicia sesión para continuar."
     );
 
@@ -2376,11 +1376,11 @@ function goTo(
 
 
   if(
-    permission==="admin" &&
+    requiredPermission==="admin" &&
     !canManage()
   ){
 
-    showSystemMessage(
+    showMessage(
       "⛔ No tienes permiso de administración."
     );
 
@@ -2391,12 +1391,12 @@ function goTo(
 
 
   if(
-    permission==="invite" &&
+    requiredPermission==="invite" &&
     !canInvite()
   ){
 
-    showSystemMessage(
-      "⛔ No tienes permiso para invitar usuarios."
+    showMessage(
+      "⛔ No tienes permiso para invitar."
     );
 
 
@@ -2407,7 +1407,7 @@ function goTo(
 
   if(!page){
 
-    showSystemMessage(
+    showMessage(
       "⚠️ Acceso no disponible."
     );
 
@@ -2417,20 +1417,18 @@ function goTo(
   }
 
 
-  window.location.href=page;
+  window.location.assign(page);
 
 }
 
 
-
 function mainLoginAction(){
 
-  if(registerMode){
+  if(registerMode!==""){
 
     sendRegisterRequest(
       registerMode
     );
-
 
     return;
 
@@ -2440,7 +1438,6 @@ function mainLoginAction(){
   login();
 
 }
-
 
 
 async function login(){
@@ -2461,15 +1458,11 @@ async function login(){
     );
 
 
-  if(
-    !email ||
-    !password
-  ){
+  if(!email || !password){
 
-    showSystemMessage(
+    showMessage(
       "⚠️ Pon correo y contraseña."
     );
-
 
     return;
 
@@ -2500,7 +1493,7 @@ async function login(){
       .classList.remove("show");
 
 
-    showSystemMessage(
+    showMessage(
       "👑 Administración JM Elite activa."
     );
 
@@ -2526,10 +1519,9 @@ async function login(){
 
     if(snapshot.empty){
 
-      showSystemMessage(
-        "⛔ Cuenta no encontrada o todavía no aprobada."
+      showMessage(
+        "⛔ Cuenta no encontrada o no aprobada."
       );
-
 
       return;
 
@@ -2546,10 +1538,9 @@ async function login(){
       password
     ){
 
-      showSystemMessage(
+      showMessage(
         "⛔ Contraseña incorrecta."
       );
-
 
       return;
 
@@ -2569,10 +1560,9 @@ async function login(){
       status!=="activo"
     ){
 
-      showSystemMessage(
+      showMessage(
         "⏳ Tu cuenta todavía no está activa."
       );
-
 
       return;
 
@@ -2616,7 +1606,7 @@ async function login(){
       .classList.remove("show");
 
 
-    showSystemMessage(
+    showMessage(
       "✅ Bienvenida a JM Elite."
     );
 
@@ -2626,7 +1616,7 @@ async function login(){
     console.error(error);
 
 
-    showSystemMessage(
+    showMessage(
       "❌ Error al iniciar sesión: " +
       error.message,
       5000
@@ -2635,65 +1625,53 @@ async function login(){
   }
 
 }
-
-
-
-function openNormalRegister(){
+  function openNormalRegister(){
 
   registerMode="normal";
-
 
   document
     .getElementById("registerExtra")
     .classList.add("show");
 
+  document
+    .getElementById("recommendationCodeInput")
+    .readOnly=false;
 
   document
-    .getElementById(
-      "recommendationCodeInput"
-    )
+    .getElementById("recommendationCodeInput")
     .placeholder=
       "Código de recomendación (opcional)";
-
 
   document
     .getElementById("loginSubtitle")
     .textContent=
       "Registro normal de emisora";
 
-
   document
     .getElementById("mainLoginBtn")
     .textContent=
       "ENVIAR SOLICITUD";
 
 }
-
 
 
 function openInviteRegister(){
 
   registerMode="invitacion";
 
-
   document
     .getElementById("registerExtra")
     .classList.add("show");
 
-
   document
-    .getElementById(
-      "recommendationCodeInput"
-    )
+    .getElementById("recommendationCodeInput")
     .placeholder=
       "Código de recomendación";
-
 
   document
     .getElementById("loginSubtitle")
     .textContent=
       "Registro por invitación";
-
 
   document
     .getElementById("mainLoginBtn")
@@ -2703,22 +1681,18 @@ function openInviteRegister(){
 }
 
 
-
 function backToLogin(){
 
   registerMode="";
-
 
   document
     .getElementById("registerExtra")
     .classList.remove("show");
 
-
   document
     .getElementById("loginSubtitle")
     .textContent=
       "Acceso privado para emisoras";
-
 
   document
     .getElementById("mainLoginBtn")
@@ -2728,10 +1702,7 @@ function backToLogin(){
 }
 
 
-
-async function sendRegisterRequest(
-  type
-){
+async function sendRegisterRequest(type){
 
   const email=
     cleanEmail(
@@ -2740,14 +1711,12 @@ async function sendRegisterRequest(
         .value
     );
 
-
   const password=
     cleanText(
       document
         .getElementById("passInput")
         .value
     );
-
 
   const artisticName=
     cleanText(
@@ -2756,14 +1725,12 @@ async function sendRegisterRequest(
         .value
     );
 
-
   const poppoId=
     cleanText(
       document
         .getElementById("poppoIdInput")
         .value
     );
-
 
   const country=
     cleanText(
@@ -2772,7 +1739,6 @@ async function sendRegisterRequest(
         .value
     );
 
-
   const agencyCode=
     cleanText(
       document
@@ -2780,13 +1746,10 @@ async function sendRegisterRequest(
         .value
     );
 
-
   const recommendationCode=
     cleanText(
       document
-        .getElementById(
-          "recommendationCodeInput"
-        )
+        .getElementById("recommendationCodeInput")
         .value
     );
 
@@ -2800,10 +1763,9 @@ async function sendRegisterRequest(
     !agencyCode
   ){
 
-    showSystemMessage(
+    showMessage(
       "⚠️ Completa todos los datos obligatorios."
     );
-
 
     return;
 
@@ -2815,10 +1777,9 @@ async function sendRegisterRequest(
     !recommendationCode
   ){
 
-    showSystemMessage(
+    showMessage(
       "⚠️ Falta el código de recomendación."
     );
-
 
     return;
 
@@ -2827,7 +1788,7 @@ async function sendRegisterRequest(
 
   try{
 
-    const duplicateUser=
+    const userSnapshot=
       await db
         .collection("usuarios")
         .where(
@@ -2839,19 +1800,18 @@ async function sendRegisterRequest(
         .get();
 
 
-    if(!duplicateUser.empty){
+    if(!userSnapshot.empty){
 
-      showSystemMessage(
+      showMessage(
         "⛔ Ese correo ya tiene una cuenta."
       );
-
 
       return;
 
     }
 
 
-    const duplicateRequest=
+    const requestSnapshot=
       await db
         .collection("pending_requests")
         .where(
@@ -2863,12 +1823,11 @@ async function sendRegisterRequest(
         .get();
 
 
-    if(!duplicateRequest.empty){
+    if(!requestSnapshot.empty){
 
-      showSystemMessage(
+      showMessage(
         "⏳ Ya existe una solicitud con ese correo."
       );
-
 
       return;
 
@@ -2925,7 +1884,8 @@ async function sendRegisterRequest(
         status:"pendiente",
 
         createdAt:
-          firebase.firestore
+          firebase
+            .firestore
             .FieldValue
             .serverTimestamp(),
 
@@ -2936,14 +1896,13 @@ async function sendRegisterRequest(
       });
 
 
-    showSystemMessage(
+    showMessage(
       "✅ Solicitud enviada para revisión.",
       4000
     );
 
 
     clearRegisterForm();
-
 
     backToLogin();
 
@@ -2952,8 +1911,7 @@ async function sendRegisterRequest(
 
     console.error(error);
 
-
-    showSystemMessage(
+    showMessage(
       "❌ Error al enviar solicitud: " +
       error.message,
       5000
@@ -2962,7 +1920,6 @@ async function sendRegisterRequest(
   }
 
 }
-
 
 
 function clearRegisterForm(){
@@ -2976,11 +1933,10 @@ function clearRegisterForm(){
     "agencyCodeInput",
     "recommendationCodeInput"
 
-  ].forEach(id=>{
+  ].forEach(function(id){
 
     const input=
       document.getElementById(id);
-
 
     if(input){
 
@@ -2990,8 +1946,10 @@ function clearRegisterForm(){
 
   });
 
-  }
-  function recoverPassword(){
+}
+
+
+async function recoverPassword(){
 
   const email=
     cleanEmail(
@@ -3003,7 +1961,7 @@ function clearRegisterForm(){
 
   if(!email){
 
-    showSystemMessage(
+    showMessage(
       "⚠️ Escribe primero tu correo."
     );
 
@@ -3012,105 +1970,67 @@ function clearRegisterForm(){
   }
 
 
-  db
-    .collection("usuarios")
-    .where(
-      "email",
-      "==",
-      email
-    )
-    .limit(1)
-    .get()
+  try{
 
-    .then(snapshot=>{
+    await db
+      .collection("recovery_requests")
+      .add({
 
-      if(snapshot.empty){
+        email:email,
 
-        showSystemMessage(
-          "⛔ No encontramos una cuenta con ese correo."
-        );
+        status:"pendiente",
 
-        return;
+        createdAt:
+          firebase
+            .firestore
+            .FieldValue
+            .serverTimestamp(),
 
-      }
+        date:
+          new Date()
+            .toLocaleString()
 
-
-      return db
-        .collection("recovery_requests")
-        .add({
-
-          email:email,
-
-          status:"pendiente",
-
-          createdAt:
-            firebase.firestore
-              .FieldValue
-              .serverTimestamp(),
-
-          date:
-            new Date()
-              .toLocaleString()
-
-        });
-
-    })
-
-    .then(result=>{
-
-      if(!result){
-
-        return;
-
-      }
+      });
 
 
-      showSystemMessage(
-        "✅ Solicitud de recuperación enviada a administración.",
-        4500
-      );
-
-    })
-
-    .catch(error=>{
-
-      console.error(error);
+    showMessage(
+      "✅ Solicitud de recuperación enviada.",
+      4000
+    );
 
 
-      showSystemMessage(
-        "❌ Error en recuperación: " +
-        error.message,
-        5000
-      );
+  }catch(error){
 
-    });
+    console.error(error);
+
+    showMessage(
+      "❌ Error de recuperación: " +
+      error.message,
+      5000
+    );
+
+  }
 
 }
-
 
 
 function logout(){
 
   clearSession();
 
-
   closeDrawerDirect();
 
-
   backToLogin();
-
 
   document
     .getElementById("loginScreen")
     .classList.add("show");
 
-
-  showSystemMessage(
-    "👋 Sesión cerrada correctamente."
+  showMessage(
+    "👋 Sesión cerrada."
   );
 
 }
-
 
 
 function openDrawer(){
@@ -3121,7 +2041,6 @@ function openDrawer(){
       .getElementById("loginScreen")
       .classList.add("show");
 
-
     return;
 
   }
@@ -3129,11 +2048,9 @@ function openDrawer(){
 
   applyPermissions();
 
-
   document
     .getElementById("drawer")
     .classList.add("show");
-
 
   document
     .body
@@ -3143,13 +2060,10 @@ function openDrawer(){
 }
 
 
-
 function closeDrawer(event){
 
   if(
-    event.target.id
-    ===
-    "drawer"
+    event.target.id==="drawer"
   ){
 
     closeDrawerDirect();
@@ -3159,13 +2073,17 @@ function closeDrawer(event){
 }
 
 
-
 function closeDrawerDirect(){
 
-  document
-    .getElementById("drawer")
-    ?.classList
-    .remove("show");
+  const drawer=
+    document.getElementById("drawer");
+
+
+  if(drawer){
+
+    drawer.classList.remove("show");
+
+  }
 
 
   document
@@ -3176,14 +2094,12 @@ function closeDrawerDirect(){
 }
 
 
-
 function autoFillInviteCode(){
 
   const params=
     new URLSearchParams(
       window.location.search
     );
-
 
   const inviteCode=
     cleanText(
@@ -3200,11 +2116,9 @@ function autoFillInviteCode(){
 
   clearSession();
 
-
   document
     .getElementById("loginScreen")
     .classList.add("show");
-
 
   openInviteRegister();
 
@@ -3215,18 +2129,12 @@ function autoFillInviteCode(){
     );
 
 
-  if(input){
+  input.value=inviteCode;
 
-    input.value=
-      inviteCode;
-
-
-    input.readOnly=true;
-
-  }
+  input.readOnly=true;
 
 
-  showSystemMessage(
+  showMessage(
     "🎁 Invitación JM Elite detectada."
   );
 
@@ -3234,7 +2142,6 @@ function autoFillInviteCode(){
   return true;
 
 }
-
 
 
 async function loadPendingNotifications(){
@@ -3245,19 +2152,10 @@ async function loadPendingNotifications(){
     );
 
 
-  if(!bell){
-
-    return;
-
-  }
-
-
-  bell.classList.remove(
-    "has-pending"
-  );
-
-
-  if(!canManage()){
+  if(
+    !bell ||
+    !canManage()
+  ){
 
     return;
 
@@ -3277,34 +2175,22 @@ async function loadPendingNotifications(){
         .get();
 
 
-    const pendingCount=
-      snapshot.size;
+    if(snapshot.size>0){
 
+      bell.textContent=
+        "🔔 " + snapshot.size;
 
-    if(pendingCount>0){
+    }else{
 
-      bell.classList.add(
-        "has-pending"
-      );
-
-
-      bell.setAttribute(
-        "aria-label",
-        pendingCount +
-        " solicitudes pendientes"
-      );
-
-
-      bell.title=
-        pendingCount +
-        " solicitudes pendientes";
+      bell.textContent="🔔";
 
     }
+
 
   }catch(error){
 
     console.error(
-      "Error cargando pendientes:",
+      "Error cargando notificaciones",
       error
     );
 
@@ -3313,49 +2199,11 @@ async function loadPendingNotifications(){
 }
 
 
-
-function protectCurrentSession(){
-
-  const email=
-    getCurrentEmail();
-
-
-  if(
-    isLogged() &&
-    isAgent(email)
-  ){
-
-    saveSession(
-
-      email,
-
-      "administrador",
-
-      {
-        canInvite:true
-      },
-
-      {
-        artisticName:"Jesús"
-      }
-
-    );
-
-  }
-
-}
-
-
-
 document.addEventListener(
   "keydown",
-  event=>{
+  function(event){
 
-    if(
-      event.key
-      ===
-      "Escape"
-    ){
+    if(event.key==="Escape"){
 
       closeDrawerDirect();
 
@@ -3363,13 +2211,10 @@ document.addEventListener(
 
 
     if(
-      event.key
-      ===
-      "Enter"
-      &&
+      event.key==="Enter" &&
       document
         .getElementById("loginScreen")
-        ?.classList
+        .classList
         .contains("show")
     ){
 
@@ -3381,47 +2226,16 @@ document.addEventListener(
 );
 
 
-
-document.addEventListener(
-  "visibilitychange",
-  ()=>{
-
-    if(
-      document.visibilityState
-      ===
-      "visible"
-    ){
-
-      protectCurrentSession();
-
-
-      applyPermissions();
-
-
-      loadPendingNotifications();
-
-    }
-
-  }
-);
-
-
-
 window.addEventListener(
   "pageshow",
-  ()=>{
-
-    protectCurrentSession();
-
+  function(){
 
     checkLogin();
-
 
     loadPendingNotifications();
 
   }
 );
-
 
 
 window.onload=
@@ -3433,14 +2247,9 @@ async function(){
     );
 
 
-  if(
-    params.get("reset")
-    ===
-    "1"
-  ){
+  if(params.get("reset")==="1"){
 
     clearSession();
-
 
     window.history.replaceState(
       {},
@@ -3448,14 +2257,11 @@ async function(){
       "index.html"
     );
 
+    backToLogin();
 
     document
       .getElementById("loginScreen")
       .classList.add("show");
-
-
-    backToLogin();
-
 
     return;
 
@@ -3469,19 +2275,13 @@ async function(){
   }
 
 
-  protectCurrentSession();
-
-
   checkLogin();
-
 
   await loadPendingNotifications();
 
 };
 
-
 </script>
-
 
 </body>
 
