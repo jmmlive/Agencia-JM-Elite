@@ -201,7 +201,12 @@ textarea{
 import {
   initializeApp
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 import {
   getFirestore,
   doc,
@@ -225,7 +230,7 @@ const firebaseConfig={
 
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
-
+const storage=getStorage(app);
 const params=new URLSearchParams(window.location.search);
 const perfilSolicitado=params.get("id");
 
@@ -266,13 +271,17 @@ function mostrarPreview(inputId,imgId){
   const input=document.getElementById(inputId);
   const img=document.getElementById(imgId);
 
-  if(!input || !img) return;
+  if(!input || !img){
+    return;
+  }
 
   const url=input.value.trim();
 
   if(!url){
+
     img.style.display="none";
     img.removeAttribute("src");
+
     return;
   }
 
@@ -284,208 +293,146 @@ function mostrarPreview(inputId,imgId){
   };
 }
 
-function pintarFormulario(u){
 
-  contenido.innerHTML=`
+async function subirImagenPerfil(
+  archivo,
+  tipo
+){
 
-    <section class="card">
-      <h2>👤 Datos principales</h2>
+  if(!archivo){
+    return;
+  }
 
-      <label>Nombre visible</label>
-      <input id="nombre" placeholder="Ej: Ruth María">
+  if(
+    !archivo.type ||
+    !archivo.type.startsWith("image/")
+  ){
 
-      <label>País</label>
-      <input id="pais" placeholder="Ej: Cuba">
+    alert("Selecciona una imagen válida.");
 
-      <label>ID de Poppo</label>
-      <input id="poppoId" placeholder="Ej: 123456">
+    return;
+  }
 
-      <label>Fecha de inicio en Poppo</label>
-      <input
-        id="fechaInicioPoppo"
-        placeholder="Ej: 12/03/2024"
-      >
+  if(archivo.size > 5 * 1024 * 1024){
 
-      <div class="locked">
-        🔒 <b>Rol protegido</b><br>
-        Tu rol no se modifica desde el perfil.
-        Los permisos de administración se gestionan
-        desde el Panel de Administración.
-      </div>
+    alert(
+      "La imagen es demasiado grande. Máximo 5 MB."
+    );
 
-      <label>Nivel</label>
-      <input id="nivel" placeholder="Ej: 45">
+    return;
+  }
 
-      <label>Edad</label>
-      <input id="edad" placeholder="Ej: 49">
+  if(!usuarioActualId){
 
-      <label>Género</label>
-      <input id="genero" placeholder="Ej: Hombre / Mujer">
+    alert("No se encontró el perfil.");
 
-      <label>Descripción</label>
-      <textarea
-        id="descripcion"
-        placeholder="Escribe una presentación bonita para tu perfil..."
-      ></textarea>
-    </section>
+    return;
+  }
 
+  try{
 
-    <section class="card">
-      <h2>📊 Estadísticas Poppo</h2>
+    const extension=(
+      archivo.name.split(".").pop() ||
+      "jpg"
+    ).toLowerCase();
 
-      <label>Seguidores</label>
-      <input id="seguidores" placeholder="Ej: 1981">
+    const ruta=
+      "perfiles/"+
+      usuarioActualId+
+      "/"+
+      tipo+
+      "."+
+      extension;
 
-      <label>Diamantes / Coins</label>
-      <input id="diamantes" placeholder="Ej: 125K">
+    const archivoRef=
+      ref(storage,ruta);
 
-      <label>VIP</label>
-      <input id="vip" placeholder="Ej: VIP 3">
+    await uploadBytes(
+      archivoRef,
+      archivo,
+      {
+        contentType:archivo.type
+      }
+    );
 
-      <label>Star</label>
-      <input id="star" placeholder="Ej: Star 7">
+    const url=
+      await getDownloadURL(archivoRef);
 
-      <label>Fan</label>
-      <input id="fan" placeholder="Ej: Fan 1">
-    </section>
+    if(tipo === "perfil"){
 
+      const campo=
+        document.getElementById("fotoPerfil");
 
-    <section class="card">
-      <h2>🖼️ Imágenes</h2>
+      const preview=
+        document.getElementById("previewPerfil");
 
-      <label>Foto de perfil URL</label>
-      <input
-        id="fotoPerfil"
-        placeholder="Pega aquí el enlace de tu foto"
-        oninput="mostrarPreviewGlobal('fotoPerfil','previewPerfil')"
-      >
+      campo.value=url;
+      preview.src=url;
+      preview.style.display="block";
 
-      <img
-        id="previewPerfil"
-        class="preview avatar-preview"
-        alt="Vista previa de perfil"
-      >
+    }else{
 
-      <label>Portada URL</label>
-      <input
-        id="fotoPortada"
-        placeholder="Pega aquí el enlace de tu portada"
-        oninput="mostrarPreviewGlobal('fotoPortada','previewPortada')"
-      >
+      const campo=
+        document.getElementById("fotoPortada");
 
-      <img
-        id="previewPortada"
-        class="preview"
-        alt="Vista previa de portada"
-      >
+      const preview=
+        document.getElementById("previewPortada");
 
-      <p class="small">
-        Puedes comprobar la imagen antes de guardar.
-        Más adelante añadiremos subida directa desde el teléfono.
-      </p>
-    </section>
+      campo.value=url;
+      preview.src=url;
+      preview.style.display="block";
+    }
 
+    alert("✅ Imagen subida correctamente.");
 
-    <section class="card">
-      <h2>📲 Redes sociales</h2>
+  }catch(error){
 
-      <label>WhatsApp</label>
-      <input id="whatsapp" placeholder="Número o enlace">
+    console.error(error);
 
-      <label>Instagram</label>
-      <input id="instagram" placeholder="@usuario o enlace">
-
-      <label>TikTok</label>
-      <input id="tiktok" placeholder="@usuario o enlace">
-
-      <label>Facebook</label>
-      <input id="facebook" placeholder="Perfil o enlace">
-    </section>
-
-
-    <section class="card">
-      <h2>🛡️ Normas de Agencia JM Elite</h2>
-
-      <p class="small">
-        No se permiten fotos provocativas, desnudos,
-        drogas, violencia, insultos, contenido ilegal
-        o cualquier contenido que dañe la imagen de la agencia.
-      </p>
-
-      <label class="check">
-        <input id="aceptaNormas" type="checkbox">
-        <span>
-          Acepto las normas de Agencia JM Elite.
-        </span>
-      </label>
-
-      <button class="btn" onclick="guardarPerfil()">
-        Guardar perfil
-      </button>
-    </section>
-
-  `;
-
-  poner(
-    "nombre",
-    u.nombre ||
-    u.nombreArtistico ||
-    u.artisticName
-  );
-
-  poner(
-    "pais",
-    u.pais ||
-    u.country
-  );
-
-  poner("poppoId",u.poppoId || u.idPoppo);
-  poner("fechaInicioPoppo",u.fechaInicioPoppo);
-  poner("nivel",u.nivel || u.level);
-  poner("edad",u.edad || u.age);
-  poner("genero",u.genero || u.gender);
-  poner("descripcion",u.descripcion);
-
-  poner(
-    "seguidores",
-    u.seguidores ||
-    u.followers
-  );
-
-  poner(
-    "diamantes",
-    u.diamantes ||
-    u.coins ||
-    u.diamonds
-  );
-
-  poner("vip",u.vip);
-  poner("star",u.star);
-  poner("fan",u.fan);
-
-  poner(
-    "fotoPerfil",
-    u.fotoPerfil ||
-    u.photoURL
-  );
-
-  poner(
-    "fotoPortada",
-    u.fotoPortada ||
-    u.coverURL
-  );
-
-  poner("whatsapp",u.whatsapp);
-  poner("instagram",u.instagram);
-  poner("tiktok",u.tiktok);
-  poner("facebook",u.facebook);
-
-  document.getElementById("aceptaNormas").checked=
-    u.aceptaNormas === true;
-
-  mostrarPreview("fotoPerfil","previewPerfil");
-  mostrarPreview("fotoPortada","previewPortada");
+    alert(
+      "Error al subir la imagen: "+
+      error.message
+    );
+  }
 }
+
+
+function configurarSubidaImagenes(){
+
+  const archivoPerfil=
+    document.getElementById("archivoPerfil");
+
+  const archivoPortada=
+    document.getElementById("archivoPortada");
+
+  if(archivoPerfil){
+
+    archivoPerfil.onchange=async function(){
+
+      const archivo=this.files[0];
+
+      await subirImagenPerfil(
+        archivo,
+        "perfil"
+      );
+    };
+  }
+
+  if(archivoPortada){
+
+    archivoPortada.onchange=async function(){
+
+      const archivo=this.files[0];
+
+      await subirImagenPerfil(
+        archivo,
+        "portada"
+      );
+    };
+  }
+}
+
+
 
 window.mostrarPreviewGlobal=function(inputId,imgId){
   mostrarPreview(inputId,imgId);
