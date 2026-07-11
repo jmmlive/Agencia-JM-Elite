@@ -1,0 +1,10 @@
+{
+  "name": "Agencia JM Elite",
+  "short_name": "JM Elite",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#020713",
+  "theme_color": "#020713",
+  "description": "Aplicación oficial de Agencia JM Elite"
+}
