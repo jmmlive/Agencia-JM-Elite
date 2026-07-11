@@ -1,172 +1,1410 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>Mis Emisoras - Agencia JM Elite</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#020713;color:white}
-:root{--blue:#168cff;--gold:#f7d774;--soft:#d9e5ff}
-.topbar{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#020713;border-bottom:2px solid var(--blue)}
-.icon{width:52px;height:52px;border-radius:16px;border:1px solid var(--blue);background:#07162c;color:white;font-size:24px}
-.title{text-align:center}
-.title h1{font-size:24px;color:var(--gold)}
-.title p{font-size:13px;color:var(--soft)}
-.content{padding:16px;padding-bottom:90px}
-.panel{background:rgba(3,8,18,.88);border:1px solid rgba(247,215,116,.35);border-radius:22px;padding:16px;margin-bottom:14px}
-.panel h2{color:var(--gold);margin-bottom:8px}
-.panel p{color:var(--soft)}
-.card{display:flex;align-items:center;gap:14px;background:linear-gradient(180deg,#102644,#030813);border:1px solid rgba(247,215,116,.35);border-radius:20px;padding:14px;margin-bottom:12px}
-.avatar{width:64px;height:64px;border-radius:50%;border:2px solid var(--gold);background:#07162c;display:flex;align-items:center;justify-content:center;font-size:30px}
-  .avatar img{
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif
+}
+
+:root{
+  --blue:#168cff;
+  --gold:#f7d774;
+  --soft:#d9e5ff;
+  --deep:#020713;
+}
+
+body{
+  background:var(--deep);
+  color:white;
+  min-height:100vh
+}
+
+button,
+input{
+  font:inherit
+}
+
+button{
+  cursor:pointer
+}
+
+
+/* CABECERA */
+
+.topbar{
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:8px 16px;
+  background:rgba(2,7,19,.96);
+  border-bottom:2px solid var(--blue);
+  position:sticky;
+  top:0;
+  z-index:20;
+  backdrop-filter:blur(16px)
+}
+
+.icon{
+  width:48px;
+  height:48px;
+  min-width:48px;
+  border-radius:15px;
+  border:1px solid var(--blue);
+  background:#07162c;
+  color:white;
+  font-size:22px
+}
+
+.title{
+  text-align:center
+}
+
+.title h1{
+  font-size:22px;
+  color:var(--gold)
+}
+
+.title p{
+  font-size:12px;
+  color:var(--soft);
+  margin-top:3px
+}
+
+
+/* CONTENIDO */
+
+.content{
+  padding:16px;
+  padding-bottom:90px
+}
+
+.panel{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,55,130,.28),
+      rgba(3,8,18,.92)
+    );
+  border:1px solid rgba(247,215,116,.3);
+  border-radius:22px;
+  padding:16px;
+  margin-bottom:14px
+}
+
+.panel h2{
+  color:var(--gold);
+  margin-bottom:7px
+}
+
+.panel p{
+  color:var(--soft);
+  font-size:13px;
+  line-height:1.45
+}
+
+
+/* ROL ACTUAL */
+
+.rolePanel{
+  margin-top:13px;
+  padding:12px;
+  border-radius:15px;
+  background:rgba(0,90,255,.14);
+  border:1px solid rgba(0,162,255,.3);
+  color:var(--soft);
+  font-size:13px;
+  line-height:1.4
+}
+
+.rolePanel b{
+  color:var(--gold)
+}
+
+
+/* CONTADORES */
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  margin-bottom:14px
+}
+
+.summaryCard{
+  min-height:78px;
+  border-radius:18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,75,170,.35),
+      rgba(3,15,45,.82)
+    );
+  border:1px solid rgba(0,162,255,.28);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:8px
+}
+
+.summaryCard b{
+  color:var(--gold);
+  font-size:22px
+}
+
+.summaryCard span{
+  color:var(--soft);
+  font-size:10px;
+  margin-top:5px
+}
+
+
+/* BUSCADOR */
+
+.searchBox{
+  margin-bottom:16px
+}
+
+.searchBox input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:16px;
+  border:1px solid rgba(0,162,255,.55);
+  background:#07162c;
+  color:white;
+  outline:none;
+  font-size:14px
+}
+
+.searchBox input:focus{
+  border-color:var(--gold)
+}
+
+
+/* TARJETAS */
+
+.card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:
+    linear-gradient(
+      180deg,
+      #102644,
+      #030813
+    );
+  border:1px solid rgba(247,215,116,.3);
+  border-radius:20px;
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow:0 14px 32px rgba(0,0,0,.28)
+}
+
+.card:active{
+  transform:scale(.99)
+}
+
+.avatar{
+  width:62px;
+  height:62px;
+  min-width:62px;
+  border-radius:50%;
+  border:2px solid var(--gold);
+  background:#07162c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:29px;
+  overflow:hidden
+}
+
+.avatar img{
   width:100%;
   height:100%;
-  object-fit:cover;
-  border-radius:50%;
+  object-fit:cover
+}
+
+.info{
+  flex:1;
+  min-width:0
+}
+
+.info h3{
+  color:var(--gold);
+  font-size:17px;
+  word-break:break-word
+}
+
+.info p{
+  color:var(--soft);
+  font-size:12px;
+  margin-top:4px
+}
+
+
+/* ROLES */
+
+.roleBadge{
+  display:inline-flex;
+  align-items:center;
+  margin-top:7px;
+  padding:6px 9px;
+  border-radius:10px;
+  font-size:11px;
+  font-weight:bold
+}
+
+.role-agente{
+  background:rgba(247,215,116,.15);
+  color:var(--gold);
+  border:1px solid rgba(247,215,116,.5)
+}
+
+.role-administrador{
+  background:rgba(168,80,255,.15);
+  color:#d6a8ff;
+  border:1px solid rgba(168,80,255,.45)
+}
+
+.role-emisora{
+  background:rgba(0,162,255,.13);
+  color:#8fd6ff;
+  border:1px solid rgba(0,162,255,.4)
+}
+
+
+/* BOTONES */
+
+.adminBtn{
+  margin-top:10px;
+  padding:10px 12px;
+  border:0;
+  border-radius:11px;
+  font-weight:bold;
+  background:
+    linear-gradient(
+      135deg,
+      #d7aa31,
+      #ffd767
+    );
+  color:#061326
+}
+
+.removeAdminBtn{
+  background:#16243a;
+  color:#ffca76;
+  border:1px solid rgba(255,202,118,.4)
+}
+
+
+/* ESTADO */
+
+.status{
+  padding:7px 9px;
+  border-radius:12px;
+  background:#08264b;
+  color:#7cffb2;
+  font-size:10px;
+  border:1px solid #168cff;
+  text-align:center
+}
+
+.empty{
+  text-align:center;
+  color:var(--soft);
+  padding:30px
+}
+
+
+@media(max-width:430px){
+
+  .card{
+    gap:9px;
+    padding:12px
   }
-.info{flex:1}
-.info h3{color:var(--gold);font-size:18px}
-.info p{color:var(--soft);font-size:13px;margin-top:4px}
-.badge{padding:7px 10px;border-radius:12px;background:#08264b;color:#7cffb2;font-size:12px;border:1px solid #168cff}
-.empty{text-align:center;color:var(--soft);padding:30px}
+
+  .avatar{
+    width:55px;
+    height:55px;
+    min-width:55px
+  }
+
+  .status{
+    padding:5px;
+    font-size:9px
+  }
+
+  .summaryCard b{
+    font-size:19px
+  }
+
+}
+
 </style>
+
 </head>
 
 <body>
 
+
 <header class="topbar">
-  <button class="icon" onclick="location.replace('index.html')">←</button>
+
+  <button
+    class="icon"
+    onclick="location.replace('index.html')">
+    ←
+  </button>
+
   <div class="title">
+
     <h1>MIS EMISORAS</h1>
-    <p>Perfiles registrados en la agencia</p>
+
+    <p>
+      Equipo Agencia JM Elite
+    </p>
+
   </div>
-  <button class="icon" onclick="cargarEmisoras()">⟳</button>
+
+  <button
+    class="icon"
+    onclick="cargarEmisoras()">
+    ⟳
+  </button>
+
 </header>
 
+
 <main class="content">
+
+
   <section class="panel">
-    <h2>👥 Emisoras registradas</h2>
-    <p>Aquí aparecerán automáticamente las personas que se registren en la aplicación.</p>
+
+    <h2>
+      👥 Emisoras registradas
+    </h2>
+
+    <p>
+      Consulta los perfiles y la organización
+      actual de la agencia.
+    </p>
+
+    <div
+      id="rolePanel"
+      class="rolePanel">
+
+      Comprobando permisos...
+
+    </div>
+
   </section>
 
-  <div id="listaEmisoras" class="empty">Cargando emisoras...</div>
+
+  <section class="summary">
+
+    <div class="summaryCard">
+
+      <b id="totalUsuarios">
+        0
+      </b>
+
+      <span>
+        PERFILES
+      </span>
+
+    </div>
+
+
+    <div class="summaryCard">
+
+      <b id="totalEmisoras">
+        0
+      </b>
+
+      <span>
+        EMISORAS
+      </span>
+
+    </div>
+
+
+    <div class="summaryCard">
+
+      <b id="totalAdmins">
+        0
+      </b>
+
+      <span>
+        ADMINISTRADORAS
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <div class="searchBox">
+
+    <input
+      id="buscador"
+      type="search"
+      placeholder="🔎 Buscar por nombre o ID Poppo"
+      autocomplete="off"
+    >
+
+  </div>
+
+
+  <div
+    id="listaEmisoras"
+    class="empty">
+
+    Cargando emisoras...
+
+  </div>
+
+
 </main>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, getDocs, doc, updateDoc } from
-"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
-  authDomain: "agencia-jm-elite.firebaseapp.com",
-  projectId: "agencia-jm-elite",
-  storageBucket: "agencia-jm-elite.firebasestorage.app",
-  messagingSenderId: "171676205335",
-  appId: "1:171676205335:web:95443528659ab804fe7752"
+<script type="module">
+
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+
+const firebaseConfig={
+
+  apiKey:
+    "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+
+  authDomain:
+    "agencia-jm-elite.firebaseapp.com",
+
+  projectId:
+    "agencia-jm-elite",
+
+  storageBucket:
+    "agencia-jm-elite.firebasestorage.app",
+
+  messagingSenderId:
+    "171676205335",
+
+  appId:
+    "1:171676205335:web:95443528659ab804fe7752"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
-const lista = document.getElementById("listaEmisoras");
+const app=
+  initializeApp(firebaseConfig);
 
-window.cargarEmisoras = async function(){
-  lista.innerHTML = "Cargando emisoras...";
+
+const db=
+  getFirestore(app);
+
+
+const FUNDADOR_EMAIL=
+  "elpepolan35@gmail.com";
+
+
+const emailActual=(
+  localStorage.getItem("jm_email") || ""
+).toLowerCase();
+
+
+const lista=
+  document.getElementById(
+    "listaEmisoras"
+  );
+
+
+const rolePanel=
+  document.getElementById(
+    "rolePanel"
+  );
+
+
+const buscador=
+  document.getElementById(
+    "buscador"
+  );
+
+
+let miDocumentoId="";
+
+let miRolReal="emisora";
+
+let misDatos={};
+
+let usuariosCargados=[];
+  async function buscarMiDocumento(){
+
+  if(!emailActual){
+    return null;
+  }
+
+  const consulta=query(
+    collection(db,"usuarios"),
+    where("email","==",emailActual)
+  );
+
+  const snap=
+    await getDocs(consulta);
+
+  if(snap.empty){
+    return null;
+  }
+
+  return snap.docs[0];
+}
+
+
+function normalizarRol(u){
+
+  const email=(
+    u.email ||
+    u.correo ||
+    ""
+  ).toLowerCase();
+
+
+  if(email === FUNDADOR_EMAIL){
+    return "agente";
+  }
+
+
+  const rol=(
+    u.role ||
+    u.rol ||
+    "emisora"
+  ).toLowerCase();
+
+
+  if(rol === "agente"){
+    return "emisora";
+  }
+
+
+  if(rol === "administrador"){
+    return "administrador";
+  }
+
+
+  return "emisora";
+}
+
+
+function nombreRol(rol){
+
+  if(rol === "agente"){
+    return "👑 Agente fundador";
+  }
+
+
+  if(rol === "administrador"){
+    return "🛡️ Administradora";
+  }
+
+
+  return "🎙️ Emisora";
+}
+
+
+function claseRol(rol){
+
+  if(rol === "agente"){
+    return "role-agente";
+  }
+
+
+  if(rol === "administrador"){
+    return "role-administrador";
+  }
+
+
+  return "role-emisora";
+}
+
+
+async function comprobarMiRol(){
+
+  const miDocumento=
+    await buscarMiDocumento();
+
+
+  if(!miDocumento){
+
+    miRolReal="emisora";
+
+    rolePanel.innerHTML=
+      "⚠️ No se encontró tu cuenta.";
+
+    return false;
+  }
+
+
+  miDocumentoId=
+    miDocumento.id;
+
+
+  misDatos=
+    miDocumento.data();
+
+
+  miRolReal=
+    normalizarRol(misDatos);
+
+
+  if(emailActual === FUNDADOR_EMAIL){
+
+    miRolReal="agente";
+
+
+    const rolGuardado=(
+      misDatos.role ||
+      misDatos.rol ||
+      ""
+    ).toLowerCase();
+
+
+    if(rolGuardado !== "agente"){
+
+      await updateDoc(
+        doc(
+          db,
+          "usuarios",
+          miDocumentoId
+        ),
+        {
+          role:"agente",
+          rol:"agente"
+        }
+      );
+
+
+      misDatos.role="agente";
+
+      misDatos.rol="agente";
+    }
+  }
+
+
+  localStorage.setItem(
+    "jm_role",
+    miRolReal
+  );
+
+
+  rolePanel.innerHTML=
+
+    "Sesión actual: <b>"+
+    nombreRol(miRolReal)+
+    "</b>";
+
+
+  if(miRolReal === "agente"){
+
+    rolePanel.innerHTML+=
+      "<br>🔐 Solo tú puedes conceder o retirar administración.";
+
+  }else if(
+    miRolReal === "administrador"
+  ){
+
+    rolePanel.innerHTML+=
+      "<br>🛡️ Puedes consultar y gestionar emisoras, pero no modificar roles.";
+
+  }else{
+
+    rolePanel.innerHTML+=
+      "<br>👀 Puedes consultar perfiles. No puedes modificar roles.";
+  }
+
+
+  return true;
+}
+
+
+function actualizarContadores(){
+
+  let emisoras=0;
+
+  let administradoras=0;
+
+
+  usuariosCargados.forEach(item=>{
+
+    const rol=
+      normalizarRol(item.datos);
+
+
+    if(rol === "emisora"){
+      emisoras++;
+    }
+
+
+    if(rol === "administrador"){
+      administradoras++;
+    }
+
+  });
+
+
+  document
+  .getElementById("totalUsuarios")
+  .textContent=
+    usuariosCargados.length;
+
+
+  document
+  .getElementById("totalEmisoras")
+  .textContent=
+    emisoras;
+
+
+  document
+  .getElementById("totalAdmins")
+  .textContent=
+    administradoras;
+}
+
+
+function pintarLista(datos){
+
+  lista.innerHTML="";
+
+
+  if(datos.length === 0){
+
+    lista.className="empty";
+
+    lista.innerHTML=
+      "No se encontraron perfiles.";
+
+    return;
+  }
+
+
+  lista.className="";
+
+
+  datos.forEach(item=>{
+
+    const id=
+      item.id;
+
+
+    const u=
+      item.datos;
+
+
+    const emailPerfil=(
+      u.email ||
+      u.correo ||
+      ""
+    ).toLowerCase();
+
+
+    const rol=
+      normalizarRol(u);
+
+
+    const nombre=
+      u.nombre ||
+      u.nombreArtistico ||
+      u.artisticName ||
+      (
+        emailPerfil
+        ? emailPerfil.split("@")[0]
+        : "Nueva emisora"
+      );
+
+
+    const pais=
+      u.pais ||
+      u.country ||
+      "País no indicado";
+
+
+    const poppoId=
+      u.poppoId ||
+      u.idPoppo ||
+      "—";
+
+
+    const nivel=
+      u.nivel ||
+      u.level ||
+      "—";
+
+
+    const foto=
+      u.fotoPerfil ||
+      u.photoURL ||
+      "";
+
+
+    const estado=(
+      u.status ||
+      u.estado ||
+      "activa"
+    ).toLowerCase();
+
+
+    const esFundador=
+      emailPerfil === FUNDADOR_EMAIL;
+
+
+    let botonAdministracion="";
+
+
+    if(
+      miRolReal === "agente" &&
+      !esFundador
+    ){
+
+      if(rol === "administrador"){
+
+        botonAdministracion=`
+
+          <button
+            class="adminBtn removeAdminBtn"
+            onclick="
+              event.stopPropagation();
+              cambiarRol(
+                '${id}',
+                'administrador'
+              );
+            ">
+
+            ⬇️ Quitar administración
+
+          </button>
+
+        `;
+
+      }else{
+
+        botonAdministracion=`
+
+          <button
+            class="adminBtn"
+            onclick="
+              event.stopPropagation();
+              cambiarRol(
+                '${id}',
+                'emisora'
+              );
+            ">
+
+            👑 Dar administración
+
+          </button>
+
+        `;
+      }
+    }
+
+
+    const card=
+      document.createElement("div");
+
+
+    card.className="card";
+
+
+    card.innerHTML=`
+
+      <div class="avatar">
+
+        ${
+          foto
+          ?
+          '<img src="'+foto+'" alt="Foto">'
+          :
+          '👤'
+        }
+
+      </div>
+
+
+      <div class="info">
+
+        <h3>
+          ${nombre} ✅
+        </h3>
+
+
+        <p>
+          🌍 ${pais}
+        </p>
+
+
+        <p>
+          🆔 ID Poppo: ${poppoId}
+        </p>
+
+
+        <p>
+          ⭐ Nivel: ${nivel}
+        </p>
+
+
+        <div
+          class="
+            roleBadge
+            ${claseRol(rol)}
+          ">
+
+          ${nombreRol(rol)}
+
+        </div>
+
+
+        ${botonAdministracion}
+
+      </div>
+
+
+      <div class="status">
+
+        ${
+          estado === "activa" ||
+          estado === "activo"
+          ?
+          "🟢 Activa"
+          :
+          "⚪ "+estado
+        }
+
+      </div>
+
+    `;
+
+
+    card.onclick=function(){
+
+      location.href=
+        "perfil.html?id="+id;
+    };
+
+
+    lista.appendChild(card);
+  });
+}
+
+
+window.cambiarRol=
+async function(
+  id,
+  rolActual
+){
 
   try{
-    const querySnapshot = await getDocs(collection(db, "usuarios"));
 
-    if(querySnapshot.empty){
-      lista.className = "empty";
-      lista.innerHTML = "Todavía no hay emisoras registradas.";
+    const miDocumento=
+      await buscarMiDocumento();
+
+
+    if(!miDocumento){
+
+      alert(
+        "No se pudo verificar tu cuenta."
+      );
+
       return;
     }
 
-    lista.className = "";
-    lista.innerHTML = "";
 
-    querySnapshot.forEach((docu) => {
-      const u = docu.data();
+    const datosActuales=
+      miDocumento.data();
 
-      const card = document.createElement("div");
-      card.className = "card";
-      
 
-      
-        card.innerHTML = `
-  <div class="avatar">
-    ${u.fotoPerfil ? '<img src="' + u.fotoPerfil + '">' : '👤'}
-  </div>
+    const rolComprobado=
+      normalizarRol(datosActuales);
 
-  <div class="info">
-    <h3>${u.nombre || u.nombreArtistico || u.artisticName || (u.email ? u.email.split("@")[0] : "Nueva emisora")} ✅</h3>
-    <p>🌍 ${u.pais || u.country || "País no indicado"}</p>
-    <p>🆔 ID Poppo: ${u.poppoId || "—"}</p>
-    <p>⭐ Nivel: ${u.nivel || u.level || "—"}</p>
-    <p>👑 Rol: ${u.role || "emisora"}</p>
 
-    <button
-      onclick="event.stopPropagation(); cambiarRol('${docu.id}', '${u.role || "emisora"}')"
-      style="margin-top:10px;padding:10px;border:0;border-radius:10px;font-weight:bold;background:#f7d774;color:#061326;">
-      ${u.role === "administrador" ? "⬇️ Quitar administración" : "👑 Dar administración"}
-    </button>
-  </div>
+    if(
+      emailActual !== FUNDADOR_EMAIL ||
+      rolComprobado !== "agente"
+    ){
 
-  <div class="badge">🟢 Activa</div>
-`;
-      window.cambiarRol = async function(id, rolActual){
-  const nuevoRol = rolActual === "administrador" ? "emisora" : "administrador";
+      alert(
+        "⛔ Solo el agente fundador puede cambiar permisos de administración."
+      );
 
-  const confirmar = confirm(
-    nuevoRol === "administrador"
-      ? "¿Dar permisos de administradora a esta emisora?"
-      : "¿Quitar los permisos de administradora?"
-  );
+      return;
+    }
 
-  if(!confirmar) return;
 
-  try{
-    await updateDoc(doc(db, "usuarios", id), {
-      role: nuevoRol
-    });
+    const objetivoRef=
+      doc(
+        db,
+        "usuarios",
+        id
+      );
 
-    alert(
-      nuevoRol === "administrador"
-        ? "👑 Administración concedida."
-        : "✅ Administración retirada."
+
+    const objetivoSnap=
+      await getDoc(objetivoRef);
+
+
+    if(!objetivoSnap.exists()){
+
+      alert(
+        "No se encontró este perfil."
+      );
+
+      return;
+    }
+
+
+    const objetivo=
+      objetivoSnap.data();
+
+
+    const emailObjetivo=(
+      objetivo.email ||
+      objetivo.correo ||
+      ""
+    ).toLowerCase();
+
+
+    if(emailObjetivo === FUNDADOR_EMAIL){
+
+      alert(
+        "⛔ El rol del agente fundador está protegido."
+      );
+
+      return;
+    }
+
+
+    const rolObjetivo=
+      normalizarRol(objetivo);
+
+
+    const nuevoRol=
+      rolObjetivo === "administrador"
+      ? "emisora"
+      : "administrador";
+
+
+    const confirmar=
+      confirm(
+
+        nuevoRol === "administrador"
+
+        ?
+
+        "¿Dar permisos de administradora a esta emisora?"
+
+        :
+
+        "¿Quitar los permisos de administradora?"
+
+      );
+
+
+    if(!confirmar){
+      return;
+    }
+
+
+    await updateDoc(
+      objetivoRef,
+      {
+        role:nuevoRol,
+        rol:nuevoRol
+      }
     );
 
-    cargarEmisoras();
+
+    alert(
+
+      nuevoRol === "administrador"
+
+      ?
+
+      "👑 Administración concedida."
+
+      :
+
+      "✅ Administración retirada."
+
+    );
+
+
+    await cargarEmisoras();
+
 
   }catch(error){
-    alert("Error cambiando el rol: " + error.message);
+
+    console.error(error);
+
+
+    alert(
+      "Error cambiando el rol: "+
+      error.message
+    );
   }
 };
-card.onclick = () => {
-    location.href = "perfil.html?id=" + docu.id;
-};
-      lista.appendChild(card);
+
+
+function filtrarEmisoras(){
+
+  const texto=
+    buscador.value
+    .trim()
+    .toLowerCase();
+
+
+  if(!texto){
+
+    pintarLista(
+      usuariosCargados
+    );
+
+    return;
+  }
+
+
+  const filtrados=
+    usuariosCargados.filter(item=>{
+
+      const u=
+        item.datos;
+
+
+      const nombre=(
+        u.nombre ||
+        u.nombreArtistico ||
+        u.artisticName ||
+        ""
+      ).toLowerCase();
+
+
+      const poppoId=
+        String(
+          u.poppoId ||
+          u.idPoppo ||
+          ""
+        ).toLowerCase();
+
+
+      return(
+        nombre.includes(texto) ||
+        poppoId.includes(texto)
+      );
     });
 
+
+  pintarLista(filtrados);
+}
+
+
+buscador.addEventListener(
+  "input",
+  filtrarEmisoras
+);
+  window.cargarEmisoras=
+async function(){
+
+  lista.className="empty";
+
+  lista.innerHTML=
+    "Cargando emisoras...";
+
+
+  try{
+
+    const sesionValida=
+      await comprobarMiRol();
+
+
+    if(!sesionValida){
+
+      lista.innerHTML=
+        "No se pudo verificar tu cuenta.";
+
+      return;
+    }
+
+
+    const querySnapshot=
+      await getDocs(
+        collection(
+          db,
+          "usuarios"
+        )
+      );
+
+
+    usuariosCargados=[];
+
+
+    querySnapshot.forEach(docu=>{
+
+      usuariosCargados.push({
+
+        id:docu.id,
+
+        datos:docu.data()
+
+      });
+
+    });
+
+
+    usuariosCargados.sort(
+      (a,b)=>{
+
+        const rolA=
+          normalizarRol(a.datos);
+
+
+        const rolB=
+          normalizarRol(b.datos);
+
+
+        const orden={
+
+          agente:0,
+
+          administrador:1,
+
+          emisora:2
+
+        };
+
+
+        if(
+          orden[rolA] !==
+          orden[rolB]
+        ){
+
+          return(
+            orden[rolA] -
+            orden[rolB]
+          );
+        }
+
+
+        const nombreA=(
+          a.datos.nombre ||
+          a.datos.nombreArtistico ||
+          a.datos.artisticName ||
+          ""
+        ).toLowerCase();
+
+
+        const nombreB=(
+          b.datos.nombre ||
+          b.datos.nombreArtistico ||
+          b.datos.artisticName ||
+          ""
+        ).toLowerCase();
+
+
+        return nombreA.localeCompare(
+          nombreB,
+          "es"
+        );
+      }
+    );
+
+
+    actualizarContadores();
+
+
+    pintarLista(
+      usuariosCargados
+    );
+
+
   }catch(error){
-    lista.className = "empty";
-    lista.innerHTML = "Error cargando emisoras: " + error.message;
+
+    console.error(error);
+
+
+    lista.className="empty";
+
+
+    lista.innerHTML=
+      "Error cargando emisoras: "+
+      error.message;
   }
 };
 
-const logged = localStorage.getItem("jm_logged");
 
-if(logged !== "yes"){
-  location.replace("index.html");
-}else{
-  cargarEmisoras();
+async function iniciarPagina(){
+
+  const logged=
+    localStorage.getItem(
+      "jm_logged"
+    );
+
+
+  if(logged !== "yes"){
+
+    location.replace(
+      "index.html"
+    );
+
+    return;
+  }
+
+
+  if(!emailActual){
+
+    location.replace(
+      "index.html"
+    );
+
+    return;
+  }
+
+
+  await cargarEmisoras();
 }
+
+
+iniciarPagina();
+
 </script>
 
 </body>
+
 </html>
