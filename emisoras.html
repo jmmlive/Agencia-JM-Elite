@@ -111,7 +111,7 @@ window.cargarEmisoras = async function(){
     <p>👑 Rol: ${u.role || "emisora"}</p>
 
     <button
-      onclick="event.stopPropagation(); cambiarRol('${doc.id}', '${u.role || "emisora"}')"
+      onclick="event.stopPropagation(); cambiarRol('${docu.id}', '${u.role || "emisora"}')"
       style="margin-top:10px;padding:10px;border:0;border-radius:10px;font-weight:bold;background:#f7d774;color:#061326;">
       ${u.role === "administrador" ? "⬇️ Quitar administración" : "👑 Dar administración"}
     </button>
