@@ -22,6 +22,8 @@ a{text-decoration:none;color:inherit}
 .empty{text-align:center;color:#dce8ff;padding:30px 10px}
 .badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#3b2d00;color:#f7d774;font-size:12px;margin-top:6px}
 </style>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 </head>
 
 <body>
@@ -58,111 +60,211 @@ a{text-decoration:none;color:inherit}
 </div>
 
 <script>
+const firebaseConfig={
+  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain:"agencia-jm-elite.firebaseapp.com",
+  projectId:"agencia-jm-elite",
+  storageBucket:"agencia-jm-elite.firebasestorage.app",
+  messagingSenderId:"171676205335",
+  appId:"1:171676205335:web:95443528659ab804fe7752"
+};
+
+if(!firebase.apps.length){
+  firebase.initializeApp(firebaseConfig);
+}
+
+const db=firebase.firestore();
+
+const usuario=JSON.parse(localStorage.getItem("jm_user") || "{}");
+
+if(usuario.rol!=="administrador"){
+  alert("Acceso denegado.");
+  location.href="index.html";
+}
+
 function loadRequests(){
+
   const box=document.getElementById("requestsBox");
-  const solicitudes=JSON.parse(localStorage.getItem("jm_solicitudes")) || [];
 
-  const pendientes=solicitudes.filter(s=>s.estado==="Pendiente de aprobación");
+  db.collection("pending_requests")
+  .where("status","==","pendiente")
+  .onSnapshot(snapshot=>{
 
-  if(pendientes.length===0){
-    box.innerHTML='<div class="empty">No hay solicitudes pendientes.</div>';
-    return;
-  }
+    box.innerHTML="";
 
-  box.innerHTML="";
+    const botonInvitaciones=document.querySelector(
+      'button[onclick*="invitaciones.html"]'
+    );
 
-  pendientes.forEach((s,index)=>{
-    const realIndex=solicitudes.indexOf(s);
+    if(botonInvitaciones){
+      botonInvitaciones.innerHTML=
+      "📩 Invitaciones" +
+      (snapshot.size>0 ? " 🔴 " + snapshot.size : "");
+    }
 
-    const div=document.createElement("div");
-    div.className="card";
-    div.innerHTML=`
-      <h2>👤 ${s.nombreArtistico || "Sin nombre"}</h2>
-      <div class="info">
-        <b>Nombre completo:</b> ${s.nombreCompleto || "-"}<br>
-        <b>País:</b> ${s.pais || "-"}<br>
-        <b>Teléfono:</b> ${s.telefono || "-"}<br>
-        <b>Correo:</b> ${s.correo || "-"}<br>
-        <b>Código agencia:</b> ${s.codigoAgencia || "-"}<br>
-        <b>Código recomendación:</b> ${s.codigoRecomendacion || "Sin recomendación"}<br>
-        <b>Fecha:</b> ${s.fecha || "-"}<br>
-        <span class="badge">⏳ Pendiente</span>
-      </div>
+    if(snapshot.empty){
+      box.innerHTML=
+      '<div class="empty">No hay solicitudes pendientes.</div>';
+      return;
+    }
 
-      <div class="actions">
-        <button class="btn approve" onclick="approveRequest(${realIndex})">✅ Aprobar</button>
-        <button class="btn reject" onclick="rejectRequest(${realIndex})">❌ Rechazar</button>
-      </div>
-    `;
-    box.appendChild(div);
+    snapshot.forEach(doc=>{
+
+      const s=doc.data();
+
+      const div=document.createElement("div");
+      div.className="card";
+
+      div.innerHTML=`
+        <h2>👤 ${s.artisticName || "Sin nombre"}</h2>
+
+        <div class="info">
+          <b>País:</b> ${s.country || "-"}<br>
+          <b>Correo:</b> ${s.email || "-"}<br>
+          <b>Código invitación:</b> ${s.invitationCode || "Sin código"}<br>
+          <b>Invitada por:</b> ${s.invitedBy || "Nadie"}<br>
+          <b>Fecha:</b> ${s.date || "-"}<br>
+
+          <span class="badge">⏳ Pendiente</span>
+        </div>
+
+        <div class="actions">
+          <button class="btn approve"
+          onclick="approveRequest('${doc.id}')">
+          ✅ Aprobar
+          </button>
+
+          <button class="btn reject"
+          onclick="rejectRequest('${doc.id}')">
+          ❌ Rechazar
+          </button>
+        </div>
+      `;
+
+      box.appendChild(div);
+
+    });
+
+  },error=>{
+    box.innerHTML=
+    '<div class="empty">Error al cargar solicitudes.</div>';
+
+    alert("Error: "+error.message);
   });
 }
 
-function approveRequest(i){
-  let solicitudes=JSON.parse(localStorage.getItem("jm_solicitudes")) || [];
-  let aprobados=JSON.parse(localStorage.getItem("jm_approved_users")) || [];
+function approveRequest(id){
 
-  solicitudes[i].estado="Aprobada";
-  solicitudes[i].aprobadaEn=new Date().toLocaleString();
+  db.collection("pending_requests").doc(id).get()
+  .then(doc=>{
 
-  aprobados.push(solicitudes[i]);
+    if(!doc.exists){
+      alert("No se encontró la solicitud.");
+      return;
+    }
 
-  localStorage.setItem("jm_solicitudes",JSON.stringify(solicitudes));
-  localStorage.setItem("jm_approved_users",JSON.stringify(aprobados));
+    const s=doc.data();
 
-  alert("✅ Solicitud aprobada.");
-  loadRequests();
+    return db.collection("usuarios").add({
+      id:s.id || "JM-"+Date.now(),
+      email:s.email || "",
+      password:s.password || "",
+      artisticName:s.artisticName || "",
+      country:s.country || "",
+      invitationCode:s.invitationCode || "",
+      invitedBy:s.invitedBy || "",
+      registerType:s.registerType || "",
+      appStartDate:s.appStartDate || new Date().toISOString(),
+      appDay:s.appDay || 1,
+      level:s.level || 1,
+      badge:s.badge || "Nueva",
+      status:"activa",
+      role:"emisora",
+      approvedAt:new Date().toLocaleString()
+    }).then(()=>{
+      return db.collection("pending_requests").doc(id).delete();
+    });
+
+  })
+  .then(()=>{
+    alert("✅ Solicitud aprobada. La emisora ya está activa.");
+  })
+  .catch(error=>{
+    alert("Error al aprobar: "+error.message);
+  });
 }
 
-function rejectRequest(i){
-  let solicitudes=JSON.parse(localStorage.getItem("jm_solicitudes")) || [];
+function rejectRequest(id){
 
-  solicitudes[i].estado="Rechazada";
-  solicitudes[i].rechazadaEn=new Date().toLocaleString();
+  if(!confirm("¿Rechazar esta solicitud?")){
+    return;
+  }
 
-  localStorage.setItem("jm_solicitudes",JSON.stringify(solicitudes));
-
-  alert("❌ Solicitud rechazada.");
-  loadRequests();
+  db.collection("pending_requests").doc(id).delete()
+  .then(()=>{
+    alert("❌ Solicitud rechazada.");
+  })
+  .catch(error=>{
+    alert("Error al rechazar: "+error.message);
+  });
 }
 
-loadRequests();function borrarPruebas(){
+async function borrarPruebas(){
 
-let solicitudes = JSON.parse(localStorage.getItem("jm_solicitudes")) || [];
-let aprobados = JSON.parse(localStorage.getItem("jm_approved_users")) || [];
+  if(!confirm("¿Eliminar los registros de prueba?")){
+    return;
+  }
 
-const esPrueba = (u)=>{
-const texto = (
-(u.nombreArtistico || "") + " " +
-(u.nombreCompleto || "") + " " +
-(u.correo || "")
-).toLowerCase();
+  try{
 
-return texto.includes("prueba") ||
-texto.includes("test") ||
-texto.includes("demo");
-};
+    const pendientes=await db.collection("pending_requests").get();
 
-solicitudes = solicitudes.filter(u => !esPrueba(u));
-aprobados = aprobados.filter(u => !esPrueba(u));
+    for(const doc of pendientes.docs){
 
-localStorage.setItem("jm_solicitudes", JSON.stringify(solicitudes));
-localStorage.setItem("jm_approved_users", JSON.stringify(aprobados));
+      const u=doc.data();
 
-alert("🗑️ Registros de prueba eliminados.");
+      const texto=(
+        (u.artisticName || "")+" "+
+        (u.email || "")
+      ).toLowerCase();
+
+      if(
+        texto.includes("prueba") ||
+        texto.includes("test") ||
+        texto.includes("demo")
+      ){
+        await doc.ref.delete();
+      }
+    }
+
+    const usuarios=await db.collection("usuarios").get();
+
+    for(const doc of usuarios.docs){
+
+      const u=doc.data();
+
+      const texto=(
+        (u.artisticName || "")+" "+
+        (u.email || "")
+      ).toLowerCase();
+
+      if(
+        texto.includes("prueba") ||
+        texto.includes("test") ||
+        texto.includes("demo")
+      ){
+        await doc.ref.delete();
+      }
+    }
+
+    alert("🗑️ Registros de prueba eliminados.");
+
+  }catch(error){
+    alert("Error en laboratorio: "+error.message);
+  }
+}
 
 loadRequests();
-}
-loadRequests();
-  
-
-const usuario = JSON.parse(localStorage.getItem("jm_user") || "{}");
-
-if (usuario.rol !== "administrador") {
-  alert("Acceso denegado.");
-  location.href = "index.html";
-}
-
 </script>
 </body>
 </html>
