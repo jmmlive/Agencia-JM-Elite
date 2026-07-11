@@ -3,58 +3,294 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Perfil Elite</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-:root{--gold:#f7d774;--blue:#00a2ff;--deep:#020713;--soft:#dce8ff}
-body{background:#020713;color:white;min-height:100vh;padding-bottom:78px}
-a{text-decoration:none;color:inherit}
-button{border:0;cursor:pointer}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif
+}
 
-.profile{min-height:100vh;background:radial-gradient(circle at top,#006bff99,#020713 65%)}
-.header{position:relative;height:340px}
-.cover{height:290px;background:#061326;overflow:hidden}
-.cover img{width:100%;height:100%;object-fit:cover;filter:brightness(.85) saturate(1.2)}
-.back{position:absolute;top:16px;left:16px;width:52px;height:52px;border-radius:18px;background:#07162c;border:1px solid var(--blue);color:white;font-size:26px;z-index:5}
-.editBtn{position:absolute;top:16px;right:16px;padding:14px 16px;border-radius:18px;background:#f7d774;color:#061326;font-weight:900;z-index:5;display:none}
-.avatar{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:118px;height:118px;border-radius:50%;border:4px solid var(--gold);background:#07162c;overflow:hidden;box-shadow:0 0 28px #00a2ff}
-.avatar img{width:100%;height:100%;object-fit:cover}
+:root{
+  --gold:#f7d774;
+  --blue:#00a2ff;
+  --deep:#020713;
+  --soft:#dce8ff;
+}
 
-.identity{text-align:center;padding:10px 16px 0}
-.identity h1{font-size:32px;color:var(--gold);margin-bottom:6px}
-.identity p{color:white;font-size:16px;margin-bottom:16px}
+body{
+  background:#020713;
+  color:white;
+  min-height:100vh;
+  padding-bottom:78px
+}
 
-.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:0 18px;margin-bottom:18px}
-.badges span{min-height:40px;border-radius:999px;background:rgba(0,70,180,.55);border:1px solid rgba(0,183,255,.45);display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;padding:5px}
+a{
+  text-decoration:none;
+  color:inherit
+}
 
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:0 16px;margin-bottom:18px}
-.stat{min-height:72px;border-radius:18px;background:rgba(0,35,100,.72);border:1px solid rgba(0,183,255,.35);display:flex;flex-direction:column;align-items:center;justify-content:center}
-.stat b{color:var(--gold);font-size:23px}
-.stat span{font-size:11px;color:var(--soft)}
+button{
+  border:0;
+  cursor:pointer
+}
 
-.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px;margin-bottom:18px}
-.actions button{height:54px;border-radius:18px;font-weight:900;font-size:14px}
-.blue{background:linear-gradient(135deg,#008cff,#004dff);color:white}
-.gold{background:linear-gradient(135deg,#d8a92d,#ffcf55);color:#061326}
-.dark{background:#07162c;color:white;border:1px solid rgba(0,183,255,.45)}
+.profile{
+  min-height:100vh;
+  background:
+  radial-gradient(circle at top,#006bff99,#020713 65%)
+}
 
-.card{margin:0 16px 18px;background:rgba(0,18,55,.75);border:1px solid rgba(247,215,116,.28);border-radius:20px;padding:15px}
-.card h3{color:var(--gold);font-size:20px;margin-bottom:10px}
-.row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
-.row:last-child{border-bottom:0}
-.row span{color:var(--soft)}
-.row b{text-align:right}
+.header{
+  position:relative;
+  height:340px
+}
 
-.loading{text-align:center;padding:40px;color:var(--soft)}
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;height:74px;background:#020713;border-top:1px solid rgba(247,215,116,.25);display:grid;grid-template-columns:repeat(5,1fr);z-index:999}
-.nav-item{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;gap:3px}
-.nav-item .icon{font-size:24px}
-.nav-item.active{color:var(--gold)}
+.cover{
+  height:290px;
+  background:
+  linear-gradient(135deg,#061326,#003a8f,#020713);
+  overflow:hidden
+}
+
+.cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(.85) saturate(1.2)
+}
+
+.back{
+  position:absolute;
+  top:16px;
+  left:16px;
+  width:52px;
+  height:52px;
+  border-radius:18px;
+  background:#07162c;
+  border:1px solid var(--blue);
+  color:white;
+  font-size:26px;
+  z-index:5
+}
+
+.editBtn{
+  position:absolute;
+  top:16px;
+  right:16px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:#f7d774;
+  color:#061326;
+  font-weight:900;
+  z-index:5;
+  display:none
+}
+
+.avatar{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:118px;
+  height:118px;
+  border-radius:50%;
+  border:4px solid var(--gold);
+  background:#07162c;
+  overflow:hidden;
+  box-shadow:0 0 28px #00a2ff;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.avatarFallback{
+  font-size:58px;
+  display:none
+}
+
+.identity{
+  text-align:center;
+  padding:10px 16px 0
+}
+
+.identity h1{
+  font-size:32px;
+  color:var(--gold);
+  margin-bottom:6px
+}
+
+.identity p{
+  color:white;
+  font-size:16px;
+  margin-bottom:16px
+}
+
+.badges{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+  padding:0 18px;
+  margin-bottom:18px
+}
+
+.badges span{
+  min-height:40px;
+  border-radius:999px;
+  background:rgba(0,70,180,.55);
+  border:1px solid rgba(0,183,255,.45);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  text-align:center;
+  padding:5px
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  padding:0 16px;
+  margin-bottom:18px
+}
+
+.stat{
+  min-height:72px;
+  border-radius:18px;
+  background:rgba(0,35,100,.72);
+  border:1px solid rgba(0,183,255,.35);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center
+}
+
+.stat b{
+  color:var(--gold);
+  font-size:23px
+}
+
+.stat span{
+  font-size:11px;
+  color:var(--soft)
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:0 16px;
+  margin-bottom:18px
+}
+
+.actions button{
+  height:54px;
+  border-radius:18px;
+  font-weight:900;
+  font-size:14px
+}
+
+.blue{
+  background:linear-gradient(135deg,#008cff,#004dff);
+  color:white
+}
+
+.gold{
+  background:linear-gradient(135deg,#d8a92d,#ffcf55);
+  color:#061326
+}
+
+.dark{
+  background:#07162c;
+  color:white;
+  border:1px solid rgba(0,183,255,.45)
+}
+
+.card{
+  margin:0 16px 18px;
+  background:rgba(0,18,55,.75);
+  border:1px solid rgba(247,215,116,.28);
+  border-radius:20px;
+  padding:15px
+}
+
+.card h3{
+  color:var(--gold);
+  font-size:20px;
+  margin-bottom:10px
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-size:14px
+}
+
+.row:last-child{
+  border-bottom:0
+}
+
+.row span{
+  color:var(--soft)
+}
+
+.row b{
+  text-align:right
+}
+
+.loading{
+  text-align:center;
+  padding:40px;
+  color:var(--soft)
+}
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  height:74px;
+  background:#020713;
+  border-top:1px solid rgba(247,215,116,.25);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:999
+}
+
+.nav-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  gap:3px
+}
+
+.nav-item .icon{
+  font-size:24px
+}
+
+.nav-item.active{
+  color:var(--gold)
+}
 </style>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 </head>
 
 <body>
@@ -62,33 +298,83 @@ button{border:0;cursor:pointer}
 <main class="profile">
 
 <section class="header">
+
   <button class="back" onclick="history.back()">←</button>
-  <button id="editBtn" class="editBtn" onclick="editarPerfilActual()">✏️ Editar</button>
+
+  <button
+    id="editBtn"
+    class="editBtn"
+    onclick="editarPerfilActual()">
+    ✏️ Editar
+  </button>
 
   <div class="cover">
-    <img id="coverImg" src="file_00000000b87071f4b2cf26f846b51b6e.png" alt="Portada">
+    <img id="coverImg" alt="Portada">
   </div>
 
   <div class="avatar">
-    <img id="avatarImg" src="file_00000000f71471f499e5839986bab33b.png" alt="Foto de perfil">
+
+    <img
+      id="avatarImg"
+      alt="Foto de perfil">
+
+    <span
+      id="avatarFallback"
+      class="avatarFallback">
+      👤
+    </span>
+
   </div>
+
 </section>
 
 <section id="profileContent">
-  <div class="loading">Cargando perfil...</div>
+
+  <div class="loading">
+    Cargando perfil...
+  </div>
+
 </section>
 
 </main>
 
 <nav class="bottom-nav">
-  <a class="nav-item" href="index.html"><span class="icon">🏠</span><span>Inicio</span></a>
-  <a class="nav-item" href="sala-pro.html"><span class="icon">🎙️</span><span>Sala</span></a>
-  <a class="nav-item active" href="perfil.html"><span class="icon">👤</span><span>Perfil</span></a>
-  <a class="nav-item" href="chat.html"><span class="icon">💬</span><span>Chat</span></a>
-  <a class="nav-item" href="menu.html"><span class="icon">☰</span><span>Más</span></a>
+
+  <a class="nav-item" href="index.html">
+    <span class="icon">🏠</span>
+    <span>Inicio</span>
+  </a>
+
+  <a class="nav-item" href="sala-pro.html">
+    <span class="icon">🎙️</span>
+    <span>Sala</span>
+  </a>
+
+  <a class="nav-item active" href="perfil.html">
+    <span class="icon">👤</span>
+    <span>Perfil</span>
+  </a>
+
+  <a class="nav-item" href="chat.html">
+    <span class="icon">💬</span>
+    <span>Chat</span>
+  </a>
+
+  <a class="nav-item" href="menu.html">
+    <span class="icon">☰</span>
+    <span>Más</span>
+  </a>
+
 </nav>
 
 <script>
+
+const AGENT_EMAILS=[
+  "jesus@jmelite.com",
+  "admin@jmelite.com",
+  "elpepolan35@gmail.com"
+];
+
 const firebaseConfig={
   apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
   authDomain:"agencia-jm-elite.firebaseapp.com",
@@ -99,140 +385,547 @@ const firebaseConfig={
 };
 
 firebase.initializeApp(firebaseConfig);
+
 const db=firebase.firestore();
 
-const params = new URLSearchParams(window.location.search);
-const perfilId = params.get("id");
-const myEmail = (localStorage.getItem("jm_email") || "").toLowerCase();
-const role = localStorage.getItem("jm_role") || "";
-const content = document.getElementById("profileContent");
+const params=
+  new URLSearchParams(window.location.search);
 
-function valor(v, defecto="—"){
-  return v && String(v).trim() !== "" ? v : defecto;
+const perfilSolicitado=
+  params.get("id");
+
+const myEmail=(
+  localStorage.getItem("jm_email") || ""
+).toLowerCase();
+
+const roleLocal=(
+  localStorage.getItem("jm_role") || ""
+).toLowerCase();
+
+const content=
+  document.getElementById("profileContent");
+
+let perfilActualId="";
+let esMiPerfilActual=false;
+
+function esAgente(email){
+
+  return AGENT_EMAILS.includes(
+    (email || "").toLowerCase()
+  );
 }
+
+function valor(v,defecto="—"){
+
+  return v &&
+  String(v).trim() !== ""
+  ? v
+  : defecto;
+}
+
 function calcularDias(fechaInicio){
-  if(!fechaInicio) return "—";
 
-  const partes = fechaInicio.split("/");
-  const inicio = new Date(partes[2], partes[1]-1, partes[0]);
-  const hoy = new Date();
-
-  const diferencia = hoy - inicio;
-  return Math.floor(diferencia / (1000 * 60 * 60 * 24));
-  }
-function pintarPerfil(u, esMiPerfil=false){
-  document.getElementById("avatarImg").src = u.fotoPerfil || u.photoURL || "file_00000000f71471f499e5839986bab33b.png";
-  document.getElementById("coverImg").src = u.fotoPortada || u.coverURL || "file_00000000b87071f4b2cf26f846b51b6e.png";
-
-  if(esMiPerfil || role === "administrador"){
-    document.getElementById("editBtn").style.display = "block";
+  if(!fechaInicio){
+    return "—";
   }
 
-  const nombre = valor(u.nombre || u.nombreArtistico || u.artisticName, "Sin nombre");
-  const pais = valor(u.pais || u.country, "País no indicado");
-  const poppoId = valor(u.poppoId || u.idPoppo || u.poppoID);
-  const nivel = valor(u.nivel || u.level);
-  const rol = valor(u.rol || u.role || "Emisora");
-  const edad = valor(u.edad || u.age);
-  const genero = valor(u.genero || u.gender);
-  const seguidores = valor(u.seguidores || u.followers, "0");
-  const diamantes = valor(u.diamantes || u.coins || u.diamonds, "0");
-  const dias = calcularDias(u.fechaInicioPoppo);
+  const partes=fechaInicio.split("/");
 
-  content.innerHTML = `
+  if(partes.length !== 3){
+    return "—";
+  }
+
+  const inicio=new Date(
+    Number(partes[2]),
+    Number(partes[1])-1,
+    Number(partes[0])
+  );
+
+  if(isNaN(inicio.getTime())){
+    return "—";
+  }
+
+  const hoy=new Date();
+
+  inicio.setHours(0,0,0,0);
+  hoy.setHours(0,0,0,0);
+
+  const diferencia=hoy-inicio;
+
+  return Math.max(
+    0,
+    Math.floor(
+      diferencia/(1000*60*60*24)
+    )
+  );
+}
+
+function mostrarImagenes(u){
+
+  const avatarImg=
+    document.getElementById("avatarImg");
+
+  const avatarFallback=
+    document.getElementById("avatarFallback");
+
+  const coverImg=
+    document.getElementById("coverImg");
+
+  const fotoPerfil=
+    u.fotoPerfil ||
+    u.photoURL ||
+    "";
+
+  const fotoPortada=
+    u.fotoPortada ||
+    u.coverURL ||
+    "";
+
+  if(fotoPerfil){
+
+    avatarImg.src=fotoPerfil;
+    avatarImg.style.display="block";
+    avatarFallback.style.display="none";
+
+    avatarImg.onerror=function(){
+
+      avatarImg.style.display="none";
+      avatarFallback.style.display="block";
+    };
+
+  }else{
+
+    avatarImg.style.display="none";
+    avatarFallback.style.display="block";
+  }
+
+  if(fotoPortada){
+
+    coverImg.src=fotoPortada;
+    coverImg.style.display="block";
+
+    coverImg.onerror=function(){
+
+      coverImg.style.display="none";
+    };
+
+  }else{
+
+    coverImg.style.display="none";
+  }
+}
+
+function puedeEditarPerfil(
+  perfilEmail,
+  esMiPerfil
+){
+
+  if(esMiPerfil){
+    return true;
+  }
+
+  if(esAgente(myEmail)){
+    return true;
+  }
+
+  if(
+    roleLocal === "administrador" ||
+    roleLocal === "agente"
+  ){
+    return true;
+  }
+
+  return false;
+}
+
+function pintarPerfil(
+  u,
+  idDocumento,
+  esMiPerfil=false
+){
+
+  perfilActualId=idDocumento;
+  esMiPerfilActual=esMiPerfil;
+
+  mostrarImagenes(u);
+
+  const emailPerfil=(
+    u.email ||
+    u.correo ||
+    ""
+  ).toLowerCase();
+
+  const editBtn=
+    document.getElementById("editBtn");
+
+  if(
+    puedeEditarPerfil(
+      emailPerfil,
+      esMiPerfil
+    )
+  ){
+
+    editBtn.style.display="block";
+
+  }else{
+
+    editBtn.style.display="none";
+  }
+
+  const nombre=valor(
+    u.nombre ||
+    u.nombreArtistico ||
+    u.artisticName,
+    "Sin nombre"
+  );
+
+  const pais=valor(
+    u.pais ||
+    u.country,
+    "País no indicado"
+  );
+
+  const poppoId=valor(
+    u.poppoId ||
+    u.idPoppo ||
+    u.poppoID
+  );
+
+  const nivel=valor(
+    u.nivel ||
+    u.level
+  );
+
+  const rol=valor(
+    u.role ||
+    u.rol ||
+    "emisora"
+  );
+
+  const edad=valor(
+    u.edad ||
+    u.age
+  );
+
+  const genero=valor(
+    u.genero ||
+    u.gender
+  );
+
+  const seguidores=valor(
+    u.seguidores ||
+    u.followers,
+    "0"
+  );
+
+  const diamantes=valor(
+    u.diamantes ||
+    u.coins ||
+    u.diamonds,
+    "0"
+  );
+
+  const dias=
+    calcularDias(u.fechaInicioPoppo);
+
+  content.innerHTML=`
+
     <section class="identity">
+
       <h1>${nombre}</h1>
-      <p>👑 ${rol} · Agencia JM Elite</p>
+
+      <p>
+        👑 ${rol} · Agencia JM Elite
+      </p>
 
       <div class="badges">
+
         <span>🟣 Nivel ${nivel}</span>
+
         <span>🆔 ${poppoId}</span>
+
         <span>🌍 ${pais}</span>
+
         <span>♂ ${genero}</span>
+
         <span>🎂 ${edad}</span>
+
         <span>✅ Activa</span>
+
       </div>
+
     </section>
+
 
     <section class="stats">
-      <div class="stat"><b>${seguidores}</b><span>Seguidores</span></div>
-      <div class="stat"><b>${nivel}</b><span>Nivel</span></div>
-      <div class="stat"><b>${diamantes}</b><span>Diamantes</span></div>
-      <div class="stat"><b>${dias}</b><span>Días</span></div>
+
+      <div class="stat">
+        <b>${seguidores}</b>
+        <span>Seguidores</span>
+      </div>
+
+      <div class="stat">
+        <b>${nivel}</b>
+        <span>Nivel</span>
+      </div>
+
+      <div class="stat">
+        <b>${diamantes}</b>
+        <span>Diamantes</span>
+      </div>
+
+      <div class="stat">
+        <b>${dias}</b>
+        <span>Días Poppo</span>
+      </div>
+
     </section>
+
 
     <section class="actions">
-      <button class="blue">💬 Mensaje</button>
-      <button class="gold" onclick="editarPerfilActual()">✏️ Editar</button>
-      <button class="dark">➕ Añadir</button>
+
+      <button class="blue">
+        💬 Mensaje
+      </button>
+
+      ${
+        puedeEditarPerfil(
+          emailPerfil,
+          esMiPerfil
+        )
+        ?
+        `
+        <button
+          class="gold"
+          onclick="editarPerfilActual()">
+          ✏️ Editar
+        </button>
+        `
+        :
+        `
+        <button
+          class="dark"
+          disabled>
+          🔒 Perfil
+        </button>
+        `
+      }
+
+      <button class="dark">
+        ➕ Añadir
+      </button>
+
     </section>
+
 
     <section class="card">
+
       <h3>Información</h3>
-      <div class="row"><span>ID Poppo</span><b>${poppoId}</b></div>
-      <div class="row"><span>País</span><b>${pais}</b></div>
-      <div class="row"><span>Rol</span><b>${rol}</b></div>
-      <div class="row"><span>Correo</span><b>${valor(u.email || u.correo)}</b></div>
+
+      <div class="row">
+        <span>ID Poppo</span>
+        <b>${poppoId}</b>
+      </div>
+
+      <div class="row">
+        <span>País</span>
+        <b>${pais}</b>
+      </div>
+
+      <div class="row">
+        <span>Rol</span>
+        <b>${rol}</b>
+      </div>
+
+      <div class="row">
+        <span>Correo</span>
+        <b>${valor(u.email || u.correo)}</b>
+      </div>
+
     </section>
+
   `;
 }
-function editarPerfilActual(){
-  const idActual = new URLSearchParams(window.location.search).get("id");
 
-  if(idActual){
-    location.href = "editar-perfil.html?id=" + idActual;
-  }else{
-    alert("Abre este perfil desde Mis Emisoras para poder editarlo.");
+async function buscarMiPerfil(){
+
+  if(!myEmail){
+    return null;
   }
+
+  const snap=
+    await db
+    .collection("usuarios")
+    .where("email","==",myEmail)
+    .limit(1)
+    .get();
+
+  if(snap.empty){
+    return null;
+  }
+
+  return snap.docs[0];
 }
+
+async function crearPerfilFundadorSiFalta(){
+
+  if(!esAgente(myEmail)){
+    return null;
+  }
+
+  const idFundador=
+    "fundador_elpepolan35";
+
+  const ref=
+    db.collection("usuarios")
+    .doc(idFundador);
+
+  const snap=
+    await ref.get();
+
+  if(!snap.exists){
+
+    await ref.set({
+
+      email:myEmail,
+
+      nombre:"Jesús Melián",
+
+      nombreArtistico:"Jesús Melián",
+
+      artisticName:"Jesús Melián",
+
+      pais:"España",
+
+      country:"España",
+
+      poppoId:"19758906",
+
+      fechaInicioPoppo:"12/03/2024",
+
+      nivel:"45",
+
+      level:"45",
+
+      role:"agente",
+
+      edad:"49",
+
+      genero:"Hombre",
+
+      seguidores:"1981",
+
+      diamantes:"125K",
+
+      status:"activa"
+
+    },{
+      merge:true
+    });
+  }
+
+  return await ref.get();
+}
+
+window.editarPerfilActual=function(){
+
+  if(!perfilActualId){
+
+    alert(
+      "No se encontró el perfil que quieres editar."
+    );
+
+    return;
+  }
+
+  location.href=
+    "editar-perfil.html?id="+
+    perfilActualId;
+};
+
 async function cargarPerfil(){
-  if(localStorage.getItem("jm_logged") !== "yes"){
+
+  if(
+    localStorage.getItem("jm_logged")
+    !==
+    "yes"
+  ){
+
     location.replace("index.html");
+
     return;
   }
 
   try{
-    if(perfilId){
-      const doc = await db.collection("usuarios").doc(perfilId).get();
 
-      if(!doc.exists){
-        content.innerHTML = '<div class="loading">No se encontró este perfil.</div>';
+    const miPerfil=
+      await buscarMiPerfil()
+      ||
+      await crearPerfilFundadorSiFalta();
+
+    if(perfilSolicitado){
+
+      const docPerfil=
+        await db
+        .collection("usuarios")
+        .doc(perfilSolicitado)
+        .get();
+
+      if(!docPerfil.exists){
+
+        content.innerHTML=
+        '<div class="loading">No se encontró este perfil.</div>';
+
         return;
       }
 
-      pintarPerfil(doc.data(), false);
+      const datos=
+        docPerfil.data();
+
+      const emailPerfil=(
+        datos.email ||
+        datos.correo ||
+        ""
+      ).toLowerCase();
+
+      const esMio=
+        emailPerfil === myEmail;
+
+      pintarPerfil(
+        datos,
+        docPerfil.id,
+        esMio
+      );
+
       return;
     }
 
-    if(myEmail){
-      const snap = await db.collection("usuarios").where("email","==",myEmail).limit(1).get();
+    if(miPerfil){
 
-      if(!snap.empty){
-        pintarPerfil(snap.docs[0].data(), true);
-        return;
-      }
+      pintarPerfil(
+        miPerfil.data(),
+        miPerfil.id,
+        true
+      );
+
+      return;
     }
 
-    pintarPerfil({
-      nombre:"Jesús Melián",
-      pais:"España",
-      poppoId:"19758906",
-      nivel:"45",
-      rol:"Fundador",
-      edad:"49",
-      genero:"Hombre",
-      seguidores:"1981",
-      diamantes:"125K",
-      dias:"845"
-    }, true);
+    content.innerHTML=
+    '<div class="loading">No se encontró tu perfil.</div>';
 
   }catch(error){
-    content.innerHTML = '<div class="loading">Error cargando perfil: '+error.message+'</div>';
+
+    content.innerHTML=
+    '<div class="loading">Error cargando perfil: '+
+    error.message+
+    '</div>';
   }
 }
 
 cargarPerfil();
+
 </script>
 
 </body>
-</html>
+  </html>
