@@ -1198,6 +1198,7 @@ function checkLogin() {
 }
 
 function login() {
+
   if (registerMode) {
     sendRegisterRequest(registerMode);
     return;
@@ -1232,34 +1233,69 @@ function login() {
     return;
   }
 
-  if (isAgent(email)) {
-    localStorage.setItem("jm_logged", "yes");
-    localStorage.setItem("jm_email", email);
-    localStorage.setItem("jm_role", "administrador");
-
-    localStorage.setItem(
-      "jm_permissions",
-      JSON.stringify({
-        canInvite: true
-      })
-    );
-
-    localStorage.setItem(
-      "jm_user",
-      JSON.stringify({
-        email: email,
-        rol: "administrador"
-      })
-    );
-
-    checkLogin();
-    return;
-  }
-
   setLoginStatus(
     "Comprobando acceso...",
     "info"
   );
+
+  if (isAgent(email)) {
+
+    auth.signInWithEmailAndPassword(email, pass)
+
+    .then(() => {
+
+      localStorage.setItem(
+        "jm_logged",
+        "yes"
+      );
+
+      localStorage.setItem(
+        "jm_email",
+        email
+      );
+
+      localStorage.setItem(
+        "jm_role",
+        "administrador"
+      );
+
+      localStorage.setItem(
+        "jm_permissions",
+        JSON.stringify({
+          canInvite: true
+        })
+      );
+
+      localStorage.setItem(
+        "jm_user",
+        JSON.stringify({
+          email: email,
+          rol: "administrador"
+        })
+      );
+
+      clearLoginStatus();
+
+      checkLogin();
+
+    })
+
+    .catch(error => {
+
+      console.error(
+        "ERROR AUTH ADMIN:",
+        error
+      );
+
+      setLoginStatus(
+        "Correo o contraseña de administrador incorrectos.",
+        "error"
+      );
+
+    });
+
+    return;
+  }
 
   db.collection("usuarios")
     .where("email", "==", email)
@@ -1269,33 +1305,47 @@ function login() {
     .then(snapshot => {
 
       if (snapshot.empty) {
+
         setLoginStatus(
           "No estás aprobado todavía o el correo no existe.",
           "error"
         );
+
         return;
       }
 
-      const user = snapshot.docs[0].data();
+      const user =
+        snapshot.docs[0].data();
 
       if (user.password !== pass) {
+
         setLoginStatus(
           "Contraseña incorrecta.",
           "error"
         );
+
         return;
       }
 
       if (user.status !== "activa") {
+
         setLoginStatus(
           "Tu cuenta todavía no está activa.",
           "error"
         );
+
         return;
       }
 
-      localStorage.setItem("jm_logged", "yes");
-      localStorage.setItem("jm_email", email);
+      localStorage.setItem(
+        "jm_logged",
+        "yes"
+      );
+
+      localStorage.setItem(
+        "jm_email",
+        email
+      );
 
       localStorage.setItem(
         "jm_role",
@@ -1314,7 +1364,8 @@ function login() {
         JSON.stringify({
           email: email,
           rol: user.role || "emisora",
-          artisticName: user.artisticName || ""
+          artisticName:
+            user.artisticName || ""
         })
       );
 
@@ -1326,7 +1377,10 @@ function login() {
 
     .catch(error => {
 
-      console.error("ERROR LOGIN:", error);
+      console.error(
+        "ERROR LOGIN:",
+        error
+      );
 
       setLoginStatus(
         "Error al conectar con el sistema: " +
@@ -1335,9 +1389,12 @@ function login() {
       );
 
     });
+
 }
 
+
 function normalRegister() {
+
   if (registerSending) {
     return;
   }
@@ -1365,7 +1422,8 @@ function normalRegister() {
     .getElementById("mainLoginBtn")
     .innerText =
     "ENVIAR SOLICITUD";
-}
+
+          }
 
 function inviteRegister() {
   if (registerSending) {
