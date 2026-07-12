@@ -1545,6 +1545,12 @@ let unsubscribeChat=null;
 
 let unsubscribeModeration=null;
 
+let roomStartupReady=false;
+let roomStartupRunning=false;
+let roomRetryTimer=null;
+let roomStatusMessage="";
+
+
 
 function normalizeText(text){
 
@@ -1556,6 +1562,189 @@ function normalizeText(text){
       ""
     )
     .trim();
+
+}
+
+
+
+function setRoomStatus(icon,message){
+
+  const status=
+    document.getElementById(
+      "connectionStatus"
+    );
+
+  const subtitle=
+    document.getElementById(
+      "roomSubtitle"
+    );
+
+  if(status){
+    status.textContent=icon;
+  }
+
+  if(
+    subtitle &&
+    message
+  ){
+    subtitle.textContent=message;
+  }
+
+  roomStatusMessage=
+    message || "";
+
+}
+
+
+function waitMs(ms){
+
+  return new Promise(resolve=>
+    setTimeout(resolve,ms)
+  );
+
+}
+
+
+async function safeStep(
+  name,
+  action,
+  options={}
+){
+
+  const retries=
+    Number(options.retries || 1);
+
+  const retryDelay=
+    Number(options.retryDelay || 1800);
+
+  let lastError=null;
+
+  for(
+    let attempt=1;
+    attempt<=retries;
+    attempt++
+  ){
+
+    try{
+
+      return await action();
+
+    }catch(error){
+
+      lastError=error;
+
+      console.warn(
+        "Paso de Sala Pro falló:",
+        name,
+        "intento",
+        attempt,
+        error
+      );
+
+      setRoomStatus(
+        "🟡",
+        "Conexión lenta. Reintentando " +
+        name +
+        "..."
+      );
+
+      if(attempt<retries){
+        await waitMs(retryDelay);
+      }
+
+    }
+
+  }
+
+  console.error(
+    "Paso omitido temporalmente:",
+    name,
+    lastError
+  );
+
+  return null;
+
+}
+
+
+function scheduleRoomRecovery(){
+
+  if(roomRetryTimer){
+    return;
+  }
+
+  roomRetryTimer=
+    setInterval(
+      async function(){
+
+        if(
+          document.visibilityState==="hidden"
+        ){
+          return;
+        }
+
+        if(
+          !navigator.onLine
+        ){
+
+          setRoomStatus(
+            "🔴",
+            "Sin conexión. Sala Pro seguirá aquí y reintentará sola."
+          );
+
+          return;
+        }
+
+        try{
+
+          if(!currentPresenceId){
+
+            await safeStep(
+              "presencia",
+              joinRoom,
+              {
+                retries:1
+              }
+            );
+
+          }else{
+
+            await sendHeartbeat();
+
+          }
+
+          if(
+            !livekitRoom ||
+            livekitRoom.state!=="connected"
+          ){
+
+            await connectLiveKitAudio();
+
+          }
+
+          setRoomStatus(
+            livekitRoom &&
+            livekitRoom.state==="connected"
+              ? "🟢"
+              : "🟡",
+            livekitRoom &&
+            livekitRoom.state==="connected"
+              ? "Sala oficial de audio y seguimiento"
+              : "Modo oyente. Audio reconectando en segundo plano."
+          );
+
+        }catch(error){
+
+          console.warn(
+            "Recuperación automática pendiente:",
+            error
+          );
+
+        }
+
+      },
+      8000
+    );
 
 }
 
@@ -1735,10 +1924,50 @@ async function loadCurrentUser(){
 
   if(!currentEmail){
 
-    window.location.href=
-      "index.html";
+    setRoomStatus(
+      "🟡",
+      "Recuperando tu sesión. Sala Pro no te expulsará."
+    );
 
-    return false;
+    const storedUser=
+      localStorage.getItem("jm_user") || "";
+
+    try{
+
+      const parsedUser=
+        JSON.parse(storedUser || "{}");
+
+      currentEmail=
+        normalizeText(
+          parsedUser.email || ""
+        );
+
+      currentRole=
+        normalizeText(
+          parsedUser.role ||
+          parsedUser.rol ||
+          currentRole
+        );
+
+    }catch(error){
+
+      console.warn(
+        "No se pudo recuperar jm_user:",
+        error
+      );
+
+    }
+
+    if(!currentEmail){
+
+      currentUser={
+        email:"",
+        role:currentRole || "emisora"
+      };
+
+      return true;
+
+    }
 
   }
 
@@ -1846,46 +2075,79 @@ function isParticipantOnline(item){
 
 async function joinRoom(){
 
+  if(!currentEmail){
+
+    setRoomStatus(
+      "🟡",
+      "Esperando datos de sesión. La sala sigue abierta."
+    );
+
+    return false;
+
+  }
+
   currentPresenceId=
     getPresenceDocId();
 
+  try{
 
-  await db
-    .collection("sala_pro_presence")
-    .doc(currentPresenceId)
-    .set({
+    await db
+      .collection("sala_pro_presence")
+      .doc(currentPresenceId)
+      .set({
 
-      roomId:ROOM_ID,
+        roomId:ROOM_ID,
 
-      email:currentEmail,
+        email:currentEmail,
 
-      name:getUserName(currentUser),
+        name:getUserName(currentUser),
 
-      avatar:getUserAvatar(currentUser),
+        avatar:getUserAvatar(currentUser),
 
-      role:currentRole,
+        role:currentRole,
 
-      seatNumber:null,
+        seatNumber:null,
 
-      connected:true,
+        connected:true,
 
-      lastSeen:Date.now(),
+        lastSeen:Date.now(),
 
-      joinedAt:
-        firebase.firestore
-          .FieldValue
-          .serverTimestamp()
+        joinedAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp()
 
-    },{
-      merge:true
-    });
+      },{
+        merge:true
+      });
 
+    if(!heartbeatTimer){
 
-  heartbeatTimer=
-    setInterval(
-      sendHeartbeat,
-      15000
+      heartbeatTimer=
+        setInterval(
+          sendHeartbeat,
+          15000
+        );
+
+    }
+
+    return true;
+
+  }catch(error){
+
+    console.warn(
+      "Presencia aplazada por conexión lenta:",
+      error
     );
+
+    setRoomStatus(
+      "🟡",
+      "Conexión lenta. Entraste en modo limitado y reintentaremos."
+    );
+
+    return false;
+
+  }
 
 }
 
@@ -3777,8 +4039,9 @@ async function connectLiveKitAudio(){
       .textContent="🔴";
 
 
-    alert(
-      "No se pudo conectar el audio de Sala Pro."
+    setRoomStatus(
+      "🟡",
+      "Modo oyente. El audio se reconectará automáticamente."
     );
 
 
@@ -4445,6 +4708,14 @@ function cleanupRoom(){
   );
 
 
+  clearInterval(
+    roomRetryTimer
+  );
+
+
+  roomRetryTimer=null;
+
+
   if(unsubscribePresence){
 
     unsubscribePresence();
@@ -4582,85 +4853,201 @@ function startModerationSync(){
 
 async function startSalaPro(){
 
-  const logged=
-    localStorage.getItem(
-      "jm_logged"
-    );
-
-
-  if(logged!=="yes"){
-
-    window.location.href=
-      "index.html";
-
+  if(roomStartupRunning){
     return;
-
   }
 
+  roomStartupRunning=true;
 
-  const loaded=
-    await loadCurrentUser();
-
-
-  if(!loaded){
-
-    return;
-
-  }
-
-
-  await loadTodayActivity();
-
-
-  await joinRoom();
-
-
-  startRoomSync();
-
-
-  startModerationSync();
-
-
-  await connectLiveKitAudio();
-
-
-  startPresenceCounter();
-
-
-  saveProgressTimer=
-    setInterval(
-      savePresenceProgress,
-      30000
-    );
-
-
-  staleSeatCleanupTimer=
-    setInterval(
-      cleanupStaleSeats,
-      15000
-    );
-
-
-  audioRetryTimer=
-    setInterval(
-      async function(){
-
-        attachExistingRemoteAudio();
-
-        await retryRemoteAudioPlayback();
-
-      },
-      5000
-    );
-
-
-  await sendSystemMessage(
-
-    "🟢 " +
-    getUserName(currentUser) +
-    " ha entrado en Sala Pro."
-
+  setRoomStatus(
+    "🟡",
+    "Abriendo Sala Pro..."
   );
+
+  try{
+
+    const logged=
+      localStorage.getItem(
+        "jm_logged"
+      );
+
+    if(logged!=="yes"){
+
+      setRoomStatus(
+        "🟡",
+        "Recuperando sesión. No saldrás de Sala Pro."
+      );
+
+    }
+
+
+    await safeStep(
+      "tu perfil",
+      loadCurrentUser,
+      {
+        retries:2,
+        retryDelay:1200
+      }
+    );
+
+
+    await safeStep(
+      "actividad diaria",
+      loadTodayActivity,
+      {
+        retries:2,
+        retryDelay:1200
+      }
+    );
+
+
+    await safeStep(
+      "presencia",
+      joinRoom,
+      {
+        retries:2,
+        retryDelay:1500
+      }
+    );
+
+
+    try{
+
+      startRoomSync();
+
+    }catch(error){
+
+      console.warn(
+        "Sincronización principal aplazada:",
+        error
+      );
+
+    }
+
+
+    try{
+
+      startModerationSync();
+
+    }catch(error){
+
+      console.warn(
+        "Moderación aplazada:",
+        error
+      );
+
+    }
+
+
+    const audioConnected=
+      await safeStep(
+        "audio",
+        connectLiveKitAudio,
+        {
+          retries:2,
+          retryDelay:2200
+        }
+      );
+
+
+    startPresenceCounter();
+
+
+    saveProgressTimer=
+      setInterval(
+        savePresenceProgress,
+        30000
+      );
+
+
+    staleSeatCleanupTimer=
+      setInterval(
+        cleanupStaleSeats,
+        15000
+      );
+
+
+    audioRetryTimer=
+      setInterval(
+        async function(){
+
+          try{
+
+            attachExistingRemoteAudio();
+
+            await retryRemoteAudioPlayback();
+
+          }catch(error){
+
+            console.warn(
+              "Audio pendiente:",
+              error
+            );
+
+          }
+
+        },
+        5000
+      );
+
+
+    scheduleRoomRecovery();
+
+
+    if(currentEmail){
+
+      sendSystemMessage(
+
+        "🟢 " +
+        getUserName(currentUser) +
+        " ha entrado en Sala Pro."
+
+      ).catch(error=>{
+
+        console.warn(
+          "Mensaje de entrada aplazado:",
+          error
+        );
+
+      });
+
+    }
+
+
+    roomStartupReady=true;
+
+
+    setRoomStatus(
+      audioConnected
+        ? "🟢"
+        : "🟡",
+      audioConnected
+        ? "Sala oficial de audio y seguimiento"
+        : "Modo oyente. El audio sigue intentando conectar."
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Arranque protegido de Sala Pro:",
+      error
+    );
+
+
+    setRoomStatus(
+      "🟡",
+      "Conexión lenta. La sala sigue abierta y reintentará sola."
+    );
+
+
+    scheduleRoomRecovery();
+
+  }finally{
+
+    roomStartupRunning=false;
+
+  }
 
 }
 
@@ -4710,6 +5097,35 @@ window.addEventListener(
 
   }
 
+);
+
+
+
+window.addEventListener(
+  "offline",
+  function(){
+
+    setRoomStatus(
+      "🔴",
+      "Sin conexión. Sala Pro seguirá abierta y reintentará sola."
+    );
+
+  }
+);
+
+
+window.addEventListener(
+  "online",
+  function(){
+
+    setRoomStatus(
+      "🟡",
+      "Conexión recuperada. Reconectando Sala Pro..."
+    );
+
+    scheduleRoomRecovery();
+
+  }
 );
 
 
