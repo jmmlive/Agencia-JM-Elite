@@ -1525,6 +1525,10 @@ let presenceTimer=null;
 
 let saveProgressTimer=null;
 
+let staleSeatCleanupTimer=null;
+
+let audioRetryTimer=null;
+
 let heartbeatTimer=null;
 
 let roomParticipants=[];
@@ -2271,6 +2275,8 @@ function startRoomSync(){
 
           renderRoom();
 
+          cleanupStaleSeats();
+
         },
 
         error=>{
@@ -2365,6 +2371,70 @@ function startRoomSync(){
       }
 
     );
+
+}
+
+
+function isSeatOwnerStillOnline(seat){
+
+  const seatEmail=
+    normalizeText(seat.email);
+
+  return roomParticipants.some(
+    participant=>
+      normalizeText(participant.email)===seatEmail
+      &&
+      isParticipantOnline(participant)
+  );
+
+}
+
+
+async function cleanupStaleSeats(){
+
+  const staleSeats=
+    occupiedSeats.filter(
+      seat=>
+        !isSeatOwnerStillOnline(seat)
+    );
+
+  if(!staleSeats.length){
+    return;
+  }
+
+  for(const seat of staleSeats){
+
+    try{
+
+      await db
+        .collection("sala_pro_seats")
+        .doc(
+          getSeatDocId(
+            Number(seat.seatNumber)
+          )
+        )
+        .delete();
+
+      await sendSystemMessage(
+        "⬇️ " +
+        (
+          seat.name ||
+          seat.email ||
+          "Un participante"
+        ) +
+        " ha salido de Sala Pro y su puesto quedó libre."
+      );
+
+    }catch(error){
+
+      console.error(
+        "Error limpiando puesto abandonado:",
+        error
+      );
+
+    }
+
+  }
 
 }
 
@@ -2618,9 +2688,9 @@ function seatMarkup(number,seat){
 
 
   const participant=
-    roomParticipants.find(
-      person=>
-        Number(person.seatNumber)
+    occupiedSeats.find(
+      seat=>
+        Number(seat.seatNumber)
         ===number
     );
 
@@ -3062,22 +3132,26 @@ async function removeFromSeat(number){
 
     const seat=seatDoc.data();
 
-    await sendModerationCommand(
-      seat.email,
-      "leave-seat"
-    );
-
-    await db
-      .collection("sala_pro_seats")
-      .doc(seatId)
-      .delete();
-
     const participant=
       roomParticipants.find(
         item=>
           normalizeText(item.email)===
           normalizeText(seat.email)
       );
+
+    if(participant){
+
+      await sendModerationCommand(
+        seat.email,
+        "leave-seat"
+      );
+
+    }
+
+    await db
+      .collection("sala_pro_seats")
+      .doc(seatId)
+      .delete();
 
     if(participant){
 
@@ -3097,7 +3171,10 @@ async function removeFromSeat(number){
 
     await sendSystemMessage(
       "⬇️ " +
-      (seat.name || seat.email) +
+      (
+        seat.name ||
+        seat.email
+      ) +
       " ha sido bajado del micro."
     );
 
@@ -3115,7 +3192,6 @@ async function removeFromSeat(number){
   }
 
 }
-
 
 async function kickFromRoom(email){
 
@@ -3273,115 +3349,418 @@ async function requestSeat(){
 }
 
 
+function attachRemoteAudioTrack(
+  track,
+  participant
+){
+
+  if(
+    !track ||
+    track.kind!==LivekitClient.Track.Kind.Audio
+  ){
+    return;
+  }
+
+  const container=
+    document.getElementById(
+      "remoteAudioContainer"
+    );
+
+  if(!container){
+    return;
+  }
+
+  const identity=
+    normalizeText(
+      participant?.identity || "remote"
+    );
+
+  const trackSid=
+    track.sid || "";
+
+  const selector=
+    `audio[data-livekit-track="${trackSid}"]`;
+
+  if(
+    trackSid &&
+    container.querySelector(selector)
+  ){
+    return;
+  }
+
+  const audioElement=
+    track.attach();
+
+  audioElement.autoplay=true;
+  audioElement.playsInline=true;
+  audioElement.muted=false;
+  audioElement.volume=1;
+
+  audioElement.setAttribute(
+    "data-livekit-audio",
+    identity
+  );
+
+  if(trackSid){
+
+    audioElement.setAttribute(
+      "data-livekit-track",
+      trackSid
+    );
+
+  }
+
+  container.appendChild(
+    audioElement
+  );
+
+  audioElement.play()
+    .then(()=>{
+      refreshAudioUnlock();
+    })
+    .catch(error=>{
+
+      console.warn(
+        "Audio remoto esperando interacción:",
+        error
+      );
+
+      refreshAudioUnlock(true);
+
+    });
+
+}
+
+
+function attachExistingRemoteAudio(){
+
+  if(!livekitRoom){
+    return;
+  }
+
+  livekitRoom
+    .remoteParticipants
+    .forEach(participant=>{
+
+      participant
+        .audioTrackPublications
+        .forEach(publication=>{
+
+          if(
+            publication.track &&
+            publication.isSubscribed
+          ){
+
+            attachRemoteAudioTrack(
+              publication.track,
+              participant
+            );
+
+          }
+
+        });
+
+    });
+
+}
+
+
+async function retryRemoteAudioPlayback(){
+
+  if(!livekitRoom){
+    return;
+  }
+
+  document
+    .querySelectorAll(
+      "#remoteAudioContainer audio"
+    )
+    .forEach(audio=>{
+
+      audio.muted=false;
+      audio.volume=1;
+
+      if(audio.paused){
+
+        audio.play()
+          .catch(()=>{
+            refreshAudioUnlock(true);
+          });
+
+      }
+
+    });
+
+}
+
+
 async function connectLiveKitAudio(){
 
   if(
     livekitRoom &&
     livekitRoom.state==="connected"
   ){
+
+    attachExistingRemoteAudio();
+
     return true;
+
   }
 
   try{
 
     const credentials=
       await livekitTokenSource.fetch({
+
         roomName:ROOM_ID,
-        participantIdentity:currentEmail,
-        participantName:getUserName(currentUser)
+
+        participantIdentity:
+          currentEmail,
+
+        participantName:
+          getUserName(currentUser)
+
       });
+
 
     livekitRoom=
       new LivekitClient.Room({
-        adaptiveStream:true,
-        dynacast:true
+
+        adaptiveStream:false,
+
+        dynacast:false
+
       });
 
+
     livekitRoom.on(
-      LivekitClient.RoomEvent.TrackSubscribed,
+
+      LivekitClient
+        .RoomEvent
+        .TrackSubscribed,
+
       (
         track,
         publication,
         participant
       )=>{
 
+        attachRemoteAudioTrack(
+          track,
+          participant
+        );
+
+      }
+
+    );
+
+
+    livekitRoom.on(
+
+      LivekitClient
+        .RoomEvent
+        .TrackUnsubscribed,
+
+      track=>{
+
+        track
+          .detach()
+          .forEach(element=>{
+
+            element.remove();
+
+          });
+
+      }
+
+    );
+
+
+    livekitRoom.on(
+
+      LivekitClient
+        .RoomEvent
+        .AudioPlaybackStatusChanged,
+
+      ()=>{
+
+        refreshAudioUnlock();
+
+      }
+
+    );
+
+
+    livekitRoom.on(
+
+      LivekitClient
+        .RoomEvent
+        .ActiveSpeakersChanged,
+
+      ()=>{
+
+        renderSeats();
+
+      }
+
+    );
+
+
+    livekitRoom.on(
+
+      LivekitClient
+        .RoomEvent
+        .Reconnecting,
+
+      ()=>{
+
+        document
+          .getElementById(
+            "connectionStatus"
+          )
+          .textContent="🟡";
+
+      }
+
+    );
+
+
+    livekitRoom.on(
+
+      LivekitClient
+        .RoomEvent
+        .Reconnected,
+
+      async ()=>{
+
+        document
+          .getElementById(
+            "connectionStatus"
+          )
+          .textContent="🟢";
+
+        attachExistingRemoteAudio();
+
+        await retryRemoteAudioPlayback();
+
+      }
+
+    );
+
+
+    livekitRoom.on(
+
+      LivekitClient
+        .RoomEvent
+        .TrackSubscriptionFailed,
+
+      (
+        trackSid,
+        participant
+      )=>{
+
+        console.error(
+          "Fallo al suscribirse al audio:",
+          trackSid,
+          participant?.identity || ""
+        );
+
+        document
+          .getElementById(
+            "connectionStatus"
+          )
+          .textContent="🟡";
+
+      }
+
+    );
+
+
+    livekitRoom.on(
+
+      LivekitClient
+        .RoomEvent
+        .TrackStreamStateChanged,
+
+      (
+        publication,
+        streamState,
+        participant
+      )=>{
+
+        console.log(
+          "Estado del audio remoto:",
+          participant?.identity || "",
+          streamState
+        );
+
         if(
-          track.kind===
-          LivekitClient.Track.Kind.Audio
+          streamState===
+          LivekitClient.Track.StreamState.Active
         ){
 
-          const audioElement=track.attach();
+          attachExistingRemoteAudio();
 
-          audioElement.autoplay=true;
-          audioElement.playsInline=true;
-          audioElement.setAttribute(
-            "data-livekit-audio",
-            participant.identity
-          );
-
-          document
-            .getElementById("remoteAudioContainer")
-            .appendChild(audioElement);
-
-          audioElement.play()
-            .catch(()=>{
-              refreshAudioUnlock();
-            });
+          retryRemoteAudioPlayback();
 
         }
 
       }
+
     );
 
-    livekitRoom.on(
-      LivekitClient.RoomEvent.TrackUnsubscribed,
-      track=>{
-
-        track.detach()
-          .forEach(element=>{
-            element.remove();
-          });
-
-      }
-    );
 
     livekitRoom.on(
-      LivekitClient.RoomEvent.AudioPlaybackStatusChanged,
+
+      LivekitClient
+        .RoomEvent
+        .Disconnected,
+
       ()=>{
-        refreshAudioUnlock();
-      }
-    );
 
-    livekitRoom.on(
-      LivekitClient.RoomEvent.ActiveSpeakersChanged,
-      ()=>{
-        renderSeats();
-      }
-    );
-
-    livekitRoom.on(
-      LivekitClient.RoomEvent.Disconnected,
-      ()=>{
         document
-          .getElementById("connectionStatus")
+          .getElementById(
+            "connectionStatus"
+          )
           .textContent="🔴";
+
       }
+
     );
+
 
     await livekitRoom.connect(
+
       credentials.serverUrl,
-      credentials.participantToken
+
+      credentials.participantToken,
+
+      {
+        autoSubscribe:true
+      }
+
     );
 
-    window.jmLiveKitRoom=livekitRoom;
+
+    window.jmLiveKitRoom=
+      livekitRoom;
+
 
     document
-      .getElementById("connectionStatus")
+      .getElementById(
+        "connectionStatus"
+      )
       .textContent="🟢";
+
+
+    attachExistingRemoteAudio();
+
 
     refreshAudioUnlock();
 
+
     return true;
+
 
   }catch(error){
 
@@ -3390,13 +3769,18 @@ async function connectLiveKitAudio(){
       error
     );
 
+
     document
-      .getElementById("connectionStatus")
+      .getElementById(
+        "connectionStatus"
+      )
       .textContent="🔴";
+
 
     alert(
       "No se pudo conectar el audio de Sala Pro."
     );
+
 
     return false;
 
@@ -3405,22 +3789,39 @@ async function connectLiveKitAudio(){
 }
 
 
-function refreshAudioUnlock(){
+function refreshAudioUnlock(
+  forceShow=false
+){
 
   const panel=
-    document.getElementById("audioUnlock");
+    document.getElementById(
+      "audioUnlock"
+    );
+
 
   if(!panel){
     return;
   }
 
+
   const needsUnlock=
-    livekitRoom &&
-    livekitRoom.canPlayAudio===false;
+
+    forceShow
+
+    ||
+
+    (
+      livekitRoom &&
+      livekitRoom.canPlaybackAudio===false
+    );
+
 
   panel.classList.toggle(
+
     "show",
+
     Boolean(needsUnlock)
+
   );
 
 }
@@ -3431,25 +3832,28 @@ async function unlockRoomAudio(){
   const connected=
     await connectLiveKitAudio();
 
+
   if(!connected){
     return;
   }
+
 
   try{
 
     await livekitRoom.startAudio();
 
+
     audioUnlocked=true;
 
-    document
-      .querySelectorAll(
-        "#remoteAudioContainer audio"
-      )
-      .forEach(audio=>{
-        audio.play().catch(()=>{});
-      });
 
-    refreshAudioUnlock();
+    attachExistingRemoteAudio();
+
+
+    await retryRemoteAudioPlayback();
+
+
+    refreshAudioUnlock(false);
+
 
   }catch(error){
 
@@ -3457,6 +3861,10 @@ async function unlockRoomAudio(){
       "Error activando sonido:",
       error
     );
+
+
+    refreshAudioUnlock(true);
+
 
     alert(
       "Toca otra vez para activar el sonido."
@@ -3467,24 +3875,34 @@ async function unlockRoomAudio(){
 }
 
 
-async function setMicrophoneState(enabled){
+async function setMicrophoneState(
+  enabled
+){
 
   const connected=
     await connectLiveKitAudio();
+
 
   if(!connected){
     return false;
   }
 
+
   try{
 
     await livekitRoom
       .localParticipant
-      .setMicrophoneEnabled(enabled);
+      .setMicrophoneEnabled(
+        enabled
+      );
 
-    isMuted=!enabled;
+
+    isMuted=
+      !enabled;
+
 
     return true;
+
 
   }catch(error){
 
@@ -3493,9 +3911,11 @@ async function setMicrophoneState(enabled){
       error
     );
 
+
     alert(
       "Necesitas permitir el micrófono para hablar."
     );
+
 
     return false;
 
@@ -3510,8 +3930,10 @@ function isLiveKitSpeaker(email){
     return false;
   }
 
+
   const normalizedEmail=
     normalizeText(email);
+
 
   return livekitRoom
     .activeSpeakers
@@ -3537,30 +3959,47 @@ async function toggleMute(){
 
   }
 
-  const enabled=isMuted;
+
+  const enabled=
+    isMuted;
+
 
   const changed=
-    await setMicrophoneState(enabled);
+    await setMicrophoneState(
+      enabled
+    );
+
 
   if(!changed){
     return;
   }
 
+
   try{
 
     await db
-      .collection("sala_pro_seats")
+      .collection(
+        "sala_pro_seats"
+      )
       .doc(
-        getSeatDocId(currentSeat)
+        getSeatDocId(
+          currentSeat
+        )
       )
       .set({
+
         muted:isMuted
+
       },{
         merge:true
       });
 
+
     updateMicControl();
+
+
     updateMiniStatus();
+
 
   }catch(error){
 
@@ -3577,28 +4016,52 @@ async function toggleMute(){
 function updateMicControl(){
 
   const control=
-    document.getElementById("micControl");
+    document.getElementById(
+      "micControl"
+    );
+
 
   const text=
-    document.getElementById("micControlText");
+    document.getElementById(
+      "micControlText"
+    );
+
 
   if(!currentSeat){
 
-    control.classList.remove("active");
-    text.textContent="Sin micro";
+    control.classList.remove(
+      "active"
+    );
+
+
+    text.textContent=
+      "Sin micro";
+
+
     return;
 
   }
 
+
   if(isMuted){
 
-    control.classList.remove("active");
-    text.textContent="Silenciado";
+    control.classList.remove(
+      "active"
+    );
+
+
+    text.textContent=
+      "Silenciado";
 
   }else{
 
-    control.classList.add("active");
-    text.textContent="Micro activo";
+    control.classList.add(
+      "active"
+    );
+
+
+    text.textContent=
+      "Micro activo";
 
   }
 
@@ -3616,7 +4079,10 @@ async function stopLocalAudio(){
 
       await livekitRoom
         .localParticipant
-        .setMicrophoneEnabled(false);
+        .setMicrophoneEnabled(
+          false
+        );
+
 
     }catch(error){
 
@@ -3629,7 +4095,10 @@ async function stopLocalAudio(){
 
   }
 
+
   isMuted=true;
+
+
   updateMicControl();
 
 }
@@ -3966,6 +4435,16 @@ function cleanupRoom(){
   );
 
 
+  clearInterval(
+    staleSeatCleanupTimer
+  );
+
+
+  clearInterval(
+    audioRetryTimer
+  );
+
+
   if(unsubscribePresence){
 
     unsubscribePresence();
@@ -4155,6 +4634,26 @@ async function startSalaPro(){
     );
 
 
+  staleSeatCleanupTimer=
+    setInterval(
+      cleanupStaleSeats,
+      15000
+    );
+
+
+  audioRetryTimer=
+    setInterval(
+      async function(){
+
+        attachExistingRemoteAudio();
+
+        await retryRemoteAudioPlayback();
+
+      },
+      5000
+    );
+
+
   await sendSystemMessage(
 
     "🟢 " +
@@ -4179,27 +4678,38 @@ window.addEventListener(
 
 
 window.addEventListener(
+
   "pointerdown",
-  function firstAudioGesture(){
+
+  async function(){
 
     if(
       livekitRoom &&
-      livekitRoom.canPlayAudio===false
+      livekitRoom.canPlaybackAudio===false
     ){
 
-      unlockRoomAudio();
+      try{
+
+        await livekitRoom.startAudio();
+
+        audioUnlocked=true;
+
+        attachExistingRemoteAudio();
+
+        await retryRemoteAudioPlayback();
+
+        refreshAudioUnlock(false);
+
+      }catch(error){
+
+        refreshAudioUnlock(true);
+
+      }
 
     }
 
-    window.removeEventListener(
-      "pointerdown",
-      firstAudioGesture
-    );
-
-  },
-  {
-    once:true
   }
+
 );
 
 
