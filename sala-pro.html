@@ -981,6 +981,39 @@ a{
     rgba(255,97,117,.40);
 }
 
+
+/* AUDIO REMOTO */
+.audio-unlock{
+  position:fixed;
+  left:12px;
+  right:12px;
+  bottom:86px;
+  z-index:2200;
+  display:none;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:18px;
+  background:rgba(5,20,48,.98);
+  border:1px solid rgba(247,215,116,.48);
+  box-shadow:0 0 24px rgba(0,120,255,.35);
+}
+.audio-unlock.show{display:flex;}
+.audio-unlock span{
+  color:var(--soft);
+  font-size:11px;
+  line-height:1.35;
+}
+.audio-unlock button{
+  flex:none;
+  padding:10px 13px;
+  border-radius:13px;
+  color:#061326;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  font-weight:bold;
+}
+
 .hidden{
   display:none!important;
 }
@@ -1405,6 +1438,12 @@ a{
 </nav>
 
 
+
+<div id="audioUnlock" class="audio-unlock">
+  <span>🔊 Toca para escuchar el audio de Sala Pro.</span>
+  <button type="button" onclick="unlockRoomAudio()">Activar sonido</button>
+</div>
+
 <div id="remoteAudioContainer"></div>
 
 
@@ -1474,7 +1513,9 @@ let selectedSeat=null;
 
 let isMuted=true;
 
-let localStream=null;
+let livekitRoom=null;
+
+let audioUnlocked=false;
 
 let presenceSeconds=0;
 
@@ -1482,9 +1523,13 @@ let presenceValidated=false;
 
 let presenceTimer=null;
 
+let saveProgressTimer=null;
+
 let heartbeatTimer=null;
 
 let roomParticipants=[];
+
+let occupiedSeats=[];
 
 let roomMessages=[];
 
@@ -1493,6 +1538,8 @@ let unsubscribePresence=null;
 let unsubscribeSeats=null;
 
 let unsubscribeChat=null;
+
+let unsubscribeModeration=null;
 
 
 function normalizeText(text){
@@ -1583,7 +1630,8 @@ function isFounder(){
   return(
     currentRole==="agente" ||
     currentRole==="fundador" ||
-    currentRole==="creador"
+    currentRole==="creador" ||
+    currentEmail==="elpepolan35@gmail.com"
   );
 
 }
@@ -2249,7 +2297,7 @@ function startRoomSync(){
 
         snapshot=>{
 
-          const occupiedSeats=
+          occupiedSeats=
             snapshot.docs.map(doc=>({
 
               firestoreId:doc.id,
@@ -2259,9 +2307,7 @@ function startRoomSync(){
             }));
 
 
-          renderSeats(
-            occupiedSeats
-          );
+          renderSeats();
 
         },
 
@@ -2395,7 +2441,7 @@ function renderRoom(){
 }
 
 
-function renderSeats(occupiedSeats){
+function renderSeats(){
 
   const grid=
     document.getElementById(
@@ -2505,15 +2551,23 @@ function seatMarkup(number,seat){
     (
       seat.role==="agente" ||
       seat.role==="fundador" ||
-      seat.role==="creador"
+      seat.role==="creador" ||
+      seat.role==="administrador" ||
+      seat.role==="administradora"
     )
       ? "host"
       : "";
 
 
+  const speakingClass=
+    isLiveKitSpeaker(seat.email)
+      ? "speaking"
+      : "";
+
+
   return `
     <button
-      class="seat ${hostClass}"
+      class="seat ${hostClass} ${speakingClass}"
       type="button"
       onclick="openSeatModal(${number})"
     >
@@ -2679,6 +2733,14 @@ function seatMarkup(number,seat){
           onclick="removeFromSeat(${number})"
         >
           ⬇️ Bajar del micro
+        </button>
+
+        <button
+          class="sheet-btn danger"
+          type="button"
+          onclick="kickFromRoom('${normalizeText(participant.email)}')"
+        >
+          🚪 Expulsar de la sala
         </button>
 
       `;
@@ -2918,7 +2980,7 @@ async function leaveSeat(){
     isMuted=true;
 
 
-    stopLocalAudio();
+    await stopLocalAudio();
 
 
     closeSeatModal();
@@ -2948,18 +3010,42 @@ async function leaveSeat(){
 }
 
 
+async function sendModerationCommand(email,action){
+
+  const targetEmail=normalizeText(email);
+
+  if(!targetEmail || targetEmail===currentEmail){
+    return;
+  }
+
+  await db
+    .collection("sala_pro_moderation")
+    .doc(
+      encodeURIComponent(
+        ROOM_ID + "_" + targetEmail
+      )
+    )
+    .set({
+      roomId:ROOM_ID,
+      targetEmail:targetEmail,
+      action:action,
+      createdMs:Date.now(),
+      createdBy:currentEmail,
+      active:true
+    },{
+      merge:true
+    });
+
+}
+
+
 async function removeFromSeat(number){
 
   if(!canManageRoom()){
-
     return;
-
   }
 
-
-  const seatId=
-    getSeatDocId(number);
-
+  const seatId=getSeatDocId(number);
 
   try{
 
@@ -2969,25 +3055,22 @@ async function removeFromSeat(number){
         .doc(seatId)
         .get();
 
-
     if(!seatDoc.exists){
-
       closeSeatModal();
-
       return;
-
     }
 
+    const seat=seatDoc.data();
 
-    const seat=
-      seatDoc.data();
-
+    await sendModerationCommand(
+      seat.email,
+      "leave-seat"
+    );
 
     await db
       .collection("sala_pro_seats")
       .doc(seatId)
       .delete();
-
 
     const participant=
       roomParticipants.find(
@@ -2996,39 +3079,27 @@ async function removeFromSeat(number){
           normalizeText(seat.email)
       );
 
-
     if(participant){
 
       await db
         .collection("sala_pro_presence")
         .doc(participant.firestoreId)
         .set({
-
           seatNumber:null,
-
           lastSeen:Date.now()
-
         },{
           merge:true
         });
 
     }
 
-
     closeSeatModal();
 
-
     await sendSystemMessage(
-
       "⬇️ " +
-      (
-        seat.name ||
-        seat.email
-      ) +
+      (seat.name || seat.email) +
       " ha sido bajado del micro."
-
     );
-
 
   }catch(error){
 
@@ -3037,10 +3108,90 @@ async function removeFromSeat(number){
       error
     );
 
+    alert(
+      "No se pudo bajar a esta persona del micro."
+    );
+
   }
 
 }
 
+
+async function kickFromRoom(email){
+
+  if(!canManageRoom()){
+    return;
+  }
+
+  const targetEmail=normalizeText(email);
+
+  if(!targetEmail || targetEmail===currentEmail){
+    return;
+  }
+
+  try{
+
+    await sendModerationCommand(
+      targetEmail,
+      "kick-room"
+    );
+
+    const seat=
+      occupiedSeats.find(
+        item=>
+          normalizeText(item.email)===targetEmail
+      );
+
+    if(seat){
+
+      await db
+        .collection("sala_pro_seats")
+        .doc(getSeatDocId(Number(seat.seatNumber)))
+        .delete();
+
+    }
+
+    const participant=
+      roomParticipants.find(
+        item=>
+          normalizeText(item.email)===targetEmail
+      );
+
+    if(participant){
+
+      await db
+        .collection("sala_pro_presence")
+        .doc(participant.firestoreId)
+        .delete();
+
+    }
+
+    closeSeatModal();
+
+    await sendSystemMessage(
+      "🚪 " +
+      (
+        participant?.name ||
+        seat?.name ||
+        targetEmail
+      ) +
+      " ha sido expulsado de la sala."
+    );
+
+  }catch(error){
+
+    console.error(
+      "Error expulsando de sala:",
+      error
+    );
+
+    alert(
+      "No se pudo expulsar a esta persona."
+    );
+
+  }
+
+}
 
 async function requestSeat(){
 
@@ -3125,42 +3276,28 @@ async function requestSeat(){
 async function connectLiveKitAudio(){
 
   if(
-    window.jmLiveKitRoom &&
-    window.jmLiveKitRoom.state==="connected"
+    livekitRoom &&
+    livekitRoom.state==="connected"
   ){
-
     return true;
-
   }
-
 
   try{
 
     const credentials=
       await livekitTokenSource.fetch({
-
         roomName:ROOM_ID,
-
-        participantIdentity:
-          currentEmail,
-
-        participantName:
-          getUserName(currentUser)
-
+        participantIdentity:currentEmail,
+        participantName:getUserName(currentUser)
       });
 
-
-    const room=
+    livekitRoom=
       new LivekitClient.Room({
-
         adaptiveStream:true,
-
         dynacast:true
-
       });
 
-
-    room.on(
+    livekitRoom.on(
       LivekitClient.RoomEvent.TrackSubscribed,
       (
         track,
@@ -3173,54 +3310,78 @@ async function connectLiveKitAudio(){
           LivekitClient.Track.Kind.Audio
         ){
 
-          const audioElement=
-            track.attach();
+          const audioElement=track.attach();
 
           audioElement.autoplay=true;
-
+          audioElement.playsInline=true;
           audioElement.setAttribute(
-            "playsinline",
-            ""
+            "data-livekit-audio",
+            participant.identity
           );
 
-          audioElement.style.display="none";
+          document
+            .getElementById("remoteAudioContainer")
+            .appendChild(audioElement);
 
-          document.body.appendChild(
-            audioElement
-          );
+          audioElement.play()
+            .catch(()=>{
+              refreshAudioUnlock();
+            });
 
         }
 
       }
     );
 
-
-    room.on(
+    livekitRoom.on(
       LivekitClient.RoomEvent.TrackUnsubscribed,
       track=>{
 
         track.detach()
           .forEach(element=>{
-
             element.remove();
-
           });
 
       }
     );
 
+    livekitRoom.on(
+      LivekitClient.RoomEvent.AudioPlaybackStatusChanged,
+      ()=>{
+        refreshAudioUnlock();
+      }
+    );
 
-    await room.connect(
+    livekitRoom.on(
+      LivekitClient.RoomEvent.ActiveSpeakersChanged,
+      ()=>{
+        renderSeats();
+      }
+    );
+
+    livekitRoom.on(
+      LivekitClient.RoomEvent.Disconnected,
+      ()=>{
+        document
+          .getElementById("connectionStatus")
+          .textContent="🔴";
+      }
+    );
+
+    await livekitRoom.connect(
       credentials.serverUrl,
       credentials.participantToken
     );
 
+    window.jmLiveKitRoom=livekitRoom;
 
-    window.jmLiveKitRoom=room;
+    document
+      .getElementById("connectionStatus")
+      .textContent="🟢";
 
+    refreshAudioUnlock();
 
     return true;
-
 
   }catch(error){
 
@@ -3229,11 +3390,13 @@ async function connectLiveKitAudio(){
       error
     );
 
+    document
+      .getElementById("connectionStatus")
+      .textContent="🔴";
 
     alert(
       "No se pudo conectar el audio de Sala Pro."
     );
-
 
     return false;
 
@@ -3242,48 +3405,124 @@ async function connectLiveKitAudio(){
 }
 
 
-async function ensureLocalAudio(){
+function refreshAudioUnlock(){
+
+  const panel=
+    document.getElementById("audioUnlock");
+
+  if(!panel){
+    return;
+  }
+
+  const needsUnlock=
+    livekitRoom &&
+    livekitRoom.canPlayAudio===false;
+
+  panel.classList.toggle(
+    "show",
+    Boolean(needsUnlock)
+  );
+
+}
+
+
+async function unlockRoomAudio(){
 
   const connected=
     await connectLiveKitAudio();
 
-
   if(!connected){
-
-    return false;
-
+    return;
   }
-
 
   try{
 
-    await window
-      .jmLiveKitRoom
-      .localParticipant
-      .setMicrophoneEnabled(false);
+    await livekitRoom.startAudio();
 
+    audioUnlocked=true;
 
-    return true;
+    document
+      .querySelectorAll(
+        "#remoteAudioContainer audio"
+      )
+      .forEach(audio=>{
+        audio.play().catch(()=>{});
+      });
 
+    refreshAudioUnlock();
 
   }catch(error){
 
     console.error(
-      "Permiso de micrófono:",
+      "Error activando sonido:",
       error
     );
 
+    alert(
+      "Toca otra vez para activar el sonido."
+    );
+
+  }
+
+}
+
+
+async function setMicrophoneState(enabled){
+
+  const connected=
+    await connectLiveKitAudio();
+
+  if(!connected){
+    return false;
+  }
+
+  try{
+
+    await livekitRoom
+      .localParticipant
+      .setMicrophoneEnabled(enabled);
+
+    isMuted=!enabled;
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Error de micrófono:",
+      error
+    );
 
     alert(
       "Necesitas permitir el micrófono para hablar."
     );
 
-
     return false;
 
   }
 
+}
+
+
+function isLiveKitSpeaker(email){
+
+  if(!livekitRoom){
+    return false;
   }
+
+  const normalizedEmail=
+    normalizeText(email);
+
+  return livekitRoom
+    .activeSpeakers
+    .some(
+      participant=>
+        normalizeText(
+          participant.identity
+        )===normalizedEmail
+    );
+
+}
 
 
 async function toggleMute(){
@@ -3298,61 +3537,36 @@ async function toggleMute(){
 
   }
 
+  const enabled=isMuted;
 
-  const audioReady=
-    await ensureLocalAudio();
+  const changed=
+    await setMicrophoneState(enabled);
 
-
-  if(!audioReady){
-
+  if(!changed){
     return;
-
   }
 
-
   try{
-
-    isMuted=
-      !isMuted;
-
-
-    await window
-      .jmLiveKitRoom
-      .localParticipant
-      .setMicrophoneEnabled(
-        !isMuted
-      );
-
 
     await db
       .collection("sala_pro_seats")
       .doc(
-        getSeatDocId(
-          currentSeat
-        )
+        getSeatDocId(currentSeat)
       )
       .set({
-
         muted:isMuted
-
       },{
         merge:true
       });
 
-
     updateMicControl();
-
+    updateMiniStatus();
 
   }catch(error){
 
     console.error(
       "Error actualizando micro:",
       error
-    );
-
-
-    alert(
-      "No se pudo activar el audio."
     );
 
   }
@@ -3363,80 +3577,62 @@ async function toggleMute(){
 function updateMicControl(){
 
   const control=
-    document.getElementById(
-      "micControl"
-    );
-
+    document.getElementById("micControl");
 
   const text=
-    document.getElementById(
-      "micControlText"
-    );
-
+    document.getElementById("micControlText");
 
   if(!currentSeat){
 
-    control.classList.remove(
-      "active"
-    );
-
-
-    text.textContent=
-      "Sin micro";
-
-
+    control.classList.remove("active");
+    text.textContent="Sin micro";
     return;
 
   }
-
 
   if(isMuted){
 
-    control.classList.remove(
-      "active"
-    );
-
-
-    text.textContent=
-      "Silenciado";
+    control.classList.remove("active");
+    text.textContent="Silenciado";
 
   }else{
 
-    control.classList.add(
-      "active"
-    );
-
-
-    text.textContent=
-      "Micro activo";
+    control.classList.add("active");
+    text.textContent="Micro activo";
 
   }
 
 }
 
 
-function stopLocalAudio(){
+async function stopLocalAudio(){
 
-  if(!localStream){
+  if(
+    livekitRoom &&
+    livekitRoom.state==="connected"
+  ){
 
-    return;
+    try{
+
+      await livekitRoom
+        .localParticipant
+        .setMicrophoneEnabled(false);
+
+    }catch(error){
+
+      console.error(
+        "Error apagando micrófono:",
+        error
+      );
+
+    }
 
   }
 
-
-  localStream
-    .getTracks()
-    .forEach(track=>{
-
-      track.stop();
-
-    });
-
-
-  localStream=null;
+  isMuted=true;
+  updateMicControl();
 
 }
-
 
 async function sendChatMessage(){
 
@@ -3765,6 +3961,11 @@ function cleanupRoom(){
   );
 
 
+  clearInterval(
+    saveProgressTimer
+  );
+
+
   if(unsubscribePresence){
 
     unsubscribePresence();
@@ -3786,7 +3987,116 @@ function cleanupRoom(){
   }
 
 
+  if(unsubscribeModeration){
+
+    unsubscribeModeration();
+
+  }
+
+
   stopLocalAudio();
+
+
+  if(livekitRoom){
+
+    livekitRoom.disconnect();
+
+    livekitRoom=null;
+
+  }
+
+}
+
+
+function startModerationSync(){
+
+  const moderationId=
+    encodeURIComponent(
+      ROOM_ID + "_" + currentEmail
+    );
+
+  unsubscribeModeration=
+    db
+      .collection("sala_pro_moderation")
+      .doc(moderationId)
+      .onSnapshot(
+        async snapshot=>{
+
+          if(!snapshot.exists){
+            return;
+          }
+
+          const command=snapshot.data();
+
+          if(
+            command.active!==true ||
+            Number(command.createdMs || 0)<
+            Date.now()-60000
+          ){
+            return;
+          }
+
+          await db
+            .collection("sala_pro_moderation")
+            .doc(moderationId)
+            .set({
+              active:false,
+              handledMs:Date.now()
+            },{
+              merge:true
+            });
+
+          if(command.action==="leave-seat"){
+
+            await stopLocalAudio();
+
+            currentSeat=null;
+
+            if(currentPresenceId){
+
+              await db
+                .collection("sala_pro_presence")
+                .doc(currentPresenceId)
+                .set({
+                  seatNumber:null,
+                  lastSeen:Date.now()
+                },{
+                  merge:true
+                });
+
+            }
+
+            updateMicControl();
+            updateMiniStatus();
+
+            alert(
+              "Un administrador te ha bajado del micro."
+            );
+
+          }
+
+          if(command.action==="kick-room"){
+
+            await stopLocalAudio();
+
+            alert(
+              "Has sido expulsado de Sala Pro por un administrador."
+            );
+
+            await leaveRoom();
+
+          }
+
+        },
+        error=>{
+
+          console.error(
+            "Error de moderación:",
+            error
+          );
+
+        }
+      );
 
 }
 
@@ -3829,13 +4139,20 @@ async function startSalaPro(){
   startRoomSync();
 
 
+  startModerationSync();
+
+
+  await connectLiveKitAudio();
+
+
   startPresenceCounter();
 
 
-  setInterval(
-    savePresenceProgress,
-    30000
-  );
+  saveProgressTimer=
+    setInterval(
+      savePresenceProgress,
+      30000
+    );
 
 
   await sendSystemMessage(
@@ -3857,6 +4174,31 @@ window.addEventListener(
 
     cleanupRoom();
 
+  }
+);
+
+
+window.addEventListener(
+  "pointerdown",
+  function firstAudioGesture(){
+
+    if(
+      livekitRoom &&
+      livekitRoom.canPlayAudio===false
+    ){
+
+      unlockRoomAudio();
+
+    }
+
+    window.removeEventListener(
+      "pointerdown",
+      firstAudioGesture
+    );
+
+  },
+  {
+    once:true
   }
 );
 
