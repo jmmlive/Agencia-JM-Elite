@@ -75,31 +75,50 @@ button{
 
 .header{
   flex:none;
+
   padding:
     calc(12px + env(safe-area-inset-top))
     14px
     12px;
+
   display:flex;
   align-items:center;
   gap:12px;
-  background:rgba(2,7,19,.92);
-  border-bottom:1px solid rgba(0,183,255,.30);
+
+  background:
+    rgba(2,7,19,.94);
+
+  border-bottom:
+    1px solid
+    rgba(0,183,255,.30);
+
   backdrop-filter:blur(18px);
+
   z-index:20;
 }
 
 .back{
   width:48px;
   height:48px;
+
+  flex:none;
+
   border-radius:17px;
-  background:rgba(0,86,210,.24);
-  border:1px solid rgba(0,183,255,.48);
+
+  background:
+    rgba(0,86,210,.24);
+
+  border:
+    1px solid
+    rgba(0,183,255,.48);
+
   font-size:25px;
 }
 
 .identity{
   flex:1;
   min-width:0;
+
   display:flex;
   align-items:center;
   gap:11px;
@@ -107,13 +126,18 @@ button{
 
 .ai-logo{
   position:relative;
+
   width:52px;
   height:52px;
+
   flex:none;
+
   border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   background:
     radial-gradient(
       circle at 35% 30%,
@@ -121,24 +145,43 @@ button{
       #0066ff 45%,
       #061326 72%
     );
-  border:2px solid var(--gold);
+
+  border:
+    2px solid
+    var(--gold);
+
   box-shadow:
-    0 0 18px rgba(0,183,255,.75),
-    0 0 28px rgba(247,215,116,.20);
+    0 0 18px
+    rgba(0,183,255,.75),
+    0 0 28px
+    rgba(247,215,116,.20);
+
   font-size:27px;
 }
 
 .ai-logo::after{
   content:"";
+
   position:absolute;
+
   right:0;
   bottom:1px;
+
   width:12px;
   height:12px;
+
   border-radius:50%;
-  background:var(--green);
-  border:2px solid #061326;
-  box-shadow:0 0 10px var(--green);
+
+  background:
+    var(--green);
+
+  border:
+    2px solid
+    #061326;
+
+  box-shadow:
+    0 0 10px
+    var(--green);
 }
 
 .identity-text{
@@ -147,7 +190,9 @@ button{
 
 .identity h1{
   color:var(--gold);
+
   font-size:19px;
+
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -155,65 +200,100 @@ button{
 
 .identity p{
   color:var(--soft);
+
   font-size:11px;
+
   margin-top:4px;
 }
 
 .voice-toggle{
   width:48px;
   height:48px;
+
   flex:none;
+
   border-radius:17px;
-  background:rgba(0,86,210,.24);
-  border:1px solid rgba(0,183,255,.48);
+
+  background:
+    rgba(0,86,210,.24);
+
+  border:
+    1px solid
+    rgba(0,183,255,.48);
+
   font-size:22px;
 }
 
 .voice-toggle.active{
   color:#071426;
+
   background:
     linear-gradient(
       135deg,
       var(--gold),
       var(--gold2)
     );
-  border-color:var(--gold);
+
+  border-color:
+    var(--gold);
 }
 
 
-/* CUERPO */
+/* ZONA CHAT */
 
 .chat-area{
   flex:1;
+
   overflow-y:auto;
-  padding:15px 13px 145px;
+
+  padding:
+    15px
+    13px
+    145px;
+
   scroll-behavior:smooth;
 }
 
 .welcome{
-  margin:6px 0 18px;
-  padding:20px 17px;
+  margin:
+    6px 0 18px;
+
+  padding:
+    20px 17px;
+
   border-radius:25px;
+
   background:
     linear-gradient(
       145deg,
       rgba(0,87,210,.28),
       rgba(0,12,38,.84)
     );
-  border:1px solid rgba(247,215,116,.34);
+
+  border:
+    1px solid
+    rgba(247,215,116,.34);
+
   box-shadow:
-    0 0 25px rgba(0,120,255,.20);
+    0 0 25px
+    rgba(0,120,255,.20);
+
   text-align:center;
 }
 
 .welcome-icon{
   width:76px;
   height:76px;
-  margin:0 auto 13px;
+
+  margin:
+    0 auto 13px;
+
   border-radius:50%;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   background:
     radial-gradient(
       circle,
@@ -221,54 +301,116 @@ button{
       #0756d7 55%,
       #061326 72%
     );
-  border:2px solid var(--gold);
+
+  border:
+    2px solid
+    var(--gold);
+
   box-shadow:
-    0 0 30px rgba(0,183,255,.60);
+    0 0 30px
+    rgba(0,183,255,.60);
+
   font-size:39px;
 }
 
 .welcome h2{
   color:var(--gold);
+
   font-size:24px;
 }
 
 .welcome p{
   max-width:360px;
-  margin:9px auto 0;
+
+  margin:
+    9px auto 0;
+
   color:var(--soft);
+
   font-size:14px;
+
   line-height:1.5;
 }
 
-.quick-title{
-  margin:16px 2px 10px;
+.user-chip{
+  margin-top:13px;
+
+  padding:
+    8px 12px;
+
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+
+  border-radius:999px;
+
+  background:
+    rgba(0,96,220,.22);
+
+  border:
+    1px solid
+    rgba(0,183,255,.36);
+
+  color:#fff;
+
+  font-size:12px;
+}
+
+.user-chip strong{
   color:var(--gold);
+}
+
+.quick-title{
+  margin:
+    16px 2px 10px;
+
+  color:var(--gold);
+
   font-size:13px;
+
   text-transform:uppercase;
+
   letter-spacing:.7px;
 }
 
 .quick-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:9px;
+
   margin-bottom:18px;
 }
 
 .quick{
   min-height:54px;
-  padding:10px 12px;
+
+  padding:
+    10px 12px;
+
   border-radius:17px;
-  background:rgba(0,55,145,.22);
-  border:1px solid rgba(0,183,255,.32);
+
+  background:
+    rgba(0,55,145,.22);
+
+  border:
+    1px solid
+    rgba(0,183,255,.32);
+
   color:white;
+
   font-size:12px;
+
   font-weight:bold;
+
   text-align:left;
 }
 
 .quick span{
   margin-right:5px;
+
   font-size:19px;
 }
 
@@ -277,7 +419,9 @@ button{
 
 .message-row{
   display:flex;
-  margin:11px 0;
+
+  margin:
+    11px 0;
 }
 
 .message-row.user{
@@ -290,11 +434,18 @@ button{
 
 .message{
   max-width:84%;
-  padding:13px 15px;
+
+  padding:
+    13px 15px;
+
   border-radius:20px;
+
   font-size:14px;
+
   line-height:1.5;
+
   word-wrap:break-word;
+
   white-space:pre-wrap;
 }
 
@@ -305,35 +456,59 @@ button{
       #006cff,
       #00a9ff
     );
+
   border-bottom-right-radius:5px;
+
   box-shadow:
-    0 0 18px rgba(0,126,255,.25);
+    0 0 18px
+    rgba(0,126,255,.25);
 }
 
 .ai .message{
-  background:rgba(7,25,55,.96);
-  border:1px solid rgba(247,215,116,.30);
+  background:
+    rgba(7,25,55,.96);
+
+  border:
+    1px solid
+    rgba(247,215,116,.30);
+
   border-bottom-left-radius:5px;
 }
 
 .ai-name{
   display:block;
+
   margin-bottom:6px;
+
   color:var(--gold);
+
   font-size:11px;
+
   font-weight:bold;
 }
 
 .typing{
   display:none;
+
   align-items:center;
+
   gap:6px;
+
   width:max-content;
-  margin:10px 0;
-  padding:12px 16px;
+
+  margin:
+    10px 0;
+
+  padding:
+    12px 16px;
+
   border-radius:18px;
+
   background:#071937;
-  border:1px solid rgba(0,183,255,.25);
+
+  border:
+    1px solid
+    rgba(0,183,255,.25);
 }
 
 .typing.show{
@@ -343,9 +518,14 @@ button{
 .typing span{
   width:7px;
   height:7px;
+
   border-radius:50%;
-  background:var(--gold);
-  animation:pulse 1.2s infinite;
+
+  background:
+    var(--gold);
+
+  animation:
+    pulse 1.2s infinite;
 }
 
 .typing span:nth-child(2){
@@ -373,17 +553,24 @@ button{
 }
 
 
-/* CAJA DE ESCRITURA */
+/* ESCRITURA */
 
 .composer{
   position:fixed;
+
   left:0;
   right:0;
   bottom:0;
+
   z-index:30;
+
   padding:
     10px 11px
-    calc(11px + env(safe-area-inset-bottom));
+    calc(
+      11px +
+      env(safe-area-inset-bottom)
+    );
+
   background:
     linear-gradient(
       180deg,
@@ -395,37 +582,60 @@ button{
 
 .composer-box{
   display:flex;
+
   align-items:flex-end;
+
   gap:8px;
+
   padding:8px;
+
   border-radius:25px;
-  background:rgba(6,19,38,.98);
-  border:1px solid rgba(0,183,255,.42);
+
+  background:
+    rgba(6,19,38,.98);
+
+  border:
+    1px solid
+    rgba(0,183,255,.42);
+
   box-shadow:
-    0 0 25px rgba(0,120,255,.25);
+    0 0 25px
+    rgba(0,120,255,.25);
 }
 
 .mic,
 .send{
   width:48px;
   height:48px;
+
   flex:none;
+
   border-radius:17px;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   font-size:23px;
 }
 
 .mic{
-  background:rgba(0,92,220,.25);
-  border:1px solid rgba(0,183,255,.44);
+  background:
+    rgba(0,92,220,.25);
+
+  border:
+    1px solid
+    rgba(0,183,255,.44);
 }
 
 .mic.listening{
-  background:var(--danger);
+  background:
+    var(--danger);
+
   border-color:#ff9aaa;
-  animation:listenPulse 1.1s infinite;
+
+  animation:
+    listenPulse 1.1s infinite;
 }
 
 @keyframes listenPulse{
@@ -440,26 +650,37 @@ button{
 
 .send{
   color:#061326;
+
   background:
     linear-gradient(
       135deg,
       var(--gold),
       var(--gold2)
     );
+
   font-weight:bold;
 }
 
 textarea{
   flex:1;
+
   min-height:48px;
   max-height:120px;
+
   resize:none;
+
   border:0;
   outline:0;
-  padding:13px 5px 8px;
+
+  padding:
+    13px 5px 8px;
+
   background:transparent;
+
   color:white;
+
   font-size:15px;
+
   line-height:1.35;
 }
 
@@ -469,18 +690,20 @@ textarea::placeholder{
 
 .voice-status{
   display:none;
-  margin:7px 10px 0;
+
+  margin:
+    7px 10px 0;
+
   color:#ff9aaa;
+
   font-size:11px;
+
   text-align:center;
 }
 
 .voice-status.show{
   display:block;
 }
-
-
-/* PEQUEÑAS */
 
 @media(max-width:380px){
 
@@ -507,6 +730,12 @@ textarea::placeholder{
 
 </style>
 
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
 </head>
 
 
@@ -514,9 +743,7 @@ textarea::placeholder{
 
 
 <div class="app">
-
-
-<header class="header">
+  <header class="header">
 
   <button
     class="back"
@@ -538,8 +765,8 @@ textarea::placeholder{
 
       <h1>JM NEXUS IA</h1>
 
-      <p>
-        Asistente inteligente · Agencia JM Elite
+      <p id="connectionText">
+        Sincronizando con JM Elite...
       </p>
 
     </div>
@@ -579,11 +806,22 @@ textarea::placeholder{
       JM NEXUS IA
     </h2>
 
-    <p>
-      Soy el asistente inteligente de JM Elite.
-      Puedes escribirme o hablarme.
-      Estoy aquí para orientarte dentro de la agencia.
+    <p id="welcomeText">
+      Estoy conectando con tu perfil y con el equipo de JM Elite.
     </p>
+
+    <div class="user-chip">
+
+      <span>👤</span>
+
+      <span>
+        Hablando con
+        <strong id="currentUserName">
+          identificando...
+        </strong>
+      </span>
+
+    </div>
 
   </section>
 
@@ -600,45 +838,47 @@ textarea::placeholder{
 
     <button
       class="quick"
+      type="button"
+      onclick="quickQuestion('¿Quién soy?')"
+    >
+      <span>👤</span>
+      ¿Quién soy?
+    </button>
+
+
+    <button
+      class="quick"
+      type="button"
+      onclick="quickQuestion('¿Cuántas personas hay en la agencia?')"
+    >
+      <span>👥</span>
+      Equipo JM Elite
+    </button>
+
+
+    <button
+      class="quick"
+      type="button"
       onclick="quickQuestion('¿Cómo funciona la agencia?')"
     >
       <span>🦅</span>
-      Cómo funciona la agencia
+      Cómo funciona
     </button>
 
 
     <button
       class="quick"
-      onclick="quickQuestion('¿Qué debo hacer en Poppo?')"
+      type="button"
+      onclick="quickQuestion('¿Qué sabes de Poppo?')"
     >
       <span>🎙️</span>
-      Ayuda con Poppo
-    </button>
-
-
-    <button
-      class="quick"
-      onclick="quickQuestion('Explícame las normas')"
-    >
-      <span>📖</span>
-      Normas JM Elite
-    </button>
-
-
-    <button
-      class="quick"
-      onclick="quickQuestion('¿Cómo funcionan los pagos?')"
-    >
-      <span>💰</span>
-      Pagos y bonos
+      Ayuda Poppo
     </button>
 
   </section>
 
 
-  <div
-    id="messages"
-  ></div>
+  <div id="messages"></div>
 
 
   <div
@@ -708,141 +948,57 @@ textarea::placeholder{
 
 <script>
 
+
+const firebaseConfig={
+
+  apiKey:
+    "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+
+  authDomain:
+    "agencia-jm-elite.firebaseapp.com",
+
+  projectId:
+    "agencia-jm-elite",
+
+  storageBucket:
+    "agencia-jm-elite.firebasestorage.app",
+
+  messagingSenderId:
+    "171676205335",
+
+  appId:
+    "1:171676205335:web:95443528659ab804fe7752"
+
+};
+
+
+if(!firebase.apps.length){
+
+  firebase.initializeApp(
+    firebaseConfig
+  );
+
+}
+
+
+const db=
+  firebase.firestore();
+
+
+
 let voiceEnabled=true;
 
 let recognition=null;
 
 let isListening=false;
 
+let currentUser=null;
 
+let agencyMembers=[];
 
-const KNOWLEDGE=[
+let membersLoaded=false;
 
-  {
-    words:[
-      "agencia",
-      "funciona",
-      "jm elite"
-    ],
-
-    answer:
-      "JM Elite es la aplicación privada de la agencia. Desde aquí puedes acceder a tu perfil, formación, avisos, pagos, ranking, Sala Pro y herramientas de apoyo para emisoras."
-  },
-
-  {
-    words:[
-      "poppo",
-      "directo",
-      "transmitir",
-      "emisora"
-    ],
-
-    answer:
-      "En Poppo debes cuidar la constancia, el trato con las personas y el cumplimiento de las normas. Si tienes una duda concreta sobre directos, monedas, tareas o tu cuenta, pregúntame exactamente qué te ocurre."
-  },
-
-  {
-    words:[
-      "norma",
-      "normas",
-      "reglas"
-    ],
-
-    answer:
-      "Las normas de JM Elite buscan proteger a las emisoras y mantener una agencia organizada. Debes respetar a compañeras y administración, cuidar tu cuenta y seguir las instrucciones oficiales de la agencia."
-  },
-
-  {
-    words:[
-      "pago",
-      "pagos",
-      "dinero",
-      "bono",
-      "bonos"
-    ],
-
-    answer:
-      "La información de pagos y bonos debe revisarse siempre en la zona de Pagos de JM Elite. No des por válida una cantidad de memoria si existe un aviso o tabla más reciente de la agencia."
-  },
-
-  {
-    words:[
-      "sala",
-      "sala pro"
-    ],
-
-    answer:
-      "Sala Pro es el espacio interno de encuentro de JM Elite. Está pensado para reuniones, formación, seguimiento y actividades de la agencia."
-  },
-
-  {
-    words:[
-      "administrador",
-      "administradora",
-      "administración"
-    ],
-
-    answer:
-      "La administración ayuda a organizar y acompañar a las emisoras. Las decisiones sensibles de gestión deben seguir los permisos definidos dentro de JM Elite."
-  },
-
-  {
-    words:[
-      "hola",
-      "buenos dias",
-      "buenas",
-      "hey"
-    ],
-
-    answer:
-      "Hola. Soy JM Nexus IA. 🦅 Puedes preguntarme sobre la agencia, Poppo, normas, pagos, formación o cómo usar JM Elite."
-  }
-
-];
-
-
-
-function goBack(){
-
-  window.location.href=
-    "index.html";
-
-}
-
-
-
-function toggleVoice(){
-
-  voiceEnabled=
-    !voiceEnabled;
-
-
-  const button=
-    document.getElementById(
-      "voiceToggle"
-    );
-
-
-  button.classList.toggle(
-    "active",
-    voiceEnabled
-  );
-
-
-  button.textContent=
-    voiceEnabled
-      ? "🔊"
-      : "🔇";
-
-
-  if(!voiceEnabled){
-
-    window.speechSynthesis
-      ?.cancel();
-
-  }
-
-}
+let unsubscribeMembers=null;
 
 
 
@@ -856,9 +1012,815 @@ function normalizeText(text){
     .replace(
       /[\u0300-\u036f]/g,
       ""
-    );
+    )
+    .trim();
 
 }
+
+
+
+function safeValue(
+  value,
+  fallback=""
+){
+
+  if(
+    value===undefined ||
+    value===null ||
+    value===""
+  ){
+
+    return fallback;
+
+  }
+
+
+  return String(value);
+
+}
+
+
+
+function getMemberName(member){
+
+  return (
+    member.artisticName ||
+    member.nombreArtistico ||
+    member.name ||
+    member.nombre ||
+    member.displayName ||
+    member.email ||
+    "Miembro JM Elite"
+  );
+
+}
+
+
+
+function getMemberRole(member){
+
+  return normalizeText(
+    member.role ||
+    member.rol ||
+    "emisora"
+  );
+
+}
+
+
+
+function getMemberCountry(member){
+
+  return (
+    member.country ||
+    member.pais ||
+    "País no indicado"
+  );
+
+}
+
+
+
+function getMemberPoppoId(member){
+
+  return (
+    member.poppoId ||
+    member.idPoppo ||
+    member.poppoID ||
+    ""
+  );
+
+}
+
+
+
+function getMemberLevel(member){
+
+  return (
+    member.level ||
+    member.nivel ||
+    ""
+  );
+
+}
+
+
+
+function isActiveMember(member){
+
+  const status=
+    normalizeText(
+      member.status ||
+      member.estado ||
+      "activa"
+    );
+
+
+  return (
+    status==="activa" ||
+    status==="activo" ||
+    status==="active" ||
+    status==="miembro"
+  );
+
+}
+
+
+
+function publicMember(member){
+
+  return {
+
+    email:
+      safeValue(member.email),
+
+    artisticName:
+      getMemberName(member),
+
+    role:
+      getMemberRole(member),
+
+    country:
+      getMemberCountry(member),
+
+    poppoId:
+      safeValue(
+        getMemberPoppoId(member)
+      ),
+
+    level:
+      safeValue(
+        getMemberLevel(member)
+      ),
+
+    status:
+      safeValue(
+        member.status ||
+        member.estado ||
+        "activa"
+      )
+
+  };
+
+}
+
+
+
+function getSessionData(){
+
+  let storedUser={};
+
+
+  try{
+
+    storedUser=
+      JSON.parse(
+        localStorage.getItem(
+          "jm_user"
+        ) || "{}"
+      );
+
+  }catch(error){
+
+    storedUser={};
+
+  }
+
+
+  return {
+
+    email:
+      normalizeText(
+        localStorage.getItem(
+          "jm_email"
+        ) ||
+        storedUser.email ||
+        ""
+      ),
+
+    role:
+      normalizeText(
+        localStorage.getItem(
+          "jm_role"
+        ) ||
+        storedUser.rol ||
+        storedUser.role ||
+        ""
+      ),
+
+    artisticName:
+      storedUser.artisticName ||
+      storedUser.nombreArtistico ||
+      storedUser.name ||
+      ""
+
+  };
+
+}
+
+
+
+async function identifyCurrentUser(){
+
+  const session=
+    getSessionData();
+
+
+  if(!session.email){
+
+    currentUser=null;
+
+    updateIdentityUI();
+
+    return;
+
+  }
+
+
+  const localMatch=
+    agencyMembers.find(member=>
+
+      normalizeText(member.email)===
+      session.email
+
+    );
+
+
+  if(localMatch){
+
+    currentUser=
+      publicMember(localMatch);
+
+    updateIdentityUI();
+
+    return;
+
+  }
+
+
+  try{
+
+    const snapshot=
+      await db
+        .collection("usuarios")
+        .where(
+          "email",
+          "==",
+          session.email
+        )
+        .limit(1)
+        .get();
+
+
+    if(!snapshot.empty){
+
+      currentUser=
+        publicMember(
+          snapshot.docs[0].data()
+        );
+
+    }else{
+
+      currentUser={
+
+        email:
+          session.email,
+
+        artisticName:
+          session.artisticName ||
+          session.email.split("@")[0],
+
+        role:
+          session.role ||
+          "emisora",
+
+        country:
+          "País no indicado",
+
+        poppoId:"",
+
+        level:"",
+
+        status:"activa"
+
+      };
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "Error identificando usuario:",
+      error
+    );
+
+
+    currentUser={
+
+      email:
+        session.email,
+
+      artisticName:
+        session.artisticName ||
+        session.email.split("@")[0],
+
+      role:
+        session.role ||
+        "emisora",
+
+      country:
+        "País no indicado",
+
+      poppoId:"",
+
+      level:"",
+
+      status:"activa"
+
+    };
+
+  }
+
+
+  updateIdentityUI();
+
+}
+
+
+
+function updateIdentityUI(){
+
+  const nameElement=
+    document.getElementById(
+      "currentUserName"
+    );
+
+
+  const welcomeText=
+    document.getElementById(
+      "welcomeText"
+    );
+
+
+  if(currentUser){
+
+    const name=
+      currentUser.artisticName;
+
+
+    nameElement.textContent=
+      name;
+
+
+    welcomeText.textContent=
+      "Hola " +
+      name +
+      ". Ya tengo identificado tu perfil dentro de JM Elite. Puedes escribirme o hablarme.";
+
+  }else{
+
+    nameElement.textContent=
+      "usuario no identificado";
+
+
+    welcomeText.textContent=
+      "No he podido identificar tu perfil. Vuelve al inicio e inicia sesión para que pueda dirigirme a ti correctamente.";
+
+  }
+
+}
+
+
+
+function startAgencySync(){
+
+  if(unsubscribeMembers){
+
+    unsubscribeMembers();
+
+  }
+
+
+  document
+    .getElementById(
+      "connectionText"
+    )
+    .textContent=
+      "Sincronizando con JM Elite...";
+
+
+  unsubscribeMembers=
+    db
+      .collection("usuarios")
+      .onSnapshot(
+
+        async snapshot=>{
+
+          agencyMembers=
+            snapshot.docs
+              .map(doc=>({
+
+                firestoreId:
+                  doc.id,
+
+                ...doc.data()
+
+              }))
+              .filter(
+                isActiveMember
+              );
+
+
+          membersLoaded=true;
+
+
+          document
+            .getElementById(
+              "connectionText"
+            )
+            .textContent=
+              agencyMembers.length +
+              " perfiles sincronizados · JM Elite";
+
+
+          await identifyCurrentUser();
+
+        },
+
+
+        error=>{
+
+          console.error(
+            "Error sincronizando agencia:",
+            error
+          );
+
+
+          membersLoaded=false;
+
+
+          document
+            .getElementById(
+              "connectionText"
+            )
+            .textContent=
+              "Conexión limitada con JM Elite";
+
+
+          identifyCurrentUser();
+
+        }
+
+      );
+
+}
+  function findMemberByName(text){
+
+  const normalized=
+    normalizeText(text);
+
+
+  return agencyMembers.find(member=>{
+
+    const name=
+      normalizeText(
+        getMemberName(member)
+      );
+
+
+    if(!name){
+
+      return false;
+
+    }
+
+
+    return (
+      normalized.includes(name) ||
+      name
+        .split(" ")
+        .filter(word=>word.length>3)
+        .some(word=>
+          normalized.includes(word)
+        )
+    );
+
+  });
+
+}
+
+
+
+function roleLabel(role){
+
+  const value=
+    normalizeText(role);
+
+
+  if(
+    value==="agente" ||
+    value==="fundador"
+  ){
+
+    return "agente fundador";
+
+  }
+
+
+  if(
+    value==="administrador" ||
+    value==="administradora"
+  ){
+
+    return "administrador";
+
+  }
+
+
+  return "emisora";
+
+}
+
+
+
+function describeMember(member){
+
+  const data=
+    publicMember(member);
+
+
+  let answer=
+    data.artisticName +
+    " forma parte de JM Elite como " +
+    roleLabel(data.role) +
+    ".";
+
+
+  if(
+    data.country &&
+    data.country!=="País no indicado"
+  ){
+
+    answer+=
+      " Su país registrado es " +
+      data.country +
+      ".";
+
+  }
+
+
+  if(data.poppoId){
+
+    answer+=
+      " Su ID Poppo registrado es " +
+      data.poppoId +
+      ".";
+
+  }
+
+
+  if(data.level){
+
+    answer+=
+      " Figura con nivel " +
+      data.level +
+      ".";
+
+  }
+
+
+  return answer;
+
+}
+
+
+
+function randomAnswer(list){
+
+  return list[
+    Math.floor(
+      Math.random() *
+      list.length
+    )
+  ];
+
+}
+
+
+
+function getCurrentUserAnswer(){
+
+  if(!currentUser){
+
+    return (
+      "Ahora mismo no he podido identificar tu perfil. " +
+      "Vuelve al inicio e inicia sesión para que pueda reconocerte."
+    );
+
+  }
+
+
+  let answer=
+    "Sí. Eres " +
+    currentUser.artisticName +
+    " y te tengo identificado dentro de JM Elite como " +
+    roleLabel(
+      currentUser.role
+    ) +
+    ".";
+
+
+  if(
+    currentUser.country &&
+    currentUser.country!==
+    "País no indicado"
+  ){
+
+    answer+=
+      " Tu país registrado es " +
+      currentUser.country +
+      ".";
+
+  }
+
+
+  if(currentUser.poppoId){
+
+    answer+=
+      " Tu ID Poppo es " +
+      currentUser.poppoId +
+      ".";
+
+  }
+
+
+  return answer;
+
+}
+
+
+
+function getAgencyCountAnswer(){
+
+  if(!membersLoaded){
+
+    return (
+      "Todavía estoy sincronizando los perfiles de JM Elite. " +
+      "Pregúntame otra vez en unos segundos."
+    );
+
+  }
+
+
+  const total=
+    agencyMembers.length;
+
+
+  const admins=
+    agencyMembers.filter(member=>{
+
+      const role=
+        getMemberRole(member);
+
+
+      return (
+        role==="administrador" ||
+        role==="administradora"
+      );
+
+    }).length;
+
+
+  const agents=
+    agencyMembers.filter(member=>{
+
+      const role=
+        getMemberRole(member);
+
+
+      return (
+        role==="agente" ||
+        role==="fundador"
+      );
+
+    }).length;
+
+
+  const emitters=
+    Math.max(
+      total -
+      admins -
+      agents,
+      0
+    );
+
+
+  return (
+    "Ahora mismo tengo sincronizados " +
+    total +
+    " perfiles activos de JM Elite. " +
+    "Veo " +
+    agents +
+    " agente fundador, " +
+    admins +
+    " perfiles de administración y " +
+    emitters +
+    " emisoras."
+  );
+
+}
+
+
+
+const KNOWLEDGE=[
+
+  {
+
+    words:[
+      "agencia",
+      "jm elite",
+      "como funciona"
+    ],
+
+    answer:
+      "JM Elite es la aplicación privada de la agencia. Desde aquí puedes acceder a tu perfil, equipo, formación, avisos, pagos, ranking, Sala Pro y herramientas internas de apoyo."
+
+  },
+
+
+  {
+
+    words:[
+      "poppo",
+      "directo",
+      "transmitir",
+      "transmision"
+    ],
+
+    answer:
+      "Puedo ayudarte con información de Poppo y con el método de trabajo de JM Elite. Mi conocimiento oficial de Poppo irá creciendo con la información validada por la agencia."
+
+  },
+
+
+  {
+
+    words:[
+      "norma",
+      "normas",
+      "reglas"
+    ],
+
+    answer:
+      "Las normas de JM Elite buscan mantener una agencia organizada, segura y respetuosa. La información concreta debe coincidir siempre con las normas oficiales publicadas por la agencia."
+
+  },
+
+
+  {
+
+    words:[
+      "pago",
+      "pagos",
+      "bono",
+      "bonos",
+      "dinero"
+    ],
+
+    answer:
+      "Para cantidades, bonos y pagos debo utilizar la información vigente de JM Elite. No quiero darte una cifra antigua o inventada. Cuando mi base oficial de pagos esté conectada, podré orientarte con mayor precisión."
+
+  },
+
+
+  {
+
+    words:[
+      "sala pro",
+      "sala"
+    ],
+
+    answer:
+      "Sala Pro es el espacio interno de JM Elite para reuniones, formación, seguimiento y actividades de la agencia."
+
+  },
+
+
+  {
+
+    words:[
+      "administracion",
+      "administrador",
+      "administradora"
+    ],
+
+    answer:
+      "La administración ayuda en la organización y seguimiento de las emisoras. Los permisos de cada rol se controlan dentro de JM Elite."
+
+  }
+
+];
 
 
 
@@ -866,6 +1828,211 @@ function findAnswer(text){
 
   const normalized=
     normalizeText(text);
+
+
+  /* IDENTIDAD */
+
+
+  if(
+    normalized.includes("quien soy") ||
+    normalized.includes("sabes quien soy") ||
+    normalized.includes("me conoces")
+  ){
+
+    return getCurrentUserAnswer();
+
+  }
+
+
+  if(
+    normalized.includes(
+      "cuantas personas"
+    ) ||
+    normalized.includes(
+      "cuantos perfiles"
+    ) ||
+    normalized.includes(
+      "cuanta gente"
+    ) ||
+    normalized.includes(
+      "cuantas emisoras"
+    )
+  ){
+
+    return getAgencyCountAnswer();
+
+  }
+
+
+  /* CONVERSACIÓN NATURAL */
+
+
+  if(
+    normalized==="gracias" ||
+    normalized.includes(
+      "muchas gracias"
+    ) ||
+    normalized.includes(
+      "gracias por tu ayuda"
+    ) ||
+    normalized.includes(
+      "te lo agradezco"
+    )
+  ){
+
+    const name=
+      currentUser
+        ? currentUser.artisticName
+        : "";
+
+
+    return randomAnswer([
+
+      "Gracias a ti" +
+      (
+        name
+          ? ", " + name
+          : ""
+      ) +
+      ". 🦅 Estoy aquí para ayudarte dentro de JM Elite.",
+
+
+      "Para eso estoy. 💙 Seguimos creciendo juntos en JM Elite.",
+
+
+      "Gracias a ti por confiar en JM Nexus IA. 🦅 Pregúntame cuando lo necesites.",
+
+
+      "Siempre a tu disposición dentro de JM Elite. 💙"
+
+    ]);
+
+  }
+
+
+  if(
+    normalized==="hola" ||
+    normalized==="buenas" ||
+    normalized.includes(
+      "buenos dias"
+    ) ||
+    normalized.includes(
+      "buenas tardes"
+    ) ||
+    normalized.includes(
+      "buenas noches"
+    )
+  ){
+
+    const name=
+      currentUser
+        ? currentUser.artisticName
+        : "";
+
+
+    return randomAnswer([
+
+      "Hola" +
+      (
+        name
+          ? ", " + name
+          : ""
+      ) +
+      ". 🦅 ¿En qué puedo ayudarte?",
+
+
+      "Hola. 💙 Estoy conectado con JM Elite. Cuéntame qué necesitas.",
+
+
+      "Bienvenido a JM Nexus IA. 🦅 Estoy preparado para ayudarte."
+
+    ]);
+
+  }
+
+
+  if(
+    normalized.includes(
+      "como estas"
+    ) ||
+    normalized==="que tal"
+  ){
+
+    return (
+      "Estoy conectado y preparado. 🦅 " +
+      "Gracias por preguntar. ¿En qué puedo ayudarte?"
+    );
+
+  }
+
+
+  if(
+    normalized.includes(
+      "quien eres"
+    ) ||
+    normalized.includes(
+      "como te llamas"
+    ) ||
+    normalized.includes(
+      "tu nombre"
+    )
+  ){
+
+    return (
+      "Soy JM Nexus IA. 🦅 " +
+      "El asistente inteligente de Agencia JM Elite. " +
+      "Reconozco el perfil que me habla y sincronizo el equipo activo de la agencia."
+    );
+
+  }
+
+
+  if(
+    normalized.includes("adios") ||
+    normalized.includes(
+      "hasta luego"
+    ) ||
+    normalized.includes(
+      "nos vemos"
+    )
+  ){
+
+    const name=
+      currentUser
+        ? currentUser.artisticName
+        : "";
+
+
+    return (
+      "Hasta luego" +
+      (
+        name
+          ? ", " + name
+          : ""
+      ) +
+      ". 🦅 Aquí estaré cuando vuelvas."
+    );
+
+  }
+
+
+  /* PERSONAS DE LA AGENCIA */
+
+
+  const foundMember=
+    findMemberByName(text);
+
+
+  if(foundMember){
+
+    return describeMember(
+      foundMember
+    );
+
+  }
+
+
+  /* CONOCIMIENTO JM ELITE */
 
 
   let bestAnswer="";
@@ -912,61 +2079,38 @@ function findAnswer(text){
 
 
   return (
-    "Todavía no tengo esa respuesta guardada en mi conocimiento de JM Elite. " +
-    "Puedes reformular la pregunta o consultar con administración. " +
-    "Mi base de conocimiento irá creciendo con la información oficial de la agencia."
+    "Todavía no tengo información suficiente para responderte eso con seguridad. 🦅 " +
+    "Mi conocimiento de JM Elite y Poppo seguirá creciendo con la información oficial de la agencia."
   );
 
-}
-
-
-
-function addMessage(
-  text,
-  type
-){
+  }
+  function addMessage(text,type){
 
   const messages=
-    document.getElementById(
-      "messages"
-    );
-
+    document.getElementById("messages");
 
   const row=
-    document.createElement(
-      "div"
-    );
-
+    document.createElement("div");
 
   row.className=
     "message-row " + type;
 
 
   const bubble=
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
-
-  bubble.className=
-    "message";
+  bubble.className="message";
 
 
   if(type==="ai"){
 
     const name=
-      document.createElement(
-        "span"
-      );
+      document.createElement("span");
 
-
-    name.className=
-      "ai-name";
-
+    name.className="ai-name";
 
     name.textContent=
       "🦅 JM NEXUS IA";
-
 
     bubble.appendChild(name);
 
@@ -974,22 +2118,15 @@ function addMessage(
 
 
   const content=
-    document.createElement(
-      "span"
-    );
-
+    document.createElement("span");
 
   content.textContent=text;
 
-
   bubble.appendChild(content);
-
 
   row.appendChild(bubble);
 
-
   messages.appendChild(row);
-
 
   scrollBottom();
 
@@ -1000,10 +2137,7 @@ function addMessage(
 function scrollBottom(){
 
   const area=
-    document.getElementById(
-      "chatArea"
-    );
-
+    document.getElementById("chatArea");
 
   setTimeout(()=>{
 
@@ -1025,7 +2159,6 @@ function showTyping(show){
       show
     );
 
-
   scrollBottom();
 
 }
@@ -1038,10 +2171,10 @@ function answerQuestion(text){
 
 
   const delay=
-    550 +
+    500 +
     Math.min(
-      text.length * 8,
-      900
+      text.length * 7,
+      800
     );
 
 
@@ -1050,15 +2183,12 @@ function answerQuestion(text){
     const answer=
       findAnswer(text);
 
-
     showTyping(false);
-
 
     addMessage(
       answer,
       "ai"
     );
-
 
     speak(answer);
 
@@ -1075,7 +2205,6 @@ function sendMessage(){
       "messageInput"
     );
 
-
   const text=
     input.value.trim();
 
@@ -1089,14 +2218,12 @@ function sendMessage(){
 
   document
     .getElementById("welcome")
-    .style.display=
-      "none";
+    .style.display="none";
 
 
   document
     .getElementById("quickGrid")
-    .style.display=
-      "none";
+    .style.display="none";
 
 
   addMessage(
@@ -1107,9 +2234,7 @@ function sendMessage(){
 
   input.value="";
 
-
   autoResize();
-
 
   answerQuestion(text);
 
@@ -1121,14 +2246,12 @@ function quickQuestion(text){
 
   document
     .getElementById("welcome")
-    .style.display=
-      "none";
+    .style.display="none";
 
 
   document
     .getElementById("quickGrid")
-    .style.display=
-      "none";
+    .style.display="none";
 
 
   addMessage(
@@ -1143,11 +2266,53 @@ function quickQuestion(text){
 
 
 
+function toggleVoice(){
+
+  voiceEnabled=
+    !voiceEnabled;
+
+
+  const button=
+    document.getElementById(
+      "voiceToggle"
+    );
+
+
+  button.classList.toggle(
+    "active",
+    voiceEnabled
+  );
+
+
+  button.textContent=
+    voiceEnabled
+      ? "🔊"
+      : "🔇";
+
+
+  if(
+    !voiceEnabled &&
+    "speechSynthesis" in window
+  ){
+
+    window
+      .speechSynthesis
+      .cancel();
+
+  }
+
+}
+
+
+
 function speak(text){
 
   if(
     !voiceEnabled ||
-    !("speechSynthesis" in window)
+    !(
+      "speechSynthesis"
+      in window
+    )
   ){
 
     return;
@@ -1155,7 +2320,9 @@ function speak(text){
   }
 
 
-  window.speechSynthesis.cancel();
+  window
+    .speechSynthesis
+    .cancel();
 
 
   const utterance=
@@ -1164,21 +2331,16 @@ function speak(text){
     );
 
 
-  utterance.lang=
-    "es-ES";
+  utterance.lang="es-ES";
+
+  utterance.rate=1;
+
+  utterance.pitch=1;
 
 
-  utterance.rate=
-    1;
-
-
-  utterance.pitch=
-    1;
-
-
-  window.speechSynthesis.speak(
-    utterance
-  );
+  window
+    .speechSynthesis
+    .speak(utterance);
 
 }
 
@@ -1188,7 +2350,11 @@ function startListening(){
 
   if(isListening){
 
-    recognition?.stop();
+    if(recognition){
+
+      recognition.stop();
+
+    }
 
     return;
 
@@ -1196,7 +2362,9 @@ function startListening(){
 
 
   const SpeechRecognition=
+
     window.SpeechRecognition ||
+
     window.webkitSpeechRecognition;
 
 
@@ -1215,16 +2383,11 @@ function startListening(){
     new SpeechRecognition();
 
 
-  recognition.lang=
-    "es-ES";
+  recognition.lang="es-ES";
 
+  recognition.interimResults=false;
 
-  recognition.interimResults=
-    false;
-
-
-  recognition.maxAlternatives=
-    1;
+  recognition.maxAlternatives=1;
 
 
   recognition.onstart=
@@ -1242,7 +2405,7 @@ function startListening(){
         .getElementById("voiceStatus")
         .classList.add("show");
 
-  };
+    };
 
 
   recognition.onresult=
@@ -1268,29 +2431,30 @@ function startListening(){
         220
       );
 
-  };
+    };
 
 
   recognition.onerror=
     function(event){
 
       console.error(
-        "Speech error:",
+        "Error de voz:",
         event.error
       );
 
 
       if(
-        event.error!=="no-speech"
+        event.error!=="no-speech" &&
+        event.error!=="aborted"
       ){
 
         alert(
-          "No pude escuchar bien. Prueba otra vez."
+          "No pude escucharte bien. Prueba otra vez."
         );
 
       }
 
-  };
+    };
 
 
   recognition.onend=
@@ -1308,7 +2472,7 @@ function startListening(){
         .getElementById("voiceStatus")
         .classList.remove("show");
 
-  };
+    };
 
 
   try{
@@ -1317,7 +2481,10 @@ function startListening(){
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "No se pudo iniciar el micrófono:",
+      error
+    );
 
   }
 
@@ -1333,11 +2500,11 @@ function autoResize(){
     );
 
 
-  input.style.height=
-    "48px";
+  input.style.height="48px";
 
 
   input.style.height=
+
     Math.min(
       input.scrollHeight,
       120
@@ -1364,25 +2531,119 @@ function handleKey(event){
 
 
 
-window.onload=function(){
+function goBack(){
 
-  setTimeout(()=>{
+  if(unsubscribeMembers){
 
-    addMessage(
+    unsubscribeMembers();
 
-      "Hola. Soy JM Nexus IA. Puedes escribirme o pulsar el micrófono para hablar conmigo.",
+  }
 
-      "ai"
 
+  window.location.href=
+    "index.html";
+
+}
+
+
+
+async function startNexus(){
+
+  const logged=
+    localStorage.getItem(
+      "jm_logged"
     );
 
-  },500);
+
+  if(logged!=="yes"){
+
+    window.location.href=
+      "index.html";
+
+    return;
+
+  }
+
+
+  startAgencySync();
+
+
+  setTimeout(async()=>{
+
+    if(!currentUser){
+
+      await identifyCurrentUser();
+
+    }
+
+
+    const name=
+
+      currentUser
+        ? currentUser.artisticName
+        : "";
+
+
+    const greeting=
+
+      name
+
+        ? "Hola, " +
+          name +
+          ". Soy JM Nexus IA. Ya tengo identificado tu perfil dentro de JM Elite. Puedes escribirme o hablarme."
+
+        : "Hola. Soy JM Nexus IA. Puedes escribirme o pulsar el micrófono para hablar conmigo.";
+
+
+    addMessage(
+      greeting,
+      "ai"
+    );
+
+
+    speak(greeting);
+
+  },900);
+
+}
+
+
+
+window.addEventListener(
+  "beforeunload",
+  function(){
+
+    if(unsubscribeMembers){
+
+      unsubscribeMembers();
+
+    }
+
+
+    if(
+      "speechSynthesis"
+      in window
+    ){
+
+      window
+        .speechSynthesis
+        .cancel();
+
+    }
+
+  }
+);
+
+
+
+window.onload=function(){
+
+  startNexus();
 
 };
 
 </script>
 
-
 </body>
 
-  </html>
+</html>
