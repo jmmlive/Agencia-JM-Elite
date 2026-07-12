@@ -1464,7 +1464,7 @@ function getAdminValidDays(){
 }
 
 
-function renderAdmin(){
+  function renderAdmin(){
 
   const section=
     document.getElementById(
@@ -1472,10 +1472,41 @@ function renderAdmin(){
     );
 
 
-  if(
-    !isAdminRole(currentRole) &&
-    !isFounderRole(currentRole)
-  ){
+  if(isFounderRole(currentRole)){
+
+    section.classList.remove("hidden");
+
+    document
+      .getElementById("adminLevel")
+      .textContent=
+        "Panel del fundador";
+
+    document
+      .getElementById("adminDays")
+      .textContent=
+        "—";
+
+    document
+      .getElementById("adminDaily")
+      .textContent=
+        "—";
+
+    document
+      .getElementById("adminTotal")
+      .textContent=
+        "—";
+
+    document
+      .querySelector(".admin-text p")
+      .textContent=
+        "Control general de incentivos administrativos · Modo prueba";
+
+    return;
+
+  }
+
+
+  if(!isAdminRole(currentRole)){
 
     section.classList.add("hidden");
 
@@ -1486,14 +1517,11 @@ function renderAdmin(){
 
   section.classList.remove("hidden");
 
-
   const levelKey=
     getAdminLevel();
 
-
   const level=
     TEST_ADMIN_LEVELS[levelKey];
-
 
   const days=
     getAdminValidDays();
@@ -1504,29 +1532,28 @@ function renderAdmin(){
     .textContent=
       level.name;
 
-
   document
     .getElementById("adminDays")
     .textContent=
       days;
 
-
   document
     .getElementById("adminDaily")
     .textContent=
-      level.daily
-        .toLocaleString("es-ES");
-
+      level.daily.toLocaleString("es-ES");
 
   document
     .getElementById("adminTotal")
     .textContent=
-      (
-        days * level.daily
-      )
+      (days * level.daily)
         .toLocaleString("es-ES");
 
-}
+  document
+    .querySelector(".admin-text p")
+    .textContent=
+      "Seguimiento mensual en fase de prueba";
+
+  }
 
 
 function renderHistory(){
