@@ -3335,25 +3335,14 @@ function stopLocalAudio(){
 
 async function sendChatMessage(){
 
-  const input=
-    document.getElementById(
-      "chatInput"
-    );
+  const input =
+    document.getElementById("chatInput");
 
-
-  const text=
-    input.value.trim();
-
+  const text = input.value.trim();
 
   if(!text){
-
     return;
-
   }
-
-
-  input.value="";
-
 
   try{
 
@@ -3361,26 +3350,26 @@ async function sendChatMessage(){
       .collection("sala_pro_chat")
       .add({
 
-        roomId:ROOM_ID,
+        roomId: ROOM_ID,
 
-        type:"message",
+        type: "message",
 
-        email:currentEmail,
+        email: currentEmail || "invitado",
 
-        name:
-          getUserName(currentUser),
+        name: getUserName(currentUser) || "Usuario",
 
-        text:text,
+        text: text,
 
         createdAt:
           firebase.firestore
             .FieldValue
             .serverTimestamp(),
 
-        createdMs:Date.now()
+        createdMs: Date.now()
 
       });
 
+    input.value = "";
 
   }catch(error){
 
@@ -3388,7 +3377,6 @@ async function sendChatMessage(){
       "Error enviando chat:",
       error
     );
-
 
     alert(
       "No se pudo enviar el mensaje."
