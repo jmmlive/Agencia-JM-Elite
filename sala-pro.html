@@ -1447,7 +1447,12 @@ const db=
 
 
 const ROOM_ID="sala-pro-principal";
+const LIVEKIT_TOKEN_SERVER_ID="jmelitesalapro-13u95g";
 
+const livekitTokenSource=
+  LivekitClient.TokenSource.sandboxTokenServer(
+    LIVEKIT_TOKEN_SERVER_ID
+  );
 const MAX_SEATS=25;
 
 const REQUIRED_SECONDS=300;
