@@ -705,7 +705,7 @@ input:focus-visible{
     <button
       id="mainLoginBtn"
       class="login-btn"
-      onclick="login()"
+      onclick="mainLoginAction()"
     >
       ENTRAR
     </button>
@@ -1232,6 +1232,40 @@ function checkLogin(){
 }
 
 
+function mainLoginAction(){
+
+  const registerExtra=
+    document.getElementById("registerExtra");
+
+  const visibleRegister=
+    registerExtra &&
+    registerExtra.classList.contains("show");
+
+  const mode=
+    registerMode ||
+    document
+      .getElementById("mainLoginBtn")
+      .dataset
+      .mode ||
+    "";
+
+  if(visibleRegister){
+
+    sendRegisterRequest(
+      mode==="invitacion"
+        ? "invitacion"
+        : "normal"
+    );
+
+    return;
+
+  }
+
+  login();
+
+}
+
+
 function login(){
 
   if(registerMode){
@@ -1440,6 +1474,18 @@ function login(){
     .textContent=
       "ENVIAR SOLICITUD";
 
+  document
+    .getElementById("mainLoginBtn")
+    .dataset
+    .mode=
+      "invitacion";
+
+  document
+    .getElementById("mainLoginBtn")
+    .dataset
+    .mode=
+      "normal";
+
 }
 
 
@@ -1486,6 +1532,12 @@ function backToLogin(){
     .getElementById("mainLoginBtn")
     .textContent=
       "ENTRAR";
+
+  document
+    .getElementById("mainLoginBtn")
+    .dataset
+    .mode=
+      "";
 
 }
 
