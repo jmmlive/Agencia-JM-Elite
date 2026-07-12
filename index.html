@@ -1587,14 +1587,61 @@ async function sendRegisterRequest(type){
           "==",
           email
         )
-        .limit(1)
         .get();
 
 
-    if(!requestSnapshot.empty){
+    let hasPendingRequest=false;
+
+
+    for(
+      const requestDoc of
+      requestSnapshot.docs
+    ){
+
+      const requestData=
+        requestDoc.data();
+
+
+      const requestStatus=
+        normalizeText(
+          requestData.status ||
+          requestData.estado ||
+          ""
+        );
+
+
+      if(
+        requestStatus==="pendiente" ||
+        requestStatus==="pending"
+      ){
+
+        hasPendingRequest=true;
+
+        break;
+
+      }
+
+
+      try{
+
+        await requestDoc.ref.delete();
+
+      }catch(deleteError){
+
+        console.warn(
+          "No se pudo limpiar solicitud antigua:",
+          deleteError
+        );
+
+      }
+
+    }
+
+
+    if(hasPendingRequest){
 
       alert(
-        "Ya existe una solicitud con ese correo."
+        "Tu solicitud ya está pendiente de revisión. No hace falta enviarla otra vez."
       );
 
       return;
