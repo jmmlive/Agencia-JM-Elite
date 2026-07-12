@@ -3122,50 +3122,101 @@ async function requestSeat(){
 }
 
 
-async function ensureLocalAudio(){
+async function connectLiveKitAudio(){
 
-  if(localStream){
+  if(
+    window.jmLiveKitRoom &&
+    window.jmLiveKitRoom.state==="connected"
+  ){
 
     return true;
 
   }
 
 
-  if(
-    !navigator.mediaDevices ||
-    !navigator.mediaDevices.getUserMedia
-  ){
-
-    alert(
-      "El navegador no permite usar el micrófono."
-    );
-
-    return false;
-
-  }
-
-
   try{
 
-    localStream=
-      await navigator
-        .mediaDevices
-        .getUserMedia({
+    const credentials=
+      await livekitTokenSource.fetch({
 
-          audio:true,
+        roomName:ROOM_ID,
 
-          video:false
+        participantIdentity:
+          currentEmail,
 
-        });
-
-
-    localStream
-      .getAudioTracks()
-      .forEach(track=>{
-
-        track.enabled=false;
+        participantName:
+          getUserName(currentUser)
 
       });
+
+
+    const room=
+      new LivekitClient.Room({
+
+        adaptiveStream:true,
+
+        dynacast:true
+
+      });
+
+
+    room.on(
+      LivekitClient.RoomEvent.TrackSubscribed,
+      (
+        track,
+        publication,
+        participant
+      )=>{
+
+        if(
+          track.kind===
+          LivekitClient.Track.Kind.Audio
+        ){
+
+          const audioElement=
+            track.attach();
+
+          audioElement.autoplay=true;
+
+          audioElement.setAttribute(
+            "playsinline",
+            ""
+          );
+
+          audioElement.style.display="none";
+
+          document.body.appendChild(
+            audioElement
+          );
+
+        }
+
+      }
+    );
+
+
+    room.on(
+      LivekitClient.RoomEvent.TrackUnsubscribed,
+      track=>{
+
+        track.detach()
+          .forEach(element=>{
+
+            element.remove();
+
+          });
+
+      }
+    );
+
+
+    await room.connect(
+      credentials.serverUrl,
+      credentials.participantToken
+    );
+
+
+    window.jmLiveKitRoom=room;
 
 
     return true;
@@ -3174,7 +3225,51 @@ async function ensureLocalAudio(){
   }catch(error){
 
     console.error(
-      "Permiso de micro:",
+      "Error conectando LiveKit:",
+      error
+    );
+
+
+    alert(
+      "No se pudo conectar el audio de Sala Pro."
+    );
+
+
+    return false;
+
+  }
+
+}
+
+
+async function ensureLocalAudio(){
+
+  const connected=
+    await connectLiveKitAudio();
+
+
+  if(!connected){
+
+    return false;
+
+  }
+
+
+  try{
+
+    await window
+      .jmLiveKitRoom
+      .localParticipant
+      .setMicrophoneEnabled(false);
+
+
+    return true;
+
+
+  }catch(error){
+
+    console.error(
+      "Permiso de micrófono:",
       error
     );
 
@@ -3188,7 +3283,7 @@ async function ensureLocalAudio(){
 
   }
 
-}
+  }
 
 
 async function toggleMute(){
@@ -3215,21 +3310,19 @@ async function toggleMute(){
   }
 
 
-  isMuted=
-    !isMuted;
-
-
-  localStream
-    .getAudioTracks()
-    .forEach(track=>{
-
-      track.enabled=
-        !isMuted;
-
-    });
-
-
   try{
+
+    isMuted=
+      !isMuted;
+
+
+    await window
+      .jmLiveKitRoom
+      .localParticipant
+      .setMicrophoneEnabled(
+        !isMuted
+      );
+
 
     await db
       .collection("sala_pro_seats")
@@ -3255,6 +3348,11 @@ async function toggleMute(){
     console.error(
       "Error actualizando micro:",
       error
+    );
+
+
+    alert(
+      "No se pudo activar el audio."
     );
 
   }
