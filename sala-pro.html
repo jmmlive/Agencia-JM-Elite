@@ -1498,6 +1498,10 @@ const REQUIRED_SECONDS=300;
 
 const PRESENCE_TIMEOUT_MS=45000;
 
+const CHAT_MAX_MESSAGES=40;
+const CHAT_MAX_AGE_MS=6*60*60*1000;
+const ENTRY_MESSAGE_COOLDOWN_MS=5*60*1000;
+
 
 let currentEmail="";
 
@@ -1528,6 +1532,7 @@ let saveProgressTimer=null;
 let staleSeatCleanupTimer=null;
 
 let audioRetryTimer=null;
+let chatCleanupTimer=null;
 
 let heartbeatTimer=null;
 
@@ -1549,6 +1554,7 @@ let roomStartupReady=false;
 let roomStartupRunning=false;
 let roomRetryTimer=null;
 let roomStatusMessage="";
+let lastEntryMessageMs=0;
 
 
 
@@ -2617,7 +2623,7 @@ function startRoomSync(){
                 Number(a.createdMs || 0) -
                 Number(b.createdMs || 0)
             )
-            .slice(-100);
+            .slice(-CHAT_MAX_MESSAGES);
 
         renderChat();
 
@@ -4456,6 +4462,148 @@ async function sendSystemMessage(text){
 }
 
 
+
+async function cleanupOldChatMessages(){
+
+  try{
+
+    const snapshot=
+      await db
+        .collection("sala_pro_chat")
+        .where(
+          "roomId",
+          "==",
+          ROOM_ID
+        )
+        .get();
+
+    const messages=
+      snapshot.docs
+        .map(doc=>({
+
+          firestoreId:doc.id,
+
+          ref:doc.ref,
+
+          ...doc.data()
+
+        }))
+        .sort(
+          (a,b)=>
+            Number(a.createdMs || 0) -
+            Number(b.createdMs || 0)
+        );
+
+    const now=Date.now();
+
+    const expired=
+      messages.filter(message=>
+        Number(message.createdMs || 0)>0
+        &&
+        now-Number(message.createdMs || 0)>
+        CHAT_MAX_AGE_MS
+      );
+
+    const survivors=
+      messages.filter(message=>
+        !expired.some(
+          oldMessage=>
+            oldMessage.firestoreId===
+            message.firestoreId
+        )
+      );
+
+    const excessCount=
+      Math.max(
+        0,
+        survivors.length-
+        CHAT_MAX_MESSAGES
+      );
+
+    const excess=
+      survivors.slice(
+        0,
+        excessCount
+      );
+
+    const toDelete=[
+      ...expired,
+      ...excess
+    ];
+
+    for(const message of toDelete){
+
+      try{
+
+        await message.ref.delete();
+
+      }catch(error){
+
+        console.warn(
+          "No se pudo borrar mensaje antiguo:",
+          error
+        );
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.warn(
+      "Limpieza automática de chat pendiente:",
+      error
+    );
+
+  }
+
+}
+
+
+async function sendEntryMessageOnce(){
+
+  if(!currentEmail){
+    return;
+  }
+
+  const storageKey=
+    "jm_sala_last_entry_" +
+    encodeURIComponent(currentEmail);
+
+  const stored=
+    Number(
+      localStorage.getItem(storageKey) || 0
+    );
+
+  const now=Date.now();
+
+  if(
+    now-stored<
+    ENTRY_MESSAGE_COOLDOWN_MS
+  ){
+
+    return;
+
+  }
+
+  localStorage.setItem(
+    storageKey,
+    String(now)
+  );
+
+  lastEntryMessageMs=now;
+
+  await sendSystemMessage(
+
+    "🟢 " +
+    getUserName(currentUser) +
+    " ha entrado en Sala Pro."
+
+  );
+
+}
+
+
 function renderChat(){
 
   const container=
@@ -4713,7 +4861,14 @@ function cleanupRoom(){
   );
 
 
+  clearInterval(
+    chatCleanupTimer
+  );
+
+
   roomRetryTimer=null;
+
+  chatCleanupTimer=null;
 
 
   if(unsubscribePresence){
@@ -4915,6 +5070,8 @@ async function startSalaPro(){
 
       startRoomSync();
 
+      cleanupOldChatMessages();
+
     }catch(error){
 
       console.warn(
@@ -4991,25 +5148,27 @@ async function startSalaPro(){
       );
 
 
+    chatCleanupTimer=
+      setInterval(
+        cleanupOldChatMessages,
+        10*60*1000
+      );
+
+
     scheduleRoomRecovery();
 
 
     if(currentEmail){
 
-      sendSystemMessage(
+      sendEntryMessageOnce()
+        .catch(error=>{
 
-        "🟢 " +
-        getUserName(currentUser) +
-        " ha entrado en Sala Pro."
+          console.warn(
+            "Mensaje de entrada aplazado:",
+            error
+          );
 
-      ).catch(error=>{
-
-        console.warn(
-          "Mensaje de entrada aplazado:",
-          error
-        );
-
-      });
+        });
 
     }
 
