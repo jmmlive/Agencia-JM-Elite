@@ -10,7 +10,7 @@
   content="width=device-width, initial-scale=1.0"
 >
 
-<title>JM Nexus IA</title>
+<title>Popu IA | JM Elite</title>
 
 <style>
 
@@ -705,6 +705,122 @@ textarea::placeholder{
   display:block;
 }
 
+
+/* POPU */
+
+.popu-face{
+  overflow:visible;
+}
+
+.popu-eyes{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:1px;
+  text-shadow:0 0 12px rgba(255,255,255,.75);
+}
+
+.popu-face.speaking{
+  animation:popuTalk .55s infinite alternate;
+}
+
+.popu-face.speaking .popu-eyes{
+  animation:popuMouth .4s infinite alternate;
+}
+
+@keyframes popuTalk{
+  from{
+    transform:translateY(0) scale(1);
+    box-shadow:
+      0 0 18px rgba(0,183,255,.75),
+      0 0 28px rgba(247,215,116,.20);
+  }
+  to{
+    transform:translateY(-2px) scale(1.05);
+    box-shadow:
+      0 0 28px rgba(0,200,255,.95),
+      0 0 36px rgba(247,215,116,.35);
+  }
+}
+
+@keyframes popuMouth{
+  from{transform:scaleY(.85)}
+  to{transform:scaleY(1.12)}
+}
+
+.voice-invite{
+  margin:0 0 17px;
+  padding:13px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,87,210,.24),
+      rgba(0,12,38,.88)
+    );
+  border:1px solid rgba(247,215,116,.34);
+}
+
+.voice-invite.hidden{
+  display:none;
+}
+
+.voice-invite-icon{
+  width:44px;
+  height:44px;
+  flex:none;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,92,220,.28);
+  border:1px solid rgba(0,183,255,.38);
+  font-size:21px;
+}
+
+.voice-invite-text{
+  flex:1;
+  min-width:0;
+}
+
+.voice-invite-text strong{
+  display:block;
+  color:var(--gold);
+  font-size:13px;
+}
+
+.voice-invite-text span{
+  display:block;
+  margin-top:4px;
+  color:var(--soft);
+  font-size:10px;
+  line-height:1.35;
+}
+
+.voice-invite button{
+  flex:none;
+  min-height:38px;
+  padding:0 11px;
+  border-radius:13px;
+  color:#061326;
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold),
+      var(--gold2)
+    );
+  font-size:10px;
+  font-weight:900;
+}
+
 @media(max-width:380px){
 
   .header{
@@ -757,13 +873,13 @@ textarea::placeholder{
 
   <div class="identity">
 
-    <div class="ai-logo">
-      🦅
+    <div id="popuFace" class="ai-logo popu-face" aria-label="Popu IA">
+      <span class="popu-eyes">•‿•</span>
     </div>
 
     <div class="identity-text">
 
-      <h1>JM NEXUS IA</h1>
+      <h1>POPU IA</h1>
 
       <p id="connectionText">
         Sincronizando con JM Elite...
@@ -776,12 +892,12 @@ textarea::placeholder{
 
   <button
     id="voiceToggle"
-    class="voice-toggle active"
+    class="voice-toggle"
     type="button"
     onclick="toggleVoice()"
     aria-label="Activar o desactivar voz"
   >
-    🔊
+    🔇
   </button>
 
 </header>
@@ -798,12 +914,12 @@ textarea::placeholder{
     class="welcome"
   >
 
-    <div class="welcome-icon">
-      🦅
+    <div class="welcome-icon popu-face welcome-popu">
+      <span class="popu-eyes">•‿•</span>
     </div>
 
     <h2>
-      JM NEXUS IA
+      POPU IA
     </h2>
 
     <p id="welcomeText">
@@ -822,6 +938,28 @@ textarea::placeholder{
       </span>
 
     </div>
+
+  </section>
+
+
+  <section id="voiceInvite" class="voice-invite">
+
+    <div class="voice-invite-icon">
+      🔊
+    </div>
+
+    <div class="voice-invite-text">
+      <strong>¿Quieres escuchar mi voz?</strong>
+      <span>Puedo responderte hablando. Tú eliges.</span>
+    </div>
+
+    <button
+      id="voiceInviteButton"
+      type="button"
+      onclick="enableVoiceFromInvite()"
+    >
+      Activar voz
+    </button>
 
   </section>
 
@@ -986,7 +1124,8 @@ const db=
 
 
 
-let voiceEnabled=true;
+let voiceEnabled=
+  localStorage.getItem("jm_popu_voice")==="on";
 
 let recognition=null;
 
@@ -1894,13 +2033,13 @@ function findAnswer(text){
           ? ", " + name
           : ""
       ) +
-      ". 🦅 Estoy aquí para ayudarte dentro de JM Elite.",
+      ". 🤖 Estoy aquí para ayudarte dentro de JM Elite.",
 
 
       "Para eso estoy. 💙 Seguimos creciendo juntos en JM Elite.",
 
 
-      "Gracias a ti por confiar en JM Nexus IA. 🦅 Pregúntame cuando lo necesites.",
+      "Gracias a ti por confiar en Popu IA. 🤖 Pregúntame cuando lo necesites.",
 
 
       "Siempre a tu disposición dentro de JM Elite. 💙"
@@ -1944,7 +2083,7 @@ function findAnswer(text){
       "Hola. 💙 Estoy conectado con JM Elite. Cuéntame qué necesitas.",
 
 
-      "Bienvenido a JM Nexus IA. 🦅 Estoy preparado para ayudarte."
+      "Bienvenido a Popu IA. 🤖 Estoy preparado para ayudarte."
 
     ]);
 
@@ -1979,7 +2118,7 @@ function findAnswer(text){
   ){
 
     return (
-      "Soy JM Nexus IA. 🦅 " +
+      "Soy Popu IA. 🤖 " +
       "El asistente inteligente de Agencia JM Elite. " +
       "Reconozco el perfil que me habla y sincronizo el equipo activo de la agencia."
     );
@@ -2010,7 +2149,7 @@ function findAnswer(text){
           ? ", " + name
           : ""
       ) +
-      ". 🦅 Aquí estaré cuando vuelvas."
+      ". 🤖 Aquí estaré cuando vuelvas."
     );
 
   }
@@ -2110,7 +2249,7 @@ function findAnswer(text){
     name.className="ai-name";
 
     name.textContent=
-      "🦅 JM NEXUS IA";
+      "🤖 POPU IA";
 
     bubble.appendChild(name);
 
@@ -2266,28 +2405,106 @@ function quickQuestion(text){
 
 
 
-function toggleVoice(){
-
-  voiceEnabled=
-    !voiceEnabled;
-
+function syncVoiceUI(){
 
   const button=
     document.getElementById(
       "voiceToggle"
     );
 
+  const invite=
+    document.getElementById(
+      "voiceInvite"
+    );
 
-  button.classList.toggle(
-    "active",
+  if(button){
+
+    button.classList.toggle(
+      "active",
+      voiceEnabled
+    );
+
+    button.textContent=
+      voiceEnabled
+        ? "🔊"
+        : "🔇";
+
+  }
+
+
+  if(invite){
+
+    invite.classList.toggle(
+      "hidden",
+      voiceEnabled
+    );
+
+  }
+
+}
+
+
+function enableVoiceFromInvite(){
+
+  voiceEnabled=true;
+
+  localStorage.setItem(
+    "jm_popu_voice",
+    "on"
+  );
+
+  syncVoiceUI();
+
+  addMessage(
+    "Perfecto. Desde ahora puedo responderte por voz. 🔊",
+    "ai"
+  );
+
+  speak(
+    "Perfecto. Desde ahora puedo responderte por voz."
+  );
+
+}
+
+
+function setPopuSpeaking(
+  speaking
+){
+
+  document
+    .querySelectorAll(
+      ".popu-face"
+    )
+    .forEach(face=>{
+
+      face.classList.toggle(
+        "speaking",
+        speaking
+      );
+
+    });
+
+}
+
+
+function toggleVoice(){
+
+  voiceEnabled=
+    !voiceEnabled;
+
+
+  localStorage.setItem(
+
+    "jm_popu_voice",
+
     voiceEnabled
+      ? "on"
+      : "off"
+
   );
 
 
-  button.textContent=
-    voiceEnabled
-      ? "🔊"
-      : "🔇";
+  syncVoiceUI();
 
 
   if(
@@ -2299,11 +2516,25 @@ function toggleVoice(){
       .speechSynthesis
       .cancel();
 
+    setPopuSpeaking(false);
+
+  }
+
+
+  if(voiceEnabled){
+
+    addMessage(
+      "🔊 Voz activada. Ahora puedo responderte hablando.",
+      "ai"
+    );
+
+    speak(
+      "Voz activada. Ahora puedo responderte hablando."
+    );
+
   }
 
 }
-
-
 
 function speak(text){
 
@@ -2325,6 +2556,9 @@ function speak(text){
     .cancel();
 
 
+  setPopuSpeaking(true);
+
+
   const utterance=
     new SpeechSynthesisUtterance(
       text
@@ -2333,18 +2567,32 @@ function speak(text){
 
   utterance.lang="es-ES";
 
-  utterance.rate=1;
+  utterance.rate=.98;
 
-  utterance.pitch=1;
+  utterance.pitch=1.05;
+
+
+  utterance.onend=function(){
+
+    setPopuSpeaking(false);
+
+  };
+
+
+  utterance.onerror=function(){
+
+    setPopuSpeaking(false);
+
+  };
 
 
   window
     .speechSynthesis
-    .speak(utterance);
+    .speak(
+      utterance
+    );
 
 }
-
-
 
 function startListening(){
 
@@ -2549,6 +2797,9 @@ function goBack(){
 
 async function startNexus(){
 
+  syncVoiceUI();
+
+
   const logged=
     localStorage.getItem(
       "jm_logged"
@@ -2590,9 +2841,9 @@ async function startNexus(){
 
         ? "Hola, " +
           name +
-          ". Soy JM Nexus IA. Ya tengo identificado tu perfil dentro de JM Elite. Puedes escribirme o hablarme."
+          ". Soy Popu IA. Ya tengo identificado tu perfil dentro de JM Elite. Puedes escribirme o pulsar el micrófono para hablar conmigo."
 
-        : "Hola. Soy JM Nexus IA. Puedes escribirme o pulsar el micrófono para hablar conmigo.";
+        : "Hola. Soy Popu IA. Puedes escribirme o pulsar el micrófono para hablar conmigo.";
 
 
     addMessage(
