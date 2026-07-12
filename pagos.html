@@ -718,7 +718,7 @@ a{
     <h1>🪙 Recompensas JM Elite</h1>
 
     <p>
-      Actividad, invitaciones y progreso de la agencia
+      Pruebas de incentivos por invitación · 7 días
     </p>
 
   </div>
@@ -733,8 +733,10 @@ a{
   </strong>
 
   <p>
-    Los progresos, recompensas e incentivos mostrados
-    son simulaciones internas. No generan recargas
+    🧪 PRUEBA CONTROLADA. Cada invitación válida puede generar 1K al día
+    para la persona nueva y 1K al día para quien la invitó, durante un máximo
+    de 7 días. Solo se incentivan hasta 3 invitaciones por persona y semana.
+    Por ahora, este panel solo muestra perfiles de prueba. No generan recargas
     reales ni corresponden a pagos oficiales de Poppo
     hasta activación expresa del fundador.
   </p>
@@ -772,7 +774,7 @@ a{
     </strong>
 
     <small>
-      Días válidos registrados
+      Días incentivados
     </small>
 
   </div>
@@ -789,7 +791,7 @@ a{
     </strong>
 
     <small>
-      Coins simuladas
+      Coins ficticias generadas
     </small>
 
   </div>
@@ -933,7 +935,7 @@ a{
     <div class="progress-head">
 
       <span>
-        Programa de 7 días
+        Invitaciones incentivadas
       </span>
 
       <strong id="detailProgressText">
@@ -966,8 +968,8 @@ a{
       </strong>
 
       <p id="detailRewardText">
-        Cada día se valida al completar 5 minutos
-        dentro de Sala Pro. El sistema está en modo prueba.
+        Cada invitado puede generar hasta 7 días de incentivo.
+        Después del día 7, deja de sumar coins.
       </p>
 
     </div>
@@ -1079,9 +1081,17 @@ const db=
 
 const TEST_MODE=true;
 
-const TEST_REWARD_NEW=1000;
+const TEST_MODE=true;
 
-const TEST_REWARD_INVITER=2000;
+const TEST_REWARD_INVITEE_PER_VALID_DAY=1000;
+
+const TEST_REWARD_INVITER_PER_VALID_DAY=1000;
+
+const TEST_MAX_REWARD_DAYS_PER_INVITE=7;
+
+const TEST_MAX_INVITES_PER_WEEK=3;
+
+const FOUNDER_EMAIL="elpepolan35@gmail.com";
 
 
 let currentEmail="";
@@ -1492,8 +1502,7 @@ function getValidatedDays(member){
 
   return Array
     .from(validDates)
-    .sort((a,b)=>String(a).localeCompare(String(b)))
-    .slice(0,7);
+    .sort((a,b)=>String(a).localeCompare(String(b)));
 
 }
 
@@ -1574,6 +1583,261 @@ function findInviter(member){
     );
 
   }) || null;
+
+}
+
+
+function isTestProfile(member){
+
+  const email=
+    normalizeText(member?.email);
+
+  const role=
+    getMemberRole(member || {});
+
+  return(
+    email===FOUNDER_EMAIL ||
+    role==="administrador" ||
+    role==="administradora"
+  );
+
+}
+
+
+function getInviteStartDate(member){
+
+  const raw=
+    member.createdAt ||
+    member.approvedAt ||
+    member.appStartDate ||
+    member.date ||
+    "";
+
+  if(raw && typeof raw.toDate==="function"){
+
+    return raw.toDate();
+
+  }
+
+  const parsed=
+    new Date(raw);
+
+  return isNaN(parsed.getTime())
+    ? null
+    : parsed;
+
+}
+
+
+function startOfWeek(date){
+
+  const d=
+    new Date(date);
+
+  const day=
+    d.getDay();
+
+  const diff=
+    day===0
+      ? -6
+      : 1-day;
+
+  d.setDate(
+    d.getDate()+diff
+  );
+
+  d.setHours(
+    0,0,0,0
+  );
+
+  return d;
+
+}
+
+
+function getEligibleInvites(member){
+
+  const invites=
+    getMemberInvites(member)
+      .map(person=>({
+
+        person,
+
+        startDate:
+          getInviteStartDate(person)
+
+      }))
+      .filter(item=>item.startDate)
+      .sort(
+        (a,b)=>
+          a.startDate-b.startDate
+      );
+
+
+  const weeks=
+    new Map();
+
+
+  invites.forEach(item=>{
+
+    const weekKey=
+      startOfWeek(
+        item.startDate
+      ).toISOString()
+      .slice(0,10);
+
+
+    if(!weeks.has(weekKey)){
+
+      weeks.set(
+        weekKey,
+        []
+      );
+
+    }
+
+
+    const list=
+      weeks.get(weekKey);
+
+
+    if(
+      list.length<
+      TEST_MAX_INVITES_PER_WEEK
+    ){
+
+      list.push(
+        item.person
+      );
+
+    }
+
+  });
+
+
+  return Array
+    .from(
+      weeks.values()
+    )
+    .flat();
+
+}
+
+
+function isEligibleInvite(
+  inviter,
+  invitee
+){
+
+  return getEligibleInvites(inviter)
+    .some(
+      person=>
+        person.firestoreId===
+        invitee.firestoreId
+    );
+
+}
+
+
+function getRewardableDaysForInvitee(member){
+
+  return Math.min(
+    getValidatedDays(member).length,
+    TEST_MAX_REWARD_DAYS_PER_INVITE
+  );
+
+}
+
+
+function getInviteeRewardCoins(member){
+
+  const inviter=
+    findInviter(member);
+
+
+  if(
+    !inviter ||
+    !isEligibleInvite(
+      inviter,
+      member
+    )
+  ){
+
+    return 0;
+
+  }
+
+
+  return(
+    getRewardableDaysForInvitee(member) *
+    TEST_REWARD_INVITEE_PER_VALID_DAY
+  );
+
+}
+
+
+function getInviterRewardCoins(member){
+
+  const eligibleInvites=
+    getEligibleInvites(member);
+
+
+  return eligibleInvites.reduce(
+    (sum,person)=>
+      sum +
+      (
+        getRewardableDaysForInvitee(person) *
+        TEST_REWARD_INVITER_PER_VALID_DAY
+      ),
+    0
+  );
+
+}
+
+
+function getMemberRewardCoins(member){
+
+  return(
+    getInviteeRewardCoins(member) +
+    getInviterRewardCoins(member)
+  );
+
+}
+
+
+function getMemberRewardableDays(member){
+
+  return getEligibleInvites(member)
+    .reduce(
+      (sum,person)=>
+        sum +
+        getRewardableDaysForInvitee(person),
+      0
+    );
+
+}
+
+
+function getInviteeRewardDays(member){
+
+  const inviter=
+    findInviter(member);
+
+
+  if(
+    !inviter ||
+    !isEligibleInvite(
+      inviter,
+      member
+    )
+  ){
+
+    return 0;
+
+  }
+
+
+  return getRewardableDaysForInvitee(member);
 
 }
 
@@ -1679,11 +1943,11 @@ function memberCardMarkup(member){
         <div class="member-stat">
 
           <strong>
-            ${validDays.length}/7
+            ${getInviteeRewardCoins(member).toLocaleString("es-ES")}
           </strong>
 
           <span>
-            DÍAS VÁLIDOS
+            COINS COMO NUEVA
           </span>
 
         </div>
@@ -1692,15 +1956,11 @@ function memberCardMarkup(member){
         <div class="member-stat">
 
           <strong>
-            ${
-              validDays.length>=7
-                ? "✅"
-                : "⏳"
-            }
+            ${getInviterRewardCoins(member).toLocaleString("es-ES")}
           </strong>
 
           <span>
-            ESTADO
+            COINS POR INVITAR
           </span>
 
         </div>
@@ -1803,24 +2063,17 @@ function updateSummary(){
     agencyMembers.reduce(
       (sum,member)=>
         sum +
-        getValidatedDays(member).length,
+        getMemberRewardableDays(member),
       0
     );
 
 
-  const completedMembers=
-    agencyMembers.filter(
-      member=>
-        getValidatedDays(member)
-          .length>=7
-    ).length;
-
-
   const simulatedCoins=
-    completedMembers *
-    (
-      TEST_REWARD_NEW +
-      TEST_REWARD_INVITER
+    agencyMembers.reduce(
+      (sum,member)=>
+        sum +
+        getMemberRewardCoins(member),
+      0
     );
 
 
@@ -1916,12 +2169,45 @@ function openMemberDetail(
     findInviter(member);
 
 
+  const rewardableDays=
+    getMemberRewardableDays(member);
+
+
+  const inviteeCoins=
+    getInviteeRewardCoins(member);
+
+
+  const inviterCoins=
+    getInviterRewardCoins(member);
+
+
+  const accumulatedCoins=
+    inviteeCoins +
+    inviterCoins;
+
+
+  const completedInviteePrograms=
+    getEligibleInvites(member)
+      .filter(
+        person=>
+          getRewardableDaysForInvitee(person)>=
+          TEST_MAX_REWARD_DAYS_PER_INVITE
+      ).length;
+
+
   const progress=
-    Math.round(
-      validatedDays.length /
-      7 *
-      100
-    );
+    invites.length
+      ? Math.round(
+          (
+            rewardableDays /
+            (
+              invites.length *
+              TEST_MAX_REWARD_DAYS_PER_INVITE
+            )
+          ) *
+          100
+        )
+      : 0;
 
 
   document
@@ -1997,8 +2283,8 @@ function openMemberDetail(
   document
     .getElementById("detailProgressText")
     .textContent=
-      validatedDays.length +
-      "/7 días";
+      getEligibleInvites(member).length +
+      " invitaciones con incentivo";
 
 
   document
@@ -2010,45 +2296,62 @@ function openMemberDetail(
   document
     .getElementById("detailDays")
     .innerHTML=
-      Array
-        .from(
-          {length:7},
-          (_,index)=>
-            createDayMarkup(
-              index,
-              validatedDays
-            )
-        )
-        .join("");
+      getEligibleInvites(member).length
+        ? getEligibleInvites(member)
+            .slice(0,7)
+            .map(person=>{
+
+              const days=
+                getRewardableDaysForInvitee(person);
 
 
-  if(validatedDays.length>=7){
+              return `
+                <div class="day ${days>=7 ? "done" : ""}">
 
-    document
-      .getElementById("detailRewardStatus")
-      .textContent=
-        "🪙 Recompensa desbloqueada";
+                  <span>
+                    ${escapeHtml(getMemberName(person))}
+                  </span>
+
+                  <strong>
+                    ${days}/7
+                  </strong>
+
+                  <span>
+                    ${(days * TEST_REWARD_PER_VALID_DAY).toLocaleString("es-ES")} coins
+                  </span>
+
+                </div>
+              `;
+
+            })
+            .join("")
+        : `
+            <div class="empty">
+              Sin personas invitadas todavía.
+            </div>
+          `;
 
 
-    document
-      .getElementById("detailRewardText")
-      .textContent=
-        "Ha completado 7 días válidos. La recompensa sigue en modo prueba y pendiente de revisión del fundador.";
-
-  }else{
-
-    document
-      .getElementById("detailRewardStatus")
-      .textContent=
-        "🪙 Recompensa en progreso";
+  document
+    .getElementById("detailRewardStatus")
+    .textContent=
+      "🪙 " +
+      accumulatedCoins.toLocaleString("es-ES") +
+      " coins de prueba";
 
 
-    document
-      .getElementById("detailRewardText")
-      .textContent=
-        "Cada día se valida al completar 5 minutos dentro de Sala Pro. El sistema sigue en modo prueba.";
-
-  }
+  document
+    .getElementById("detailRewardText")
+    .textContent=
+      "Modo prueba. Como persona nueva: " +
+      inviteeCoins.toLocaleString("es-ES") +
+      " coins. Por invitar y acompañar: " +
+      inviterCoins.toLocaleString("es-ES") +
+      " coins. Cada invitación válida genera 1K diario para la nueva y 1K diario para quien invita, durante un máximo de 7 días. Solo cuentan las primeras " +
+      TEST_MAX_INVITES_PER_WEEK +
+      " invitaciones incentivadas por semana. Programas completados: " +
+      completedInviteePrograms +
+      ".";
 
 
   renderInviteTree(
@@ -2135,13 +2438,18 @@ function startMembersSync(){
         snapshot=>{
 
           agencyMembers=
-            snapshot.docs.map(doc=>({
+            snapshot.docs
+              .map(doc=>({
 
-              firestoreId:doc.id,
+                firestoreId:doc.id,
 
-              ...doc.data()
+                ...doc.data()
 
-            }));
+              }))
+              .filter(member=>
+                !TEST_MODE ||
+                isTestProfile(member)
+              );
 
 
           renderMembers();
