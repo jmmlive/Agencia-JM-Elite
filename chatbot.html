@@ -2559,9 +2559,22 @@ function speak(text){
   setPopuSpeaking(true);
 
 
+  const spokenText=
+    String(text || "")
+      .replace(
+        /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,
+        ""
+      )
+      .replace(
+        /\s{2,}/g,
+        " "
+      )
+      .trim();
+
+
   const utterance=
     new SpeechSynthesisUtterance(
-      text
+      spokenText
     );
 
 
