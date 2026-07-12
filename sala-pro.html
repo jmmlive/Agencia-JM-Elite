@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
 <title>Sala Pro JM Elite</title>
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -15,19 +23,39 @@
 
 :root{
   --gold:#f7d774;
-  --gold2:#ffcc3d;
-  --blue:#008cff;
-  --blue2:#005dff;
+  --gold2:#ffbd32;
+  --blue:#007bff;
+  --cyan:#00c8ff;
   --deep:#020713;
-  --navy:#061326;
+  --panel:#061326;
   --soft:#dce8ff;
+  --green:#59ffb1;
+  --danger:#ff6175;
+  --purple:#b968ff;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+  background:#020713;
+  color:white;
 }
 
 body{
-  background:#020713;
-  color:white;
   min-height:100vh;
-  padding-bottom:76px;
+  overflow-x:hidden;
+}
+
+button,
+input{
+  font-family:inherit;
+}
+
+button{
+  border:0;
+  color:inherit;
+  cursor:pointer;
 }
 
 a{
@@ -35,457 +63,3730 @@ a{
   text-decoration:none;
 }
 
-button{
-  border:0;
-  cursor:pointer;
-}
-
-.room{
+.app{
   min-height:100vh;
-  padding:10px;
+  padding-bottom:84px;
   background:
-    radial-gradient(circle at top,#008cff 0%,#004dff 34%,#020713 78%);
+    radial-gradient(
+      circle at top,
+      #005bdc 0,
+      #061326 28%,
+      #020713 75%
+    );
 }
 
-/* PANTALLA PRINCIPAL */
-.stage{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/8.5;
-  border-radius:20px;
-  overflow:hidden;
-  border:2px solid rgba(247,215,116,.6);
-  background:#061326;
-  box-shadow:
-    0 0 22px rgba(0,140,255,.8),
-    inset 0 0 22px rgba(0,140,255,.35);
-}
 
-.stage img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center top;
-  display:block;
-  filter:saturate(1.28) contrast(1.08);
-}
+/* CABECERA */
 
-.stage::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    180deg,
-    rgba(0,0,0,.02) 0%,
-    rgba(0,35,120,.12) 52%,
-    rgba(0,140,255,.48) 100%
-  );
-}
+.header{
+  position:sticky;
+  top:0;
+  z-index:100;
 
-.stage-top{
-  position:absolute;
-  top:9px;
-  left:9px;
-  right:9px;
-  z-index:5;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  gap:10px;
+
+  padding:
+    calc(10px + env(safe-area-inset-top))
+    12px
+    10px;
+
+  background:
+    rgba(2,7,19,.94);
+
+  border-bottom:
+    1px solid
+    rgba(0,183,255,.30);
+
+  backdrop-filter:blur(18px);
 }
 
-.live-pill{
-  padding:7px 10px;
-  border-radius:999px;
-  background:rgba(0,18,45,.75);
-  border:1px solid rgba(247,215,116,.45);
-  font-size:12px;
-  font-weight:bold;
+.back{
+  width:46px;
+  height:46px;
+  flex:none;
+
+  border-radius:16px;
+
+  background:
+    rgba(0,86,210,.28);
+
+  border:
+    1px solid
+    rgba(0,183,255,.48);
+
+  font-size:24px;
 }
 
-.stage-actions{
-  display:flex;
-  gap:7px;
+.room-title{
+  flex:1;
+  min-width:0;
 }
 
-.stage-btn{
-  width:38px;
-  height:38px;
-  border-radius:14px;
-  background:rgba(0,15,40,.62);
-  border:1px solid rgba(247,215,116,.42);
-  color:white;
+.room-title h1{
+  color:var(--gold);
   font-size:19px;
 }
 
-/* INFO SALA */
-.room-info{
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  gap:7px;
-  margin:11px 0;
+.room-title p{
+  margin-top:4px;
+  color:var(--soft);
+  font-size:10px;
 }
 
-.info-pill{
-  min-height:32px;
-  border-radius:999px;
-  background:rgba(0,28,92,.7);
-  border:1px solid rgba(0,170,255,.45);
+.header-status{
+  width:46px;
+  height:46px;
+  flex:none;
+
+  border-radius:16px;
+
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:0 9px;
-  font-size:11.5px;
+
+  background:
+    rgba(89,255,177,.12);
+
+  border:
+    1px solid
+    rgba(89,255,177,.38);
+
+  font-size:21px;
 }
 
-.info-pill.gold{
-  border-color:rgba(247,215,116,.55);
+
+/* INFO DE SALA */
+
+.room-info{
+  padding:12px;
+}
+
+.room-card{
+  padding:14px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,76,185,.30),
+      rgba(3,15,40,.94)
+    );
+
+  border:
+    1px solid
+    rgba(247,215,116,.34);
+
+  box-shadow:
+    0 0 24px
+    rgba(0,120,255,.18);
+}
+
+.room-main{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.room-logo{
+  width:56px;
+  height:56px;
+  flex:none;
+
+  border-radius:18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #006cff,
+      #00c8ff
+    );
+
+  border:
+    2px solid
+    var(--gold);
+
+  font-size:28px;
+}
+
+.room-data{
+  flex:1;
+  min-width:0;
+}
+
+.room-data h2{
   color:var(--gold);
+  font-size:17px;
 }
 
-/* 15 PUESTOS */
-.seats{
+.room-data p{
+  margin-top:5px;
+  color:var(--soft);
+  font-size:10px;
+  line-height:1.4;
+}
+
+.room-stats{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:7px;
-  margin-bottom:11px;
+
+  margin-top:13px;
+}
+
+.room-stat{
+  padding:9px 5px;
+
+  border-radius:14px;
+
+  text-align:center;
+
+  background:
+    rgba(0,7,25,.55);
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+}
+
+.room-stat strong{
+  display:block;
+  color:var(--gold);
+  font-size:14px;
+}
+
+.room-stat span{
+  display:block;
+  margin-top:4px;
+  color:var(--soft);
+  font-size:8px;
+}
+
+
+/* CONTADOR 5 MINUTOS */
+
+.presence-card{
+  margin-top:10px;
+  padding:12px;
+
+  border-radius:18px;
+
+  background:
+    rgba(0,12,38,.72);
+
+  border:
+    1px solid
+    rgba(89,255,177,.28);
+}
+
+.presence-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+
+  color:var(--soft);
+  font-size:10px;
+}
+
+.presence-head strong{
+  color:var(--green);
+}
+
+.presence-bar{
+  height:9px;
+  margin-top:8px;
+
+  overflow:hidden;
+
+  border-radius:999px;
+
+  background:#020713;
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+}
+
+.presence-fill{
+  width:0;
+  height:100%;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #00a2ff,
+      var(--green),
+      var(--gold)
+    );
+
+  transition:width .4s ease;
+}
+
+.presence-note{
+  margin-top:7px;
+  color:var(--soft);
+  font-size:9px;
+  line-height:1.4;
+}
+
+
+/* TÍTULOS */
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  margin:
+    16px 12px 10px;
+
+  color:var(--gold);
+
+  font-size:13px;
+
+  text-transform:uppercase;
+}
+
+.section-title::after{
+  content:"";
+  flex:1;
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--gold),
+      transparent
+    );
+}
+
+
+/* MICROFONOS */
+
+.seats-panel{
+  margin:0 12px;
+
+  padding:13px 8px;
+
+  border-radius:24px;
+
+  background:
+    rgba(0,12,38,.56);
+
+  border:
+    1px solid
+    rgba(0,183,255,.24);
+}
+
+.seats-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(5,1fr);
+
+  gap:11px 6px;
 }
 
 .seat{
-  position:relative;
-  min-height:78px;
-  border-radius:14px;
-  background:linear-gradient(180deg,rgba(0,70,210,.55),rgba(0,16,60,.86));
-  border:1px solid rgba(0,170,255,.45);
+  min-width:0;
+
+  background:transparent;
+
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
-  padding:6px 3px;
-  box-shadow:inset 0 0 16px rgba(0,140,255,.14);
+
+  text-align:center;
 }
 
-.seat.host{
-  border-color:var(--gold);
-  box-shadow:
-    0 0 17px rgba(247,215,116,.38),
-    inset 0 0 18px rgba(0,140,255,.14);
-}
+.seat-avatar{
+  position:relative;
 
-.num{
-  position:absolute;
-  top:-6px;
-  left:-5px;
-  width:22px;
-  height:22px;
+  width:55px;
+  height:55px;
+
   border-radius:50%;
-  background:#061326;
-  border:1px solid var(--gold);
-  color:var(--gold);
+
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:10px;
-  font-weight:bold;
-}
 
-.face{
-  width:35px;
-  height:35px;
-  border-radius:50%;
   overflow:hidden;
-  border:2px solid rgba(247,215,116,.65);
-  margin-bottom:4px;
-  background:#020713;
+
+  background:
+    rgba(255,255,255,.10);
+
+  border:
+    1px solid
+    rgba(255,255,255,.18);
+
+  box-shadow:
+    0 0 14px
+    rgba(0,120,255,.14);
+
+  font-size:23px;
 }
 
-.face img{
+.seat-avatar img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
-.seat strong{
-  font-size:10px;
-  color:white;
-  max-width:100%;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+.seat.empty .seat-avatar{
+  color:#ffe9b2;
+
+  background:
+    rgba(255,255,255,.12);
 }
 
-.seat span{
-  font-size:9px;
-  color:#85d9ff;
+.seat.host .seat-avatar{
+  border:
+    2px solid
+    var(--gold);
+
+  box-shadow:
+    0 0 18px
+    rgba(247,215,116,.52);
 }
 
-.mic-off{
+.seat.speaking .seat-avatar{
+  border:
+    2px solid
+    var(--green);
+
+  box-shadow:
+    0 0 22px
+    rgba(89,255,177,.70);
+
+  animation:
+    speakingPulse 1s infinite;
+}
+
+@keyframes speakingPulse{
+
+  50%{
+    transform:scale(1.05);
+  }
+
+}
+
+.seat-muted::after{
+  content:"🔇";
+
   position:absolute;
-  right:4px;
-  bottom:4px;
-  font-size:12px;
-  opacity:.75;
+  right:-2px;
+  bottom:-2px;
+
+  width:20px;
+  height:20px;
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#071426;
+
+  font-size:10px;
 }
+
+.seat-number{
+  position:absolute;
+
+  left:50%;
+  bottom:-7px;
+
+  transform:
+    translateX(-50%);
+
+  min-width:18px;
+  height:18px;
+
+  padding:0 4px;
+
+  border-radius:999px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#061326;
+
+  background:var(--gold);
+
+  font-size:8px;
+  font-weight:bold;
+}
+
+.seat-name{
+  width:100%;
+
+  margin-top:10px;
+
+  overflow:hidden;
+
+  color:white;
+
+  font-size:8px;
+
+  white-space:nowrap;
+
+  text-overflow:ellipsis;
+}
+
+.seat-status{
+  margin-top:3px;
+
+  color:var(--soft);
+
+  font-size:7px;
+}
+
+
+/* OYENTES */
+
+.listeners-panel{
+  margin:0 12px;
+
+  padding:13px;
+
+  border-radius:22px;
+
+  background:
+    rgba(0,12,38,.62);
+
+  border:
+    1px solid
+    rgba(0,183,255,.22);
+}
+
+.listeners-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+
+  margin-bottom:10px;
+
+  color:var(--soft);
+
+  font-size:10px;
+}
+
+.listeners-head strong{
+  color:var(--gold);
+}
+
+.listeners-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.listener-chip{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  padding:
+    6px 9px;
+
+  border-radius:999px;
+
+  background:
+    rgba(0,102,255,.16);
+
+  border:
+    1px solid
+    rgba(0,183,255,.26);
+
+  font-size:9px;
+}
+
+.listener-dot{
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:var(--green);
+
+  box-shadow:
+    0 0 7px
+    var(--green);
+}
+
 
 /* CHAT */
+
 .chat-panel{
-  border-radius:17px;
-  background:rgba(0,14,45,.78);
-  border:1px solid rgba(0,170,255,.4);
-  padding:10px;
-  margin-bottom:10px;
-  box-shadow:inset 0 0 18px rgba(0,140,255,.1);
+  margin:
+    0 12px 16px;
+
+  padding:13px;
+
+  border-radius:22px;
+
+  background:
+    rgba(0,12,38,.68);
+
+  border:
+    1px solid
+    rgba(0,183,255,.24);
 }
 
-.chat-title{
-  color:var(--gold);
-  font-size:15px;
-  margin-bottom:7px;
-}
+.chat-messages{
+  min-height:150px;
+  max-height:260px;
 
-.chat-box{
-  height:104px;
   overflow-y:auto;
+
+  padding:4px;
 }
 
-.msg{
+.chat-message{
+  margin-bottom:9px;
+
+  font-size:11px;
+
+  line-height:1.45;
+}
+
+.chat-message strong{
+  color:var(--gold);
+}
+
+.chat-system{
+  color:var(--green);
+  font-style:italic;
+}
+
+.chat-compose{
   display:flex;
-  gap:7px;
-  margin-bottom:7px;
-  font-size:12px;
+  gap:8px;
+
+  margin-top:10px;
 }
 
-.msg b{
-  color:#75d8ff;
-}
-
-.msg span{
-  color:white;
-}
-
-.chat-form{
-  display:flex;
-  gap:7px;
-  margin-top:8px;
-}
-
-.chat-form input{
+.chat-compose input{
   flex:1;
-  height:36px;
-  border-radius:999px;
-  border:1px solid rgba(0,170,255,.45);
-  background:rgba(0,8,30,.78);
+  min-width:0;
+
+  padding:
+    12px 13px;
+
+  border:0;
+  outline:0;
+
+  border-radius:15px;
+
   color:white;
-  padding:0 12px;
-  outline:none;
+
+  background:
+    rgba(0,7,25,.70);
+
+  border:
+    1px solid
+    rgba(0,183,255,.30);
 }
 
-.chat-form button{
-  width:40px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#d8a92d,#ffcf55);
-  color:#061326;
-  font-size:18px;
+.chat-compose input::placeholder{
+  color:#8fa2c0;
 }
+
+.chat-send{
+  width:46px;
+  height:46px;
+
+  flex:none;
+
+  border-radius:15px;
+
+  color:#061326;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold),
+      var(--gold2)
+    );
+
+  font-size:20px;
+}
+
 
 /* CONTROLES */
+
 .controls{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
-  margin-bottom:12px;
-}
-
-.control{
-  min-height:43px;
-  border-radius:14px;
-  font-weight:bold;
-  color:white;
-  background:linear-gradient(135deg,#005dff,#00aaff);
-  box-shadow:0 0 16px rgba(0,140,255,.35);
-  font-size:12px;
-}
-
-.control.gold{
-  background:linear-gradient(135deg,#d8a92d,#ffcf55);
-  color:#061326;
-}
-
-.control.dark{
-  background:rgba(0,20,70,.8);
-  border:1px solid rgba(247,215,116,.28);
-}
-
-/* MENÚ INFERIOR */
-.bottom-nav{
   position:fixed;
+
   left:0;
   right:0;
   bottom:0;
-  height:72px;
-  background:rgba(0,12,38,.98);
-  border-top:1px solid rgba(247,215,116,.25);
+
+  z-index:900;
+
+  min-height:74px;
+
+  padding:
+    9px 10px
+    calc(
+      9px +
+      env(safe-area-inset-bottom)
+    );
+
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  z-index:999;
+
+  grid-template-columns:
+    repeat(5,1fr);
+
+  gap:6px;
+
+  background:
+    rgba(0,12,38,.98);
+
+  border-top:
+    1px solid
+    rgba(247,215,116,.26);
 }
 
-.nav-item{
-  color:white;
-  font-size:10.5px;
+.control{
+  min-width:0;
+
+  background:transparent;
+
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:2px;
+
+  gap:4px;
+
+  color:var(--soft);
+
+  font-size:8px;
 }
 
-.nav-item .icon{
-  font-size:23px;
+.control-icon{
+  width:42px;
+  height:42px;
+
+  border-radius:15px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    rgba(0,86,210,.22);
+
+  border:
+    1px solid
+    rgba(0,183,255,.28);
+
+  font-size:20px;
 }
 
-.nav-item.active{
+.control.active .control-icon{
+  color:#061326;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold),
+      var(--gold2)
+    );
+}
+
+.control.danger .control-icon{
+  background:
+    rgba(150,0,32,.60);
+
+  border-color:
+    rgba(255,97,117,.42);
+}
+
+
+/* MINI SALA */
+
+.mini-room{
+  position:fixed;
+
+  right:12px;
+  bottom:88px;
+
+  z-index:1500;
+
+  display:none;
+
+  width:178px;
+
+  padding:10px;
+
+  border-radius:20px;
+
+  background:
+    rgba(5,20,48,.97);
+
+  border:
+    1px solid
+    rgba(247,215,116,.40);
+
+  box-shadow:
+    0 0 28px
+    rgba(0,120,255,.38);
+}
+
+.mini-room.show{
+  display:block;
+}
+
+.mini-room strong{
+  display:block;
   color:var(--gold);
+  font-size:11px;
 }
 
-@media(min-width:760px){
-  .room{
-    max-width:760px;
-    margin:auto;
-  }
+.mini-room p{
+  margin-top:4px;
+  color:var(--soft);
+  font-size:8px;
 }
+
+.mini-actions{
+  display:flex;
+  gap:6px;
+  margin-top:9px;
+}
+
+.mini-actions button{
+  flex:1;
+  padding:8px 5px;
+
+  border-radius:11px;
+
+  background:
+    rgba(0,102,255,.22);
+
+  border:
+    1px solid
+    rgba(0,183,255,.26);
+
+  font-size:9px;
+}
+
+
+/* MODAL MICRO */
+
+.seat-modal{
+  position:fixed;
+  inset:0;
+
+  z-index:3000;
+
+  display:none;
+
+  align-items:flex-end;
+
+  background:
+    rgba(0,0,0,.72);
+}
+
+.seat-modal.show{
+  display:flex;
+}
+
+.seat-sheet{
+  width:100%;
+
+  padding:
+    18px 15px
+    calc(
+      18px +
+      env(safe-area-inset-bottom)
+    );
+
+  border-radius:
+    26px 26px 0 0;
+
+  background:#061326;
+
+  border-top:
+    1px solid
+    rgba(247,215,116,.38);
+}
+
+.seat-sheet h3{
+  color:var(--gold);
+  font-size:18px;
+}
+
+.seat-sheet p{
+  margin-top:6px;
+  color:var(--soft);
+  font-size:11px;
+  line-height:1.45;
+}
+
+.sheet-actions{
+  display:grid;
+  gap:9px;
+  margin-top:15px;
+}
+
+.sheet-btn{
+  min-height:46px;
+
+  border-radius:15px;
+
+  background:
+    rgba(0,86,210,.30);
+
+  border:
+    1px solid
+    rgba(0,183,255,.35);
+
+  font-size:13px;
+}
+
+.sheet-btn.primary{
+  color:#061326;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold),
+      var(--gold2)
+    );
+
+  font-weight:bold;
+}
+
+.sheet-btn.danger{
+  background:
+    rgba(130,0,28,.72);
+
+  border-color:
+    rgba(255,97,117,.40);
+}
+
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:380px){
+
+  .seat-avatar{
+    width:50px;
+    height:50px;
+  }
+
+  .seats-grid{
+    gap:10px 4px;
+  }
+
+  .room-stat strong{
+    font-size:13px;
+  }
+
+}
+
 </style>
+
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+
 </head>
+
 
 <body>
 
-<main class="room">
 
-  <!-- PANTALLA CINE -->
-  <section class="stage">
-    <img src="agencia-jm-equipo-banner.png" alt="Pantalla principal JM Elite">
+<div class="app">
+  <header class="header">
 
-    <div class="stage-top">
-      <div class="live-pill">🟢 Sala Pro Élite</div>
+  <button
+    class="back"
+    type="button"
+    onclick="leaveRoom()"
+  >
+    ←
+  </button>
 
-      <div class="stage-actions">
-        <button class="stage-btn" onclick="openStageMenu()">⋮</button>
-        <button class="stage-btn" onclick="shareRoom()">🔗</button>
-        <button class="stage-btn" onclick="toggleFull()">⛶</button>
+  <div class="room-title">
+
+    <h1>
+      🎙️ Sala Pro JM Elite
+    </h1>
+
+    <p id="roomSubtitle">
+      Sala oficial de audio y seguimiento
+    </p>
+
+  </div>
+
+  <div
+    id="connectionStatus"
+    class="header-status"
+  >
+    🟢
+  </div>
+
+</header>
+
+
+<section class="room-info">
+
+  <div class="room-card">
+
+    <div class="room-main">
+
+      <div class="room-logo">
+        🦅
       </div>
-    </div>
-  </section>
 
-  <!-- INFO -->
-  <section class="room-info">
-    <div class="info-pill">👥 15 en sala</div>
-    <div class="info-pill gold">👑 Jesús</div>
-    <div class="info-pill">💎 125K</div>
-  </section>
+      <div class="room-data">
 
-  <!-- 15 PUESTOS -->
-  <section class="seats">
+        <h2>
+          Sala Oficial JM Elite
+        </h2>
 
-    <div class="seat host"><div class="num">1</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Jesús</strong><span>💎125K</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">2</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Ruth</strong><span>Admin</span><em class="mic-off">🔇</em></div>
-    <div class="seat"><div class="num">3</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Yandira</strong><span>Admin</span><em class="mic-off">🔇</em></div>
-    <div class="seat"><div class="num">4</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 4</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">5</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 5</span><em class="mic-off">🎙️</em></div>
+        <p>
+          25 puestos de audio.
+          Si los micros están ocupados,
+          puedes permanecer como oyente,
+          escuchar y participar en el chat.
+        </p>
 
-    <div class="seat"><div class="num">6</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 6</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">7</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 7</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">8</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 8</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">9</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 9</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">10</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 10</span><em class="mic-off">🎙️</em></div>
+      </div>
 
-    <div class="seat"><div class="num">11</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 11</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">12</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 12</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">13</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 13</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">14</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 14</span><em class="mic-off">🎙️</em></div>
-    <div class="seat"><div class="num">15</div><div class="face"><img src="file_00000000f71471f499e5839986bab33b.png"></div><strong>Libre</strong><span>Plaza 15</span><em class="mic-off">🎙️</em></div>
-
-  </section>
-
-  <!-- CHAT -->
-  <section class="chat-panel">
-    <h2 class="chat-title">💬 Chat de la sala</h2>
-
-    <div id="chatBox" class="chat-box">
-      <div class="msg"><b>Sistema</b><span>Bienvenidos a Sala Pro JM Elite 🔥</span></div>
-      <div class="msg"><b>Ruth</b><span>Lista para apoyar a las emisoras 👑</span></div>
-      <div class="msg"><b>Yandira</b><span>Equipo activo y organizado 💎</span></div>
     </div>
 
-    <div class="chat-form">
-      <input id="chatInput" type="text" placeholder="Escribe un mensaje...">
-      <button onclick="sendMessage()">➤</button>
+
+    <div class="room-stats">
+
+      <div class="room-stat">
+
+        <strong id="seatCount">
+          0/25
+        </strong>
+
+        <span>
+          MICROS OCUPADOS
+        </span>
+
+      </div>
+
+
+      <div class="room-stat">
+
+        <strong id="listenerCount">
+          0
+        </strong>
+
+        <span>
+          OYENTES
+        </span>
+
+      </div>
+
+
+      <div class="room-stat">
+
+        <strong id="totalOnline">
+          0
+        </strong>
+
+        <span>
+          EN SALA
+        </span>
+
+      </div>
+
     </div>
-  </section>
 
-  <!-- CONTROLES -->
-  <section class="controls">
-    <button class="control" onclick="uploadCamera()">📹 Subir cámara</button>
-    <button class="control dark" onclick="shareScreen()">🖥 Compartir pantalla</button>
-    <button class="control gold" onclick="raiseHand()">🎙️ Pedir micro</button>
-    <button class="control dark" onclick="inviteUser()">👥 Invitar</button>
-  </section>
 
-</main>
+    <div class="presence-card">
 
-<nav class="bottom-nav">
-  <a class="nav-item" href="index.html"><span class="icon">🏠</span><span>Inicio</span></a>
-  <a class="nav-item active" href="sala-pro.html"><span class="icon">🎙️</span><span>Sala</span></a>
-  <a class="nav-item" href="perfil.html"><span class="icon">👤</span><span>Perfil</span></a>
-  <a class="nav-item" href="chat.html"><span class="icon">💬</span><span>Chat</span></a>
-  <a class="nav-item" href="menu.html"><span class="icon">☰</span><span>Más</span></a>
+      <div class="presence-head">
+
+        <span>
+          ⏱️ Actividad diaria
+        </span>
+
+        <strong id="presenceTime">
+          00:00 / 05:00
+        </strong>
+
+      </div>
+
+
+      <div class="presence-bar">
+
+        <div
+          id="presenceFill"
+          class="presence-fill"
+        ></div>
+
+      </div>
+
+
+      <p
+        id="presenceNote"
+        class="presence-note"
+      >
+        Permanece 5 minutos reales en Sala Pro
+        para validar el día de actividad.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<h2 class="section-title">
+  🎙️ Puestos de audio
+</h2>
+
+
+<section class="seats-panel">
+
+  <div
+    id="seatsGrid"
+    class="seats-grid"
+  ></div>
+
+</section>
+
+
+<h2 class="section-title">
+  👂 Oyentes en sala
+</h2>
+
+
+<section class="listeners-panel">
+
+  <div class="listeners-head">
+
+    <span>
+      Personas sin micro
+    </span>
+
+    <strong id="listenersLabel">
+      0 oyentes
+    </strong>
+
+  </div>
+
+
+  <div
+    id="listenersList"
+    class="listeners-list"
+  >
+
+    <div class="listener-chip">
+      Esperando participantes...
+    </div>
+
+  </div>
+
+</section>
+
+
+<h2 class="section-title">
+  💬 Chat de sala
+</h2>
+
+
+<section class="chat-panel">
+
+  <div
+    id="chatMessages"
+    class="chat-messages"
+  >
+
+    <div class="chat-message chat-system">
+      Bienvenido a Sala Pro JM Elite.
+    </div>
+
+  </div>
+
+
+  <div class="chat-compose">
+
+    <input
+      id="chatInput"
+      type="text"
+      maxlength="300"
+      placeholder="Escribe en la sala..."
+      onkeydown="handleChatKey(event)"
+    >
+
+    <button
+      class="chat-send"
+      type="button"
+      onclick="sendChatMessage()"
+    >
+      ➤
+    </button>
+
+  </div>
+
+</section>
+
+
+</div>
+
+
+<div
+  id="miniRoom"
+  class="mini-room"
+>
+
+  <strong>
+    🎙️ Sala Pro activa
+  </strong>
+
+  <p id="miniStatus">
+    Conectado como oyente
+  </p>
+
+  <div class="mini-actions">
+
+    <button
+      type="button"
+      onclick="toggleMute()"
+    >
+      🎤 Micro
+    </button>
+
+    <button
+      type="button"
+      onclick="restoreRoom()"
+    >
+      Abrir
+    </button>
+
+  </div>
+
+</div>
+
+
+<div
+  id="seatModal"
+  class="seat-modal"
+  onclick="closeSeatModalOutside(event)"
+>
+
+  <div class="seat-sheet">
+
+    <h3 id="seatModalTitle">
+      Puesto de audio
+    </h3>
+
+    <p id="seatModalText">
+      Selecciona una acción.
+    </p>
+
+    <div
+      id="seatModalActions"
+      class="sheet-actions"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<nav class="controls">
+
+  <button
+    id="micControl"
+    class="control"
+    type="button"
+    onclick="toggleMute()"
+  >
+
+    <span class="control-icon">
+      🎤
+    </span>
+
+    <span id="micControlText">
+      Micro
+    </span>
+
+  </button>
+
+
+  <button
+    class="control"
+    type="button"
+    onclick="requestSeat()"
+  >
+
+    <span class="control-icon">
+      ✋
+    </span>
+
+    <span>
+      Pedir micro
+    </span>
+
+  </button>
+
+
+  <button
+    class="control"
+    type="button"
+    onclick="scrollToChat()"
+  >
+
+    <span class="control-icon">
+      💬
+    </span>
+
+    <span>
+      Chat
+    </span>
+
+  </button>
+
+
+  <button
+    class="control"
+    type="button"
+    onclick="minimizeRoom()"
+  >
+
+    <span class="control-icon">
+      ▣
+    </span>
+
+    <span>
+      Flotante
+    </span>
+
+  </button>
+
+
+  <button
+    class="control danger"
+    type="button"
+    onclick="leaveRoom()"
+  >
+
+    <span class="control-icon">
+      🚪
+    </span>
+
+    <span>
+      Salir
+    </span>
+
+  </button>
+
 </nav>
 
+
+<div id="remoteAudioContainer"></div>
+
+
 <script>
-function addChat(name,text){
-  const box=document.getElementById("chatBox");
-  const div=document.createElement("div");
-  div.className="msg";
-  div.innerHTML="<b>"+name+"</b><span>"+text+"</span>";
-  box.appendChild(div);
-  box.scrollTop=box.scrollHeight;
+
+const firebaseConfig={
+
+  apiKey:
+    "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+
+  authDomain:
+    "agencia-jm-elite.firebaseapp.com",
+
+  projectId:
+    "agencia-jm-elite",
+
+  storageBucket:
+    "agencia-jm-elite.firebasestorage.app",
+
+  messagingSenderId:
+    "171676205335",
+
+  appId:
+    "1:171676205335:web:95443528659ab804fe7752"
+
+};
+
+
+if(!firebase.apps.length){
+
+  firebase.initializeApp(
+    firebaseConfig
+  );
+
 }
 
-function sendMessage(){
-  const input=document.getElementById("chatInput");
-  const text=input.value.trim();
-  if(!text)return;
-  addChat("Jesús",text);
+
+const db=
+  firebase.firestore();
+
+
+const ROOM_ID="sala-pro-principal";
+
+const MAX_SEATS=25;
+
+const REQUIRED_SECONDS=300;
+
+const PRESENCE_TIMEOUT_MS=45000;
+
+
+let currentEmail="";
+
+let currentRole="";
+
+let currentUser=null;
+
+let currentPresenceId="";
+
+let currentSeat=null;
+
+let selectedSeat=null;
+
+let isMuted=true;
+
+let localStream=null;
+
+let presenceSeconds=0;
+
+let presenceValidated=false;
+
+let presenceTimer=null;
+
+let heartbeatTimer=null;
+
+let roomParticipants=[];
+
+let roomMessages=[];
+
+let unsubscribePresence=null;
+
+let unsubscribeSeats=null;
+
+let unsubscribeChat=null;
+
+
+function normalizeText(text){
+
+  return String(text || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+    .trim();
+
+}
+
+
+function getSession(){
+
+  let user={};
+
+
+  try{
+
+    user=
+      JSON.parse(
+        localStorage.getItem(
+          "jm_user"
+        ) || "{}"
+      );
+
+  }catch(error){
+
+    user={};
+
+  }
+
+
+  return{
+
+    email:
+      normalizeText(
+        localStorage.getItem("jm_email") ||
+        user.email ||
+        ""
+      ),
+
+    role:
+      normalizeText(
+        localStorage.getItem("jm_role") ||
+        user.role ||
+        user.rol ||
+        ""
+      )
+
+  };
+
+}
+
+
+function getUserName(user){
+
+  return(
+    user.artisticName ||
+    user.nombreArtistico ||
+    user.nombre ||
+    user.name ||
+    user.email ||
+    "Miembro JM Elite"
+  );
+
+}
+
+
+function getUserAvatar(user){
+
+  return(
+    user.fotoPerfil ||
+    user.photoURL ||
+    user.avatar ||
+    ""
+  );
+
+}
+
+
+function isFounder(){
+
+  return(
+    currentRole==="agente" ||
+    currentRole==="fundador" ||
+    currentRole==="creador"
+  );
+
+}
+
+
+function isAdmin(){
+
+  return(
+    currentRole==="administrador" ||
+    currentRole==="administradora"
+  );
+
+}
+
+
+function canManageRoom(){
+
+  return(
+    isFounder() ||
+    isAdmin()
+  );
+
+}
+
+
+function todayKey(){
+
+  const now=
+    new Date();
+
+
+  const year=
+    now.getFullYear();
+
+
+  const month=
+    String(
+      now.getMonth()+1
+    ).padStart(2,"0");
+
+
+  const day=
+    String(
+      now.getDate()
+    ).padStart(2,"0");
+
+
+  return(
+    year +
+    "-" +
+    month +
+    "-" +
+    day
+  );
+
+}
+
+
+function formatTime(seconds){
+
+  const minutes=
+    Math.floor(
+      seconds / 60
+    );
+
+
+  const remaining=
+    seconds % 60;
+
+
+  return(
+    String(minutes)
+      .padStart(2,"0")
+    +
+    ":"
+    +
+    String(remaining)
+      .padStart(2,"0")
+  );
+
+}
+
+
+async function loadCurrentUser(){
+
+  const session=
+    getSession();
+
+
+  currentEmail=
+    session.email;
+
+
+  currentRole=
+    session.role;
+
+
+  if(!currentEmail){
+
+    window.location.href=
+      "index.html";
+
+    return false;
+
+  }
+
+
+  try{
+
+    const snapshot=
+      await db
+        .collection("usuarios")
+        .where(
+          "email",
+          "==",
+          currentEmail
+        )
+        .limit(1)
+        .get();
+
+
+    if(!snapshot.empty){
+
+      currentUser={
+
+        firestoreId:
+          snapshot.docs[0].id,
+
+        ...snapshot.docs[0].data()
+
+      };
+
+
+      currentRole=
+        normalizeText(
+          currentUser.role ||
+          currentUser.rol ||
+          currentRole
+        );
+
+    }else{
+
+      currentUser={
+
+        email:currentEmail,
+
+        role:currentRole
+
+      };
+
+    }
+
+
+    return true;
+
+
+  }catch(error){
+
+    console.error(
+      "Error cargando usuario:",
+      error
+    );
+
+
+    currentUser={
+
+      email:currentEmail,
+
+      role:currentRole
+
+    };
+
+
+    return true;
+
+  }
+
+}
+  function getPresenceDocId(){
+
+  return encodeURIComponent(
+    ROOM_ID + "_" + currentEmail
+  );
+
+}
+
+
+function getSeatDocId(number){
+
+  return ROOM_ID + "_seat_" + number;
+
+}
+
+
+function isParticipantOnline(item){
+
+  const lastSeen=
+    Number(item.lastSeen || 0);
+
+  return(
+    Date.now() - lastSeen
+    <
+    PRESENCE_TIMEOUT_MS
+  );
+
+}
+
+
+async function joinRoom(){
+
+  currentPresenceId=
+    getPresenceDocId();
+
+
+  await db
+    .collection("sala_pro_presence")
+    .doc(currentPresenceId)
+    .set({
+
+      roomId:ROOM_ID,
+
+      email:currentEmail,
+
+      name:getUserName(currentUser),
+
+      avatar:getUserAvatar(currentUser),
+
+      role:currentRole,
+
+      seatNumber:null,
+
+      connected:true,
+
+      lastSeen:Date.now(),
+
+      joinedAt:
+        firebase.firestore
+          .FieldValue
+          .serverTimestamp()
+
+    },{
+      merge:true
+    });
+
+
+  heartbeatTimer=
+    setInterval(
+      sendHeartbeat,
+      15000
+    );
+
+}
+
+
+async function sendHeartbeat(){
+
+  if(!currentPresenceId){
+
+    return;
+
+  }
+
+
+  try{
+
+    await db
+      .collection("sala_pro_presence")
+      .doc(currentPresenceId)
+      .set({
+
+        connected:true,
+
+        lastSeen:Date.now(),
+
+        seatNumber:currentSeat
+
+      },{
+        merge:true
+      });
+
+  }catch(error){
+
+    console.error(
+      "Error de presencia:",
+      error
+    );
+
+  }
+
+}
+
+
+function startPresenceCounter(){
+
+  presenceTimer=
+    setInterval(
+      async function(){
+
+        if(presenceValidated){
+
+          return;
+
+        }
+
+
+        presenceSeconds++;
+
+
+        updatePresenceUI();
+
+
+        if(
+          presenceSeconds>=
+          REQUIRED_SECONDS
+        ){
+
+          await validateTodayActivity();
+
+        }
+
+      },
+      1000
+    );
+
+}
+
+
+function updatePresenceUI(){
+
+  const safeSeconds=
+    Math.min(
+      presenceSeconds,
+      REQUIRED_SECONDS
+    );
+
+
+  const percent=
+    Math.min(
+      100,
+      safeSeconds /
+      REQUIRED_SECONDS *
+      100
+    );
+
+
+  document
+    .getElementById("presenceTime")
+    .textContent=
+      formatTime(safeSeconds)
+      +
+      " / 05:00";
+
+
+  document
+    .getElementById("presenceFill")
+    .style.width=
+      percent + "%";
+
+
+  if(presenceValidated){
+
+    document
+      .getElementById("presenceNote")
+      .textContent=
+        "✅ Día de actividad validado. Ya cuenta para tu progreso de 7 días.";
+
+  }
+
+}
+
+
+async function loadTodayActivity(){
+
+  const activityId=
+    encodeURIComponent(
+      ROOM_ID +
+      "_" +
+      currentEmail +
+      "_" +
+      todayKey()
+    );
+
+
+  try{
+
+    const doc=
+      await db
+        .collection("sala_pro_activity")
+        .doc(activityId)
+        .get();
+
+
+    if(doc.exists){
+
+      const data=
+        doc.data();
+
+
+      presenceSeconds=
+        Math.min(
+          REQUIRED_SECONDS,
+          Number(
+            data.seconds ||
+            data.totalSeconds ||
+            0
+          )
+        );
+
+
+      presenceValidated=
+        data.validated===true ||
+        data.dayValidated===true ||
+        presenceSeconds>=
+        REQUIRED_SECONDS;
+
+    }
+
+
+    updatePresenceUI();
+
+  }catch(error){
+
+    console.error(
+      "Error cargando actividad:",
+      error
+    );
+
+  }
+
+}
+
+
+async function savePresenceProgress(){
+
+  if(
+    !currentEmail ||
+    presenceValidated
+  ){
+
+    return;
+
+  }
+
+
+  const activityId=
+    encodeURIComponent(
+      ROOM_ID +
+      "_" +
+      currentEmail +
+      "_" +
+      todayKey()
+    );
+
+
+  try{
+
+    await db
+      .collection("sala_pro_activity")
+      .doc(activityId)
+      .set({
+
+        roomId:ROOM_ID,
+
+        email:currentEmail,
+
+        poppoId:
+          currentUser.poppoId ||
+          currentUser.idPoppo ||
+          "",
+
+        name:
+          getUserName(currentUser),
+
+        dateKey:
+          todayKey(),
+
+        seconds:
+          Math.min(
+            presenceSeconds,
+            REQUIRED_SECONDS
+          ),
+
+        minutes:
+          Number(
+            (
+              presenceSeconds / 60
+            ).toFixed(2)
+          ),
+
+        validated:false,
+
+        dayValidated:false,
+
+        updatedAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp()
+
+      },{
+        merge:true
+      });
+
+  }catch(error){
+
+    console.error(
+      "Error guardando progreso:",
+      error
+    );
+
+  }
+
+}
+
+
+async function validateTodayActivity(){
+
+  if(presenceValidated){
+
+    return;
+
+  }
+
+
+  presenceValidated=true;
+
+  presenceSeconds=
+    REQUIRED_SECONDS;
+
+
+  const activityId=
+    encodeURIComponent(
+      ROOM_ID +
+      "_" +
+      currentEmail +
+      "_" +
+      todayKey()
+    );
+
+
+  try{
+
+    await db
+      .collection("sala_pro_activity")
+      .doc(activityId)
+      .set({
+
+        roomId:ROOM_ID,
+
+        email:currentEmail,
+
+        poppoId:
+          currentUser.poppoId ||
+          currentUser.idPoppo ||
+          "",
+
+        name:
+          getUserName(currentUser),
+
+        dateKey:
+          todayKey(),
+
+        seconds:REQUIRED_SECONDS,
+
+        minutes:5,
+
+        validated:true,
+
+        dayValidated:true,
+
+        validatedAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp(),
+
+        updatedAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp()
+
+      },{
+        merge:true
+      });
+
+
+    updatePresenceUI();
+
+
+    await sendSystemMessage(
+      "✅ " +
+      getUserName(currentUser) +
+      " ha validado su actividad diaria."
+    );
+
+
+  }catch(error){
+
+    presenceValidated=false;
+
+
+    console.error(
+      "Error validando actividad:",
+      error
+    );
+
+  }
+
+}
+
+
+function startRoomSync(){
+
+  unsubscribePresence=
+    db
+      .collection("sala_pro_presence")
+      .where(
+        "roomId",
+        "==",
+        ROOM_ID
+      )
+      .onSnapshot(
+
+        snapshot=>{
+
+          roomParticipants=
+            snapshot.docs
+              .map(doc=>({
+
+                firestoreId:doc.id,
+
+                ...doc.data()
+
+              }))
+              .filter(
+                isParticipantOnline
+              );
+
+
+          renderRoom();
+
+        },
+
+        error=>{
+
+          console.error(
+            "Error sincronizando sala:",
+            error
+          );
+
+        }
+
+      );
+
+
+  unsubscribeSeats=
+    db
+      .collection("sala_pro_seats")
+      .where(
+        "roomId",
+        "==",
+        ROOM_ID
+      )
+      .onSnapshot(
+
+        snapshot=>{
+
+          const occupiedSeats=
+            snapshot.docs.map(doc=>({
+
+              firestoreId:doc.id,
+
+              ...doc.data()
+
+            }));
+
+
+          renderSeats(
+            occupiedSeats
+          );
+
+        },
+
+        error=>{
+
+          console.error(
+            "Error sincronizando micros:",
+            error
+          );
+
+        }
+
+      );
+
+
+  unsubscribeChat=
+    db
+      .collection("sala_pro_chat")
+      .where(
+        "roomId",
+        "==",
+        ROOM_ID
+      )
+      .orderBy(
+        "createdAt",
+        "asc"
+      )
+      .limitToLast(100)
+      .onSnapshot(
+
+        snapshot=>{
+
+          roomMessages=
+            snapshot.docs.map(doc=>({
+
+              firestoreId:doc.id,
+
+              ...doc.data()
+
+            }));
+
+
+          renderChat();
+
+        },
+
+        error=>{
+
+          console.error(
+            "Error sincronizando chat:",
+            error
+          );
+
+        }
+
+      );
+
+}
+
+
+function renderRoom(){
+
+  const listeners=
+    roomParticipants.filter(
+      participant=>
+        !participant.seatNumber
+    );
+
+
+  document
+    .getElementById("listenerCount")
+    .textContent=
+      listeners.length;
+
+
+  document
+    .getElementById("totalOnline")
+    .textContent=
+      roomParticipants.length;
+
+
+  document
+    .getElementById("listenersLabel")
+    .textContent=
+      listeners.length +
+      (
+        listeners.length===1
+          ? " oyente"
+          : " oyentes"
+      );
+
+
+  const list=
+    document.getElementById(
+      "listenersList"
+    );
+
+
+  if(!listeners.length){
+
+    list.innerHTML=`
+      <div class="listener-chip">
+        No hay oyentes ahora mismo
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  list.innerHTML=
+    listeners
+      .map(person=>`
+
+        <div class="listener-chip">
+
+          <span class="listener-dot">
+          </span>
+
+          <span>
+            ${person.name || person.email}
+          </span>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+
+function renderSeats(occupiedSeats){
+
+  const grid=
+    document.getElementById(
+      "seatsGrid"
+    );
+
+
+  const seats=[];
+
+
+  for(
+    let number=1;
+    number<=MAX_SEATS;
+    number++
+  ){
+
+    const occupied=
+      occupiedSeats.find(
+        seat=>
+          Number(seat.seatNumber)
+          ===number
+      );
+
+
+    seats.push(
+      seatMarkup(
+        number,
+        occupied
+      )
+    );
+
+  }
+
+
+  grid.innerHTML=
+    seats.join("");
+
+
+  document
+    .getElementById("seatCount")
+    .textContent=
+      occupiedSeats.length +
+      "/25";
+
+
+  const mine=
+    occupiedSeats.find(
+      seat=>
+        normalizeText(seat.email)
+        ===currentEmail
+    );
+
+
+  currentSeat=
+    mine
+      ? Number(mine.seatNumber)
+      : null;
+
+
+  updateMicControl();
+
+}
+
+
+function seatMarkup(number,seat){
+
+  if(!seat){
+
+    return `
+      <button
+        class="seat empty"
+        type="button"
+        onclick="openSeatModal(${number})"
+      >
+
+        <span class="seat-avatar">
+
+          🎙️
+
+          <span class="seat-number">
+            ${number}
+          </span>
+
+        </span>
+
+        <span class="seat-name">
+          Libre
+        </span>
+
+        <span class="seat-status">
+          Toca para subir
+        </span>
+
+      </button>
+    `;
+
+  }
+
+
+  const avatar=
+    seat.avatar
+      ? `<img src="${seat.avatar}" alt="">`
+      : "👤";
+
+
+  const hostClass=
+    (
+      seat.role==="agente" ||
+      seat.role==="fundador" ||
+      seat.role==="creador"
+    )
+      ? "host"
+      : "";
+
+
+  return `
+    <button
+      class="seat ${hostClass}"
+      type="button"
+      onclick="openSeatModal(${number})"
+    >
+
+      <span class="seat-avatar">
+
+        ${avatar}
+
+        <span class="seat-number">
+          ${number}
+        </span>
+
+      </span>
+
+      <span class="seat-name">
+        ${seat.name || "Miembro"}
+      </span>
+
+      <span class="seat-status">
+        ${seat.muted ? "🔇 Silenciado" : "🎙️ Micro activo"}
+      </span>
+
+    </button>
+  `;
+
+  }
+  function openSeatModal(number){
+
+  selectedSeat=number;
+
+
+  const title=
+    document.getElementById(
+      "seatModalTitle"
+    );
+
+
+  const text=
+    document.getElementById(
+      "seatModalText"
+    );
+
+
+  const actions=
+    document.getElementById(
+      "seatModalActions"
+    );
+
+
+  const participant=
+    roomParticipants.find(
+      person=>
+        Number(person.seatNumber)
+        ===number
+    );
+
+
+  title.textContent=
+    "Puesto " + number;
+
+
+  actions.innerHTML="";
+
+
+  if(!participant){
+
+    text.textContent=
+      "Este puesto está libre.";
+
+
+    if(currentSeat){
+
+      actions.innerHTML=`
+
+        <button
+          class="sheet-btn"
+          type="button"
+          onclick="closeSeatModal()"
+        >
+          Ya tienes el puesto ${currentSeat}
+        </button>
+
+      `;
+
+    }else{
+
+      actions.innerHTML=`
+
+        <button
+          class="sheet-btn primary"
+          type="button"
+          onclick="takeSeat(${number})"
+        >
+          🎙️ Subir al puesto ${number}
+        </button>
+
+      `;
+
+    }
+
+
+    actions.innerHTML+=`
+
+      <button
+        class="sheet-btn"
+        type="button"
+        onclick="closeSeatModal()"
+      >
+        Cancelar
+      </button>
+
+    `;
+
+  }else{
+
+    text.textContent=
+      (
+        participant.name ||
+        participant.email
+      ) +
+      " ocupa este puesto.";
+
+
+    const isMe=
+      normalizeText(
+        participant.email
+      )===currentEmail;
+
+
+    if(isMe){
+
+      actions.innerHTML=`
+
+        <button
+          class="sheet-btn primary"
+          type="button"
+          onclick="toggleMute()"
+        >
+          ${
+            isMuted
+              ? "🎤 Activar mi micro"
+              : "🔇 Silenciar mi micro"
+          }
+        </button>
+
+        <button
+          class="sheet-btn danger"
+          type="button"
+          onclick="leaveSeat()"
+        >
+          ⬇️ Bajar del micro
+        </button>
+
+      `;
+
+    }else if(canManageRoom()){
+
+      actions.innerHTML=`
+
+        <button
+          class="sheet-btn danger"
+          type="button"
+          onclick="removeFromSeat(${number})"
+        >
+          ⬇️ Bajar del micro
+        </button>
+
+      `;
+
+    }
+
+
+    actions.innerHTML+=`
+
+      <button
+        class="sheet-btn"
+        type="button"
+        onclick="closeSeatModal()"
+      >
+        Cerrar
+      </button>
+
+    `;
+
+  }
+
+
+  document
+    .getElementById("seatModal")
+    .classList.add("show");
+
+}
+
+
+function closeSeatModal(){
+
+  document
+    .getElementById("seatModal")
+    .classList.remove("show");
+
+
+  selectedSeat=null;
+
+}
+
+
+function closeSeatModalOutside(event){
+
+  if(
+    event.target.id===
+    "seatModal"
+  ){
+
+    closeSeatModal();
+
+  }
+
+}
+
+
+async function takeSeat(number){
+
+  if(currentSeat){
+
+    alert(
+      "Ya tienes un puesto de audio."
+    );
+
+    return;
+
+  }
+
+
+  const seatId=
+    getSeatDocId(number);
+
+
+  try{
+
+    await db.runTransaction(
+      async transaction=>{
+
+        const seatRef=
+          db
+            .collection("sala_pro_seats")
+            .doc(seatId);
+
+
+        const seatDoc=
+          await transaction.get(
+            seatRef
+          );
+
+
+        if(seatDoc.exists){
+
+          throw new Error(
+            "Este puesto acaba de ser ocupado."
+          );
+
+        }
+
+
+        transaction.set(
+          seatRef,
+          {
+
+            roomId:ROOM_ID,
+
+            seatNumber:number,
+
+            email:currentEmail,
+
+            name:
+              getUserName(currentUser),
+
+            avatar:
+              getUserAvatar(currentUser),
+
+            role:currentRole,
+
+            muted:true,
+
+            joinedSeatAt:
+              firebase.firestore
+                .FieldValue
+                .serverTimestamp()
+
+          }
+        );
+
+
+        const presenceRef=
+          db
+            .collection(
+              "sala_pro_presence"
+            )
+            .doc(currentPresenceId);
+
+
+        transaction.set(
+          presenceRef,
+          {
+
+            seatNumber:number,
+
+            lastSeen:Date.now()
+
+          },
+          {
+            merge:true
+          }
+        );
+
+      }
+    );
+
+
+    currentSeat=number;
+
+    isMuted=true;
+
+
+    closeSeatModal();
+
+
+    updateMicControl();
+
+
+    await sendSystemMessage(
+
+      "🎙️ " +
+      getUserName(currentUser) +
+      " ha subido al puesto " +
+      number +
+      "."
+
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Error ocupando puesto:",
+      error
+    );
+
+
+    alert(
+      error.message ||
+      "No se pudo ocupar el puesto."
+    );
+
+  }
+
+}
+
+
+async function leaveSeat(){
+
+  if(!currentSeat){
+
+    closeSeatModal();
+
+    return;
+
+  }
+
+
+  const seatNumber=
+    currentSeat;
+
+
+  try{
+
+    await db
+      .collection("sala_pro_seats")
+      .doc(
+        getSeatDocId(
+          seatNumber
+        )
+      )
+      .delete();
+
+
+    await db
+      .collection("sala_pro_presence")
+      .doc(currentPresenceId)
+      .set({
+
+        seatNumber:null,
+
+        lastSeen:Date.now()
+
+      },{
+        merge:true
+      });
+
+
+    currentSeat=null;
+
+    isMuted=true;
+
+
+    stopLocalAudio();
+
+
+    closeSeatModal();
+
+
+    updateMicControl();
+
+
+    await sendSystemMessage(
+
+      "⬇️ " +
+      getUserName(currentUser) +
+      " ha bajado del micro."
+
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Error dejando micro:",
+      error
+    );
+
+  }
+
+}
+
+
+async function removeFromSeat(number){
+
+  if(!canManageRoom()){
+
+    return;
+
+  }
+
+
+  const seatId=
+    getSeatDocId(number);
+
+
+  try{
+
+    const seatDoc=
+      await db
+        .collection("sala_pro_seats")
+        .doc(seatId)
+        .get();
+
+
+    if(!seatDoc.exists){
+
+      closeSeatModal();
+
+      return;
+
+    }
+
+
+    const seat=
+      seatDoc.data();
+
+
+    await db
+      .collection("sala_pro_seats")
+      .doc(seatId)
+      .delete();
+
+
+    const participant=
+      roomParticipants.find(
+        item=>
+          normalizeText(item.email)===
+          normalizeText(seat.email)
+      );
+
+
+    if(participant){
+
+      await db
+        .collection("sala_pro_presence")
+        .doc(participant.firestoreId)
+        .set({
+
+          seatNumber:null,
+
+          lastSeen:Date.now()
+
+        },{
+          merge:true
+        });
+
+    }
+
+
+    closeSeatModal();
+
+
+    await sendSystemMessage(
+
+      "⬇️ " +
+      (
+        seat.name ||
+        seat.email
+      ) +
+      " ha sido bajado del micro."
+
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Error administrando puesto:",
+      error
+    );
+
+  }
+
+}
+
+
+async function requestSeat(){
+
+  if(currentSeat){
+
+    alert(
+      "Ya estás en el puesto " +
+      currentSeat +
+      "."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    await db
+      .collection("sala_pro_requests")
+      .doc(
+        encodeURIComponent(
+          ROOM_ID +
+          "_" +
+          currentEmail
+        )
+      )
+      .set({
+
+        roomId:ROOM_ID,
+
+        email:currentEmail,
+
+        name:
+          getUserName(currentUser),
+
+        role:currentRole,
+
+        status:"pendiente",
+
+        requestedAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp()
+
+      },{
+        merge:true
+      });
+
+
+    alert(
+      "✋ Solicitud de micro enviada."
+    );
+
+
+    await sendSystemMessage(
+
+      "✋ " +
+      getUserName(currentUser) +
+      " está solicitando micro."
+
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "Error solicitando micro:",
+      error
+    );
+
+
+    alert(
+      "No se pudo enviar la solicitud."
+    );
+
+  }
+
+}
+
+
+async function ensureLocalAudio(){
+
+  if(localStream){
+
+    return true;
+
+  }
+
+
+  if(
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ){
+
+    alert(
+      "El navegador no permite usar el micrófono."
+    );
+
+    return false;
+
+  }
+
+
+  try{
+
+    localStream=
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+
+          audio:true,
+
+          video:false
+
+        });
+
+
+    localStream
+      .getAudioTracks()
+      .forEach(track=>{
+
+        track.enabled=false;
+
+      });
+
+
+    return true;
+
+
+  }catch(error){
+
+    console.error(
+      "Permiso de micro:",
+      error
+    );
+
+
+    alert(
+      "Necesitas permitir el micrófono para hablar."
+    );
+
+
+    return false;
+
+  }
+
+}
+
+
+async function toggleMute(){
+
+  if(!currentSeat){
+
+    alert(
+      "Primero tienes que subir a un puesto de audio."
+    );
+
+    return;
+
+  }
+
+
+  const audioReady=
+    await ensureLocalAudio();
+
+
+  if(!audioReady){
+
+    return;
+
+  }
+
+
+  isMuted=
+    !isMuted;
+
+
+  localStream
+    .getAudioTracks()
+    .forEach(track=>{
+
+      track.enabled=
+        !isMuted;
+
+    });
+
+
+  try{
+
+    await db
+      .collection("sala_pro_seats")
+      .doc(
+        getSeatDocId(
+          currentSeat
+        )
+      )
+      .set({
+
+        muted:isMuted
+
+      },{
+        merge:true
+      });
+
+
+    updateMicControl();
+
+
+  }catch(error){
+
+    console.error(
+      "Error actualizando micro:",
+      error
+    );
+
+  }
+
+}
+
+
+function updateMicControl(){
+
+  const control=
+    document.getElementById(
+      "micControl"
+    );
+
+
+  const text=
+    document.getElementById(
+      "micControlText"
+    );
+
+
+  if(!currentSeat){
+
+    control.classList.remove(
+      "active"
+    );
+
+
+    text.textContent=
+      "Sin micro";
+
+
+    return;
+
+  }
+
+
+  if(isMuted){
+
+    control.classList.remove(
+      "active"
+    );
+
+
+    text.textContent=
+      "Silenciado";
+
+  }else{
+
+    control.classList.add(
+      "active"
+    );
+
+
+    text.textContent=
+      "Micro activo";
+
+  }
+
+}
+
+
+function stopLocalAudio(){
+
+  if(!localStream){
+
+    return;
+
+  }
+
+
+  localStream
+    .getTracks()
+    .forEach(track=>{
+
+      track.stop();
+
+    });
+
+
+  localStream=null;
+
+}
+
+
+async function sendChatMessage(){
+
+  const input=
+    document.getElementById(
+      "chatInput"
+    );
+
+
+  const text=
+    input.value.trim();
+
+
+  if(!text){
+
+    return;
+
+  }
+
+
   input.value="";
+
+
+  try{
+
+    await db
+      .collection("sala_pro_chat")
+      .add({
+
+        roomId:ROOM_ID,
+
+        type:"message",
+
+        email:currentEmail,
+
+        name:
+          getUserName(currentUser),
+
+        text:text,
+
+        createdAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp(),
+
+        createdMs:Date.now()
+
+      });
+
+
+  }catch(error){
+
+    console.error(
+      "Error enviando chat:",
+      error
+    );
+
+
+    alert(
+      "No se pudo enviar el mensaje."
+    );
+
+  }
+
 }
 
-function openStageMenu(){
-  alert("Menú: cámara, compartir pantalla, avisos y controles de host.");
+
+async function sendSystemMessage(text){
+
+  try{
+
+    await db
+      .collection("sala_pro_chat")
+      .add({
+
+        roomId:ROOM_ID,
+
+        type:"system",
+
+        text:text,
+
+        createdAt:
+          firebase.firestore
+            .FieldValue
+            .serverTimestamp(),
+
+        createdMs:Date.now()
+
+      });
+
+
+  }catch(error){
+
+    console.error(
+      "Error mensaje sistema:",
+      error
+    );
+
+  }
+
 }
 
-function shareRoom(){
-  alert("Enlace de Sala Pro preparado.");
+
+function renderChat(){
+
+  const container=
+    document.getElementById(
+      "chatMessages"
+    );
+
+
+  if(!roomMessages.length){
+
+    container.innerHTML=`
+
+      <div class="chat-message chat-system">
+
+        Bienvenido a Sala Pro JM Elite.
+
+      </div>
+
+    `;
+
+
+    return;
+
+  }
+
+
+  container.innerHTML=
+    roomMessages
+      .map(message=>{
+
+        if(
+          message.type==="system"
+        ){
+
+          return `
+
+            <div class="chat-message chat-system">
+
+              ${message.text || ""}
+
+            </div>
+
+          `;
+
+        }
+
+
+        return `
+
+          <div class="chat-message">
+
+            <strong>
+
+              ${message.name || "Miembro"}:
+
+            </strong>
+
+            ${message.text || ""}
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+
+  container.scrollTop=
+    container.scrollHeight;
+
 }
 
-function toggleFull(){
-  alert("Pantalla completa preparada.");
+
+function handleChatKey(event){
+
+  if(event.key==="Enter"){
+
+    event.preventDefault();
+
+    sendChatMessage();
+
+  }
+
 }
 
-function uploadCamera(){
-  alert("Cámara preparada.");
+
+function scrollToChat(){
+
+  document
+    .querySelector(".chat-panel")
+    .scrollIntoView({
+
+      behavior:"smooth",
+
+      block:"start"
+
+    });
+
 }
 
-function shareScreen(){
-  alert("Compartir pantalla preparado.");
+
+function minimizeRoom(){
+
+  document
+    .getElementById("miniRoom")
+    .classList.add("show");
+
+
+  document
+    .querySelector(".app")
+    .style.display="none";
+
+
+  document
+    .querySelector(".controls")
+    .style.display="none";
+
+
+  updateMiniStatus();
+
 }
 
-function raiseHand(){
-  addChat("Sistema","Jesús pidió subir al micrófono 🎙️");
+
+function restoreRoom(){
+
+  document
+    .getElementById("miniRoom")
+    .classList.remove("show");
+
+
+  document
+    .querySelector(".app")
+    .style.display="block";
+
+
+  document
+    .querySelector(".controls")
+    .style.display="grid";
+
 }
 
-function inviteUser(){
-  alert("Invitación preparada.");
+
+function updateMiniStatus(){
+
+  const element=
+    document.getElementById(
+      "miniStatus"
+    );
+
+
+  if(currentSeat){
+
+    element.textContent=
+
+      "Puesto " +
+      currentSeat +
+      " · " +
+      (
+        isMuted
+          ? "micro silenciado"
+          : "micro activo"
+      );
+
+  }else{
+
+    element.textContent=
+      "Conectado como oyente";
+
+  }
+
 }
+
+
+async function leaveRoom(){
+
+  try{
+
+    await savePresenceProgress();
+
+
+    if(currentSeat){
+
+      await db
+        .collection("sala_pro_seats")
+        .doc(
+          getSeatDocId(
+            currentSeat
+          )
+        )
+        .delete();
+
+    }
+
+
+    if(currentPresenceId){
+
+      await db
+        .collection("sala_pro_presence")
+        .doc(currentPresenceId)
+        .delete();
+
+    }
+
+
+    await db
+      .collection("sala_pro_requests")
+      .doc(
+        encodeURIComponent(
+          ROOM_ID +
+          "_" +
+          currentEmail
+        )
+      )
+      .delete()
+      .catch(()=>{});
+
+
+  }catch(error){
+
+    console.error(
+      "Error saliendo:",
+      error
+    );
+
+  }
+
+
+  cleanupRoom();
+
+
+  window.location.href=
+    "index.html";
+
+}
+
+
+function cleanupRoom(){
+
+  clearInterval(
+    presenceTimer
+  );
+
+
+  clearInterval(
+    heartbeatTimer
+  );
+
+
+  if(unsubscribePresence){
+
+    unsubscribePresence();
+
+  }
+
+
+  if(unsubscribeSeats){
+
+    unsubscribeSeats();
+
+  }
+
+
+  if(unsubscribeChat){
+
+    unsubscribeChat();
+
+  }
+
+
+  stopLocalAudio();
+
+}
+
+
+async function startSalaPro(){
+
+  const logged=
+    localStorage.getItem(
+      "jm_logged"
+    );
+
+
+  if(logged!=="yes"){
+
+    window.location.href=
+      "index.html";
+
+    return;
+
+  }
+
+
+  const loaded=
+    await loadCurrentUser();
+
+
+  if(!loaded){
+
+    return;
+
+  }
+
+
+  await loadTodayActivity();
+
+
+  await joinRoom();
+
+
+  startRoomSync();
+
+
+  startPresenceCounter();
+
+
+  setInterval(
+    savePresenceProgress,
+    30000
+  );
+
+
+  await sendSystemMessage(
+
+    "🟢 " +
+    getUserName(currentUser) +
+    " ha entrado en Sala Pro."
+
+  );
+
+}
+
+
+window.addEventListener(
+  "beforeunload",
+  function(){
+
+    savePresenceProgress();
+
+    cleanupRoom();
+
+  }
+);
+
+
+window.onload=function(){
+
+  startSalaPro();
+
+};
+
 </script>
 
 </body>
-                                                                                                                                                                       </html>
+
+</html>
