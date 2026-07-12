@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Recompensas JM Elite</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+:root{
+  --gold:#f7d774;
+  --gold2:#ffbd32;
+  --blue:#007bff;
+  --blue2:#00b7ff;
+  --deep:#020713;
+  --panel:#061326;
+  --soft:#dce8ff;
+  --green:#59ffb1;
+  --danger:#ff6175;
+  --orange:#ff9f43;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  padding-bottom:82px;
+  background:#020713;
+  color:white;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+  color:inherit;
+}
+
+.app{
+  min-height:100vh;
+  padding:12px;
+  background:
+    radial-gradient(
+      circle at top,
+      #006cff75 0,
+      #061326 30%,
+      #020713 78%
+    );
+}
+
+
+/* CABECERA */
+
+.header{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:14px;
+}
+
+.back{
+  width:48px;
+  height:48px;
+  flex:none;
+  border-radius:17px;
+  background:rgba(0,86,210,.25);
+  border:1px solid rgba(0,183,255,.48);
+  font-size:25px;
+}
+
+.header-title{
+  flex:1;
+  min-width:0;
+}
+
+.header-title h1{
+  color:var(--gold);
+  font-size:23px;
+}
+
+.header-title p{
+  color:var(--soft);
+  font-size:12px;
+  margin-top:4px;
+}
+
+
+/* MODO PRUEBA */
+
+.test-banner{
+  margin-bottom:14px;
+  padding:14px 15px;
+  border-radius:20px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,159,67,.18),
+      rgba(130,62,0,.22)
+    );
+  border:
+    1px solid
+    rgba(255,159,67,.65);
+  box-shadow:
+    0 0 22px
+    rgba(255,159,67,.15);
+}
+
+.test-banner strong{
+  display:block;
+  color:#ffd3a6;
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+.test-banner p{
+  color:#ffe7cf;
+  font-size:12px;
+  line-height:1.5;
+}
+
+
+/* RESUMEN */
+
+.summary{
+  display:grid;
+  grid-template-columns:
+    repeat(3,1fr);
+  gap:9px;
+  margin-bottom:16px;
+}
+
+.summary-card{
+  min-height:96px;
+  padding:13px 10px;
+  border-radius:20px;
+  background:rgba(0,12,38,.70);
+  border:1px solid rgba(0,183,255,.32);
+  box-shadow:
+    0 0 18px
+    rgba(0,126,255,.15);
+  text-align:center;
+}
+
+.summary-card span{
+  display:block;
+  font-size:24px;
+  margin-bottom:8px;
+}
+
+.summary-card strong{
+  display:block;
+  color:var(--gold);
+  font-size:15px;
+}
+
+.summary-card small{
+  display:block;
+  color:var(--soft);
+  font-size:10px;
+  margin-top:5px;
+  line-height:1.3;
+}
+
+
+/* SECCIONES */
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:18px 0 10px;
+  color:var(--gold);
+  font-size:15px;
+  text-transform:uppercase;
+}
+
+.section-title::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:
+    linear-gradient(
+      90deg,
+      var(--gold),
+      transparent
+    );
+}
+
+.panel{
+  margin-bottom:16px;
+  padding:15px;
+  border-radius:24px;
+  background:rgba(0,12,38,.62);
+  border:1px solid rgba(0,183,255,.24);
+}
+
+.empty{
+  padding:18px 12px;
+  text-align:center;
+  color:var(--soft);
+  font-size:13px;
+  line-height:1.5;
+}
+
+
+/* TARJETAS */
+
+.reward-card{
+  margin-bottom:11px;
+  padding:14px;
+  border-radius:20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0,66,170,.24),
+      rgba(4,18,46,.96)
+    );
+  border:
+    1px solid
+    rgba(0,183,255,.34);
+}
+
+.reward-card:last-child{
+  margin-bottom:0;
+}
+
+.reward-top{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+}
+
+.reward-avatar{
+  width:48px;
+  height:48px;
+  flex:none;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(
+      135deg,
+      #006cff,
+      #00b7ff
+    );
+  border:2px solid var(--gold);
+  font-size:22px;
+}
+
+.reward-info{
+  flex:1;
+  min-width:0;
+}
+
+.reward-info h3{
+  color:white;
+  font-size:15px;
+}
+
+.reward-info p{
+  color:var(--soft);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.status-badge{
+  flex:none;
+  padding:6px 9px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.status-progress{
+  color:#cfe7ff;
+  background:rgba(0,102,255,.22);
+  border:1px solid rgba(0,183,255,.35);
+}
+
+.status-review{
+  color:#ffe4ad;
+  background:rgba(255,159,67,.18);
+  border:1px solid rgba(255,159,67,.45);
+}
+
+.status-done{
+  color:#baffdc;
+  background:rgba(89,255,177,.15);
+  border:1px solid rgba(89,255,177,.40);
+}
+
+.progress-wrap{
+  margin-top:13px;
+}
+
+.progress-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:var(--soft);
+  font-size:11px;
+  margin-bottom:7px;
+}
+
+.progress-bar{
+  height:9px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#020713;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.progress-fill{
+  width:0;
+  height:100%;
+  border-radius:999px;
+  background:
+    linear-gradient(
+      90deg,
+      #006cff,
+      #00c8ff,
+      #f7d774
+    );
+  transition:width .35s ease;
+}
+
+.days{
+  display:grid;
+  grid-template-columns:
+    repeat(7,1fr);
+  gap:5px;
+  margin-top:12px;
+}
+
+.day{
+  min-height:42px;
+  padding:6px 2px;
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  text-align:center;
+  font-size:9px;
+  color:var(--soft);
+}
+
+.day strong{
+  display:block;
+  margin-top:4px;
+  color:white;
+  font-size:11px;
+}
+
+.day.done{
+  background:rgba(89,255,177,.12);
+  border-color:rgba(89,255,177,.40);
+}
+
+.day.done strong{
+  color:var(--green);
+}
+
+.reward-bottom{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:13px;
+  padding-top:12px;
+  border-top:
+    1px solid
+    rgba(255,255,255,.08);
+}
+
+.reward-value{
+  font-size:11px;
+  color:var(--soft);
+}
+
+.reward-value strong{
+  display:block;
+  color:var(--gold);
+  font-size:15px;
+  margin-top:4px;
+}
+
+.reward-note{
+  max-width:52%;
+  color:#ffcf9f;
+  font-size:10px;
+  line-height:1.35;
+  text-align:right;
+}
+
+
+/* ADMINISTRACIÓN */
+
+.admin-card{
+  padding:15px;
+  border-radius:20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(126,71,0,.20),
+      rgba(5,20,48,.96)
+    );
+  border:
+    1px solid
+    rgba(247,215,116,.38);
+}
+
+.admin-head{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.admin-icon{
+  width:52px;
+  height:52px;
+  flex:none;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    linear-gradient(
+      135deg,
+      #8b6300,
+      #f7d774
+    );
+  color:#061326;
+  font-size:25px;
+}
+
+.admin-text{
+  flex:1;
+}
+
+.admin-text h3{
+  color:var(--gold);
+  font-size:16px;
+}
+
+.admin-text p{
+  color:var(--soft);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.admin-stats{
+  display:grid;
+  grid-template-columns:
+    repeat(3,1fr);
+  gap:8px;
+  margin-top:14px;
+}
+
+.admin-stat{
+  padding:10px 7px;
+  border-radius:15px;
+  background:rgba(0,12,38,.58);
+  border:
+    1px solid
+    rgba(247,215,116,.20);
+  text-align:center;
+}
+
+.admin-stat strong{
+  display:block;
+  color:var(--gold);
+  font-size:15px;
+}
+
+.admin-stat span{
+  display:block;
+  color:var(--soft);
+  font-size:9px;
+  margin-top:4px;
+}
+
+
+/* HISTORIAL */
+
+.history-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.07);
+}
+
+.history-row:last-child{
+  border-bottom:0;
+}
+
+.history-icon{
+  width:38px;
+  height:38px;
+  flex:none;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,102,255,.18);
+  border:1px solid rgba(0,183,255,.28);
+}
+
+.history-info{
+  flex:1;
+}
+
+.history-info strong{
+  display:block;
+  font-size:12px;
+}
+
+.history-info span{
+  display:block;
+  color:var(--soft);
+  font-size:10px;
+  margin-top:3px;
+}
+
+.history-value{
+  color:var(--gold);
+  font-size:12px;
+  font-weight:bold;
+}
+
+
+/* BARRA INFERIOR */
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:999;
+  height:74px;
+  background:rgba(0,12,38,.98);
+  border-top:
+    1px solid
+    rgba(247,215,116,.26);
+  display:grid;
+  grid-template-columns:
+    repeat(5,1fr);
+}
+
+.nav-item{
+  color:white;
+  font-size:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+}
+
+.nav-item .icon{
+  font-size:24px;
+}
+
+.nav-item.active{
+  color:var(--gold);
+}
+
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:380px){
+
+  .summary{
+    gap:6px;
+  }
+
+  .summary-card{
+    padding:11px 6px;
+  }
+
+  .days{
+    gap:3px;
+  }
+
+}
+
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+</head>
+
+<body>
+
+<main class="app">
+  <header class="header">
+
+  <button
+    class="back"
+    type="button"
+    onclick="goBack()"
+  >
+    ←
+  </button>
+
+  <div class="header-title">
+
+    <h1>💎 Recompensas JM Elite</h1>
+
+    <p>
+      Seguimiento interno de incentivos y actividad
+    </p>
+
+  </div>
+
+</header>
+
+
+<section class="test-banner">
+
+  <strong>
+    🧪 SISTEMA EN MODO PRUEBA
+  </strong>
+
+  <p>
+    Las recompensas, recargas e incentivos mostrados
+    son simulaciones internas. No están activos ni
+    corresponden a pagos oficiales de Poppo.
+    La activación solo podrá realizarla el fundador.
+  </p>
+
+</section>
+
+
+<section class="summary">
+
+  <div class="summary-card">
+    <span>🎁</span>
+    <strong id="rewardCount">0</strong>
+    <small>Recompensas en seguimiento</small>
+  </div>
+
+  <div class="summary-card">
+    <span>⏱️</span>
+    <strong id="validDays">0</strong>
+    <small>Días validados</small>
+  </div>
+
+  <div class="summary-card">
+    <span>💎</span>
+    <strong id="simulatedCoins">0</strong>
+    <small>Coins simuladas</small>
+  </div>
+
+</section>
+
+
+<h2 class="section-title">
+  🎁 Mis recompensas
+</h2>
+
+<section
+  id="rewardsPanel"
+  class="panel"
+>
+
+  <div class="empty">
+    Sincronizando tus recompensas con JM Elite...
+  </div>
+
+</section>
+
+
+<section
+  id="adminSection"
+  class="hidden"
+>
+
+  <h2 class="section-title">
+    👑 Incentivo administrativo
+  </h2>
+
+  <section class="panel">
+
+    <div class="admin-card">
+
+      <div class="admin-head">
+
+        <div class="admin-icon">
+          👑
+        </div>
+
+        <div class="admin-text">
+
+          <h3 id="adminLevel">
+            Categoría administrativa
+          </h3>
+
+          <p>
+            Seguimiento mensual en fase de prueba
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="admin-stats">
+
+        <div class="admin-stat">
+          <strong id="adminDays">0</strong>
+          <span>DÍAS VÁLIDOS</span>
+        </div>
+
+        <div class="admin-stat">
+          <strong id="adminDaily">0</strong>
+          <span>COINS / DÍA</span>
+        </div>
+
+        <div class="admin-stat">
+          <strong id="adminTotal">0</strong>
+          <span>SIMULADO</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+<h2 class="section-title">
+  📜 Historial de prueba
+</h2>
+
+<section
+  id="historyPanel"
+  class="panel"
+>
+
+  <div class="empty">
+    Todavía no hay movimientos simulados registrados.
+  </div>
+
+</section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <a class="nav-item" href="index.html">
+    <span class="icon">🏠</span>
+    <span>Inicio</span>
+  </a>
+
+  <a class="nav-item" href="sala-pro.html">
+    <span class="icon">🎙️</span>
+    <span>Sala Pro</span>
+  </a>
+
+  <a class="nav-item" href="perfil.html">
+    <span class="icon">👤</span>
+    <span>Perfil</span>
+  </a>
+
+  <a class="nav-item" href="chat.html">
+    <span class="icon">💬</span>
+    <span>Chat</span>
+  </a>
+
+  <a
+    class="nav-item active"
+    href="pagos.html"
+  >
+    <span class="icon">💎</span>
+    <span>Recompensas</span>
+  </a>
+
+</nav>
+
+
+<script>
+
+const firebaseConfig={
+
+  apiKey:
+    "AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+
+  authDomain:
+    "agencia-jm-elite.firebaseapp.com",
+
+  projectId:
+    "agencia-jm-elite",
+
+  storageBucket:
+    "agencia-jm-elite.firebasestorage.app",
+
+  messagingSenderId:
+    "171676205335",
+
+  appId:
+    "1:171676205335:web:95443528659ab804fe7752"
+
+};
+
+
+if(!firebase.apps.length){
+
+  firebase.initializeApp(
+    firebaseConfig
+  );
+
+}
+
+
+const db=
+  firebase.firestore();
+
+
+const TEST_MODE=true;
+
+const TEST_REWARD_NEW=1000;
+
+const TEST_REWARD_INVITER=2000;
+
+
+const TEST_ADMIN_LEVELS={
+
+  nivel1:{
+    name:"Administración Nivel 1",
+    daily:100
+  },
+
+  nivel2:{
+    name:"Administración Nivel 2",
+    daily:150
+  },
+
+  nivel3:{
+    name:"Administración Nivel 3",
+    daily:200
+  }
+
+};
+
+
+let currentEmail="";
+
+let currentRole="";
+
+let currentUser=null;
+
+let userRewards=[];
+
+let rewardHistory=[];
+
+
+function normalizeText(text){
+
+  return String(text || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+    .trim();
+
+}
+
+
+function getSession(){
+
+  let user={};
+
+  try{
+
+    user=
+      JSON.parse(
+        localStorage.getItem(
+          "jm_user"
+        ) || "{}"
+      );
+
+  }catch(error){
+
+    user={};
+
+  }
+
+  return{
+
+    email:
+      normalizeText(
+        localStorage.getItem(
+          "jm_email"
+        ) ||
+        user.email ||
+        ""
+      ),
+
+    role:
+      normalizeText(
+        localStorage.getItem(
+          "jm_role"
+        ) ||
+        user.role ||
+        user.rol ||
+        ""
+      )
+
+  };
+
+}
+
+
+function isAdminRole(role){
+
+  const value=
+    normalizeText(role);
+
+  return(
+    value==="administrador" ||
+    value==="administradora"
+  );
+
+}
+
+
+function isFounderRole(role){
+
+  const value=
+    normalizeText(role);
+
+  return(
+    value==="agente" ||
+    value==="fundador" ||
+    value==="creador"
+  );
+
+}
+
+
+function getName(user){
+
+  if(!user){
+
+    return "Miembro JM Elite";
+
+  }
+
+  return(
+    user.artisticName ||
+    user.nombreArtistico ||
+    user.name ||
+    user.nombre ||
+    user.email ||
+    "Miembro JM Elite"
+  );
+
+}
+
+
+function goBack(){
+
+  window.location.href=
+    "index.html";
+
+}
+
+
+async function loadCurrentUser(){
+
+  const session=
+    getSession();
+
+  currentEmail=
+    session.email;
+
+  currentRole=
+    session.role;
+
+
+  if(!currentEmail){
+
+    window.location.href=
+      "index.html";
+
+    return false;
+
+  }
+
+
+  try{
+
+    const snapshot=
+      await db
+        .collection("usuarios")
+        .where(
+          "email",
+          "==",
+          currentEmail
+        )
+        .limit(1)
+        .get();
+
+
+    if(!snapshot.empty){
+
+      currentUser={
+
+        firestoreId:
+          snapshot.docs[0].id,
+
+        ...snapshot.docs[0].data()
+
+      };
+
+      currentRole=
+        normalizeText(
+          currentUser.role ||
+          currentUser.rol ||
+          currentRole
+        );
+
+    }else{
+
+      currentUser={
+        email:currentEmail,
+        role:currentRole
+      };
+
+    }
+
+    return true;
+
+  }catch(error){
+
+    console.error(
+      "Error cargando usuario:",
+      error
+    );
+
+    currentUser={
+      email:currentEmail,
+      role:currentRole
+    };
+
+    return true;
+
+  }
+
+}
+  function getRewardDays(reward){
+
+  if(
+    Array.isArray(reward.days)
+  ){
+
+    return reward.days
+      .slice(0,7)
+      .map(Boolean);
+
+  }
+
+
+  const completed=
+    Math.max(
+      0,
+      Math.min(
+        7,
+        Number(
+          reward.completedDays ||
+          reward.validDays ||
+          0
+        )
+      )
+    );
+
+
+  return Array.from(
+    {length:7},
+    (_,index)=>
+      index<completed
+  );
+
+}
+
+
+function countDoneDays(reward){
+
+  return getRewardDays(reward)
+    .filter(Boolean)
+    .length;
+
+}
+
+
+function getRewardStatus(reward){
+
+  const status=
+    normalizeText(reward.status);
+
+  const days=
+    countDoneDays(reward);
+
+
+  if(
+    status==="entregada" ||
+    status==="entregado"
+  ){
+
+    return{
+      text:"Entregada",
+      className:"status-done"
+    };
+
+  }
+
+
+  if(
+    days>=7 ||
+    status==="revision" ||
+    status==="pendiente revision"
+  ){
+
+    return{
+      text:"Pendiente revisión",
+      className:"status-review"
+    };
+
+  }
+
+
+  return{
+    text:"En progreso",
+    className:"status-progress"
+  };
+
+}
+
+
+function rewardValue(reward){
+
+  if(
+    Number.isFinite(
+      Number(reward.simulatedCoins)
+    )
+  ){
+
+    return Number(
+      reward.simulatedCoins
+    );
+
+  }
+
+
+  return(
+    normalizeText(reward.rewardType)
+    ==="new"
+  )
+    ? TEST_REWARD_NEW
+    : TEST_REWARD_INVITER;
+
+}
+
+
+function createDayMarkup(
+  done,
+  index
+){
+
+  return `
+    <div class="day ${done ? "done" : ""}">
+
+      <span>
+        Día ${index + 1}
+      </span>
+
+      <strong>
+        ${done ? "✅" : "🔒"}
+      </strong>
+
+    </div>
+  `;
+
+}
+
+
+function renderRewards(){
+
+  const panel=
+    document.getElementById(
+      "rewardsPanel"
+    );
+
+
+  if(!userRewards.length){
+
+    panel.innerHTML=`
+      <div class="empty">
+
+        No tienes recompensas en seguimiento todavía.
+
+        Cuando una invitación válida entre en el
+        programa de 7 días, aparecerá aquí.
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  panel.innerHTML=
+    userRewards
+      .map(reward=>{
+
+        const days=
+          getRewardDays(reward);
+
+        const done=
+          countDoneDays(reward);
+
+        const percent=
+          Math.round(
+            done / 7 * 100
+          );
+
+        const status=
+          getRewardStatus(reward);
+
+        const person=
+
+          reward.invitedName ||
+
+          reward.newMemberName ||
+
+          reward.personName ||
+
+          "Invitación en seguimiento";
+
+
+        const relationship=
+
+          normalizeText(
+            reward.rewardType
+          )==="new"
+
+            ? "Recompensa de nueva emisora"
+
+            : "Recompensa por invitación";
+
+
+        return `
+          <article class="reward-card">
+
+            <div class="reward-top">
+
+              <div class="reward-avatar">
+                🎁
+              </div>
+
+              <div class="reward-info">
+
+                <h3>
+                  ${person}
+                </h3>
+
+                <p>
+                  ${relationship}
+                  · 5 minutos diarios en Sala Pro
+                </p>
+
+              </div>
+
+              <span
+                class="status-badge ${status.className}"
+              >
+                ${status.text}
+              </span>
+
+            </div>
+
+
+            <div class="progress-wrap">
+
+              <div class="progress-head">
+
+                <span>
+                  Progreso de actividad
+                </span>
+
+                <strong>
+                  ${done}/7 días
+                </strong>
+
+              </div>
+
+
+              <div class="progress-bar">
+
+                <div
+                  class="progress-fill"
+                  style="width:${percent}%"
+                ></div>
+
+              </div>
+
+            </div>
+
+
+            <div class="days">
+
+              ${
+                days
+                  .map(createDayMarkup)
+                  .join("")
+              }
+
+            </div>
+
+
+            <div class="reward-bottom">
+
+              <div class="reward-value">
+
+                Valor de prueba
+
+                <strong>
+
+                  ${
+                    rewardValue(reward)
+                      .toLocaleString("es-ES")
+                  }
+                  coins
+
+                </strong>
+
+              </div>
+
+
+              <div class="reward-note">
+
+                🧪 Simulación.
+                No genera derecho a recarga
+                hasta activación oficial.
+
+              </div>
+
+            </div>
+
+          </article>
+        `;
+
+      })
+      .join("");
+
+}
+
+
+function renderSummary(){
+
+  const totalRewards=
+    userRewards.length;
+
+
+  const totalDays=
+    userRewards.reduce(
+      (sum,reward)=>
+        sum + countDoneDays(reward),
+      0
+    );
+
+
+  const totalCoins=
+    userRewards.reduce(
+      (sum,reward)=>
+        sum + rewardValue(reward),
+      0
+    );
+
+
+  document
+    .getElementById("rewardCount")
+    .textContent=
+      totalRewards;
+
+
+  document
+    .getElementById("validDays")
+    .textContent=
+      totalDays;
+
+
+  document
+    .getElementById("simulatedCoins")
+    .textContent=
+      totalCoins
+        .toLocaleString("es-ES");
+
+  }
+  function getAdminLevel(){
+
+  const raw=
+    normalizeText(
+      currentUser &&
+      (
+        currentUser.adminLevel ||
+        currentUser.adminCategory ||
+        currentUser.categoriaAdmin
+      )
+    );
+
+
+  return TEST_ADMIN_LEVELS[raw]
+    ? raw
+    : "nivel1";
+
+}
+
+
+function getAdminValidDays(){
+
+  return Math.max(
+    0,
+    Number(
+      currentUser &&
+      (
+        currentUser.adminValidDays ||
+        currentUser.diasAdminValidos ||
+        0
+      )
+    ) || 0
+  );
+
+}
+
+
+function renderAdmin(){
+
+  const section=
+    document.getElementById(
+      "adminSection"
+    );
+
+
+  if(
+    !isAdminRole(currentRole) &&
+    !isFounderRole(currentRole)
+  ){
+
+    section.classList.add("hidden");
+
+    return;
+
+  }
+
+
+  section.classList.remove("hidden");
+
+
+  const levelKey=
+    getAdminLevel();
+
+
+  const level=
+    TEST_ADMIN_LEVELS[levelKey];
+
+
+  const days=
+    getAdminValidDays();
+
+
+  document
+    .getElementById("adminLevel")
+    .textContent=
+      level.name;
+
+
+  document
+    .getElementById("adminDays")
+    .textContent=
+      days;
+
+
+  document
+    .getElementById("adminDaily")
+    .textContent=
+      level.daily
+        .toLocaleString("es-ES");
+
+
+  document
+    .getElementById("adminTotal")
+    .textContent=
+      (
+        days * level.daily
+      )
+        .toLocaleString("es-ES");
+
+}
+
+
+function renderHistory(){
+
+  const panel=
+    document.getElementById(
+      "historyPanel"
+    );
+
+
+  if(!rewardHistory.length){
+
+    panel.innerHTML=`
+      <div class="empty">
+
+        Todavía no hay movimientos
+        simulados registrados.
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  panel.innerHTML=
+    rewardHistory
+      .map(item=>{
+
+        const label=
+          item.label ||
+          item.type ||
+          "Movimiento de prueba";
+
+
+        const date=
+          item.date ||
+          item.createdLabel ||
+          "Sin fecha";
+
+
+        const value=
+          Number(
+            item.coins ||
+            item.value ||
+            0
+          );
+
+
+        return `
+          <div class="history-row">
+
+            <div class="history-icon">
+              💎
+            </div>
+
+            <div class="history-info">
+
+              <strong>
+                ${label}
+              </strong>
+
+              <span>
+                ${date}
+              </span>
+
+            </div>
+
+            <div class="history-value">
+
+              ${
+                value
+                  .toLocaleString("es-ES")
+              }
+              coins
+
+            </div>
+
+          </div>
+        `;
+
+      })
+      .join("");
+
+}
+
+
+async function loadRewards(){
+
+  try{
+
+    const byOwner=
+      await db
+        .collection("reward_tests")
+        .where(
+          "ownerEmail",
+          "==",
+          currentEmail
+        )
+        .get();
+
+
+    userRewards=
+      byOwner.docs
+        .map(doc=>({
+
+          firestoreId:doc.id,
+
+          ...doc.data()
+
+        }));
+
+
+    const historySnapshot=
+      await db
+        .collection(
+          "reward_history_tests"
+        )
+        .where(
+          "ownerEmail",
+          "==",
+          currentEmail
+        )
+        .get();
+
+
+    rewardHistory=
+      historySnapshot.docs
+        .map(doc=>({
+
+          firestoreId:doc.id,
+
+          ...doc.data()
+
+        }));
+
+
+  }catch(error){
+
+    console.error(
+      "Error cargando recompensas:",
+      error
+    );
+
+
+    userRewards=[];
+
+    rewardHistory=[];
+
+  }
+
+
+  renderRewards();
+
+  renderSummary();
+
+  renderHistory();
+
+}
+
+
+async function startRewardsPage(){
+
+  if(!TEST_MODE){
+
+    console.warn(
+      "El sistema ya no está en modo prueba"
+    );
+
+  }
+
+
+  const ok=
+    await loadCurrentUser();
+
+
+  if(!ok){
+
+    return;
+
+  }
+
+
+  renderAdmin();
+
+
+  await loadRewards();
+
+}
+
+
+window.onload=
+  startRewardsPage;
+
+</script>
+
+</body>
+
+</html>
