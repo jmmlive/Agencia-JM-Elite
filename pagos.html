@@ -1022,7 +1022,7 @@ a{
 
   <a
     class="nav-item"
-    href="chat.html"
+    href="chatbot.html"
   >
     <span class="icon">💬</span>
     <span>Chat</span>
@@ -1220,6 +1220,29 @@ function getMemberAvatar(member){
     member.avatar ||
     ""
   );
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function safeImageUrl(value){
+
+  const url=String(value || "").trim();
+
+  return /^(https?:|data:image\/)/i.test(url)
+    ? url
+    : "";
 
 }
 
@@ -1469,6 +1492,7 @@ function getValidatedDays(member){
 
   return Array
     .from(validDates)
+    .sort((a,b)=>String(a).localeCompare(String(b)))
     .slice(0,7);
 
 }
@@ -1597,12 +1621,14 @@ function memberCardMarkup(member){
 
 
   const avatar=
-    getMemberAvatar(member);
+    safeImageUrl(
+      getMemberAvatar(member)
+    );
 
 
   const photoMarkup=
     avatar
-      ? `<img src="${avatar}" alt="${getMemberName(member)}">`
+      ? `<img src="${escapeHtml(avatar)}" alt="${escapeHtml(getMemberName(member))}">`
       : "👤";
 
 
@@ -1618,12 +1644,12 @@ function memberCardMarkup(member){
         <div class="member-info">
 
           <h3>
-            ${getMemberName(member)}
+            ${escapeHtml(getMemberName(member))}
           </h3>
 
           <p>
             ID Poppo:
-            ${getMemberPoppoId(member) || "No indicado"}
+            ${escapeHtml(getMemberPoppoId(member) || "No indicado")}
           </p>
 
           <span class="role">
@@ -1944,7 +1970,9 @@ function openMemberDetail(
 
 
   const avatar=
-    getMemberAvatar(member);
+    safeImageUrl(
+      getMemberAvatar(member)
+    );
 
 
   const detailAvatar=
@@ -1956,7 +1984,7 @@ function openMemberDetail(
   if(avatar){
 
     detailAvatar.innerHTML=
-      `<img src="${avatar}" alt="${getMemberName(member)}">`;
+      `<img src="${escapeHtml(avatar)}" alt="${escapeHtml(getMemberName(member))}">`;
 
   }else{
 
@@ -2067,12 +2095,12 @@ function openMemberDetail(
           <div class="tree-person">
 
             <strong>
-              └── ${getMemberName(person)}
+              └── ${escapeHtml(getMemberName(person))}
             </strong>
 
             <span>
               ID Poppo:
-              ${getMemberPoppoId(person) || "No indicado"}
+              ${escapeHtml(getMemberPoppoId(person) || "No indicado")}
             </span>
 
             <span>
