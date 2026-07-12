@@ -25,13 +25,13 @@
   --gold:#f7d774;
   --gold2:#ffbd32;
   --blue:#007bff;
-  --blue2:#00b7ff;
+  --cyan:#00c8ff;
   --deep:#020713;
   --panel:#061326;
   --soft:#dce8ff;
   --green:#59ffb1;
-  --danger:#ff6175;
   --orange:#ff9f43;
+  --danger:#ff6175;
 }
 
 html{
@@ -45,9 +45,9 @@ body{
   color:white;
 }
 
-a{
-  text-decoration:none;
-  color:inherit;
+button,
+input{
+  font-family:inherit;
 }
 
 button{
@@ -56,15 +56,20 @@ button{
   color:inherit;
 }
 
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
 .app{
   min-height:100vh;
   padding:12px;
   background:
     radial-gradient(
       circle at top,
-      #006cff75 0,
+      #006cff70 0,
       #061326 30%,
-      #020713 78%
+      #020713 76%
     );
 }
 
@@ -88,20 +93,20 @@ button{
   font-size:25px;
 }
 
-.header-title{
+.header-text{
   flex:1;
   min-width:0;
 }
 
-.header-title h1{
+.header-text h1{
   color:var(--gold);
-  font-size:23px;
+  font-size:22px;
 }
 
-.header-title p{
-  color:var(--soft);
-  font-size:12px;
+.header-text p{
   margin-top:4px;
+  color:var(--soft);
+  font-size:11px;
 }
 
 
@@ -109,32 +114,27 @@ button{
 
 .test-banner{
   margin-bottom:14px;
-  padding:14px 15px;
+  padding:14px;
   border-radius:20px;
   background:
     linear-gradient(
       135deg,
       rgba(255,159,67,.18),
-      rgba(130,62,0,.22)
+      rgba(102,48,0,.25)
     );
-  border:
-    1px solid
-    rgba(255,159,67,.65);
-  box-shadow:
-    0 0 22px
-    rgba(255,159,67,.15);
+  border:1px solid rgba(255,159,67,.65);
 }
 
 .test-banner strong{
   display:block;
-  color:#ffd3a6;
+  color:#ffd4a8;
   font-size:14px;
-  margin-bottom:5px;
 }
 
 .test-banner p{
-  color:#ffe7cf;
-  font-size:12px;
+  margin-top:5px;
+  color:#ffe8d2;
+  font-size:11px;
   line-height:1.5;
 }
 
@@ -143,46 +143,94 @@ button{
 
 .summary{
   display:grid;
-  grid-template-columns:
-    repeat(3,1fr);
-  gap:9px;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
   margin-bottom:16px;
 }
 
 .summary-card{
-  min-height:96px;
-  padding:13px 10px;
+  min-height:100px;
+  padding:13px 7px;
   border-radius:20px;
-  background:rgba(0,12,38,.70);
-  border:1px solid rgba(0,183,255,.32);
-  box-shadow:
-    0 0 18px
-    rgba(0,126,255,.15);
   text-align:center;
+  background:rgba(0,12,38,.72);
+  border:1px solid rgba(0,183,255,.30);
 }
 
-.summary-card span{
+.summary-icon{
   display:block;
-  font-size:24px;
-  margin-bottom:8px;
+  margin-bottom:7px;
+  font-size:25px;
 }
 
 .summary-card strong{
   display:block;
   color:var(--gold);
-  font-size:15px;
+  font-size:17px;
 }
 
 .summary-card small{
   display:block;
-  color:var(--soft);
-  font-size:10px;
   margin-top:5px;
+  color:var(--soft);
+  font-size:9px;
   line-height:1.3;
 }
 
 
-/* SECCIONES */
+/* PANEL FUNDADOR */
+
+.founder-panel{
+  margin-bottom:16px;
+  padding:15px;
+  border-radius:23px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(111,67,0,.24),
+      rgba(4,18,46,.95)
+    );
+  border:1px solid rgba(247,215,116,.42);
+}
+
+.founder-head{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.founder-icon{
+  width:52px;
+  height:52px;
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:18px;
+  color:#061326;
+  font-size:25px;
+  background:
+    linear-gradient(
+      135deg,
+      #9c7000,
+      var(--gold)
+    );
+}
+
+.founder-text h2{
+  color:var(--gold);
+  font-size:17px;
+}
+
+.founder-text p{
+  margin-top:4px;
+  color:var(--soft);
+  font-size:11px;
+  line-height:1.4;
+}
+
+
+/* TÍTULOS */
 
 .section-title{
   display:flex;
@@ -190,7 +238,7 @@ button{
   gap:8px;
   margin:18px 0 10px;
   color:var(--gold);
-  font-size:15px;
+  font-size:14px;
   text-transform:uppercase;
 }
 
@@ -206,129 +254,279 @@ button{
     );
 }
 
-.panel{
-  margin-bottom:16px;
-  padding:15px;
-  border-radius:24px;
+
+/* BUSCADOR */
+
+.search-box{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:12px;
+  padding:8px 12px;
+  border-radius:18px;
+  background:rgba(0,12,38,.82);
+  border:1px solid rgba(0,183,255,.34);
+}
+
+.search-box span{
+  font-size:20px;
+}
+
+.search-box input{
+  flex:1;
+  min-width:0;
+  padding:10px 2px;
+  border:0;
+  outline:0;
+  color:white;
+  background:transparent;
+  font-size:14px;
+}
+
+.search-box input::placeholder{
+  color:#8fa2c0;
+}
+
+
+/* LISTA EMISORAS */
+
+.members-panel{
+  padding:12px;
+  border-radius:23px;
   background:rgba(0,12,38,.62);
   border:1px solid rgba(0,183,255,.24);
 }
 
-.empty{
-  padding:18px 12px;
-  text-align:center;
-  color:var(--soft);
-  font-size:13px;
-  line-height:1.5;
-}
-
-
-/* TARJETAS */
-
-.reward-card{
-  margin-bottom:11px;
-  padding:14px;
-  border-radius:20px;
+.member-card{
+  margin-bottom:10px;
+  padding:13px;
+  border-radius:19px;
   background:
     linear-gradient(
       145deg,
-      rgba(0,66,170,.24),
-      rgba(4,18,46,.96)
+      rgba(0,72,180,.22),
+      rgba(5,20,48,.96)
     );
-  border:
-    1px solid
-    rgba(0,183,255,.34);
+  border:1px solid rgba(0,183,255,.30);
 }
 
-.reward-card:last-child{
+.member-card:last-child{
   margin-bottom:0;
 }
 
-.reward-top{
+.member-top{
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   gap:10px;
 }
 
-.reward-avatar{
-  width:48px;
-  height:48px;
+.avatar{
+  width:50px;
+  height:50px;
   flex:none;
-  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
+  border-radius:50%;
   background:
     linear-gradient(
       135deg,
       #006cff,
-      #00b7ff
+      var(--cyan)
     );
   border:2px solid var(--gold);
   font-size:22px;
 }
 
-.reward-info{
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.member-info{
   flex:1;
   min-width:0;
 }
 
-.reward-info h3{
+.member-info h3{
+  overflow:hidden;
   color:white;
   font-size:15px;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 
-.reward-info p{
+.member-info p{
+  margin-top:4px;
+  color:var(--soft);
+  font-size:10px;
+}
+
+.role{
+  display:inline-block;
+  margin-top:5px;
+  padding:4px 7px;
+  border-radius:999px;
+  color:#d7ecff;
+  background:rgba(0,102,255,.20);
+  border:1px solid rgba(0,183,255,.28);
+  font-size:9px;
+}
+
+.member-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  margin-top:12px;
+}
+
+.member-stat{
+  padding:8px 5px;
+  border-radius:13px;
+  text-align:center;
+  background:rgba(0,7,25,.55);
+  border:1px solid rgba(255,255,255,.07);
+}
+
+.member-stat strong{
+  display:block;
+  color:var(--gold);
+  font-size:13px;
+}
+
+.member-stat span{
+  display:block;
+  margin-top:3px;
+  color:var(--soft);
+  font-size:8px;
+}
+
+.open-member{
+  width:100%;
+  margin-top:11px;
+  padding:11px;
+  border-radius:14px;
+  color:#061326;
+  font-size:12px;
+  font-weight:bold;
+  background:
+    linear-gradient(
+      135deg,
+      var(--gold),
+      var(--gold2)
+    );
+}
+
+
+/* DETALLE */
+
+.detail{
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  display:none;
+  overflow-y:auto;
+  padding:12px 12px 90px;
+  background:
+    radial-gradient(
+      circle at top,
+      #005bd8,
+      #020713 55%
+    );
+}
+
+.detail.show{
+  display:block;
+}
+
+.detail-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.detail-close{
+  width:46px;
+  height:46px;
+  flex:none;
+  border-radius:16px;
+  background:rgba(0,12,38,.72);
+  border:1px solid rgba(0,183,255,.42);
+  font-size:24px;
+}
+
+.detail-title h2{
+  color:var(--gold);
+  font-size:20px;
+}
+
+.detail-title p{
+  margin-top:3px;
+  color:var(--soft);
+  font-size:10px;
+}
+
+.profile-card{
+  padding:16px;
+  border-radius:24px;
+  background:rgba(0,12,38,.76);
+  border:1px solid rgba(247,215,116,.35);
+}
+
+.profile-main{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.profile-main .avatar{
+  width:62px;
+  height:62px;
+}
+
+.profile-data h3{
+  color:var(--gold);
+  font-size:18px;
+}
+
+.profile-data p{
+  margin-top:5px;
   color:var(--soft);
   font-size:11px;
-  margin-top:4px;
 }
 
-.status-badge{
-  flex:none;
-  padding:6px 9px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:bold;
-}
 
-.status-progress{
-  color:#cfe7ff;
-  background:rgba(0,102,255,.22);
-  border:1px solid rgba(0,183,255,.35);
-}
+/* PROGRESO 7 DÍAS */
 
-.status-review{
-  color:#ffe4ad;
-  background:rgba(255,159,67,.18);
-  border:1px solid rgba(255,159,67,.45);
-}
-
-.status-done{
-  color:#baffdc;
-  background:rgba(89,255,177,.15);
-  border:1px solid rgba(89,255,177,.40);
-}
-
-.progress-wrap{
+.progress-card{
   margin-top:13px;
+  padding:15px;
+  border-radius:21px;
+  background:rgba(0,12,38,.72);
+  border:1px solid rgba(0,183,255,.28);
 }
 
 .progress-head{
   display:flex;
   justify-content:space-between;
   gap:10px;
+  margin-bottom:9px;
   color:var(--soft);
   font-size:11px;
-  margin-bottom:7px;
+}
+
+.progress-head strong{
+  color:var(--gold);
 }
 
 .progress-bar{
-  height:9px;
+  height:10px;
   overflow:hidden;
   border-radius:999px;
   background:#020713;
-  border:1px solid rgba(255,255,255,.08);
 }
 
 .progress-fill{
@@ -339,218 +537,110 @@ button{
     linear-gradient(
       90deg,
       #006cff,
-      #00c8ff,
-      #f7d774
+      var(--cyan),
+      var(--gold)
     );
-  transition:width .35s ease;
 }
 
 .days{
   display:grid;
-  grid-template-columns:
-    repeat(7,1fr);
+  grid-template-columns:repeat(7,1fr);
   gap:5px;
-  margin-top:12px;
+  margin-top:13px;
 }
 
 .day{
-  min-height:42px;
-  padding:6px 2px;
+  min-height:55px;
+  padding:7px 2px;
   border-radius:12px;
+  text-align:center;
+  color:var(--soft);
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.08);
-  text-align:center;
-  font-size:9px;
-  color:var(--soft);
+  font-size:8px;
 }
 
 .day strong{
   display:block;
-  margin-top:4px;
+  margin:5px 0 3px;
   color:white;
-  font-size:11px;
+  font-size:12px;
 }
 
 .day.done{
   background:rgba(89,255,177,.12);
-  border-color:rgba(89,255,177,.40);
+  border-color:rgba(89,255,177,.42);
 }
 
 .day.done strong{
   color:var(--green);
 }
 
-.reward-bottom{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
+.reward-box{
   margin-top:13px;
-  padding-top:12px;
-  border-top:
-    1px solid
-    rgba(255,255,255,.08);
+  padding:13px;
+  border-radius:17px;
+  background:rgba(247,215,116,.10);
+  border:1px solid rgba(247,215,116,.28);
 }
 
-.reward-value{
-  font-size:11px;
-  color:var(--soft);
-}
-
-.reward-value strong{
+.reward-box strong{
   display:block;
   color:var(--gold);
   font-size:15px;
-  margin-top:4px;
 }
 
-.reward-note{
-  max-width:52%;
-  color:#ffcf9f;
-  font-size:10px;
-  line-height:1.35;
-  text-align:right;
-}
-
-
-/* ADMINISTRACIÓN */
-
-.admin-card{
-  padding:15px;
-  border-radius:20px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(126,71,0,.20),
-      rgba(5,20,48,.96)
-    );
-  border:
-    1px solid
-    rgba(247,215,116,.38);
-}
-
-.admin-head{
-  display:flex;
-  align-items:center;
-  gap:11px;
-}
-
-.admin-icon{
-  width:52px;
-  height:52px;
-  flex:none;
-  border-radius:18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:
-    linear-gradient(
-      135deg,
-      #8b6300,
-      #f7d774
-    );
-  color:#061326;
-  font-size:25px;
-}
-
-.admin-text{
-  flex:1;
-}
-
-.admin-text h3{
-  color:var(--gold);
-  font-size:16px;
-}
-
-.admin-text p{
-  color:var(--soft);
-  font-size:11px;
+.reward-box p{
   margin-top:5px;
-}
-
-.admin-stats{
-  display:grid;
-  grid-template-columns:
-    repeat(3,1fr);
-  gap:8px;
-  margin-top:14px;
-}
-
-.admin-stat{
-  padding:10px 7px;
-  border-radius:15px;
-  background:rgba(0,12,38,.58);
-  border:
-    1px solid
-    rgba(247,215,116,.20);
-  text-align:center;
-}
-
-.admin-stat strong{
-  display:block;
-  color:var(--gold);
-  font-size:15px;
-}
-
-.admin-stat span{
-  display:block;
-  color:var(--soft);
-  font-size:9px;
-  margin-top:4px;
+  color:#ffe7bd;
+  font-size:10px;
+  line-height:1.4;
 }
 
 
-/* HISTORIAL */
+/* ÁRBOL */
 
-.history-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:11px 0;
-  border-bottom:
-    1px solid
-    rgba(255,255,255,.07);
-}
-
-.history-row:last-child{
-  border-bottom:0;
-}
-
-.history-icon{
-  width:38px;
-  height:38px;
-  flex:none;
-  border-radius:13px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,102,255,.18);
+.tree-card{
+  margin-top:13px;
+  padding:15px;
+  border-radius:21px;
+  background:rgba(0,12,38,.72);
   border:1px solid rgba(0,183,255,.28);
 }
 
-.history-info{
-  flex:1;
+.tree-person{
+  margin-top:9px;
+  padding:11px;
+  border-left:3px solid var(--gold);
+  border-radius:0 14px 14px 0;
+  background:rgba(0,91,210,.15);
 }
 
-.history-info strong{
+.tree-person strong{
   display:block;
   font-size:12px;
 }
 
-.history-info span{
+.tree-person span{
   display:block;
+  margin-top:4px;
   color:var(--soft);
-  font-size:10px;
-  margin-top:3px;
+  font-size:9px;
 }
 
-.history-value{
-  color:var(--gold);
+
+/* VACÍO */
+
+.empty{
+  padding:20px 12px;
+  color:var(--soft);
+  text-align:center;
   font-size:12px;
-  font-weight:bold;
+  line-height:1.5;
 }
 
 
-/* BARRA INFERIOR */
+/* NAVEGACIÓN */
 
 .bottom-nav{
   position:fixed;
@@ -559,27 +649,23 @@ button{
   bottom:0;
   z-index:999;
   height:74px;
-  background:rgba(0,12,38,.98);
-  border-top:
-    1px solid
-    rgba(247,215,116,.26);
   display:grid;
-  grid-template-columns:
-    repeat(5,1fr);
+  grid-template-columns:repeat(5,1fr);
+  background:rgba(0,12,38,.98);
+  border-top:1px solid rgba(247,215,116,.26);
 }
 
 .nav-item{
-  color:white;
-  font-size:11px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   gap:3px;
+  font-size:10px;
 }
 
 .nav-item .icon{
-  font-size:24px;
+  font-size:23px;
 }
 
 .nav-item.active{
@@ -593,11 +679,11 @@ button{
 @media(max-width:380px){
 
   .summary{
-    gap:6px;
+    gap:5px;
   }
 
   .summary-card{
-    padding:11px 6px;
+    padding:11px 5px;
   }
 
   .days{
@@ -616,7 +702,7 @@ button{
 
 <body>
 
-<main class="app">
+<div class="app">
   <header class="header">
 
   <button
@@ -627,12 +713,12 @@ button{
     ←
   </button>
 
-  <div class="header-title">
+  <div class="header-text">
 
-    <h1>💎 Recompensas JM Elite</h1>
+    <h1>🪙 Recompensas JM Elite</h1>
 
     <p>
-      Seguimiento interno de incentivos y actividad
+      Actividad, invitaciones y progreso de la agencia
     </p>
 
   </div>
@@ -647,10 +733,10 @@ button{
   </strong>
 
   <p>
-    Las recompensas, recargas e incentivos mostrados
-    son simulaciones internas. No están activos ni
-    corresponden a pagos oficiales de Poppo.
-    La activación solo podrá realizarla el fundador.
+    Los progresos, recompensas e incentivos mostrados
+    son simulaciones internas. No generan recargas
+    reales ni corresponden a pagos oficiales de Poppo
+    hasta activación expresa del fundador.
   </p>
 
 </section>
@@ -659,92 +745,246 @@ button{
 <section class="summary">
 
   <div class="summary-card">
-    <span>🎁</span>
-    <strong id="rewardCount">0</strong>
-    <small>Recompensas en seguimiento</small>
+
+    <span class="summary-icon">
+      👥
+    </span>
+
+    <strong id="totalMembers">
+      0
+    </strong>
+
+    <small>
+      Perfiles sincronizados
+    </small>
+
   </div>
 
-  <div class="summary-card">
-    <span>⏱️</span>
-    <strong id="validDays">0</strong>
-    <small>Días validados</small>
-  </div>
 
   <div class="summary-card">
-    <span>💎</span>
-    <strong id="simulatedCoins">0</strong>
-    <small>Coins simuladas</small>
+
+    <span class="summary-icon">
+      ✅
+    </span>
+
+    <strong id="totalValidatedDays">
+      0
+    </strong>
+
+    <small>
+      Días válidos registrados
+    </small>
+
+  </div>
+
+
+  <div class="summary-card">
+
+    <span class="summary-icon">
+      🪙
+    </span>
+
+    <strong id="totalSimulatedCoins">
+      0
+    </strong>
+
+    <small>
+      Coins simuladas
+    </small>
+
+  </div>
+
+</section>
+
+
+<section
+  id="founderPanel"
+  class="founder-panel hidden"
+>
+
+  <div class="founder-head">
+
+    <div class="founder-icon">
+      👑
+    </div>
+
+    <div class="founder-text">
+
+      <h2>
+        Panel del fundador
+      </h2>
+
+      <p>
+        Control general del progreso de invitaciones
+        y recompensas de JM Elite.
+      </p>
+
+    </div>
+
   </div>
 
 </section>
 
 
 <h2 class="section-title">
-  🎁 Mis recompensas
+  👥 Emisoras y seguimiento
 </h2>
 
+
+<div class="search-box">
+
+  <span>
+    🔍
+  </span>
+
+  <input
+    id="memberSearch"
+    type="search"
+    placeholder="Buscar por nombre o ID Poppo"
+    oninput="renderMembers()"
+  >
+
+</div>
+
+
 <section
-  id="rewardsPanel"
-  class="panel"
+  id="membersPanel"
+  class="members-panel"
 >
 
   <div class="empty">
-    Sincronizando tus recompensas con JM Elite...
+    Sincronizando emisoras con JM Elite...
   </div>
 
 </section>
 
 
+</div>
+
+
 <section
-  id="adminSection"
-  class="hidden"
+  id="memberDetail"
+  class="detail"
 >
 
-  <h2 class="section-title">
-    👑 Incentivo administrativo
-  </h2>
+  <div class="detail-header">
 
-  <section class="panel">
+    <button
+      class="detail-close"
+      type="button"
+      onclick="closeMemberDetail()"
+    >
+      ←
+    </button>
 
-    <div class="admin-card">
+    <div class="detail-title">
 
-      <div class="admin-head">
+      <h2 id="detailName">
+        Perfil
+      </h2>
 
-        <div class="admin-icon">
-          👑
-        </div>
+      <p id="detailSubtitle">
+        Seguimiento de actividad
+      </p>
 
-        <div class="admin-text">
+    </div>
 
-          <h3 id="adminLevel">
-            Categoría administrativa
-          </h3>
+  </div>
 
-          <p>
-            Seguimiento mensual en fase de prueba
-          </p>
 
-        </div>
+  <section class="profile-card">
+
+    <div class="profile-main">
+
+      <div
+        id="detailAvatar"
+        class="avatar"
+      >
+        👤
+      </div>
+
+      <div class="profile-data">
+
+        <h3 id="detailProfileName">
+          Miembro JM Elite
+        </h3>
+
+        <p id="detailRole">
+          Emisora
+        </p>
+
+        <p id="detailPoppoId">
+          ID Poppo no indicado
+        </p>
+
+        <p id="detailInvitedBy">
+          Invitada por: sin datos
+        </p>
 
       </div>
 
-      <div class="admin-stats">
+    </div>
 
-        <div class="admin-stat">
-          <strong id="adminDays">0</strong>
-          <span>DÍAS VÁLIDOS</span>
-        </div>
+  </section>
 
-        <div class="admin-stat">
-          <strong id="adminDaily">0</strong>
-          <span>COINS / DÍA</span>
-        </div>
 
-        <div class="admin-stat">
-          <strong id="adminTotal">0</strong>
-          <span>SIMULADO</span>
-        </div>
+  <section class="progress-card">
 
+    <div class="progress-head">
+
+      <span>
+        Programa de 7 días
+      </span>
+
+      <strong id="detailProgressText">
+        0/7 días
+      </strong>
+
+    </div>
+
+
+    <div class="progress-bar">
+
+      <div
+        id="detailProgressFill"
+        class="progress-fill"
+      ></div>
+
+    </div>
+
+
+    <div
+      id="detailDays"
+      class="days"
+    ></div>
+
+
+    <div class="reward-box">
+
+      <strong id="detailRewardStatus">
+        🪙 Recompensa en progreso
+      </strong>
+
+      <p id="detailRewardText">
+        Cada día se valida al completar 5 minutos
+        dentro de Sala Pro. El sistema está en modo prueba.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <section class="tree-card">
+
+    <h3>
+      🌳 Árbol de invitaciones
+    </h3>
+
+    <div id="detailTree">
+
+      <div class="empty">
+        Cargando relación de invitaciones...
       </div>
 
     </div>
@@ -754,42 +994,36 @@ button{
 </section>
 
 
-<h2 class="section-title">
-  📜 Historial de prueba
-</h2>
-
-<section
-  id="historyPanel"
-  class="panel"
->
-
-  <div class="empty">
-    Todavía no hay movimientos simulados registrados.
-  </div>
-
-</section>
-
-</main>
-
-
 <nav class="bottom-nav">
 
-  <a class="nav-item" href="index.html">
+  <a
+    class="nav-item"
+    href="index.html"
+  >
     <span class="icon">🏠</span>
     <span>Inicio</span>
   </a>
 
-  <a class="nav-item" href="sala-pro.html">
+  <a
+    class="nav-item"
+    href="sala-pro.html"
+  >
     <span class="icon">🎙️</span>
     <span>Sala Pro</span>
   </a>
 
-  <a class="nav-item" href="perfil.html">
+  <a
+    class="nav-item"
+    href="perfil.html"
+  >
     <span class="icon">👤</span>
     <span>Perfil</span>
   </a>
 
-  <a class="nav-item" href="chat.html">
+  <a
+    class="nav-item"
+    href="chat.html"
+  >
     <span class="icon">💬</span>
     <span>Chat</span>
   </a>
@@ -798,7 +1032,7 @@ button{
     class="nav-item active"
     href="pagos.html"
   >
-    <span class="icon">💎</span>
+    <span class="icon">🪙</span>
     <span>Recompensas</span>
   </a>
 
@@ -850,35 +1084,23 @@ const TEST_REWARD_NEW=1000;
 const TEST_REWARD_INVITER=2000;
 
 
-const TEST_ADMIN_LEVELS={
-
-  nivel1:{
-    name:"Administración Nivel 1",
-    daily:100
-  },
-
-  nivel2:{
-    name:"Administración Nivel 2",
-    daily:150
-  },
-
-  nivel3:{
-    name:"Administración Nivel 3",
-    daily:200
-  }
-
-};
-
-
 let currentEmail="";
 
 let currentRole="";
 
 let currentUser=null;
 
-let userRewards=[];
+let agencyMembers=[];
 
-let rewardHistory=[];
+let roomActivity=[];
+
+let inviteLinks=[];
+
+let selectedMember=null;
+
+let unsubscribeMembers=null;
+
+let unsubscribeActivity=null;
 
 
 function normalizeText(text){
@@ -897,11 +1119,12 @@ function normalizeText(text){
 
 function getSession(){
 
-  let user={};
+  let storedUser={};
+
 
   try{
 
-    user=
+    storedUser=
       JSON.parse(
         localStorage.getItem(
           "jm_user"
@@ -910,28 +1133,25 @@ function getSession(){
 
   }catch(error){
 
-    user={};
+    storedUser={};
 
   }
+
 
   return{
 
     email:
       normalizeText(
-        localStorage.getItem(
-          "jm_email"
-        ) ||
-        user.email ||
+        localStorage.getItem("jm_email") ||
+        storedUser.email ||
         ""
       ),
 
     role:
       normalizeText(
-        localStorage.getItem(
-          "jm_role"
-        ) ||
-        user.role ||
-        user.rol ||
+        localStorage.getItem("jm_role") ||
+        storedUser.role ||
+        storedUser.rol ||
         ""
       )
 
@@ -940,23 +1160,11 @@ function getSession(){
 }
 
 
-function isAdminRole(role){
-
-  const value=
-    normalizeText(role);
-
-  return(
-    value==="administrador" ||
-    value==="administradora"
-  );
-
-}
-
-
 function isFounderRole(role){
 
   const value=
     normalizeText(role);
+
 
   return(
     value==="agente" ||
@@ -967,22 +1175,75 @@ function isFounderRole(role){
 }
 
 
-function getName(user){
-
-  if(!user){
-
-    return "Miembro JM Elite";
-
-  }
+function getMemberName(member){
 
   return(
-    user.artisticName ||
-    user.nombreArtistico ||
-    user.name ||
-    user.nombre ||
-    user.email ||
+    member.artisticName ||
+    member.nombreArtistico ||
+    member.nombre ||
+    member.name ||
+    member.email ||
     "Miembro JM Elite"
   );
+
+}
+
+
+function getMemberRole(member){
+
+  return normalizeText(
+    member.role ||
+    member.rol ||
+    "emisora"
+  );
+
+}
+
+
+function getMemberPoppoId(member){
+
+  return String(
+    member.poppoId ||
+    member.idPoppo ||
+    member.poppoID ||
+    ""
+  ).trim();
+
+}
+
+
+function getMemberAvatar(member){
+
+  return(
+    member.fotoPerfil ||
+    member.photoURL ||
+    member.avatar ||
+    ""
+  );
+
+}
+
+
+function getMemberInvitationCode(member){
+
+  return String(
+    member.invitationCode ||
+    member.recommendationCode ||
+    member.codigoInvitacion ||
+    ""
+  ).trim();
+
+}
+
+
+function getMemberInvitedBy(member){
+
+  return String(
+    member.invitedBy ||
+    member.recommendedBy ||
+    member.invitadoPor ||
+    ""
+  ).trim();
 
 }
 
@@ -995,10 +1256,22 @@ function goBack(){
 }
 
 
+function closeMemberDetail(){
+
+  document
+    .getElementById("memberDetail")
+    .classList.remove("show");
+
+  selectedMember=null;
+
+}
+
+
 async function loadCurrentUser(){
 
   const session=
     getSession();
+
 
   currentEmail=
     session.email;
@@ -1042,6 +1315,7 @@ async function loadCurrentUser(){
 
       };
 
+
       currentRole=
         normalizeText(
           currentUser.role ||
@@ -1052,149 +1326,513 @@ async function loadCurrentUser(){
     }else{
 
       currentUser={
+
         email:currentEmail,
+
         role:currentRole
+
       };
 
     }
 
+
+    if(isFounderRole(currentRole)){
+
+      document
+        .getElementById("founderPanel")
+        .classList.remove("hidden");
+
+    }
+
+
     return true;
+
 
   }catch(error){
 
     console.error(
-      "Error cargando usuario:",
+      "Error cargando usuario actual:",
       error
     );
 
+
     currentUser={
+
       email:currentEmail,
+
       role:currentRole
+
     };
+
 
     return true;
 
   }
 
 }
-  function getRewardDays(reward){
+  function getActivityForMember(member){
 
-  if(
-    Array.isArray(reward.days)
-  ){
+  const email=
+    normalizeText(member.email);
 
-    return reward.days
-      .slice(0,7)
-      .map(Boolean);
-
-  }
+  const poppoId=
+    getMemberPoppoId(member);
 
 
-  const completed=
-    Math.max(
-      0,
-      Math.min(
-        7,
-        Number(
-          reward.completedDays ||
-          reward.validDays ||
-          0
-        )
+  return roomActivity.filter(item=>{
+
+    const activityEmail=
+      normalizeText(
+        item.email ||
+        item.userEmail ||
+        ""
+      );
+
+
+    const activityPoppoId=
+      String(
+        item.poppoId ||
+        item.idPoppo ||
+        ""
+      ).trim();
+
+
+    return(
+      (
+        email &&
+        activityEmail===email
+      )
+      ||
+      (
+        poppoId &&
+        activityPoppoId===poppoId
       )
     );
 
-
-  return Array.from(
-    {length:7},
-    (_,index)=>
-      index<completed
-  );
+  });
 
 }
 
 
-function countDoneDays(reward){
+function getValidatedDays(member){
 
-  return getRewardDays(reward)
-    .filter(Boolean)
-    .length;
+  const activity=
+    getActivityForMember(member);
+
+
+  const validDates=
+    new Set();
+
+
+  activity.forEach(item=>{
+
+    const minutes=
+      Number(
+        item.minutes ||
+        item.totalMinutes ||
+        item.minutos ||
+        0
+      );
+
+
+    const validated=
+      item.validated===true ||
+      item.dayValidated===true ||
+      item.diaValidado===true ||
+      minutes>=5;
+
+
+    if(!validated){
+
+      return;
+
+    }
+
+
+    const date=
+      String(
+        item.dateKey ||
+        item.fecha ||
+        item.date ||
+        ""
+      ).trim();
+
+
+    if(date){
+
+      validDates.add(date);
+
+    }
+
+  });
+
+
+  return Array
+    .from(validDates)
+    .slice(0,7);
 
 }
 
 
-function getRewardStatus(reward){
+function getMemberInvites(member){
 
-  const status=
-    normalizeText(reward.status);
-
-  const days=
-    countDoneDays(reward);
+  const ownCode=
+    getMemberInvitationCode(member);
 
 
-  if(
-    status==="entregada" ||
-    status==="entregado"
-  ){
-
-    return{
-      text:"Entregada",
-      className:"status-done"
-    };
-
-  }
+  const email=
+    normalizeText(member.email);
 
 
-  if(
-    days>=7 ||
-    status==="revision" ||
-    status==="pendiente revision"
-  ){
+  return agencyMembers.filter(person=>{
 
-    return{
-      text:"Pendiente revisión",
-      className:"status-review"
-    };
+    if(person.firestoreId===member.firestoreId){
 
-  }
+      return false;
+
+    }
 
 
-  return{
-    text:"En progreso",
-    className:"status-progress"
-  };
-
-}
+    const invitedBy=
+      normalizeText(
+        getMemberInvitedBy(person)
+      );
 
 
-function rewardValue(reward){
-
-  if(
-    Number.isFinite(
-      Number(reward.simulatedCoins)
-    )
-  ){
-
-    return Number(
-      reward.simulatedCoins
+    return(
+      (
+        ownCode &&
+        invitedBy===
+        normalizeText(ownCode)
+      )
+      ||
+      (
+        email &&
+        invitedBy===email
+      )
     );
 
+  });
+
+}
+
+
+function findInviter(member){
+
+  const invitedBy=
+    normalizeText(
+      getMemberInvitedBy(member)
+    );
+
+
+  if(!invitedBy){
+
+    return null;
+
   }
 
 
-  return(
-    normalizeText(reward.rewardType)
-    ==="new"
-  )
-    ? TEST_REWARD_NEW
-    : TEST_REWARD_INVITER;
+  return agencyMembers.find(person=>{
+
+    const code=
+      normalizeText(
+        getMemberInvitationCode(person)
+      );
+
+
+    const email=
+      normalizeText(person.email);
+
+
+    return(
+      code===invitedBy ||
+      email===invitedBy
+    );
+
+  }) || null;
+
+}
+
+
+function roleLabel(role){
+
+  const value=
+    normalizeText(role);
+
+
+  if(
+    value==="agente" ||
+    value==="fundador" ||
+    value==="creador"
+  ){
+
+    return "Agente fundador";
+
+  }
+
+
+  if(
+    value==="administrador" ||
+    value==="administradora"
+  ){
+
+    return "Administración";
+
+  }
+
+
+  return "Emisora";
+
+}
+
+
+function memberCardMarkup(member){
+
+  const invites=
+    getMemberInvites(member);
+
+
+  const validDays=
+    getValidatedDays(member);
+
+
+  const avatar=
+    getMemberAvatar(member);
+
+
+  const photoMarkup=
+    avatar
+      ? `<img src="${avatar}" alt="${getMemberName(member)}">`
+      : "👤";
+
+
+  return `
+    <article class="member-card">
+
+      <div class="member-top">
+
+        <div class="avatar">
+          ${photoMarkup}
+        </div>
+
+        <div class="member-info">
+
+          <h3>
+            ${getMemberName(member)}
+          </h3>
+
+          <p>
+            ID Poppo:
+            ${getMemberPoppoId(member) || "No indicado"}
+          </p>
+
+          <span class="role">
+            ${roleLabel(getMemberRole(member))}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="member-stats">
+
+        <div class="member-stat">
+
+          <strong>
+            ${invites.length}
+          </strong>
+
+          <span>
+            INVITADOS
+          </span>
+
+        </div>
+
+
+        <div class="member-stat">
+
+          <strong>
+            ${validDays.length}/7
+          </strong>
+
+          <span>
+            DÍAS VÁLIDOS
+          </span>
+
+        </div>
+
+
+        <div class="member-stat">
+
+          <strong>
+            ${
+              validDays.length>=7
+                ? "✅"
+                : "⏳"
+            }
+          </strong>
+
+          <span>
+            ESTADO
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="open-member"
+        type="button"
+        onclick="openMemberDetail('${member.firestoreId}')"
+      >
+        Ver árbol y seguimiento
+      </button>
+
+    </article>
+  `;
+
+}
+
+
+function renderMembers(){
+
+  const panel=
+    document.getElementById(
+      "membersPanel"
+    );
+
+
+  const search=
+    normalizeText(
+      document
+        .getElementById("memberSearch")
+        .value
+    );
+
+
+  let filtered=
+    agencyMembers;
+
+
+  if(search){
+
+    filtered=
+      agencyMembers.filter(member=>{
+
+        const name=
+          normalizeText(
+            getMemberName(member)
+          );
+
+
+        const poppoId=
+          normalizeText(
+            getMemberPoppoId(member)
+          );
+
+
+        return(
+          name.includes(search) ||
+          poppoId.includes(search)
+        );
+
+      });
+
+  }
+
+
+  if(!filtered.length){
+
+    panel.innerHTML=`
+      <div class="empty">
+
+        No hay emisoras que coincidan
+        con la búsqueda.
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  panel.innerHTML=
+    filtered
+      .map(memberCardMarkup)
+      .join("");
+
+}
+
+
+function updateSummary(){
+
+  const totalMembers=
+    agencyMembers.length;
+
+
+  const totalDays=
+    agencyMembers.reduce(
+      (sum,member)=>
+        sum +
+        getValidatedDays(member).length,
+      0
+    );
+
+
+  const completedMembers=
+    agencyMembers.filter(
+      member=>
+        getValidatedDays(member)
+          .length>=7
+    ).length;
+
+
+  const simulatedCoins=
+    completedMembers *
+    (
+      TEST_REWARD_NEW +
+      TEST_REWARD_INVITER
+    );
+
+
+  document
+    .getElementById("totalMembers")
+    .textContent=
+      totalMembers;
+
+
+  document
+    .getElementById("totalValidatedDays")
+    .textContent=
+      totalDays;
+
+
+  document
+    .getElementById("totalSimulatedCoins")
+    .textContent=
+      simulatedCoins
+        .toLocaleString("es-ES");
 
 }
 
 
 function createDayMarkup(
-  done,
-  index
+  index,
+  validatedDays
 ){
+
+  const done=
+    index<validatedDays.length;
+
+
+  const date=
+    done
+      ? validatedDays[index]
+      : "";
+
 
   return `
     <div class="day ${done ? "done" : ""}">
@@ -1207,371 +1845,208 @@ function createDayMarkup(
         ${done ? "✅" : "🔒"}
       </strong>
 
+      <span>
+        ${date || "Pendiente"}
+      </span>
+
     </div>
   `;
 
 }
 
 
-function renderRewards(){
+function openMemberDetail(
+  firestoreId
+){
 
-  const panel=
-    document.getElementById(
-      "rewardsPanel"
+  const member=
+    agencyMembers.find(
+      item=>
+        item.firestoreId===
+        firestoreId
     );
 
 
-  if(!userRewards.length){
-
-    panel.innerHTML=`
-      <div class="empty">
-
-        No tienes recompensas en seguimiento todavía.
-
-        Cuando una invitación válida entre en el
-        programa de 7 días, aparecerá aquí.
-
-      </div>
-    `;
+  if(!member){
 
     return;
 
   }
 
 
-  panel.innerHTML=
-    userRewards
-      .map(reward=>{
-
-        const days=
-          getRewardDays(reward);
-
-        const done=
-          countDoneDays(reward);
-
-        const percent=
-          Math.round(
-            done / 7 * 100
-          );
-
-        const status=
-          getRewardStatus(reward);
-
-        const person=
-
-          reward.invitedName ||
-
-          reward.newMemberName ||
-
-          reward.personName ||
-
-          "Invitación en seguimiento";
+  selectedMember=
+    member;
 
 
-        const relationship=
-
-          normalizeText(
-            reward.rewardType
-          )==="new"
-
-            ? "Recompensa de nueva emisora"
-
-            : "Recompensa por invitación";
+  const validatedDays=
+    getValidatedDays(member);
 
 
-        return `
-          <article class="reward-card">
-
-            <div class="reward-top">
-
-              <div class="reward-avatar">
-                🎁
-              </div>
-
-              <div class="reward-info">
-
-                <h3>
-                  ${person}
-                </h3>
-
-                <p>
-                  ${relationship}
-                  · 5 minutos diarios en Sala Pro
-                </p>
-
-              </div>
-
-              <span
-                class="status-badge ${status.className}"
-              >
-                ${status.text}
-              </span>
-
-            </div>
+  const invites=
+    getMemberInvites(member);
 
 
-            <div class="progress-wrap">
-
-              <div class="progress-head">
-
-                <span>
-                  Progreso de actividad
-                </span>
-
-                <strong>
-                  ${done}/7 días
-                </strong>
-
-              </div>
+  const inviter=
+    findInviter(member);
 
 
-              <div class="progress-bar">
-
-                <div
-                  class="progress-fill"
-                  style="width:${percent}%"
-                ></div>
-
-              </div>
-
-            </div>
-
-
-            <div class="days">
-
-              ${
-                days
-                  .map(createDayMarkup)
-                  .join("")
-              }
-
-            </div>
-
-
-            <div class="reward-bottom">
-
-              <div class="reward-value">
-
-                Valor de prueba
-
-                <strong>
-
-                  ${
-                    rewardValue(reward)
-                      .toLocaleString("es-ES")
-                  }
-                  coins
-
-                </strong>
-
-              </div>
-
-
-              <div class="reward-note">
-
-                🧪 Simulación.
-                No genera derecho a recarga
-                hasta activación oficial.
-
-              </div>
-
-            </div>
-
-          </article>
-        `;
-
-      })
-      .join("");
-
-}
-
-
-function renderSummary(){
-
-  const totalRewards=
-    userRewards.length;
-
-
-  const totalDays=
-    userRewards.reduce(
-      (sum,reward)=>
-        sum + countDoneDays(reward),
-      0
-    );
-
-
-  const totalCoins=
-    userRewards.reduce(
-      (sum,reward)=>
-        sum + rewardValue(reward),
-      0
+  const progress=
+    Math.round(
+      validatedDays.length /
+      7 *
+      100
     );
 
 
   document
-    .getElementById("rewardCount")
+    .getElementById("detailName")
     .textContent=
-      totalRewards;
+      getMemberName(member);
 
 
   document
-    .getElementById("validDays")
+    .getElementById("detailSubtitle")
     .textContent=
-      totalDays;
+      "Seguimiento de actividad y recompensas";
 
 
   document
-    .getElementById("simulatedCoins")
+    .getElementById("detailProfileName")
     .textContent=
-      totalCoins
-        .toLocaleString("es-ES");
+      getMemberName(member);
+
+
+  document
+    .getElementById("detailRole")
+    .textContent=
+      roleLabel(
+        getMemberRole(member)
+      );
+
+
+  document
+    .getElementById("detailPoppoId")
+    .textContent=
+      "ID Poppo: " +
+      (
+        getMemberPoppoId(member) ||
+        "No indicado"
+      );
+
+
+  document
+    .getElementById("detailInvitedBy")
+    .textContent=
+      inviter
+        ? "Invitada por: " +
+          getMemberName(inviter)
+        : "Invitada por: sin datos";
+
+
+  const avatar=
+    getMemberAvatar(member);
+
+
+  const detailAvatar=
+    document.getElementById(
+      "detailAvatar"
+    );
+
+
+  if(avatar){
+
+    detailAvatar.innerHTML=
+      `<img src="${avatar}" alt="${getMemberName(member)}">`;
+
+  }else{
+
+    detailAvatar.textContent=
+      "👤";
 
   }
-  function getAdminLevel(){
-
-  const raw=
-    normalizeText(
-      currentUser &&
-      (
-        currentUser.adminLevel ||
-        currentUser.adminCategory ||
-        currentUser.categoriaAdmin
-      )
-    );
 
 
-  return TEST_ADMIN_LEVELS[raw]
-    ? raw
-    : "nivel1";
+  document
+    .getElementById("detailProgressText")
+    .textContent=
+      validatedDays.length +
+      "/7 días";
 
-}
+
+  document
+    .getElementById("detailProgressFill")
+    .style.width=
+      progress + "%";
 
 
-function getAdminValidDays(){
+  document
+    .getElementById("detailDays")
+    .innerHTML=
+      Array
+        .from(
+          {length:7},
+          (_,index)=>
+            createDayMarkup(
+              index,
+              validatedDays
+            )
+        )
+        .join("");
 
-  return Math.max(
-    0,
-    Number(
-      currentUser &&
-      (
-        currentUser.adminValidDays ||
-        currentUser.diasAdminValidos ||
-        0
-      )
-    ) || 0
+
+  if(validatedDays.length>=7){
+
+    document
+      .getElementById("detailRewardStatus")
+      .textContent=
+        "🪙 Recompensa desbloqueada";
+
+
+    document
+      .getElementById("detailRewardText")
+      .textContent=
+        "Ha completado 7 días válidos. La recompensa sigue en modo prueba y pendiente de revisión del fundador.";
+
+  }else{
+
+    document
+      .getElementById("detailRewardStatus")
+      .textContent=
+        "🪙 Recompensa en progreso";
+
+
+    document
+      .getElementById("detailRewardText")
+      .textContent=
+        "Cada día se valida al completar 5 minutos dentro de Sala Pro. El sistema sigue en modo prueba.";
+
+  }
+
+
+  renderInviteTree(
+    member,
+    invites
   );
 
-}
 
+  document
+    .getElementById("memberDetail")
+    .classList.add("show");
 
-  function renderAdmin(){
+  }
+  function renderInviteTree(member,invites){
 
-  const section=
+  const container=
     document.getElementById(
-      "adminSection"
+      "detailTree"
     );
 
 
-  if(isFounderRole(currentRole)){
+  if(!invites.length){
 
-    section.classList.remove("hidden");
-
-    document
-      .getElementById("adminLevel")
-      .textContent=
-        "Panel del fundador";
-
-    document
-      .getElementById("adminDays")
-      .textContent=
-        "—";
-
-    document
-      .getElementById("adminDaily")
-      .textContent=
-        "—";
-
-    document
-      .getElementById("adminTotal")
-      .textContent=
-        "—";
-
-    document
-      .querySelector(".admin-text p")
-      .textContent=
-        "Control general de incentivos administrativos · Modo prueba";
-
-    return;
-
-  }
-
-
-  if(!isAdminRole(currentRole)){
-
-    section.classList.add("hidden");
-
-    return;
-
-  }
-
-
-  section.classList.remove("hidden");
-
-  const levelKey=
-    getAdminLevel();
-
-  const level=
-    TEST_ADMIN_LEVELS[levelKey];
-
-  const days=
-    getAdminValidDays();
-
-
-  document
-    .getElementById("adminLevel")
-    .textContent=
-      level.name;
-
-  document
-    .getElementById("adminDays")
-    .textContent=
-      days;
-
-  document
-    .getElementById("adminDaily")
-    .textContent=
-      level.daily.toLocaleString("es-ES");
-
-  document
-    .getElementById("adminTotal")
-    .textContent=
-      (days * level.daily)
-        .toLocaleString("es-ES");
-
-  document
-    .querySelector(".admin-text p")
-    .textContent=
-      "Seguimiento mensual en fase de prueba";
-
-  }
-
-
-function renderHistory(){
-
-  const panel=
-    document.getElementById(
-      "historyPanel"
-    );
-
-
-  if(!rewardHistory.length){
-
-    panel.innerHTML=`
+    container.innerHTML=`
       <div class="empty">
-
-        Todavía no hay movimientos
-        simulados registrados.
-
+        Esta persona todavía no tiene invitaciones vinculadas.
       </div>
     `;
 
@@ -1580,58 +2055,31 @@ function renderHistory(){
   }
 
 
-  panel.innerHTML=
-    rewardHistory
-      .map(item=>{
+  container.innerHTML=
+    invites
+      .map(person=>{
 
-        const label=
-          item.label ||
-          item.type ||
-          "Movimiento de prueba";
-
-
-        const date=
-          item.date ||
-          item.createdLabel ||
-          "Sin fecha";
-
-
-        const value=
-          Number(
-            item.coins ||
-            item.value ||
-            0
-          );
+        const validDays=
+          getValidatedDays(person);
 
 
         return `
-          <div class="history-row">
+          <div class="tree-person">
 
-            <div class="history-icon">
-              💎
-            </div>
+            <strong>
+              └── ${getMemberName(person)}
+            </strong>
 
-            <div class="history-info">
+            <span>
+              ID Poppo:
+              ${getMemberPoppoId(person) || "No indicado"}
+            </span>
 
-              <strong>
-                ${label}
-              </strong>
-
-              <span>
-                ${date}
-              </span>
-
-            </div>
-
-            <div class="history-value">
-
-              ${
-                value
-                  .toLocaleString("es-ES")
-              }
-              coins
-
-            </div>
+            <span>
+              Progreso:
+              ${validDays.length}/7 días
+              ${validDays.length>=7 ? "✅" : "⏳"}
+            </span>
 
           </div>
         `;
@@ -1642,87 +2090,153 @@ function renderHistory(){
 }
 
 
-async function loadRewards(){
+function startMembersSync(){
 
-  try{
+  if(unsubscribeMembers){
 
-    const byOwner=
-      await db
-        .collection("reward_tests")
-        .where(
-          "ownerEmail",
-          "==",
-          currentEmail
-        )
-        .get();
-
-
-    userRewards=
-      byOwner.docs
-        .map(doc=>({
-
-          firestoreId:doc.id,
-
-          ...doc.data()
-
-        }));
-
-
-    const historySnapshot=
-      await db
-        .collection(
-          "reward_history_tests"
-        )
-        .where(
-          "ownerEmail",
-          "==",
-          currentEmail
-        )
-        .get();
-
-
-    rewardHistory=
-      historySnapshot.docs
-        .map(doc=>({
-
-          firestoreId:doc.id,
-
-          ...doc.data()
-
-        }));
-
-
-  }catch(error){
-
-    console.error(
-      "Error cargando recompensas:",
-      error
-    );
-
-
-    userRewards=[];
-
-    rewardHistory=[];
+    unsubscribeMembers();
 
   }
 
 
-  renderRewards();
+  unsubscribeMembers=
+    db
+      .collection("usuarios")
+      .onSnapshot(
 
-  renderSummary();
+        snapshot=>{
 
-  renderHistory();
+          agencyMembers=
+            snapshot.docs.map(doc=>({
+
+              firestoreId:doc.id,
+
+              ...doc.data()
+
+            }));
+
+
+          renderMembers();
+
+          updateSummary();
+
+
+          if(selectedMember){
+
+            const updated=
+              agencyMembers.find(
+                item=>
+                  item.firestoreId===
+                  selectedMember.firestoreId
+              );
+
+
+            if(updated){
+
+              openMemberDetail(
+                updated.firestoreId
+              );
+
+            }
+
+          }
+
+        },
+
+
+        error=>{
+
+          console.error(
+            "Error sincronizando emisoras:",
+            error
+          );
+
+
+          document
+            .getElementById("membersPanel")
+            .innerHTML=`
+              <div class="empty">
+                No se pudieron cargar las emisoras.
+              </div>
+            `;
+
+        }
+
+      );
 
 }
 
 
-async function startRewardsPage(){
+function startActivitySync(){
 
-  if(!TEST_MODE){
+  if(unsubscribeActivity){
 
-    console.warn(
-      "El sistema ya no está en modo prueba"
+    unsubscribeActivity();
+
+  }
+
+
+  unsubscribeActivity=
+    db
+      .collection("sala_pro_activity")
+      .onSnapshot(
+
+        snapshot=>{
+
+          roomActivity=
+            snapshot.docs.map(doc=>({
+
+              firestoreId:doc.id,
+
+              ...doc.data()
+
+            }));
+
+
+          renderMembers();
+
+          updateSummary();
+
+
+          if(selectedMember){
+
+            openMemberDetail(
+              selectedMember.firestoreId
+            );
+
+          }
+
+        },
+
+
+        error=>{
+
+          console.error(
+            "Error sincronizando actividad:",
+            error
+          );
+
+        }
+
+      );
+
+}
+
+
+async function startRewards(){
+
+  const logged=
+    localStorage.getItem(
+      "jm_logged"
     );
+
+
+  if(logged!=="yes"){
+
+    window.location.href=
+      "index.html";
+
+    return;
 
   }
 
@@ -1738,16 +2252,39 @@ async function startRewardsPage(){
   }
 
 
-  renderAdmin();
+  startMembersSync();
 
-
-  await loadRewards();
+  startActivitySync();
 
 }
 
 
-window.onload=
-  startRewardsPage;
+window.addEventListener(
+  "beforeunload",
+  function(){
+
+    if(unsubscribeMembers){
+
+      unsubscribeMembers();
+
+    }
+
+
+    if(unsubscribeActivity){
+
+      unsubscribeActivity();
+
+    }
+
+  }
+);
+
+
+window.onload=function(){
+
+  startRewards();
+
+};
 
 </script>
 
