@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 
 <meta charset="UTF-8">
@@ -15,28 +14,199 @@
 <style>
 
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
   font-family:Arial,sans-serif;
+}
+
+:root{
+  --gold:#f7d774;
+  --blue:#007bff;
+  --blue2:#00b7ff;
+  --dark:#020713;
+  --soft:#dce8ff;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
   background:#020713;
-  color:#fff;
+  color:white;
   min-height:100vh;
-  padding-bottom:76px;
+  padding-bottom:78px;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
 }
 
 button{
   border:0;
-  color:inherit;
   cursor:pointer;
+  color:inherit;
 }
 
-body.lock{
-  overflow:hidden;
+button:focus-visible,
+a:focus-visible,
+input:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
 }
+
+
+/* LOGIN */
+
+.login{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#020713;
+}
+
+.login.show{
+  display:flex;
+}
+
+.login-bg{
+  position:absolute;
+  inset:0;
+  background:
+    url("agencia-jm-equipo-banner.png")
+    center/cover no-repeat;
+  filter:brightness(.34) saturate(1.3);
+}
+
+.login-bg:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,90,255,.35),
+      #020713 86%
+    );
+}
+
+.login-card{
+  position:relative;
+  width:100%;
+  max-width:380px;
+  padding:22px;
+  border-radius:28px;
+  background:rgba(0,12,38,.80);
+  border:1px solid rgba(247,215,116,.45);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 38px rgba(0,140,255,.55);
+  text-align:center;
+}
+
+.login-card h1{
+  color:var(--gold);
+  font-size:31px;
+  margin-bottom:6px;
+}
+
+.login-card p{
+  color:var(--soft);
+  font-size:14px;
+  margin-bottom:16px;
+}
+
+.input{
+  height:48px;
+  border-radius:16px;
+  margin-bottom:10px;
+  background:rgba(0,12,38,.86);
+  border:1px solid rgba(0,183,255,.48);
+  display:flex;
+  align-items:center;
+  padding:0 13px;
+  gap:10px;
+}
+
+.input:focus-within{
+  border-color:var(--gold);
+  box-shadow:
+    0 0 0 2px
+    rgba(247,215,116,.12);
+}
+
+.input input{
+  flex:1;
+  background:transparent;
+  border:0;
+  outline:0;
+  color:white;
+  font-size:15px;
+  min-width:0;
+}
+
+.input input::placeholder{
+  color:#aebbd2;
+}
+
+.login-btn{
+  width:100%;
+  height:50px;
+  border-radius:17px;
+  background:
+    linear-gradient(
+      135deg,
+      #d4a72d,
+      #ffcf55
+    );
+  color:#061326;
+  font-weight:900;
+  font-size:17px;
+  margin-top:4px;
+}
+
+.login-btn:active{
+  transform:scale(.985);
+}
+
+.login-links{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:12px;
+}
+
+.login-links button{
+  height:38px;
+  border-radius:999px;
+  background:rgba(0,12,38,.65);
+  border:1px solid rgba(0,183,255,.35);
+  color:white;
+  font-size:12px;
+}
+
+.login-foot{
+  margin-top:14px;
+  font-size:12px;
+  color:var(--soft);
+}
+
+.register-extra{
+  display:none;
+  margin-top:8px;
+}
+
+.register-extra.show{
+  display:block;
+}
+
+
+/* APP */
 
 .app{
   min-height:100vh;
@@ -44,19 +214,23 @@ body.lock{
   background:
     radial-gradient(
       circle at top,
-      #006cff88 0,
+      #006cff88 0%,
       #061326 35%,
       #020713 78%
     );
 }
+
+
+/* HERO */
 
 .hero{
   position:relative;
   height:225px;
   border-radius:26px;
   overflow:hidden;
-  border:1px solid #00b7ff94;
-  box-shadow:0 0 28px #008cff6b;
+  border:1px solid rgba(0,183,255,.58);
+  background:#061326;
+  box-shadow:0 0 28px rgba(0,140,255,.42);
 }
 
 .hero img{
@@ -64,7 +238,11 @@ body.lock{
   height:100%;
   object-fit:cover;
   object-position:center top;
-  filter:saturate(1.2) brightness(.9);
+  display:block;
+  filter:
+    saturate(1.22)
+    contrast(1.08)
+    brightness(.90);
 }
 
 .hero:after{
@@ -74,14 +252,14 @@ body.lock{
   background:
     linear-gradient(
       90deg,
-      #000b,
+      rgba(0,0,0,.72),
       transparent 55%,
-      #0005
+      rgba(0,0,0,.35)
     ),
     linear-gradient(
       180deg,
-      transparent,
-      #020713c7
+      rgba(0,0,0,.05),
+      rgba(2,7,19,.72)
     );
 }
 
@@ -99,9 +277,32 @@ body.lock{
   width:48px;
   height:48px;
   border-radius:17px;
-  background:#000a;
-  border:1px solid #ffffff38;
+  background:rgba(0,12,38,.58);
+  border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(10px);
   font-size:27px;
+  transition:
+    .18s transform,
+    .18s background;
+}
+
+.hero-btn:active{
+  transform:scale(.94);
+}
+
+.bell{
+  position:relative;
+}
+
+.bell:after{
+  content:"";
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:10px;
+  height:10px;
+  background:#ffbf2f;
+  border-radius:50%;
 }
 
 .hero-title{
@@ -113,38 +314,50 @@ body.lock{
 
 .hero-title h1{
   font-size:29px;
+  line-height:1.02;
+  color:white;
 }
 
 .hero-title h1 span{
+  color:var(--gold);
   display:block;
-  color:#f7d774;
 }
 
 .hero-title p{
   margin-top:8px;
+  font-size:14px;
 }
 
 .hero-line{
   width:66px;
   height:3px;
-  background:#f7d774;
+  background:var(--gold);
+  border-radius:99px;
   margin-top:11px;
 }
 
+
+/* ESTADO */
+
 .status{
   margin:10px 0 16px;
-  min-height:48px;
+  min-height:46px;
   border-radius:999px;
-  background:#0008;
-  border:1px solid #00b7ff4d;
+  background:rgba(0,12,38,.76);
+  border:1px solid rgba(0,183,255,.30);
   display:grid;
-  grid-template-columns:1.1fr .8fr .9fr auto;
+  grid-template-columns:
+    1.1fr .8fr .9fr auto;
   align-items:center;
+  gap:4px;
   padding:5px 7px;
 }
 
 .status div{
   text-align:center;
+  border-right:
+    1px solid
+    rgba(255,255,255,.10);
 }
 
 .status strong{
@@ -154,16 +367,17 @@ body.lock{
 
 .status span{
   font-size:9px;
-  color:#dce8ff;
+  color:var(--soft);
 }
 
-.status .live{
+.live{
   color:#69ff55;
+  font-weight:900;
 }
 
-.status button{
-  min-height:34px;
-  padding:0 12px;
+.status a{
+  min-height:32px;
+  padding:0 11px;
   border-radius:999px;
   background:
     linear-gradient(
@@ -171,16 +385,24 @@ body.lock{
       #006cff,
       #00b7ff
     );
-  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:800;
 }
+
+
+/* SECCIONES */
 
 .section-title{
   display:flex;
   align-items:center;
   gap:8px;
-  color:#f7d774;
+  color:var(--gold);
   font-size:16px;
   margin:18px 0 10px;
+  text-transform:uppercase;
 }
 
 .section-title:after{
@@ -190,15 +412,15 @@ body.lock{
   background:
     linear-gradient(
       90deg,
-      #f7d774,
+      var(--gold),
       transparent
     );
 }
 
 .icon-panel{
   border-radius:24px;
-  background:#0005;
-  border:1px solid #00b7ff38;
+  background:rgba(0,12,38,.48);
+  border:1px solid rgba(0,183,255,.22);
   padding:14px 10px;
   margin-bottom:16px;
 }
@@ -210,12 +432,12 @@ body.lock{
 }
 
 .icon-link{
-  background:transparent;
   display:flex;
   flex-direction:column;
   align-items:center;
-  gap:7px;
   text-align:center;
+  gap:7px;
+  min-width:0;
 }
 
 .icon-circle{
@@ -226,41 +448,73 @@ body.lock{
   align-items:center;
   justify-content:center;
   font-size:28px;
-  background:#0008;
-  border:1px solid #00b7ff73;
-  box-shadow:0 0 18px #008cff59;
+  background:rgba(0,12,38,.65);
+  border:1px solid rgba(0,183,255,.45);
+  box-shadow:0 0 18px rgba(0,140,255,.35);
+  transition:
+    .18s transform,
+    .18s box-shadow;
+}
+
+.icon-link:active .icon-circle{
+  transform:scale(.94);
 }
 
 .icon-link b{
   font-size:12px;
+  color:white;
 }
 
 .icon-link small{
   font-size:10px;
-  color:#dce8ff;
+  color:var(--soft);
 }
 
 .purple{
   border-color:#b856ff;
+  box-shadow:0 0 18px #9b32ff66;
 }
 
 .green{
   border-color:#39ffcb;
+  box-shadow:0 0 18px #39ffcb55;
 }
 
 .gold{
-  border-color:#f7d774;
+  border-color:var(--gold);
+  box-shadow:
+    0 0 18px
+    rgba(247,215,116,.50);
 }
 
 .red{
   border-color:#ff5b60;
+  box-shadow:0 0 18px #ff5b6066;
 }
+
+.dots-icon{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+}
+
+.dots-icon span{
+  width:8px;
+  height:8px;
+  background:#fff;
+  border-radius:50%;
+  display:block;
+}
+
+
+/* MENÚ LATERAL */
 
 .drawer{
   position:fixed;
   inset:0;
   display:none;
-  background:#000a;
+  background:rgba(0,0,0,.65);
   z-index:9000;
 }
 
@@ -272,30 +526,32 @@ body.lock{
   width:82%;
   max-width:320px;
   height:100%;
-  background:#061326fa;
+  background:rgba(6,19,38,.97);
+  border-right:
+    1px solid
+    rgba(247,215,116,.35);
   padding:22px 16px;
   overflow-y:auto;
 }
 
 .drawer h2{
-  color:#f7d774;
+  color:var(--gold);
   margin-bottom:16px;
 }
 
+.drawer a,
 .drawer button{
   width:100%;
-  min-height:46px;
+  height:46px;
   border-radius:15px;
   margin-bottom:9px;
-  background:#003cb461;
-  border:1px solid #00b7ff59;
+  background:rgba(0,60,180,.38);
+  border:1px solid rgba(0,183,255,.35);
+  color:white;
+  display:flex;
+  align-items:center;
   padding:0 14px;
-  text-align:left;
   font-size:15px;
-}
-
-.logout{
-  background:#820019bf!important;
 }
 
 .agent-only,
@@ -305,8 +561,16 @@ body.lock{
 
 .agent-only.show,
 .manager-only.show{
-  display:block!important;
+  display:flex!important;
 }
+
+.logout{
+  background:rgba(130,0,25,.75)!important;
+  border-color:rgba(255,80,80,.45)!important;
+}
+
+
+/* BARRA INFERIOR */
 
 .bottom-nav{
   position:fixed;
@@ -314,21 +578,23 @@ body.lock{
   right:0;
   bottom:0;
   height:74px;
-  background:#000c;
-  border-top:1px solid #f7d77442;
+  background:rgba(0,12,38,.98);
+  border-top:
+    1px solid
+    rgba(247,215,116,.26);
   display:grid;
   grid-template-columns:repeat(5,1fr);
   z-index:999;
 }
 
 .nav-item{
-  background:transparent;
+  color:white;
+  font-size:11px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   gap:3px;
-  font-size:11px;
 }
 
 .nav-item .icon{
@@ -336,128 +602,35 @@ body.lock{
 }
 
 .nav-item.active{
-  color:#f7d774;
+  color:var(--gold);
 }
 
-.login{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:#020713;
-}
 
-.login.show{
-  display:flex;
-}
+@media(max-width:380px){
 
-.login-card{
-  width:100%;
-  max-width:390px;
-  padding:22px;
-  border-radius:28px;
-  background:#000c;
-  border:1px solid #f7d77473;
-  text-align:center;
-  box-shadow:0 0 38px #008cff80;
-}
+  .icon-grid{
+    gap:9px;
+  }
 
-.login-card h1{
-  color:#f7d774;
-  font-size:31px;
-  margin-bottom:6px;
-}
+  .icon-circle{
+    width:54px;
+    height:54px;
+    font-size:25px;
+  }
 
-.login-card p{
-  color:#dce8ff;
-  margin-bottom:16px;
-}
+  .status{
+    grid-template-columns:
+      1fr .75fr .8fr auto;
+  }
 
-.input{
-  min-height:48px;
-  margin-bottom:10px;
-  padding:0 13px;
-  border-radius:16px;
-  background:#0008;
-  border:1px solid #00b7ff7a;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+  .status a{
+    padding:0 8px;
+  }
 
-.input input{
-  flex:1;
-  height:46px;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:#fff;
-  font-size:15px;
-  min-width:0;
-}
-
-.login-btn{
-  width:100%;
-  height:50px;
-  border-radius:17px;
-  background:
-    linear-gradient(
-      135deg,
-      #d4a72d,
-      #ffcf55
-    );
-  color:#061326;
-  font-weight:900;
-  font-size:17px;
-}
-
-.login-links{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-top:12px;
-}
-
-.login-links button{
-  min-height:40px;
-  border-radius:999px;
-  background:#0007;
-  border:1px solid #00b7ff59;
-  font-size:12px;
-}
-
-.register-extra{
-  display:none;
-}
-
-.register-extra.show{
-  display:block;
-}
-
-.msg{
-  position:fixed;
-  left:16px;
-  right:16px;
-  bottom:90px;
-  z-index:9500;
-  display:none;
-  max-width:420px;
-  margin:auto;
-  padding:14px 16px;
-  border-radius:16px;
-  background:#07172f;
-  border:1px solid #00b7ff8c;
-  box-shadow:0 0 25px #0078ff59;
-}
-
-.msg.show{
-  display:block;
 }
 
 </style>
+
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
@@ -466,7 +639,9 @@ body.lock{
 </head>
 
 <body>
-  <section id="loginScreen" class="login">
+  <section id="loginScreen" class="login" aria-label="Acceso a JM Elite">
+
+  <div class="login-bg"></div>
 
   <div class="login-card">
 
@@ -481,6 +656,7 @@ body.lock{
       <input
         id="emailInput"
         type="email"
+        autocomplete="email"
         placeholder="Correo electrónico"
       >
     </div>
@@ -490,14 +666,12 @@ body.lock{
       <input
         id="passInput"
         type="password"
+        autocomplete="current-password"
         placeholder="Contraseña"
       >
     </div>
 
-    <div
-      id="registerExtra"
-      class="register-extra"
-    >
+    <div id="registerExtra" class="register-extra">
 
       <div class="input">
         <span>👤</span>
@@ -505,15 +679,6 @@ body.lock{
           id="nameInput"
           type="text"
           placeholder="Nombre artístico"
-        >
-      </div>
-
-      <div class="input">
-        <span>🆔</span>
-        <input
-          id="poppoIdInput"
-          type="text"
-          placeholder="ID Poppo"
         >
       </div>
 
@@ -527,20 +692,11 @@ body.lock{
       </div>
 
       <div class="input">
-        <span>🔑</span>
-        <input
-          id="agencyCodeInput"
-          type="text"
-          placeholder="Código de acceso a la agencia"
-        >
-      </div>
-
-      <div class="input">
         <span>🎁</span>
         <input
-          id="recommendationCodeInput"
+          id="inviteInput"
           type="text"
-          placeholder="Código de recomendación"
+          placeholder="Código de invitación (opcional)"
         >
       </div>
 
@@ -549,42 +705,33 @@ body.lock{
     <button
       id="mainLoginBtn"
       class="login-btn"
-      type="button"
-      onclick="mainLoginAction()"
+      onclick="login()"
     >
       ENTRAR
     </button>
 
     <div class="login-links">
 
-      <button
-        type="button"
-        onclick="openNormalRegister()"
-      >
+      <button onclick="normalRegister()">
         Registro normal
       </button>
 
-      <button
-        type="button"
-        onclick="openInviteRegister()"
-      >
+      <button onclick="inviteRegister()">
         Registro invitación
       </button>
 
-      <button
-        type="button"
-        onclick="recoverPassword()"
-      >
+      <button onclick="recoverPassword()">
         Recuperar
       </button>
 
-      <button
-        type="button"
-        onclick="backToLogin()"
-      >
+      <button onclick="backToLogin()">
         Volver
       </button>
 
+    </div>
+
+    <div class="login-foot">
+      🔐 Seguridad y confianza · Agencia JM Elite
     </div>
 
   </div>
@@ -600,68 +747,47 @@ body.lock{
 
   <div class="drawer-panel">
 
-    <h2>🦅 JM Elite</h2>
+    <h2>JM Elite</h2>
 
-    <button
-      type="button"
-      onclick="goTo('perfil.html')"
-    >
+    <a href="perfil.html">
       👤 Perfil
-    </button>
+    </a>
 
-    <button
-      type="button"
+    <a
       class="agent-only"
-      onclick="goTo('agente.html','admin')"
+      href="agente.html"
     >
       👑 Panel de Administración
-    </button>
+    </a>
 
-    <button
-      type="button"
-      onclick="goTo('sala-pro.html')"
-    >
+    <a href="sala-pro.html">
       🎙️ Sala Pro
-    </button>
+    </a>
 
-    <button
-      type="button"
-      onclick="goTo('chatbot.html')"
-    >
+    <a href="chatbot.html">
       🤖 ChatBot IA
-    </button>
+    </a>
 
-    <button
-      type="button"
-      onclick="goTo('emisoras.html')"
-    >
-      👥 Mis Emisoras
-    </button>
+    <a href="emisoras.html">
+      👥 Emisoras
+    </a>
 
-    <button
-      type="button"
-      onclick="goTo('academia.html')"
-    >
+    <a href="academia.html">
       🎓 Academia
-    </button>
+    </a>
 
-    <button
-      type="button"
-      onclick="goTo('configuracion.html')"
-    >
+    <a href="configuracion.html">
       ⚙️ Configuración
-    </button>
+    </a>
 
-    <button
-      type="button"
+    <a
       class="manager-only"
-      onclick="goTo('invitaciones.html','invite')"
+      href="invitaciones.html"
     >
       📩 Invitar usuario nuevo
-    </button>
+    </a>
 
     <button
-      type="button"
       class="logout"
       onclick="logout()"
     >
@@ -686,17 +812,16 @@ body.lock{
 
       <button
         class="hero-btn"
-        type="button"
         onclick="openDrawer()"
+        aria-label="Abrir menú"
       >
         ☰
       </button>
 
       <button
-        id="notificationBell"
-        class="hero-btn"
-        type="button"
-        onclick="goTo('avisos.html')"
+        class="hero-btn bell"
+        onclick="location.href='avisos.html'"
+        aria-label="Ver avisos"
       >
         🔔
       </button>
@@ -722,9 +847,7 @@ body.lock{
   <section class="status">
 
     <div>
-      <strong class="live">
-        🟢 SALA
-      </strong>
+      <strong class="live">🟢 SALA</strong>
       <span>EN VIVO</span>
     </div>
 
@@ -738,12 +861,9 @@ body.lock{
       <span>Coins</span>
     </div>
 
-    <button
-      type="button"
-      onclick="goTo('sala-pro.html')"
-    >
+    <a href="sala-pro.html">
       Entrar ›
-    </button>
+    </a>
 
   </section>
 
@@ -756,53 +876,41 @@ body.lock{
 
     <div class="icon-grid">
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('chatbot.html')"
+        href="chatbot.html"
       >
-        <span class="icon-circle purple">
-          🤖
-        </span>
+        <span class="icon-circle purple">🤖</span>
         <b>ChatBot IA</b>
         <small>Asistente</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('emisoras.html')"
+        href="emisoras.html"
       >
-        <span class="icon-circle">
-          👥
-        </span>
+        <span class="icon-circle">👥</span>
         <b>Emisoras</b>
         <small>Equipo</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('pagos.html')"
+        href="pagos.html"
       >
-        <span class="icon-circle green">
-          💰
-        </span>
+        <span class="icon-circle green">💰</span>
         <b>Pagos</b>
         <small>Historial</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('ranking.html')"
+        href="ranking.html"
       >
-        <span class="icon-circle gold">
-          🏆
-        </span>
+        <span class="icon-circle gold">🏆</span>
         <b>Ranking</b>
         <small>Top</small>
-      </button>
+      </a>
 
     </div>
 
@@ -817,72 +925,56 @@ body.lock{
 
     <div class="icon-grid">
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('avisos.html')"
+        href="avisos.html"
       >
-        <span class="icon-circle gold">
-          📢
-        </span>
+        <span class="icon-circle gold">📢</span>
         <b>Avisos</b>
         <small>Noticias</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('eventos.html')"
+        href="eventos.html"
       >
-        <span class="icon-circle red">
-          🎉
-        </span>
+        <span class="icon-circle red">🎉</span>
         <b>Eventos</b>
         <small>Próximos</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('academia.html')"
+        href="academia.html"
       >
-        <span class="icon-circle">
-          🎓
-        </span>
+        <span class="icon-circle">🎓</span>
         <b>Academia</b>
         <small>Cursos</small>
-      </button>
+      </a>
 
-      <button
+      <a
+        id="inviteQuickAccess"
         class="icon-link manager-only"
-        type="button"
-        onclick="goTo('invitaciones.html','invite')"
+        href="invitaciones.html"
       >
-        <span class="icon-circle gold">
-          📩
-        </span>
+        <span class="icon-circle gold">📩</span>
         <b>Invitar</b>
         <small>Usuario nuevo</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('soporte.html')"
+        href="soporte.html"
       >
-        <span class="icon-circle green">
-          🛟
-        </span>
+        <span class="icon-circle green">🛟</span>
         <b>Soporte</b>
         <small>Ayuda</small>
-      </button>
+      </a>
 
     </div>
 
-  </section>
-
-
-  <h2 class="section-title">
+                                          </section>
+                                            <h2 class="section-title">
     ⭐ Más opciones
   </h2>
 
@@ -890,113 +982,98 @@ body.lock{
 
     <div class="icon-grid">
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('perfil.html')"
+        href="perfil.html"
       >
-        <span class="icon-circle">
-          👤
-        </span>
+        <span class="icon-circle">👤</span>
         <b>Perfil</b>
         <small>Datos</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('configuracion.html')"
+        href="configuracion.html"
       >
-        <span class="icon-circle">
-          ⚙️
-        </span>
+        <span class="icon-circle">⚙️</span>
         <b>Ajustes</b>
         <small>Cuenta</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('normas.html')"
+        href="normas.html"
       >
-        <span class="icon-circle purple">
-          📖
-        </span>
+        <span class="icon-circle purple">📖</span>
         <b>Normas</b>
         <small>Reglas</small>
-      </button>
+      </a>
 
-      <button
+      <a
         class="icon-link"
-        type="button"
-        onclick="goTo('menu.html')"
+        href="menu.html"
       >
-        <span class="icon-circle">
-          ☰
+        <span class="icon-circle dots-icon">
+          <span></span>
+          <span></span>
+          <span></span>
         </span>
+
         <b>Más</b>
         <small>Opciones</small>
-      </button>
+
+      </a>
 
     </div>
 
   </section>
 
-      </main>
-      <nav class="bottom-nav">
+</main>
 
-  <button
+
+<nav class="bottom-nav">
+
+  <a
     class="nav-item active"
-    type="button"
-    onclick="goTo('index.html')"
+    href="index.html"
   >
     <span class="icon">🏠</span>
     <span>Inicio</span>
-  </button>
+  </a>
 
-  <button
+  <a
     class="nav-item"
-    type="button"
-    onclick="goTo('sala-pro.html')"
+    href="sala-pro.html"
   >
     <span class="icon">🎙️</span>
     <span>Sala Pro</span>
-  </button>
+  </a>
 
-  <button
+  <a
     class="nav-item"
-    type="button"
-    onclick="goTo('perfil.html')"
+    href="perfil.html"
   >
     <span class="icon">👤</span>
     <span>Perfil</span>
-  </button>
+  </a>
 
-  <button
+  <a
     class="nav-item"
-    type="button"
-    onclick="goTo('chat.html')"
+    href="chat.html"
   >
     <span class="icon">💬</span>
     <span>Chat</span>
-  </button>
+  </a>
 
-  <button
+  <a
     class="nav-item"
-    type="button"
-    onclick="goTo('menu.html')"
+    href="menu.html"
   >
     <span class="icon">☰</span>
     <span>Más</span>
-  </button>
+  </a>
 
 </nav>
-
-
-<div
-  id="systemMessage"
-  class="msg"
-></div>
 
 
 <script>
@@ -1006,6 +1083,9 @@ const AGENT_EMAILS=[
   "admin@jmelite.com",
   "elpepolan35@gmail.com"
 ];
+
+
+let registerMode="";
 
 
 const firebaseConfig={
@@ -1031,41 +1111,15 @@ const firebaseConfig={
 };
 
 
-firebase.initializeApp(
-  firebaseConfig
-);
+firebase.initializeApp(firebaseConfig);
+
+const db=firebase.firestore();
 
 
-const db=
-  firebase.firestore();
+function isAgent(email){
 
-
-let registerMode="";
-
-let messageTimer=null;
-
-
-function cleanText(value){
-
-  return String(
-    value || ""
-  ).trim();
-
-}
-
-
-function cleanEmail(value){
-
-  return cleanText(value)
-    .toLowerCase();
-
-}
-
-
-function getCurrentEmail(){
-
-  return cleanEmail(
-    localStorage.getItem("jm_email")
+  return AGENT_EMAILS.includes(
+    (email||"").toLowerCase()
   );
 
 }
@@ -1073,9 +1127,7 @@ function getCurrentEmail(){
 
 function getRole(){
 
-  return cleanText(
-    localStorage.getItem("jm_role")
-  );
+  return localStorage.getItem("jm_role") || "";
 
 }
 
@@ -1085,12 +1137,10 @@ function getPermissions(){
   try{
 
     return JSON.parse(
-      localStorage.getItem(
-        "jm_permissions"
-      ) || "{}"
+      localStorage.getItem("jm_permissions") || "{}"
     );
 
-  }catch(error){
+  }catch{
 
     return {};
 
@@ -1099,95 +1149,21 @@ function getPermissions(){
 }
 
 
-function isLogged(){
-
-  return (
-    localStorage.getItem("jm_logged")
-    ===
-    "yes"
-  );
-
-}
-
-
-function isAgent(email){
-
-  return AGENT_EMAILS.includes(
-    cleanEmail(email)
-  );
-
-}
-
-
-function canManage(){
+function applyPermissions(){
 
   const role=getRole();
 
-  return (
-    role==="agente" ||
-    role==="administrador" ||
-    isAgent(getCurrentEmail())
-  );
+  const permissions=getPermissions();
 
-}
-
-
-function canInvite(){
-
-  const permissions=
-    getPermissions();
-
-  return (
-    canManage() ||
-    permissions.canInvite===true
-  );
-
-}
-
-
-function showMessage(
-  text,
-  duration=2800
-){
-
-  const box=
-    document.getElementById(
-      "systemMessage"
-    );
-
-  if(!box){
-
-    return;
-
-  }
-
-  clearTimeout(messageTimer);
-
-  box.textContent=text;
-
-  box.classList.add("show");
-
-  messageTimer=setTimeout(
-    function(){
-
-      box.classList.remove("show");
-
-    },
-    duration
-  );
-
-}
-
-
-function applyPermissions(){
 
   document
     .querySelectorAll(".agent-only")
-    .forEach(function(element){
+    .forEach(el=>{
 
-      element.classList.toggle(
+      el.classList.toggle(
         "show",
-        canManage()
+        role==="agente" ||
+        role==="administrador"
       );
 
     });
@@ -1195,11 +1171,20 @@ function applyPermissions(){
 
   document
     .querySelectorAll(".manager-only")
-    .forEach(function(element){
+    .forEach(el=>{
 
-      element.classList.toggle(
+      const canInvite=
+
+        role==="agente" ||
+
+        role==="administrador" ||
+
+        permissions.canInvite===true;
+
+
+      el.classList.toggle(
         "show",
-        canInvite()
+        canInvite
       );
 
     });
@@ -1207,139 +1192,37 @@ function applyPermissions(){
 }
 
 
-function saveSession(
-  email,
-  role,
-  permissions,
-  extra
-){
+function checkLogin(){
 
-  const finalEmail=
-    cleanEmail(email);
-
-  const finalRole=
-    cleanText(role) || "emisora";
-
-  const finalPermissions=
-    permissions || {};
-
-  const finalExtra=
-    extra || {};
-
-
-  localStorage.setItem(
-    "jm_logged",
-    "yes"
-  );
-
-  localStorage.setItem(
-    "jm_email",
-    finalEmail
-  );
-
-  localStorage.setItem(
-    "jm_role",
-    finalRole
-  );
-
-  localStorage.setItem(
-    "jm_permissions",
-    JSON.stringify(
-      finalPermissions
-    )
-  );
-
-  localStorage.setItem(
-    "jm_user",
-    JSON.stringify({
-
-      email:finalEmail,
-
-      rol:finalRole,
-
-      ...finalExtra
-
-    })
-  );
-
-
-  applyPermissions();
-
-}
-
-
-function clearSession(){
-
-  [
-    "jm_logged",
-    "jm_email",
-    "jm_role",
-    "jm_permissions",
-    "jm_user"
-
-  ].forEach(function(key){
-
-    localStorage.removeItem(key);
-
-  });
-
-}
-
-
-function protectAgentSession(){
+  const logged=
+    localStorage.getItem("jm_logged");
 
   const email=
-    getCurrentEmail();
+    (
+      localStorage.getItem("jm_email") || ""
+    ).toLowerCase();
+
+  const login=
+    document.getElementById("loginScreen");
 
 
-  if(
-    isLogged() &&
-    isAgent(email)
-  ){
+  if(isAgent(email)){
 
-    saveSession(
-
-      email,
-
-      "administrador",
-
-      {
-        canInvite:true
-      },
-
-      {
-        artisticName:"Jesús"
-      }
-
+    localStorage.setItem(
+      "jm_role",
+      "administrador"
     );
 
   }
 
-}
 
+  if(logged==="yes"){
 
-function checkLogin(){
-
-  const loginScreen=
-    document.getElementById(
-      "loginScreen"
-    );
-
-
-  protectAgentSession();
-
-
-  if(isLogged()){
-
-    loginScreen.classList.remove(
-      "show"
-    );
+    login?.classList.remove("show");
 
   }else{
 
-    loginScreen.classList.add(
-      "show"
-    );
+    login?.classList.add("show");
 
   }
 
@@ -1349,119 +1232,36 @@ function checkLogin(){
 }
 
 
-function goTo(
-  page,
-  permission
-){
+function login(){
 
-  const requiredPermission=
-    permission || "";
+  if(registerMode){
 
-
-  if(!isLogged()){
-
-    document
-      .getElementById("loginScreen")
-      .classList.add("show");
-
-
-    showMessage(
-      "🔐 Inicia sesión para continuar."
-    );
-
+    sendRegisterRequest(registerMode);
 
     return;
 
   }
 
-
-  if(
-    requiredPermission==="admin" &&
-    !canManage()
-  ){
-
-    showMessage(
-      "⛔ No tienes permiso de administración."
-    );
-
-
-    return;
-
-  }
-
-
-  if(
-    requiredPermission==="invite" &&
-    !canInvite()
-  ){
-
-    showMessage(
-      "⛔ No tienes permiso para invitar."
-    );
-
-
-    return;
-
-  }
-
-
-  if(!page){
-
-    showMessage(
-      "⚠️ Acceso no disponible."
-    );
-
-
-    return;
-
-  }
-
-
-  window.location.assign(page);
-
-}
-
-
-function mainLoginAction(){
-
-  if(registerMode!==""){
-
-    sendRegisterRequest(
-      registerMode
-    );
-
-    return;
-
-  }
-
-
-  login();
-
-}
-
-
-async function login(){
 
   const email=
-    cleanEmail(
-      document
-        .getElementById("emailInput")
-        .value
-    );
+    document
+      .getElementById("emailInput")
+      .value
+      .trim()
+      .toLowerCase();
 
 
-  const password=
-    cleanText(
-      document
-        .getElementById("passInput")
-        .value
-    );
+  const pass=
+    document
+      .getElementById("passInput")
+      .value
+      .trim();
 
 
-  if(!email || !password){
+  if(!email || !pass){
 
-    showMessage(
-      "⚠️ Pon correo y contraseña."
+    alert(
+      "Pon correo y contraseña."
     );
 
     return;
@@ -1471,161 +1271,149 @@ async function login(){
 
   if(isAgent(email)){
 
-    saveSession(
+    localStorage.setItem(
+      "jm_logged",
+      "yes"
+    );
 
-      email,
+    localStorage.setItem(
+      "jm_email",
+      email
+    );
 
-      "administrador",
+    localStorage.setItem(
+      "jm_role",
+      "administrador"
+    );
 
-      {
+    localStorage.setItem(
+      "jm_permissions",
+      JSON.stringify({
         canInvite:true
-      },
+      })
+    );
 
-      {
-        artisticName:"Jesús"
-      }
+    localStorage.setItem(
+      "jm_user",
+      JSON.stringify({
 
+        email:email,
+
+        rol:"administrador"
+
+      })
     );
 
 
-    document
-      .getElementById("loginScreen")
-      .classList.remove("show");
-
-
-    showMessage(
-      "👑 Administración JM Elite activa."
-    );
-
+    checkLogin();
 
     return;
 
   }
 
 
-  try{
+  db
+    .collection("usuarios")
+    .where(
+      "email",
+      "==",
+      email
+    )
+    .limit(1)
+    .get()
 
-    const snapshot=
-      await db
-        .collection("usuarios")
-        .where(
-          "email",
-          "==",
-          email
-        )
-        .limit(1)
-        .get();
+    .then(snapshot=>{
 
+      if(snapshot.empty){
 
-    if(snapshot.empty){
+        alert(
+          "No estás aprobado todavía o el correo no existe."
+        );
 
-      showMessage(
-        "⛔ Cuenta no encontrada o no aprobada."
-      );
-
-      return;
-
-    }
-
-
-    const user=
-      snapshot.docs[0].data();
-
-
-    if(
-      cleanText(user.password)
-      !==
-      password
-    ){
-
-      showMessage(
-        "⛔ Contraseña incorrecta."
-      );
-
-      return;
-
-    }
-
-
-    const status=
-      cleanText(
-        user.status ||
-        user.estado
-      ).toLowerCase();
-
-
-    if(
-      status &&
-      status!=="activa" &&
-      status!=="activo"
-    ){
-
-      showMessage(
-        "⏳ Tu cuenta todavía no está activa."
-      );
-
-      return;
-
-    }
-
-
-    const role=
-      cleanText(
-        user.role ||
-        user.rol
-      ) ||
-      "emisora";
-
-
-    saveSession(
-
-      email,
-
-      role,
-
-      user.permissions || {},
-
-      {
-
-        artisticName:
-          user.artisticName ||
-          user.nombre ||
-          "",
-
-        poppoId:
-          user.poppoId ||
-          ""
+        return;
 
       }
 
-    );
+
+      const user=
+        snapshot.docs[0].data();
 
 
-    document
-      .getElementById("loginScreen")
-      .classList.remove("show");
+      if(user.password!==pass){
+
+        alert(
+          "Contraseña incorrecta."
+        );
+
+        return;
+
+      }
 
 
-    showMessage(
-      "✅ Bienvenida a JM Elite."
-    );
+      if(user.status!=="activa"){
+
+        alert(
+          "Tu cuenta todavía no está activa."
+        );
+
+        return;
+
+      }
 
 
-  }catch(error){
+      localStorage.setItem(
+        "jm_logged",
+        "yes"
+      );
 
-    console.error(error);
+      localStorage.setItem(
+        "jm_email",
+        email
+      );
+
+      localStorage.setItem(
+        "jm_role",
+        user.role || "emisora"
+      );
+
+      localStorage.setItem(
+        "jm_permissions",
+        JSON.stringify(
+          user.permissions || {}
+        )
+      );
+
+      localStorage.setItem(
+        "jm_user",
+        JSON.stringify({
+
+          email:email,
+
+          rol:
+            user.role || "emisora",
+
+          artisticName:
+            user.artisticName || ""
+
+        })
+      );
 
 
-    showMessage(
-      "❌ Error al iniciar sesión: " +
-      error.message,
-      5000
-    );
+      checkLogin();
 
-  }
+    })
+
+    .catch(error=>{
+
+      alert(
+        "Error al iniciar sesión: " +
+        error.message
+      );
+
+    });
 
 }
-  function openNormalRegister(){
+  function normalRegister(){
 
   registerMode="normal";
 
@@ -1634,13 +1422,13 @@ async function login(){
     .classList.add("show");
 
   document
-    .getElementById("recommendationCodeInput")
+    .getElementById("inviteInput")
     .readOnly=false;
 
   document
-    .getElementById("recommendationCodeInput")
+    .getElementById("inviteInput")
     .placeholder=
-      "Código de recomendación (opcional)";
+      "Código de invitación (opcional)";
 
   document
     .getElementById("loginSubtitle")
@@ -1655,7 +1443,7 @@ async function login(){
 }
 
 
-function openInviteRegister(){
+function inviteRegister(){
 
   registerMode="invitacion";
 
@@ -1664,9 +1452,9 @@ function openInviteRegister(){
     .classList.add("show");
 
   document
-    .getElementById("recommendationCodeInput")
+    .getElementById("inviteInput")
     .placeholder=
-      "Código de recomendación";
+      "Código de invitación";
 
   document
     .getElementById("loginSubtitle")
@@ -1705,66 +1493,46 @@ function backToLogin(){
 async function sendRegisterRequest(type){
 
   const email=
-    cleanEmail(
-      document
-        .getElementById("emailInput")
-        .value
-    );
+    document
+      .getElementById("emailInput")
+      .value
+      .trim()
+      .toLowerCase();
 
   const password=
-    cleanText(
-      document
-        .getElementById("passInput")
-        .value
-    );
+    document
+      .getElementById("passInput")
+      .value
+      .trim();
 
   const artisticName=
-    cleanText(
-      document
-        .getElementById("nameInput")
-        .value
-    );
-
-  const poppoId=
-    cleanText(
-      document
-        .getElementById("poppoIdInput")
-        .value
-    );
+    document
+      .getElementById("nameInput")
+      .value
+      .trim();
 
   const country=
-    cleanText(
-      document
-        .getElementById("countryInput")
-        .value
-    );
+    document
+      .getElementById("countryInput")
+      .value
+      .trim();
 
-  const agencyCode=
-    cleanText(
-      document
-        .getElementById("agencyCodeInput")
-        .value
-    );
-
-  const recommendationCode=
-    cleanText(
-      document
-        .getElementById("recommendationCodeInput")
-        .value
-    );
+  const invitationCode=
+    document
+      .getElementById("inviteInput")
+      .value
+      .trim();
 
 
   if(
     !email ||
     !password ||
     !artisticName ||
-    !poppoId ||
-    !country ||
-    !agencyCode
+    !country
   ){
 
-    showMessage(
-      "⚠️ Completa todos los datos obligatorios."
+    alert(
+      "Completa todos los datos obligatorios."
     );
 
     return;
@@ -1774,11 +1542,11 @@ async function sendRegisterRequest(type){
 
   if(
     type==="invitacion" &&
-    !recommendationCode
+    !invitationCode
   ){
 
-    showMessage(
-      "⚠️ Falta el código de recomendación."
+    alert(
+      "Falta el código de invitación."
     );
 
     return;
@@ -1802,8 +1570,8 @@ async function sendRegisterRequest(type){
 
     if(!userSnapshot.empty){
 
-      showMessage(
-        "⛔ Ese correo ya tiene una cuenta."
+      alert(
+        "Ese correo ya tiene una cuenta."
       );
 
       return;
@@ -1825,8 +1593,8 @@ async function sendRegisterRequest(type){
 
     if(!requestSnapshot.empty){
 
-      showMessage(
-        "⏳ Ya existe una solicitud con ese correo."
+      alert(
+        "Ya existe una solicitud con ese correo."
       );
 
       return;
@@ -1848,21 +1616,13 @@ async function sendRegisterRequest(type){
 
         artisticName:artisticName,
 
-        poppoId:poppoId,
-
         country:country,
 
-        agencyAccessCode:
-          agencyCode,
-
-        recommendationCode:
-          recommendationCode,
-
         invitationCode:
-          recommendationCode,
+          invitationCode,
 
         invitedBy:
-          recommendationCode || "",
+          invitationCode || "",
 
         registerType:type,
 
@@ -1896,9 +1656,8 @@ async function sendRegisterRequest(type){
       });
 
 
-    showMessage(
-      "✅ Solicitud enviada para revisión.",
-      4000
+    alert(
+      "Solicitud enviada correctamente para revisión."
     );
 
 
@@ -1911,10 +1670,9 @@ async function sendRegisterRequest(type){
 
     console.error(error);
 
-    showMessage(
-      "❌ Error al enviar solicitud: " +
-      error.message,
-      5000
+    alert(
+      "Error al enviar solicitud: " +
+      error.message
     );
 
   }
@@ -1924,16 +1682,22 @@ async function sendRegisterRequest(type){
 
 function clearRegisterForm(){
 
-  [
-    "emailInput",
-    "passInput",
-    "nameInput",
-    "poppoIdInput",
-    "countryInput",
-    "agencyCodeInput",
-    "recommendationCodeInput"
+  const fields=[
 
-  ].forEach(function(id){
+    "emailInput",
+
+    "passInput",
+
+    "nameInput",
+
+    "countryInput",
+
+    "inviteInput"
+
+  ];
+
+
+  fields.forEach(id=>{
 
     const input=
       document.getElementById(id);
@@ -1942,6 +1706,8 @@ function clearRegisterForm(){
 
       input.value="";
 
+      input.readOnly=false;
+
     }
 
   });
@@ -1949,20 +1715,20 @@ function clearRegisterForm(){
 }
 
 
-async function recoverPassword(){
+function recoverPassword(){
 
   const email=
-    cleanEmail(
-      document
-        .getElementById("emailInput")
-        .value
-    );
+    document
+      .getElementById("emailInput")
+      .value
+      .trim()
+      .toLowerCase();
 
 
   if(!email){
 
-    showMessage(
-      "⚠️ Escribe primero tu correo."
+    alert(
+      "Escribe primero tu correo."
     );
 
     return;
@@ -1970,92 +1736,51 @@ async function recoverPassword(){
   }
 
 
-  try{
+  db
+    .collection("recovery_requests")
+    .add({
 
-    await db
-      .collection("recovery_requests")
-      .add({
+      email:email,
 
-        email:email,
+      status:"pendiente",
 
-        status:"pendiente",
+      createdAt:
+        firebase
+          .firestore
+          .FieldValue
+          .serverTimestamp(),
 
-        createdAt:
-          firebase
-            .firestore
-            .FieldValue
-            .serverTimestamp(),
+      date:
+        new Date()
+          .toLocaleString()
 
-        date:
-          new Date()
-            .toLocaleString()
+    })
 
-      });
+    .then(()=>{
 
+      alert(
+        "Solicitud de recuperación enviada."
+      );
 
-    showMessage(
-      "✅ Solicitud de recuperación enviada.",
-      4000
-    );
+    })
 
+    .catch(error=>{
 
-  }catch(error){
+      alert(
+        "Error de recuperación: " +
+        error.message
+      );
 
-    console.error(error);
-
-    showMessage(
-      "❌ Error de recuperación: " +
-      error.message,
-      5000
-    );
-
-  }
-
-}
-
-
-function logout(){
-
-  clearSession();
-
-  closeDrawerDirect();
-
-  backToLogin();
-
-  document
-    .getElementById("loginScreen")
-    .classList.add("show");
-
-  showMessage(
-    "👋 Sesión cerrada."
-  );
+    });
 
 }
 
 
 function openDrawer(){
 
-  if(!isLogged()){
-
-    document
-      .getElementById("loginScreen")
-      .classList.add("show");
-
-    return;
-
-  }
-
-
-  applyPermissions();
-
   document
     .getElementById("drawer")
     .classList.add("show");
-
-  document
-    .body
-    .classList
-    .add("lock");
 
 }
 
@@ -2066,45 +1791,65 @@ function closeDrawer(event){
     event.target.id==="drawer"
   ){
 
-    closeDrawerDirect();
+    document
+      .getElementById("drawer")
+      .classList.remove("show");
 
   }
 
 }
 
 
-function closeDrawerDirect(){
+function logout(){
 
-  const drawer=
-    document.getElementById("drawer");
+  localStorage.removeItem(
+    "jm_logged"
+  );
 
+  localStorage.removeItem(
+    "jm_email"
+  );
 
-  if(drawer){
+  localStorage.removeItem(
+    "jm_role"
+  );
 
-    drawer.classList.remove("show");
+  localStorage.removeItem(
+    "jm_permissions"
+  );
 
-  }
+  localStorage.removeItem(
+    "jm_user"
+  );
 
 
   document
-    .body
-    .classList
-    .remove("lock");
+    .getElementById("drawer")
+    .classList.remove("show");
+
+
+  backToLogin();
+
+
+  document
+    .getElementById("loginScreen")
+    .classList.add("show");
 
 }
 
 
-function autoFillInviteCode(){
+function checkInviteLink(){
 
   const params=
     new URLSearchParams(
       window.location.search
     );
 
+
   const inviteCode=
-    cleanText(
-      params.get("invite")
-    );
+    (
+      params.get("invite") || ""
+    ).trim();
 
 
   if(!inviteCode){
@@ -2114,29 +1859,45 @@ function autoFillInviteCode(){
   }
 
 
-  clearSession();
+  localStorage.removeItem(
+    "jm_logged"
+  );
+
+  localStorage.removeItem(
+    "jm_email"
+  );
+
+  localStorage.removeItem(
+    "jm_role"
+  );
+
+  localStorage.removeItem(
+    "jm_permissions"
+  );
+
+  localStorage.removeItem(
+    "jm_user"
+  );
+
 
   document
     .getElementById("loginScreen")
     .classList.add("show");
 
-  openInviteRegister();
+
+  inviteRegister();
 
 
-  const input=
+  const inviteInput=
     document.getElementById(
-      "recommendationCodeInput"
+      "inviteInput"
     );
 
 
-  input.value=inviteCode;
+  inviteInput.value=
+    inviteCode;
 
-  input.readOnly=true;
-
-
-  showMessage(
-    "🎁 Invitación JM Elite detectada."
-  );
+  inviteInput.readOnly=true;
 
 
   return true;
@@ -2144,140 +1905,35 @@ function autoFillInviteCode(){
 }
 
 
-async function loadPendingNotifications(){
-
-  const bell=
-    document.getElementById(
-      "notificationBell"
-    );
-
-
-  if(
-    !bell ||
-    !canManage()
-  ){
-
-    return;
-
-  }
-
-
-  try{
-
-    const snapshot=
-      await db
-        .collection("pending_requests")
-        .where(
-          "status",
-          "==",
-          "pendiente"
-        )
-        .get();
-
-
-    if(snapshot.size>0){
-
-      bell.textContent=
-        "🔔 " + snapshot.size;
-
-    }else{
-
-      bell.textContent="🔔";
-
-    }
-
-
-  }catch(error){
-
-    console.error(
-      "Error cargando notificaciones",
-      error
-    );
-
-  }
-
-}
-
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(event.key==="Escape"){
-
-      closeDrawerDirect();
-
-    }
-
-
-    if(
-      event.key==="Enter" &&
-      document
-        .getElementById("loginScreen")
-        .classList
-        .contains("show")
-    ){
-
-      mainLoginAction();
-
-    }
-
-  }
-);
-
-
 window.addEventListener(
   "pageshow",
   function(){
 
-    checkLogin();
+    if(
+      !new URLSearchParams(
+        window.location.search
+      ).get("invite")
+    ){
 
-    loadPendingNotifications();
+      checkLogin();
+
+    }
 
   }
 );
 
 
-window.onload=
-async function(){
+window.onload=function(){
 
-  const params=
-    new URLSearchParams(
-      window.location.search
-    );
+  const inviteDetected=
+    checkInviteLink();
 
 
-  if(params.get("reset")==="1"){
+  if(!inviteDetected){
 
-    clearSession();
-
-    window.history.replaceState(
-      {},
-      "",
-      "index.html"
-    );
-
-    backToLogin();
-
-    document
-      .getElementById("loginScreen")
-      .classList.add("show");
-
-    return;
+    checkLogin();
 
   }
-
-
-  if(autoFillInviteCode()){
-
-    return;
-
-  }
-
-
-  checkLogin();
-
-  await loadPendingNotifications();
 
 };
 
