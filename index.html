@@ -772,11 +772,11 @@ input:focus-visible{
       👥 Emisoras
     </a>
 
-    <a href="academia.html">
+    <a href="javascript:void(0)" onclick="modulePending('academia.html')">
       🎓 Academia
     </a>
 
-    <a href="configuracion.html">
+    <a href="javascript:void(0)" onclick="modulePending('configuracion.html')">
       ⚙️ Configuración
     </a>
 
@@ -905,7 +905,7 @@ input:focus-visible{
 
       <a
         class="icon-link"
-        href="ranking.html"
+        href="javascript:void(0)" onclick="modulePending('ranking.html')"
       >
         <span class="icon-circle gold">🏆</span>
         <b>Ranking</b>
@@ -927,7 +927,7 @@ input:focus-visible{
 
       <a
         class="icon-link"
-        href="avisos.html"
+        href="javascript:void(0)" onclick="modulePending('avisos.html')"
       >
         <span class="icon-circle gold">📢</span>
         <b>Avisos</b>
@@ -936,7 +936,7 @@ input:focus-visible{
 
       <a
         class="icon-link"
-        href="eventos.html"
+        href="javascript:void(0)" onclick="modulePending('eventos.html')"
       >
         <span class="icon-circle red">🎉</span>
         <b>Eventos</b>
@@ -945,7 +945,7 @@ input:focus-visible{
 
       <a
         class="icon-link"
-        href="academia.html"
+        href="javascript:void(0)" onclick="modulePending('academia.html')"
       >
         <span class="icon-circle">🎓</span>
         <b>Academia</b>
@@ -964,7 +964,7 @@ input:focus-visible{
 
       <a
         class="icon-link"
-        href="soporte.html"
+        href="javascript:void(0)" onclick="modulePending('soporte.html')"
       >
         <span class="icon-circle green">🛟</span>
         <b>Soporte</b>
@@ -993,7 +993,7 @@ input:focus-visible{
 
       <a
         class="icon-link"
-        href="configuracion.html"
+        href="javascript:void(0)" onclick="modulePending('configuracion.html')"
       >
         <span class="icon-circle">⚙️</span>
         <b>Ajustes</b>
@@ -1002,7 +1002,7 @@ input:focus-visible{
 
       <a
         class="icon-link"
-        href="normas.html"
+        href="javascript:void(0)" onclick="modulePending('normas.html')"
       >
         <span class="icon-circle purple">📖</span>
         <b>Normas</b>
@@ -1011,7 +1011,7 @@ input:focus-visible{
 
       <a
         class="icon-link"
-        href="menu.html"
+        href="javascript:void(0)" onclick="modulePending('menu.html')"
       >
         <span class="icon-circle dots-icon">
           <span></span>
@@ -1059,7 +1059,7 @@ input:focus-visible{
 
   <a
     class="nav-item"
-    href="chat.html"
+    href="chatbot.html"
   >
     <span class="icon">💬</span>
     <span>Chat</span>
@@ -1067,7 +1067,7 @@ input:focus-visible{
 
   <a
     class="nav-item"
-    href="menu.html"
+    href="javascript:void(0)" onclick="modulePending('menu.html')"
   >
     <span class="icon">☰</span>
     <span>Más</span>
@@ -1834,6 +1834,28 @@ function logout(){
   document
     .getElementById("loginScreen")
     .classList.add("show");
+
+}
+
+
+function modulePending(page){
+
+  const names={
+    "academia.html":"Academia",
+    "avisos.html":"Avisos",
+    "configuracion.html":"Configuración",
+    "eventos.html":"Eventos",
+    "menu.html":"Más opciones",
+    "normas.html":"Normas",
+    "ranking.html":"Ranking",
+    "soporte.html":"Soporte"
+  };
+
+  alert(
+    "🛠️ " +
+    (names[page] || "Este módulo") +
+    " está en preparación. No te mandaré a una página rota."
+  );
 
 }
 
