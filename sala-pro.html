@@ -2272,46 +2272,47 @@ function startRoomSync(){
 
 
   unsubscribeChat=
-    db
-      .collection("sala_pro_chat")
-      .where(
-        "roomId",
-        "==",
-        ROOM_ID
-      )
-      .orderBy(
-        "createdAt",
-        "asc"
-      )
-      .limitToLast(100)
-      .onSnapshot(
+  db
+    .collection("sala_pro_chat")
+    .where(
+      "roomId",
+      "==",
+      ROOM_ID
+    )
+    .onSnapshot(
 
-        snapshot=>{
+      snapshot=>{
 
-          roomMessages=
-            snapshot.docs.map(doc=>({
+        roomMessages=
+          snapshot.docs
+            .map(doc=>({
 
               firestoreId:doc.id,
 
               ...doc.data()
 
-            }));
+            }))
+            .sort(
+              (a,b)=>
+                Number(a.createdMs || 0) -
+                Number(b.createdMs || 0)
+            )
+            .slice(-100);
 
+        renderChat();
 
-          renderChat();
+      },
 
-        },
+      error=>{
 
-        error=>{
+        console.error(
+          "Error sincronizando chat:",
+          error
+        );
 
-          console.error(
-            "Error sincronizando chat:",
-            error
-          );
+      }
 
-        }
-
-      );
+    );
 
 }
 
