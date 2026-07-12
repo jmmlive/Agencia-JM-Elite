@@ -1655,11 +1655,13 @@ async function sendRegisterRequest(type){
 
 
       const requestStatus=
-        e(
+        String(
           requestData.status ||
           requestData.estado ||
           ""
-        );
+        )
+        .trim()
+        .toLowerCase();
 
 
       if(
