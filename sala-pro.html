@@ -1038,10 +1038,59 @@ a{
 </style>
 
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+window.addEventListener(
+  "pagehide",
+  function(){
+
+    if(!currentPresenceId){
+      return;
+    }
+
+    db
+      .collection("sala_pro_presence")
+      .doc(currentPresenceId)
+      .set({
+        connected:false,
+        lastSeen:0
+      },{
+        merge:true
+      })
+      .catch(()=>{});
+
+  }
+);
+
+
+document.addEventListener(
+  "visibilitychange",
+  function(){
+
+    if(
+      document.visibilityState==="hidden" &&
+      currentPresenceId
+    ){
+
+      db
+        .collection("sala_pro_presence")
+        .doc(currentPresenceId)
+        .set({
+          connected:false,
+          lastSeen:0
+        },{
+          merge:true
+        })
+        .catch(()=>{});
+
+    }
+
+  }
+);
+
+
+</script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
 
 
@@ -1917,192 +1966,110 @@ function formatTime(seconds){
 
 async function loadCurrentUser(){
 
-  const session=getSession();
+  const session=
+    getSession();
 
-  currentEmail=session.email;
-  currentRole=session.role;
 
-  let authUser=null;
+  currentEmail=
+    session.email;
 
-  try{
 
-    authUser=await new Promise(resolve=>{
+  currentRole=
+    session.role;
 
-      let finished=false;
 
-      const timer=setTimeout(()=>{
+  if(!currentEmail){
 
-        if(!finished){
-          finished=true;
-          resolve(firebase.auth().currentUser || null);
-        }
-
-      },4000);
-
-      const unsubscribe=
-        firebase.auth().onAuthStateChanged(user=>{
-
-          if(finished){
-            return;
-          }
-
-          finished=true;
-          clearTimeout(timer);
-          unsubscribe();
-          resolve(user || null);
-
-        });
-
-    });
-
-  }catch(error){
-
-    console.warn(
-      "No se pudo leer Firebase Auth:",
-      error
+    setRoomStatus(
+      "🟡",
+      "Recuperando tu sesión. Sala Pro no te expulsará."
     );
 
-  }
+    const storedUser=
+      localStorage.getItem("jm_user") || "";
 
+    try{
 
-  if(
-    authUser &&
-    authUser.email
-  ){
-
-    currentEmail=
-      normalizeText(authUser.email);
-
-    localStorage.setItem(
-      "jm_email",
-      currentEmail
-    );
-
-  }
-
-
-  try{
-
-    let userDoc=null;
-
-
-    if(
-      authUser &&
-      authUser.uid
-    ){
-
-      const uidSnapshot=
-        await db
-          .collection("usuarios")
-          .where(
-            "uid",
-            "==",
-            authUser.uid
-          )
-          .limit(1)
-          .get();
-
-      if(!uidSnapshot.empty){
-
-        userDoc=
-          uidSnapshot.docs[0];
-
-      }
-
-    }
-
-
-    if(
-      !userDoc &&
-      currentEmail
-    ){
-
-      const emailSnapshot=
-        await db
-          .collection("usuarios")
-          .where(
-            "email",
-            "==",
-            currentEmail
-          )
-          .limit(1)
-          .get();
-
-      if(!emailSnapshot.empty){
-
-        userDoc=
-          emailSnapshot.docs[0];
-
-      }
-
-    }
-
-
-    if(userDoc){
-
-      currentUser={
-
-        firestoreId:userDoc.id,
-
-        ...userDoc.data()
-
-      };
+      const parsedUser=
+        JSON.parse(storedUser || "{}");
 
       currentEmail=
         normalizeText(
-          currentUser.email ||
-          currentEmail
+          parsedUser.email || ""
         );
 
       currentRole=
         normalizeText(
-          currentUser.role ||
-          currentUser.rol ||
-          currentRole ||
-          "emisora"
+          parsedUser.role ||
+          parsedUser.rol ||
+          currentRole
         );
 
-      localStorage.setItem(
-        "jm_email",
-        currentEmail
+    }catch(error){
+
+      console.warn(
+        "No se pudo recuperar jm_user:",
+        error
       );
 
-      localStorage.setItem(
-        "jm_role",
-        currentRole
-      );
+    }
 
-      localStorage.setItem(
-        "jm_user",
-        JSON.stringify(currentUser)
-      );
+    if(!currentEmail){
+
+      currentUser={
+        email:"",
+        role:currentRole || "emisora"
+      };
 
       return true;
 
     }
 
-
-    currentUser={
-
-      uid:
-        authUser?.uid || "",
-
-      email:currentEmail,
-
-      role:
-        currentRole || "emisora"
-
-    };
+  }
 
 
-    if(!currentEmail){
+  try{
 
-      setRoomStatus(
-        "🟡",
-        "Recuperando identidad de usuario..."
-      );
+    const snapshot=
+      await db
+        .collection("usuarios")
+        .where(
+          "email",
+          "==",
+          currentEmail
+        )
+        .limit(1)
+        .get();
 
-      return false;
+
+    if(!snapshot.empty){
+
+      currentUser={
+
+        firestoreId:
+          snapshot.docs[0].id,
+
+        ...snapshot.docs[0].data()
+
+      };
+
+
+      currentRole=
+        normalizeText(
+          currentUser.role ||
+          currentUser.rol ||
+          currentRole
+        );
+
+    }else{
+
+      currentUser={
+
+        email:currentEmail,
+
+        role:currentRole
+
+      };
 
     }
 
@@ -2117,24 +2084,21 @@ async function loadCurrentUser(){
       error
     );
 
-    currentUser={
 
-      uid:
-        authUser?.uid || "",
+    currentUser={
 
       email:currentEmail,
 
-      role:
-        currentRole || "emisora"
+      role:currentRole
 
     };
 
-    return Boolean(currentEmail);
+
+    return true;
 
   }
 
 }
-
   function getPresenceDocId(){
 
   return encodeURIComponent(
@@ -2223,6 +2187,8 @@ async function joinRoom(){
 
     }
 
+    startPresenceCounter();
+
     return true;
 
   }catch(error){
@@ -2284,11 +2250,18 @@ async function sendHeartbeat(){
 
 function startPresenceCounter(){
 
+  if(presenceTimer){
+    return;
+  }
+
   presenceTimer=
     setInterval(
       async function(){
 
-        if(presenceValidated){
+        if(
+          presenceValidated ||
+          !currentPresenceId
+        ){
 
           return;
 
@@ -2613,7 +2586,7 @@ function startRoomSync(){
 
         snapshot=>{
 
-          roomParticipants=
+          const onlineParticipants=
             snapshot.docs
               .map(doc=>({
 
@@ -2622,14 +2595,52 @@ function startRoomSync(){
                 ...doc.data()
 
               }))
-              .filter(
-                isParticipantOnline
+              .filter(item=>
+                isParticipantOnline(item) &&
+                item.connected!==false &&
+                normalizeText(item.email)
               );
+
+
+          const uniqueByEmail=new Map();
+
+
+          onlineParticipants.forEach(item=>{
+
+            const key=
+              normalizeText(item.email);
+
+            const previous=
+              uniqueByEmail.get(key);
+
+
+            if(
+              !previous ||
+              Number(item.lastSeen || 0) >
+              Number(previous.lastSeen || 0)
+            ){
+
+              uniqueByEmail.set(
+                key,
+                item
+              );
+
+            }
+
+          });
+
+
+          roomParticipants=
+            Array.from(
+              uniqueByEmail.values()
+            );
 
 
           renderRoom();
 
           cleanupStaleSeats();
+
+          cleanupGhostPresence(snapshot.docs);
 
         },
 
@@ -2725,6 +2736,54 @@ function startRoomSync(){
       }
 
     );
+
+}
+
+
+async function cleanupGhostPresence(docs){
+
+  for(const doc of docs){
+
+    const data=doc.data();
+
+    const email=
+      normalizeText(data.email);
+
+    const stale=
+      !isParticipantOnline(data);
+
+    const invalid=
+      !email;
+
+    const disconnected=
+      data.connected===false;
+
+
+    if(
+      !stale &&
+      !invalid &&
+      !disconnected
+    ){
+
+      continue;
+
+    }
+
+
+    try{
+
+      await doc.ref.delete();
+
+    }catch(error){
+
+      console.warn(
+        "No se pudo limpiar presencia fantasma:",
+        error
+      );
+
+    }
+
+  }
 
 }
 
@@ -5191,9 +5250,6 @@ async function startSalaPro(){
           retryDelay:2200
         }
       );
-
-
-    startPresenceCounter();
 
 
     saveProgressTimer=
