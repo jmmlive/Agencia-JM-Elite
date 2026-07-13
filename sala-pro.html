@@ -1038,57 +1038,7 @@ a{
 </style>
 
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
-window.addEventListener(
-  "pagehide",
-  function(){
-
-    if(!currentPresenceId){
-      return;
-    }
-
-    db
-      .collection("sala_pro_presence")
-      .doc(currentPresenceId)
-      .set({
-        connected:false,
-        lastSeen:0
-      },{
-        merge:true
-      })
-      .catch(()=>{});
-
-  }
-);
-
-
-document.addEventListener(
-  "visibilitychange",
-  function(){
-
-    if(
-      document.visibilityState==="hidden" &&
-      currentPresenceId
-    ){
-
-      db
-        .collection("sala_pro_presence")
-        .doc(currentPresenceId)
-        .set({
-          connected:false,
-          lastSeen:0
-        },{
-          merge:true
-        })
-        .catch(()=>{});
-
-    }
-
-  }
-);
-
-
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
@@ -2187,8 +2137,6 @@ async function joinRoom(){
 
     }
 
-    startPresenceCounter();
-
     return true;
 
   }catch(error){
@@ -2250,18 +2198,11 @@ async function sendHeartbeat(){
 
 function startPresenceCounter(){
 
-  if(presenceTimer){
-    return;
-  }
-
   presenceTimer=
     setInterval(
       async function(){
 
-        if(
-          presenceValidated ||
-          !currentPresenceId
-        ){
+        if(presenceValidated){
 
           return;
 
@@ -2586,7 +2527,7 @@ function startRoomSync(){
 
         snapshot=>{
 
-          const onlineParticipants=
+          roomParticipants=
             snapshot.docs
               .map(doc=>({
 
@@ -2595,52 +2536,14 @@ function startRoomSync(){
                 ...doc.data()
 
               }))
-              .filter(item=>
-                isParticipantOnline(item) &&
-                item.connected!==false &&
-                normalizeText(item.email)
+              .filter(
+                isParticipantOnline
               );
-
-
-          const uniqueByEmail=new Map();
-
-
-          onlineParticipants.forEach(item=>{
-
-            const key=
-              normalizeText(item.email);
-
-            const previous=
-              uniqueByEmail.get(key);
-
-
-            if(
-              !previous ||
-              Number(item.lastSeen || 0) >
-              Number(previous.lastSeen || 0)
-            ){
-
-              uniqueByEmail.set(
-                key,
-                item
-              );
-
-            }
-
-          });
-
-
-          roomParticipants=
-            Array.from(
-              uniqueByEmail.values()
-            );
 
 
           renderRoom();
 
           cleanupStaleSeats();
-
-          cleanupGhostPresence(snapshot.docs);
 
         },
 
@@ -2736,54 +2639,6 @@ function startRoomSync(){
       }
 
     );
-
-}
-
-
-async function cleanupGhostPresence(docs){
-
-  for(const doc of docs){
-
-    const data=doc.data();
-
-    const email=
-      normalizeText(data.email);
-
-    const stale=
-      !isParticipantOnline(data);
-
-    const invalid=
-      !email;
-
-    const disconnected=
-      data.connected===false;
-
-
-    if(
-      !stale &&
-      !invalid &&
-      !disconnected
-    ){
-
-      continue;
-
-    }
-
-
-    try{
-
-      await doc.ref.delete();
-
-    }catch(error){
-
-      console.warn(
-        "No se pudo limpiar presencia fantasma:",
-        error
-      );
-
-    }
-
-  }
 
 }
 
@@ -5250,6 +5105,9 @@ async function startSalaPro(){
           retryDelay:2200
         }
       );
+
+
+    startPresenceCounter();
 
 
     saveProgressTimer=
