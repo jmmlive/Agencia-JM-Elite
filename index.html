@@ -174,6 +174,25 @@ input:focus-visible{
   transform:scale(.985);
 }
 
+.login-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:4px;
+}
+
+.login-actions .login-btn{
+  margin-top:0;
+  height:54px;
+  font-size:15px;
+  line-height:1.15;
+}
+
+.login-btn-light{
+  background:linear-gradient(135deg,#00a2ff,#39ffcb);
+  color:#061326;
+}
+
 .login-links{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -798,13 +817,23 @@ input:focus-visible{
 
     </div>
 
-    <button
-      id="mainLoginBtn"
-      class="login-btn"
-      onclick="mainLoginAction()"
-    >
-      ENTRAR
-    </button>
+    <div class="login-actions">
+      <button
+        id="mainLoginBtn"
+        class="login-btn"
+        onclick="mainLoginAction()"
+      >
+        ENTRAR<br>APP
+      </button>
+
+      <button
+        id="lightLoginBtn"
+        class="login-btn login-btn-light"
+        onclick="lightLogin()"
+      >
+        📶 ENTRAR<br>SALA LIGERA
+      </button>
+    </div>
 
     <div class="login-links">
 
@@ -1580,6 +1609,102 @@ function login(){
     });
 
 }
+
+async function lightLogin(){
+
+  if(registerMode){
+    alert("Vuelve al acceso normal para entrar en Sala Ligera.");
+    return;
+  }
+
+  const email=document
+    .getElementById("emailInput")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const pass=document
+    .getElementById("passInput")
+    .value
+    .trim();
+
+  if(!email || !pass){
+    alert("Pon correo y contraseña.");
+    return;
+  }
+
+  try{
+
+    if(isAgent(email)){
+      localStorage.setItem("jm_logged","yes");
+      localStorage.setItem("jm_email",email);
+      localStorage.setItem("jm_role","administrador");
+      localStorage.setItem(
+        "jm_permissions",
+        JSON.stringify({canInvite:true})
+      );
+      localStorage.setItem(
+        "jm_user",
+        JSON.stringify({
+          email:email,
+          rol:"administrador"
+        })
+      );
+      window.location.href="sala-ligera.html";
+      return;
+    }
+
+    const snapshot=await db
+      .collection("usuarios")
+      .where("email","==",email)
+      .limit(1)
+      .get();
+
+    if(snapshot.empty){
+      alert("No estás aprobado todavía o el correo no existe.");
+      return;
+    }
+
+    const user=snapshot.docs[0].data();
+
+    if(String(user.password || user.pass || "")!==pass){
+      alert("Contraseña incorrecta.");
+      return;
+    }
+
+    if(
+      user.status &&
+      String(user.status).toLowerCase()!=="activa"
+    ){
+      alert("Tu cuenta todavía no está activa.");
+      return;
+    }
+
+    localStorage.setItem("jm_logged","yes");
+    localStorage.setItem("jm_email",email);
+    localStorage.setItem("jm_role",user.role || user.rol || "emisora");
+    localStorage.setItem(
+      "jm_permissions",
+      JSON.stringify(user.permissions || {})
+    );
+    localStorage.setItem(
+      "jm_user",
+      JSON.stringify({
+        email:email,
+        rol:user.role || user.rol || "emisora",
+        artisticName:user.artisticName || user.nombreArtistico || ""
+      })
+    );
+
+    window.location.href="sala-ligera.html";
+
+  }catch(error){
+    console.error(error);
+    alert("Conexión débil. Inténtalo otra vez.");
+  }
+
+}
+
   function normalRegister(){
 
   registerMode="registro";
