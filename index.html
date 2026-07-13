@@ -782,7 +782,7 @@ input:focus-visible{
         id="passInput"
         type="password"
         autocomplete="current-password"
-        placeholder="Contraseña"
+        placeholder="Contraseña (solo para registro)"
       >
     </div>
 
@@ -1453,17 +1453,10 @@ function login(){
       .toLowerCase();
 
 
-  const pass=
-    document
-      .getElementById("passInput")
-      .value
-      .trim();
-
-
-  if(!email || !pass){
+  if(!email){
 
     alert(
-      "Pon correo y contraseña."
+      "Pon tu correo."
     );
 
     return;
@@ -1473,39 +1466,20 @@ function login(){
 
   if(isAgent(email)){
 
-    localStorage.setItem(
-      "jm_logged",
-      "yes"
-    );
-
-    localStorage.setItem(
-      "jm_email",
-      email
-    );
-
-    localStorage.setItem(
-      "jm_role",
-      "administrador"
-    );
-
+    localStorage.setItem("jm_logged","yes");
+    localStorage.setItem("jm_email",email);
+    localStorage.setItem("jm_role","administrador");
     localStorage.setItem(
       "jm_permissions",
-      JSON.stringify({
-        canInvite:true
-      })
+      JSON.stringify({canInvite:true})
     );
-
     localStorage.setItem(
       "jm_user",
       JSON.stringify({
-
         email:email,
-
         rol:"administrador"
-
       })
     );
-
 
     checkLogin();
 
@@ -1521,16 +1495,27 @@ function login(){
     .then(snapshot=>{
 
       const userDoc=
-        snapshot.docs.find(doc=>
-          String(doc.data().email || "")
-            .trim()
-            .toLowerCase() === email
-        );
+        snapshot.docs.find(doc=>{
+
+          const user=doc.data();
+
+          const savedEmail=String(
+            user.email ||
+            user.correo ||
+            ""
+          )
+          .trim()
+          .toLowerCase();
+
+          return savedEmail===email;
+
+        });
+
 
       if(!userDoc){
 
         alert(
-          "No estás aprobado todavía o el correo no existe."
+          "Este correo no está registrado en JM Elite."
         );
 
         return;
@@ -1538,30 +1523,12 @@ function login(){
       }
 
 
-      const user=
-        userDoc.data();
+      const user=userDoc.data();
 
-
-      if(user.password!==pass){
-
-        alert(
-          "Contraseña incorrecta."
-        );
-
-        return;
-
-      }
-
-
-      if(user.status!=="activa"){
-
-        alert(
-          "Tu cuenta todavía no está activa."
-        );
-
-        return;
-
-      }
+      const userRole=
+        user.role ||
+        user.rol ||
+        "emisora";
 
 
       localStorage.setItem(
@@ -1576,28 +1543,28 @@ function login(){
 
       localStorage.setItem(
         "jm_role",
-        user.role || "emisora"
+        userRole
       );
 
       localStorage.setItem(
         "jm_permissions",
         JSON.stringify(
-          user.permissions || {}
+          user.permissions ||
+          user.permisos ||
+          {}
         )
       );
 
       localStorage.setItem(
         "jm_user",
         JSON.stringify({
-
           email:email,
-
-          rol:
-            user.role || "emisora",
-
+          rol:userRole,
           artisticName:
-            user.artisticName || ""
-
+            user.artisticName ||
+            user.nombreArtistico ||
+            user.nombre ||
+            ""
         })
       );
 
@@ -1608,9 +1575,10 @@ function login(){
 
     .catch(error=>{
 
+      console.error(error);
+
       alert(
-        "Error al iniciar sesión: " +
-        error.message
+        "No se pudo comprobar el correo. Inténtalo otra vez."
       );
 
     });
@@ -1630,13 +1598,8 @@ async function lightLogin(){
     .trim()
     .toLowerCase();
 
-  const pass=document
-    .getElementById("passInput")
-    .value
-    .trim();
-
-  if(!email || !pass){
-    alert("Pon correo y contraseña.");
+  if(!email){
+    alert("Pon tu correo.");
     return;
   }
 
@@ -1663,43 +1626,49 @@ async function lightLogin(){
 
     const snapshot=await db
       .collection("usuarios")
-      .where("email","==",email)
-      .limit(1)
       .get();
 
-    if(snapshot.empty){
-      alert("No estás aprobado todavía o el correo no existe.");
+    const userDoc=snapshot.docs.find(doc=>{
+
+      const user=doc.data();
+
+      const savedEmail=String(
+        user.email ||
+        user.correo ||
+        ""
+      )
+      .trim()
+      .toLowerCase();
+
+      return savedEmail===email;
+
+    });
+
+    if(!userDoc){
+      alert("Este correo no está registrado en JM Elite.");
       return;
     }
 
-    const user=snapshot.docs[0].data();
-
-    if(String(user.password || user.pass || "")!==pass){
-      alert("Contraseña incorrecta.");
-      return;
-    }
-
-    if(
-      user.status &&
-      String(user.status).toLowerCase()!=="activa"
-    ){
-      alert("Tu cuenta todavía no está activa.");
-      return;
-    }
+    const user=userDoc.data();
+    const userRole=user.role || user.rol || "emisora";
 
     localStorage.setItem("jm_logged","yes");
     localStorage.setItem("jm_email",email);
-    localStorage.setItem("jm_role",user.role || user.rol || "emisora");
+    localStorage.setItem("jm_role",userRole);
     localStorage.setItem(
       "jm_permissions",
-      JSON.stringify(user.permissions || {})
+      JSON.stringify(user.permissions || user.permisos || {})
     );
     localStorage.setItem(
       "jm_user",
       JSON.stringify({
         email:email,
-        rol:user.role || user.rol || "emisora",
-        artisticName:user.artisticName || user.nombreArtistico || ""
+        rol:userRole,
+        artisticName:
+          user.artisticName ||
+          user.nombreArtistico ||
+          user.nombre ||
+          ""
       })
     );
 
