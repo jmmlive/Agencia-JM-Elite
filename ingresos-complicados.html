@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ingresos con conexión mala · JM Elite</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;min-height:100vh;background:linear-gradient(180deg,#063579,#020713 40%);color:white;padding:18px}
+.wrap{max-width:520px;margin:auto}
+.head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.back{width:46px;height:46px;border:1px solid #2e78b8;border-radius:14px;background:#061326;color:white;font-size:23px}
+h1{margin:0;color:#f7d774;font-size:22px}
+.sub{margin:5px 0 0;color:#c8d8ed;font-size:12px;line-height:1.4}
+.card{background:#061326;border:1px solid rgba(247,215,116,.42);border-radius:22px;padding:18px;box-shadow:0 0 28px rgba(0,120,255,.22)}
+.note{padding:12px;border-radius:15px;background:rgba(0,140,255,.12);border:1px solid rgba(0,183,255,.3);color:#cfe1f6;font-size:12px;line-height:1.45;margin-bottom:14px}
+label{display:block;color:#f7d774;font-size:12px;font-weight:bold;margin:12px 0 6px}
+input{width:100%;height:48px;border:1px solid #236db0;border-radius:14px;background:#020b1b;color:#fff;padding:0 13px;font-size:15px;outline:none}
+button.create{width:100%;height:50px;margin-top:16px;border:0;border-radius:15px;background:linear-gradient(135deg,#f7d774,#ffbd32);color:#071426;font-weight:900;font-size:16px}
+.status{min-height:20px;margin-top:12px;text-align:center;color:#59ffb1;font-size:12px;line-height:1.4}
+.list{margin-top:18px}
+.item{padding:12px;margin-top:8px;border:1px solid #1c5f99;border-radius:15px;background:#061326}
+.item strong{color:#f7d774;font-size:13px}
+.item span{display:block;color:#b9cbe1;font-size:11px;margin-top:4px;overflow-wrap:anywhere}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <button class="back" onclick="location.href='index.html'">←</button>
+    <div>
+      <h1>📶 Ingresos con conexión mala</h1>
+      <p class="sub">Alta rápida para Cuba o conexiones complicadas.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="note">
+      La emisora te manda su correo. Tú le creas una entrada rápida con una contraseña sencilla.
+      Después podrá entrar por <b>Sala Ligera</b> y, cuando tenga mejor conexión, cambiar su contraseña desde Configuración.
+    </div>
+
+    <label>Correo de la emisora</label>
+    <input id="email" type="email" inputmode="email" autocomplete="off" placeholder="correo@gmail.com">
+
+    <label>Contraseña provisional</label>
+    <input id="password" type="text" autocomplete="off" placeholder="Ejemplo: 123456">
+
+    <button class="create" onclick="createQuickUser()">CREAR ACCESO RÁPIDO</button>
+    <div id="status" class="status"></div>
+  </div>
+
+  <div class="list">
+    <h2 style="font-size:16px;color:#f7d774">Últimos ingresos rápidos</h2>
+    <div id="recent"></div>
+  </div>
+</div>
+
+<script>
+
+const firebaseConfig={
+  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain:"agencia-jm-elite.firebaseapp.com",
+  projectId:"agencia-jm-elite",
+  storageBucket:"agencia-jm-elite.firebasestorage.app",
+  messagingSenderId:"171676205335",
+  appId:"1:171676205335:web:95443528659ab804fe7752"
+};
+
+if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+const FOUNDER_EMAIL="elpepolan35@gmail.com";
+
+function normalize(v){
+  return String(v||"").trim().toLowerCase();
+}
+
+function protect(){
+  const email=normalize(localStorage.getItem("jm_email"));
+  const role=normalize(localStorage.getItem("jm_role"));
+  const allowed=
+    email===FOUNDER_EMAIL ||
+    role==="agente" ||
+    role==="fundador";
+
+  if(!allowed){
+    alert("Acceso reservado al fundador.");
+    location.href="index.html";
+    return false;
+  }
+  return true;
+}
+
+async function createQuickUser(){
+  const email=normalize(document.getElementById("email").value);
+  const password=document.getElementById("password").value.trim();
+  const status=document.getElementById("status");
+
+  if(!email || !email.includes("@")){
+    status.style.color="#ff9eaa";
+    status.textContent="Escribe un correo válido.";
+    return;
+  }
+
+  if(password.length<6){
+    status.style.color="#ff9eaa";
+    status.textContent="La contraseña provisional debe tener al menos 6 caracteres.";
+    return;
+  }
+
+  status.style.color="#cfe1f6";
+  status.textContent="Creando acceso...";
+
+  try{
+    const existing=await db.collection("usuarios")
+      .where("email","==",email)
+      .limit(1)
+      .get();
+
+    if(!existing.empty){
+      status.style.color="#ff9eaa";
+      status.textContent="Ese correo ya tiene cuenta.";
+      return;
+    }
+
+    const id="JM-QUICK-"+Date.now();
+    const baseName=email.split("@")[0];
+
+    await db.collection("usuarios").doc(id).set({
+      id:id,
+      email:email,
+      password:password,
+      artisticName:baseName,
+      country:"Pendiente",
+      role:"emisora",
+      permissions:{canInvite:false},
+      status:"activa",
+      badge:"Nueva",
+      level:1,
+      appDay:1,
+      quickAccess:true,
+      quickAccessReason:"conexion_mala",
+      mustChangePassword:true,
+      createdBy:FOUNDER_EMAIL,
+      appStartDate:new Date().toISOString(),
+      createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+      date:new Date().toLocaleString()
+    });
+
+    status.style.color="#59ffb1";
+    status.textContent="✅ Acceso creado. Ya puede entrar con ese correo y contraseña.";
+    document.getElementById("email").value="";
+    document.getElementById("password").value="";
+    loadRecent();
+
+  }catch(error){
+    console.error(error);
+    status.style.color="#ff9eaa";
+    status.textContent="No se pudo crear: "+error.message;
+  }
+}
+
+async function loadRecent(){
+  const box=document.getElementById("recent");
+  box.innerHTML='<div class="item"><span>Cargando...</span></div>';
+
+  try{
+    const snap=await db.collection("usuarios").get();
+    const rows=snap.docs
+      .map(d=>d.data())
+      .filter(u=>u.quickAccess===true)
+      .sort((a,b)=>String(b.appStartDate||"").localeCompare(String(a.appStartDate||"")))
+      .slice(0,10);
+
+    if(!rows.length){
+      box.innerHTML='<div class="item"><span>Todavía no hay ingresos rápidos.</span></div>';
+      return;
+    }
+
+    box.innerHTML=rows.map(u=>`
+      <div class="item">
+        <strong>📶 ${u.artisticName || "Nueva emisora"}</strong>
+        <span>${u.email || ""}</span>
+        <span>Estado: ${u.status || "activa"} · contraseña provisional pendiente de cambio</span>
+      </div>
+    `).join("");
+
+  }catch(error){
+    box.innerHTML='<div class="item"><span>No se pudo cargar el historial.</span></div>';
+  }
+}
+
+window.onload=function(){
+  if(protect()) loadRecent();
+};
+</script>
+</body>
+</html>
