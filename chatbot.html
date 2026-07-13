@@ -1488,6 +1488,142 @@ async function identifyCurrentUser(){
 
 
 
+
+function isCubanProfile(user){
+
+  if(!user){
+    return false;
+  }
+
+  const country=
+    normalizeText(
+      user.country ||
+      user.pais ||
+      ""
+    );
+
+  return (
+    country.includes("cuba") ||
+    country.includes("cubana") ||
+    country.includes("cubano")
+  );
+
+}
+
+
+function isFounderProfile(user){
+
+  if(!user){
+    return false;
+  }
+
+  const email=
+    normalizeText(user.email);
+
+  const role=
+    normalizeText(user.role || user.rol);
+
+  return (
+    email==="elpepolan35@gmail.com" ||
+    role==="agente" ||
+    role==="fundador"
+  );
+
+}
+
+
+function getCubanGreeting(name){
+
+  const cleanName=
+    name || "mi vida";
+
+  return randomAnswer([
+
+    "¡Asere, qué bolá, " +
+    cleanName +
+    "! 😄 Dime, ¿en qué te ayudo hoy?",
+
+    "¡Asere, qué bolá! 🇨🇺 Hola, " +
+    cleanName +
+    ". Cuéntame, ¿qué necesitas?",
+
+    "¡Qué bolá, " +
+    cleanName +
+    "! 😄 Ya estoy por aquí. Dime qué necesitas y vamos a resolverlo."
+
+  ]);
+
+}
+
+
+function getCubanDemoAnswer(text){
+
+  if(!isFounderProfile(currentUser)){
+    return "";
+  }
+
+  const normalized=
+    normalizeText(text);
+
+  const wantsDemo=
+    normalized.includes("ruth") ||
+    normalized.includes("yandira") ||
+    normalized.includes("yadira");
+
+  if(!wantsDemo){
+    return "";
+  }
+
+  let member=null;
+
+  if(normalized.includes("ruth")){
+
+    member=
+      agencyMembers.find(item=>
+        normalizeText(getMemberName(item))
+          .includes("ruth")
+      ) || {
+        artisticName:"Ruth María",
+        country:"Cuba"
+      };
+
+  }else{
+
+    member=
+      agencyMembers.find(item=>{
+
+        const name=
+          normalizeText(
+            getMemberName(item)
+          );
+
+        return (
+          name.includes("yandira") ||
+          name.includes("yadira")
+        );
+
+      }) || {
+        artisticName:"Yandira",
+        country:"Cuba"
+      };
+
+  }
+
+  if(!isCubanProfile(member)){
+    return "";
+  }
+
+  return (
+    "Así le hablaría a ella: " +
+    getCubanGreeting(
+      getMemberName(member)
+    ) +
+    " Después sigo la conversación de forma natural, cercana y sin forzar el tono cubano."
+  );
+
+}
+
+
 function updateIdentityUI(){
 
   const nameElement=
@@ -1512,10 +1648,20 @@ function updateIdentityUI(){
       name;
 
 
-    welcomeText.textContent=
-      "Hola " +
-      name +
-      ". Ya tengo identificado tu perfil dentro de JM Elite. Puedes escribirme o hablarme.";
+    if(isCubanProfile(currentUser)){
+
+      welcomeText.textContent=
+        getCubanGreeting(name) +
+        " Puedes escribirme o hablarme.";
+
+    }else{
+
+      welcomeText.textContent=
+        "Hola " +
+        name +
+        ". Ya tengo identificado tu perfil dentro de JM Elite. Puedes escribirme o hablarme.";
+
+    }
 
   }else{
 
@@ -2161,6 +2307,17 @@ function findAnswer(text){
     normalizeText(text);
 
 
+  const cubanDemo=
+    getCubanDemoAnswer(text);
+
+
+  if(cubanDemo){
+
+    return cubanDemo;
+
+  }
+
+
   /* IDENTIDAD */
 
 
@@ -2259,6 +2416,16 @@ function findAnswer(text){
       currentUser
         ? currentUser.artisticName
         : "";
+
+
+    if(
+      currentUser &&
+      isCubanProfile(currentUser)
+    ){
+
+      return getCubanGreeting(name);
+
+    }
 
 
     return randomAnswer([
@@ -3061,13 +3228,20 @@ async function startNexus(){
 
     const greeting=
 
-      name
+      (
+        currentUser &&
+        isCubanProfile(currentUser)
+      )
 
-        ? "Hola, " +
-          name +
-          ". Soy Popu IA. Ya tengo identificado tu perfil dentro de JM Elite. Puedes escribirme o pulsar el micrófono para hablar conmigo."
+        ? getCubanGreeting(name)
 
-        : "Hola. Soy Popu IA. Puedes escribirme o pulsar el micrófono para hablar conmigo.";
+        : name
+
+          ? "Hola, " +
+            name +
+            ". Soy Popu IA. Ya tengo identificado tu perfil dentro de JM Elite. Puedes escribirme o pulsar el micrófono para hablar conmigo."
+
+          : "Hola. Soy Popu IA. Puedes escribirme o pulsar el micrófono para hablar conmigo.";
 
 
     addMessage(
