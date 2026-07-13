@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#020713">
+<title>Sala Ligera JM Elite</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;background:#020713;color:#fff}
+body{overflow:hidden}
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.screen{height:100dvh;min-height:100vh}
+#login{display:flex;align-items:center;justify-content:center;padding:18px;background:linear-gradient(180deg,#063579,#020713 42%)}
+.login-card{width:100%;max-width:390px;padding:22px;border:1px solid #1c75c9;border-radius:22px;background:#061326}
+.logo{text-align:center;font-size:42px}
+h1{margin:8px 0 5px;text-align:center;color:#f7d774;font-size:22px}
+.sub{text-align:center;color:#bcd0ee;font-size:12px;line-height:1.4;margin-bottom:18px}
+.field{width:100%;height:48px;margin:7px 0;padding:0 14px;border:1px solid #236db0;border-radius:14px;background:#020b1b;color:#fff;outline:none}
+.primary{width:100%;height:48px;margin-top:9px;border:0;border-radius:14px;background:#f7d774;color:#071426;font-weight:700}
+.msg{min-height:18px;margin-top:10px;text-align:center;color:#ffb9c3;font-size:12px}
+
+#room{display:flex;flex-direction:column;background:#020713}
+.top{flex:none;padding:10px 12px;border-bottom:1px solid #174f82;background:#061326}
+.topline{display:flex;align-items:center;gap:9px}
+.eagle{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid #f7d774;background:#074e9c;font-size:21px}
+.title{flex:1;min-width:0}
+.title strong{display:block;color:#f7d774;font-size:16px}
+.title span{display:block;margin-top:3px;color:#a9bfdd;font-size:10px}
+.net{font-size:18px}
+.progress{margin-top:9px}
+.progress-head{display:flex;justify-content:space-between;font-size:11px;color:#c9d8ee}
+.progress-head b{color:#59ffb1}
+.bar{height:7px;margin-top:6px;border-radius:99px;overflow:hidden;background:#01050d}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#00a2ff,#59ffb1,#f7d774);transition:width .3s}
+.note{margin-top:5px;color:#8fa8c8;font-size:9px}
+
+.seat-zone{flex:none;padding:9px 12px}
+.seat{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid #1a5f9d;border-radius:16px;background:#061326}
+.chair{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:#0b3d73;font-size:23px}
+.seat-info{flex:1;min-width:0}
+.seat-info strong{display:block;color:#f7d774;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seat-info span{display:block;margin-top:3px;color:#b8c9df;font-size:10px}
+.online{width:8px;height:8px;border-radius:50%;background:#59ffb1}
+
+.chat{flex:1;min-height:0;overflow-y:auto;padding:8px 12px;overscroll-behavior:contain}
+.message{padding:6px 0;font-size:12px;line-height:1.35;overflow-wrap:anywhere}
+.message b{color:#f7d774}
+.system{color:#59ffb1;font-style:italic;font-size:11px}
+.empty{padding:20px;text-align:center;color:#8fa8c8;font-size:11px}
+
+.compose{flex:none;display:flex;gap:7px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));border-top:1px solid #174f82;background:#061326}
+.compose input{flex:1;min-width:0;height:44px;padding:0 13px;border:1px solid #236db0;border-radius:14px;background:#020b1b;color:#fff;outline:none}
+.send{width:48px;height:44px;border:0;border-radius:14px;background:#f7d774;color:#071426;font-size:20px;font-weight:bold}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<section id="login" class="screen">
+  <div class="login-card">
+    <div class="logo">🦅</div>
+    <h1>JM Elite · Sala Ligera</h1>
+    <div class="sub">Solo texto. Hecha para conexiones lentas.<br>Entra, cumple tus 5 minutos y escribe.</div>
+    <input id="email" class="field" type="email" inputmode="email" autocomplete="email" placeholder="Correo">
+    <input id="password" class="field" type="password" autocomplete="current-password" placeholder="Contraseña">
+    <button class="primary" onclick="login()">ENTRAR A LA SALA</button>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+</section>
+
+<section id="room" class="screen hidden">
+  <header class="top">
+    <div class="topline">
+      <div class="eagle">🦅</div>
+      <div class="title">
+        <strong>Sala Ligera JM Elite</strong>
+        <span id="roomStatus">Conectando...</span>
+      </div>
+      <div id="net" class="net">🟢</div>
+    </div>
+    <div class="progress">
+      <div class="progress-head"><span>Actividad de hoy</span><b id="time">00:00 / 05:00</b></div>
+      <div class="bar"><div id="fill" class="fill"></div></div>
+      <div id="note" class="note">Mantén la sala abierta. El progreso se guarda.</div>
+    </div>
+  </header>
+
+  <div class="seat-zone">
+    <div class="seat">
+      <div class="chair">🪑</div>
+      <div class="seat-info">
+        <strong id="myName">Miembro JM Elite</strong>
+        <span>Sentada en Sala Ligera · solo texto</span>
+      </div>
+      <div class="online"></div>
+    </div>
+  </div>
+
+  <main id="messages" class="chat">
+    <div class="empty">Cargando chat...</div>
+  </main>
+
+  <footer class="compose">
+    <input id="chatInput" maxlength="300" autocomplete="off" placeholder="Escribe aquí..." onkeydown="if(event.key==='Enter'){event.preventDefault();sendMessage()}">
+    <button class="send" onclick="sendMessage()">➤</button>
+  </footer>
+</section>
+
+<script>
+const firebaseConfig={
+  apiKey:"AIzaSyBSGaEv1sLmfLDKMNLtlUMRcxBPTASF_AQ",
+  authDomain:"agencia-jm-elite.firebaseapp.com",
+  projectId:"agencia-jm-elite",
+  storageBucket:"agencia-jm-elite.firebasestorage.app",
+  messagingSenderId:"171676205335",
+  appId:"1:171676205335:web:95443528659ab804fe7752"
+};
+if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+
+const ROOM_ID="sala-pro-principal";
+const REQUIRED_SECONDS=300;
+const PRESENCE_TIMEOUT_MS=45000;
+
+let currentUser=null;
+let currentEmail="";
+let currentRole="";
+let presenceId="";
+let presenceSeconds=0;
+let presenceValidated=false;
+let counterTimer=null;
+let saveTimer=null;
+let heartbeatTimer=null;
+let unsubscribeChat=null;
+
+function normalize(v){
+  return String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+}
+function userName(u){
+  return u.artisticName||u.nombreArtistico||u.nombre||u.name||u.email||"Miembro JM Elite";
+}
+function todayKey(){
+  const d=new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function formatTime(s){
+  return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+}
+function activityId(){
+  return encodeURIComponent(ROOM_ID+"_"+currentEmail+"_"+todayKey());
+}
+function safe(text){
+  const div=document.createElement("div");
+  div.textContent=String(text||"");
+  return div.innerHTML;
+}
+
+async function login(){
+  const email=normalize(document.getElementById("email").value);
+  const password=document.getElementById("password").value.trim();
+  const msg=document.getElementById("loginMsg");
+  if(!email||!password){msg.textContent="Escribe correo y contraseña.";return}
+  msg.textContent="Entrando...";
+  try{
+    const snap=await db.collection("usuarios").where("email","==",email).limit(1).get();
+    if(snap.empty){msg.textContent="No encuentro esa cuenta en JM Elite.";return}
+    const doc=snap.docs[0];
+    const u={firestoreId:doc.id,...doc.data()};
+    if(String(u.password||u.pass||"")!==password){
+      msg.textContent="Contraseña incorrecta.";
+      return;
+    }
+    currentUser=u;
+    currentEmail=email;
+    currentRole=normalize(u.role||u.rol||"emisora");
+    localStorage.setItem("jm_logged","yes");
+    localStorage.setItem("jm_email",currentEmail);
+    localStorage.setItem("jm_role",currentRole);
+    localStorage.setItem("jm_user",JSON.stringify(u));
+    await enterRoom();
+  }catch(e){
+    console.error(e);
+    msg.textContent="Conexión débil. Inténtalo otra vez.";
+  }
+}
+
+async function restoreSession(){
+  if(localStorage.getItem("jm_logged")!=="yes") return;
+  currentEmail=normalize(localStorage.getItem("jm_email"));
+  if(!currentEmail) return;
+  try{
+    const snap=await db.collection("usuarios").where("email","==",currentEmail).limit(1).get();
+    if(snap.empty) return;
+    const doc=snap.docs[0];
+    currentUser={firestoreId:doc.id,...doc.data()};
+    currentRole=normalize(currentUser.role||currentUser.rol||localStorage.getItem("jm_role")||"emisora");
+    await enterRoom();
+  }catch(e){console.error(e)}
+}
+
+async function enterRoom(){
+  document.getElementById("login").classList.add("hidden");
+  document.getElementById("room").classList.remove("hidden");
+  document.getElementById("myName").textContent=userName(currentUser);
+  document.getElementById("roomStatus").textContent="Dentro de la sala · chat en directo";
+  presenceId=encodeURIComponent(ROOM_ID+"_"+currentEmail);
+  await loadActivity();
+  await savePresence();
+  startChat();
+  startCounter();
+  heartbeatTimer=setInterval(savePresence,20000);
+  saveTimer=setInterval(saveProgress,15000);
+}
+
+async function savePresence(){
+  if(!presenceId) return;
+  try{
+    await db.collection("sala_pro_presence").doc(presenceId).set({
+      roomId:ROOM_ID,
+      email:currentEmail,
+      name:userName(currentUser),
+      avatar:"",
+      role:currentRole,
+      seatNumber:null,
+      connected:true,
+      lightMode:true,
+      lastSeen:Date.now(),
+      joinedAt:firebase.firestore.FieldValue.serverTimestamp()
+    },{merge:true});
+    document.getElementById("net").textContent="🟢";
+  }catch(e){
+    document.getElementById("net").textContent="🟠";
+  }
+}
+
+async function loadActivity(){
+  try{
+    const doc=await db.collection("sala_pro_activity").doc(activityId()).get();
+    if(doc.exists){
+      const d=doc.data();
+      presenceSeconds=Math.min(REQUIRED_SECONDS,Number(d.seconds||d.totalSeconds||0));
+      presenceValidated=d.validated===true||d.dayValidated===true||presenceSeconds>=REQUIRED_SECONDS;
+    }
+    updateProgress();
+  }catch(e){console.error(e)}
+}
+
+function startCounter(){
+  clearInterval(counterTimer);
+  counterTimer=setInterval(async()=>{
+    if(presenceValidated||document.hidden||!navigator.onLine) return;
+    presenceSeconds++;
+    updateProgress();
+    if(presenceSeconds>=REQUIRED_SECONDS) await validateActivity();
+  },1000);
+}
+
+function updateProgress(){
+  const s=Math.min(presenceSeconds,REQUIRED_SECONDS);
+  document.getElementById("time").textContent=formatTime(s)+" / 05:00";
+  document.getElementById("fill").style.width=Math.min(100,s/REQUIRED_SECONDS*100)+"%";
+  if(presenceValidated){
+    document.getElementById("note").textContent="✅ Día validado. Ya cuenta para tu progreso de 7 días.";
+  }
+}
+
+async function saveProgress(){
+  if(!currentEmail||presenceValidated) return;
+  try{
+    await db.collection("sala_pro_activity").doc(activityId()).set({
+      roomId:ROOM_ID,
+      email:currentEmail,
+      poppoId:currentUser.poppoId||currentUser.idPoppo||"",
+      name:userName(currentUser),
+      dateKey:todayKey(),
+      seconds:Math.min(presenceSeconds,REQUIRED_SECONDS),
+      minutes:Number((presenceSeconds/60).toFixed(2)),
+      validated:false,
+      dayValidated:false,
+      source:"sala-ligera",
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    },{merge:true});
+  }catch(e){console.error(e)}
+}
+
+async function validateActivity(){
+  if(presenceValidated) return;
+  presenceValidated=true;
+  presenceSeconds=REQUIRED_SECONDS;
+  try{
+    await db.collection("sala_pro_activity").doc(activityId()).set({
+      roomId:ROOM_ID,
+      email:currentEmail,
+      poppoId:currentUser.poppoId||currentUser.idPoppo||"",
+      name:userName(currentUser),
+      dateKey:todayKey(),
+      seconds:REQUIRED_SECONDS,
+      minutes:5,
+      validated:true,
+      dayValidated:true,
+      source:"sala-ligera",
+      validatedAt:firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    },{merge:true});
+    updateProgress();
+    await db.collection("sala_pro_chat").add({
+      roomId:ROOM_ID,
+      type:"system",
+      text:"✅ "+userName(currentUser)+" ha validado su actividad diaria.",
+      createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+      createdMs:Date.now()
+    });
+  }catch(e){
+    presenceValidated=false;
+    console.error(e);
+  }
+}
+
+function startChat(){
+  if(unsubscribeChat) unsubscribeChat();
+  unsubscribeChat=db.collection("sala_pro_chat").where("roomId","==",ROOM_ID).onSnapshot(snapshot=>{
+    const rows=snapshot.docs.map(d=>d.data()).sort((a,b)=>Number(a.createdMs||0)-Number(b.createdMs||0)).slice(-60);
+    const box=document.getElementById("messages");
+    if(!rows.length){box.innerHTML='<div class="empty">Sala abierta. Puedes escribir.</div>';return}
+    box.innerHTML=rows.map(m=>{
+      if(m.type==="system") return '<div class="message system">'+safe(m.text)+'</div>';
+      return '<div class="message"><b>'+safe(m.name||"Miembro")+':</b> '+safe(m.text)+'</div>';
+    }).join("");
+    box.scrollTop=box.scrollHeight;
+  },e=>{
+    console.error(e);
+    document.getElementById("roomStatus").textContent="Conexión débil · reintentando";
+  });
+}
+
+async function sendMessage(){
+  const input=document.getElementById("chatInput");
+  const text=input.value.trim();
+  if(!text) return;
+  input.value="";
+  try{
+    await db.collection("sala_pro_chat").add({
+      roomId:ROOM_ID,
+      type:"message",
+      email:currentEmail,
+      name:userName(currentUser),
+      text:text,
+      lightMode:true,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp(),
+      createdMs:Date.now()
+    });
+  }catch(e){
+    input.value=text;
+    document.getElementById("roomStatus").textContent="No salió el mensaje · prueba otra vez";
+  }
+}
+
+window.addEventListener("online",()=>{document.getElementById("net").textContent="🟢";savePresence();saveProgress()});
+window.addEventListener("offline",()=>{document.getElementById("net").textContent="🔴";document.getElementById("roomStatus").textContent="Sin red · esperando conexión"});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){savePresence();loadActivity()}});
+window.addEventListener("beforeunload",()=>{saveProgress()});
+window.onload=restoreSession;
+</script>
+</body>
+</html>
