@@ -1256,6 +1256,17 @@ const AGENT_EMAILS=[
   "elpepolan35@gmail.com"
 ];
 
+const DIRECT_ACCESS_USERS={
+  "ruty.2701@gmail.com":{
+    role:"administrador",
+    artisticName:"Ruth María"
+  },
+  "vivesyandira@gmail.com":{
+    role:"administrador",
+    artisticName:"Yandira"
+  }
+};
+
 
 let registerMode="";
 
@@ -1464,6 +1475,30 @@ function login(){
   }
 
 
+  if(DIRECT_ACCESS_USERS[email]){
+
+    const directUser=DIRECT_ACCESS_USERS[email];
+
+    localStorage.setItem("jm_logged","yes");
+    localStorage.setItem("jm_email",email);
+    localStorage.setItem("jm_role",directUser.role);
+    localStorage.setItem("jm_permissions",JSON.stringify({}));
+    localStorage.setItem(
+      "jm_user",
+      JSON.stringify({
+        email:email,
+        rol:directUser.role,
+        artisticName:directUser.artisticName
+      })
+    );
+
+    checkLogin();
+
+    return;
+
+  }
+
+
   if(isAgent(email)){
 
     localStorage.setItem("jm_logged","yes");
@@ -1604,6 +1639,24 @@ async function lightLogin(){
   }
 
   try{
+
+    if(DIRECT_ACCESS_USERS[email]){
+      const directUser=DIRECT_ACCESS_USERS[email];
+      localStorage.setItem("jm_logged","yes");
+      localStorage.setItem("jm_email",email);
+      localStorage.setItem("jm_role",directUser.role);
+      localStorage.setItem("jm_permissions",JSON.stringify({}));
+      localStorage.setItem(
+        "jm_user",
+        JSON.stringify({
+          email:email,
+          rol:directUser.role,
+          artisticName:directUser.artisticName
+        })
+      );
+      window.location.href="sala-ligera.html";
+      return;
+    }
 
     if(isAgent(email)){
       localStorage.setItem("jm_logged","yes");
