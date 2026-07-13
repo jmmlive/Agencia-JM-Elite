@@ -1041,6 +1041,7 @@ a{
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
 
 
@@ -1916,110 +1917,192 @@ function formatTime(seconds){
 
 async function loadCurrentUser(){
 
-  const session=
-    getSession();
+  const session=getSession();
 
+  currentEmail=session.email;
+  currentRole=session.role;
 
-  currentEmail=
-    session.email;
+  let authUser=null;
 
+  try{
 
-  currentRole=
-    session.role;
+    authUser=await new Promise(resolve=>{
 
+      let finished=false;
 
-  if(!currentEmail){
+      const timer=setTimeout(()=>{
 
-    setRoomStatus(
-      "🟡",
-      "Recuperando tu sesión. Sala Pro no te expulsará."
+        if(!finished){
+          finished=true;
+          resolve(firebase.auth().currentUser || null);
+        }
+
+      },4000);
+
+      const unsubscribe=
+        firebase.auth().onAuthStateChanged(user=>{
+
+          if(finished){
+            return;
+          }
+
+          finished=true;
+          clearTimeout(timer);
+          unsubscribe();
+          resolve(user || null);
+
+        });
+
+    });
+
+  }catch(error){
+
+    console.warn(
+      "No se pudo leer Firebase Auth:",
+      error
     );
 
-    const storedUser=
-      localStorage.getItem("jm_user") || "";
+  }
 
-    try{
 
-      const parsedUser=
-        JSON.parse(storedUser || "{}");
+  if(
+    authUser &&
+    authUser.email
+  ){
 
-      currentEmail=
-        normalizeText(
-          parsedUser.email || ""
-        );
+    currentEmail=
+      normalizeText(authUser.email);
 
-      currentRole=
-        normalizeText(
-          parsedUser.role ||
-          parsedUser.rol ||
-          currentRole
-        );
-
-    }catch(error){
-
-      console.warn(
-        "No se pudo recuperar jm_user:",
-        error
-      );
-
-    }
-
-    if(!currentEmail){
-
-      currentUser={
-        email:"",
-        role:currentRole || "emisora"
-      };
-
-      return true;
-
-    }
+    localStorage.setItem(
+      "jm_email",
+      currentEmail
+    );
 
   }
 
 
   try{
 
-    const snapshot=
-      await db
-        .collection("usuarios")
-        .where(
-          "email",
-          "==",
-          currentEmail
-        )
-        .limit(1)
-        .get();
+    let userDoc=null;
 
 
-    if(!snapshot.empty){
+    if(
+      authUser &&
+      authUser.uid
+    ){
+
+      const uidSnapshot=
+        await db
+          .collection("usuarios")
+          .where(
+            "uid",
+            "==",
+            authUser.uid
+          )
+          .limit(1)
+          .get();
+
+      if(!uidSnapshot.empty){
+
+        userDoc=
+          uidSnapshot.docs[0];
+
+      }
+
+    }
+
+
+    if(
+      !userDoc &&
+      currentEmail
+    ){
+
+      const emailSnapshot=
+        await db
+          .collection("usuarios")
+          .where(
+            "email",
+            "==",
+            currentEmail
+          )
+          .limit(1)
+          .get();
+
+      if(!emailSnapshot.empty){
+
+        userDoc=
+          emailSnapshot.docs[0];
+
+      }
+
+    }
+
+
+    if(userDoc){
 
       currentUser={
 
-        firestoreId:
-          snapshot.docs[0].id,
+        firestoreId:userDoc.id,
 
-        ...snapshot.docs[0].data()
+        ...userDoc.data()
 
       };
 
+      currentEmail=
+        normalizeText(
+          currentUser.email ||
+          currentEmail
+        );
 
       currentRole=
         normalizeText(
           currentUser.role ||
           currentUser.rol ||
-          currentRole
+          currentRole ||
+          "emisora"
         );
 
-    }else{
+      localStorage.setItem(
+        "jm_email",
+        currentEmail
+      );
 
-      currentUser={
+      localStorage.setItem(
+        "jm_role",
+        currentRole
+      );
 
-        email:currentEmail,
+      localStorage.setItem(
+        "jm_user",
+        JSON.stringify(currentUser)
+      );
 
-        role:currentRole
+      return true;
 
-      };
+    }
+
+
+    currentUser={
+
+      uid:
+        authUser?.uid || "",
+
+      email:currentEmail,
+
+      role:
+        currentRole || "emisora"
+
+    };
+
+
+    if(!currentEmail){
+
+      setRoomStatus(
+        "🟡",
+        "Recuperando identidad de usuario..."
+      );
+
+      return false;
 
     }
 
@@ -2034,21 +2117,24 @@ async function loadCurrentUser(){
       error
     );
 
-
     currentUser={
+
+      uid:
+        authUser?.uid || "",
 
       email:currentEmail,
 
-      role:currentRole
+      role:
+        currentRole || "emisora"
 
     };
 
-
-    return true;
+    return Boolean(currentEmail);
 
   }
 
 }
+
   function getPresenceDocId(){
 
   return encodeURIComponent(
